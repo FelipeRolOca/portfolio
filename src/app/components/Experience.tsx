@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 
-const EXPERIENCES = [
+const experiences = [
   {
     role: "Full Stack Developer",
     company: "JJAsist (Freelance Project)",
@@ -39,30 +39,6 @@ const EXPERIENCES = [
       "Improved internal communication and data organization workflows"
     ]
   },
-  {
-    role: "Frontend React Developer",
-    company: "Tech Nova",
-    period: "2024 - 2025",
-    location: "Remote",
-    description: "Developed interactive and responsive user interfaces using React and Tailwind CSS for various client projects.",
-    bullets: [
-      "Implemented responsive designs ensuring cross-device compatibility",
-      "Collaborated efficiently with UX/UI designers",
-      "Improved general site usability and performance"
-    ]
-  },
-  {
-    role: "Junior Web Developer",
-    company: "Web Solutions Inc",
-    period: "2023 - 2024",
-    location: "Hybrid",
-    description: "Assisted senior developers in building client websites, maintaining web applications, and resolving UI bugs.",
-    bullets: [
-      "Fixed UI bugs and improved existing web components",
-      "Learned Agile methodologies and participated in daily stand-ups",
-      "Wrote and maintained unit tests for critical components"
-    ]
-  }
 ];
 
 export function Experience() {

@@ -3,7 +3,9 @@ import { ExternalLink, QrCode, Map, Settings, ShieldCheck } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 export function Projects() {
-  const featuredProject = {
+const EXPERIENCES = {
+  // Wait, I should use the correct variable names for projects
+};
     title: "JJAsist",
     type: "Featured Project",
     image: "https://images.unsplash.com/photo-1685575112968-7dd67bc447b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxciUyMGNvZGUlMjBzY2FubmluZyUyMG1vYmlsZSUyMGFwcCUyMGludGVyZmFjZSUyMG1vZGVybiUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzczNzU4MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",

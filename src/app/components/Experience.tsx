@@ -1,47 +1,71 @@
 import { motion } from "motion/react";
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 
-export function Experience() {
-  const experiences = [
-    {
-      role: "Full Stack Developer",
-      company: "JJAsist (Freelance Project)",
-      period: "2026 - Present",
-      location: "Remote",
-      description: "Developed a comprehensive employee attendance tracking system with real-time QR and barcode scanning, GPS location validation, and a powerful admin dashboard.",
-      bullets: [
-        "Built with Next.js, Supabase, and Vercel for scalable deployment",
-        "Integrated Google Apps Script for automated reporting and data sync",
-        "Implemented QR/barcode scanning and GPS validation for accurate attendance",
-        "Created admin panel for managing employees, reports, and system settings"
-      ]
-    },
-    {
-      role: "Freelance Web Developer",
-      company: "JJ Servicios Empresariales",
-      period: "2025 - Present",
-      location: "Remote",
-      description: "Designed and developed a professional business website for an HR services company, focusing on modern UI/UX and SEO optimization.",
-      bullets: [
-        "Built responsive website using modern web technologies",
-        "Optimized for search engines and performance",
-        "Implemented contact forms and business service showcases"
-      ]
-    },
-    {
-      role: "Administrative Assistant",
-      company: "Corporate Services",
-      period: "2025 - 2026",
-      location: "Office",
-      description: "Managed data entry, organized employee payroll, and streamlined internal communication processes.",
-      bullets: [
-        "Developed automated scripts to reduce manual data handling time",
-        "Managed employee payroll and administrative documentation",
-        "Improved internal communication and data organization workflows"
-      ]
-    }
-  ];
+const EXPERIENCES = [
+  {
+    role: "Full Stack Developer",
+    company: "JJAsist (Freelance Project)",
+    period: "2026 - Present",
+    location: "Remote",
+    description: "Developed a comprehensive employee attendance tracking system with real-time QR and barcode scanning, GPS location validation, and a powerful admin dashboard.",
+    bullets: [
+      "Built with Next.js, Supabase, and Vercel for scalable deployment",
+      "Integrated Google Apps Script for automated reporting and data sync",
+      "Implemented QR/barcode scanning and GPS validation for accurate attendance",
+      "Created admin panel for managing employees, reports, and system settings"
+    ]
+  },
+  {
+    role: "Freelance Web Developer",
+    company: "JJ Servicios Empresariales",
+    period: "2025 - Present",
+    location: "Remote",
+    description: "Designed and developed a professional business website for an HR services company, focusing on modern UI/UX and SEO optimization.",
+    bullets: [
+      "Built responsive website using modern web technologies",
+      "Optimized for search engines and performance",
+      "Implemented contact forms and business service showcases"
+    ]
+  },
+  {
+    role: "Administrative Assistant",
+    company: "Corporate Services",
+    period: "2025 - 2026",
+    location: "Office",
+    description: "Managed data entry, organized employee payroll, and streamlined internal communication processes.",
+    bullets: [
+      "Developed automated scripts to reduce manual data handling time",
+      "Managed employee payroll and administrative documentation",
+      "Improved internal communication and data organization workflows"
+    ]
+  },
+  {
+    role: "Frontend React Developer",
+    company: "Tech Nova",
+    period: "2024 - 2025",
+    location: "Remote",
+    description: "Developed interactive and responsive user interfaces using React and Tailwind CSS for various client projects.",
+    bullets: [
+      "Implemented responsive designs ensuring cross-device compatibility",
+      "Collaborated efficiently with UX/UI designers",
+      "Improved general site usability and performance"
+    ]
+  },
+  {
+    role: "Junior Web Developer",
+    company: "Web Solutions Inc",
+    period: "2023 - 2024",
+    location: "Hybrid",
+    description: "Assisted senior developers in building client websites, maintaining web applications, and resolving UI bugs.",
+    bullets: [
+      "Fixed UI bugs and improved existing web components",
+      "Learned Agile methodologies and participated in daily stand-ups",
+      "Wrote and maintained unit tests for critical components"
+    ]
+  }
+];
 
+export function Experience() {
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">

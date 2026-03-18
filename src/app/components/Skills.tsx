@@ -6,6 +6,9 @@ import {
   Wrench,
   Zap
 } from "lucide-react";
+import { BorderBeam } from "./ui/BorderBeam";
+import { SpotlightCard } from "./ui/SpotlightCard";
+import { TextReveal } from "./ui/TextReveal";
 
 export function Skills() {
   const skillCategories = [
@@ -50,15 +53,10 @@ export function Skills() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16 relative z-20">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">Technical Arsenal</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-white">Skills & Technologies</h3>
-        </motion.div>
+          <TextReveal text="Skills & Technologies" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+        </div>
 
         <motion.div 
           variants={containerVariants}
@@ -71,23 +69,26 @@ export function Skills() {
             <motion.div 
               key={idx}
               variants={itemVariants}
-              className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-zinc-700 transition-colors group"
+              className="relative overflow-visible group"
             >
-              <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
-                <div className="p-2 bg-zinc-800 rounded-lg group-hover:scale-110 transition-transform">
-                  {category.icon}
+              <SpotlightCard className="p-6 h-full relative z-10">
+                <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
+                <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
+                  <div className="p-2 bg-zinc-800 rounded-lg group-hover:scale-110 transition-transform">
+                    {category.icon}
+                  </div>
+                  <h4 className="text-lg font-bold text-white">{category.title}</h4>
                 </div>
-                <h4 className="text-lg font-bold text-white">{category.title}</h4>
-              </div>
-              
-              <ul className="space-y-3">
-                {category.skills.map((skill, sIdx) => (
-                  <li key={sIdx} className="flex items-center gap-2 text-zinc-400">
-                    <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-                    <span className="font-medium hover:text-zinc-200 transition-colors">{skill}</span>
-                  </li>
-                ))}
-              </ul>
+                
+                <ul className="space-y-3">
+                  {category.skills.map((skill, sIdx) => (
+                    <li key={sIdx} className="flex items-center gap-2 text-zinc-400">
+                      <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
+                      <span className="font-medium hover:text-zinc-200 transition-colors">{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </SpotlightCard>
             </motion.div>
           ))}
         </motion.div>

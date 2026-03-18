@@ -14,7 +14,7 @@ interface Particle {
 export const FloatingParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const targetRectRef = useRef<DOMRect | null>(null);
+  const targetElementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,7 +56,7 @@ export const FloatingParticles = () => {
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const targetRect = targetRectRef.current;
+      const targetRect = targetElementRef.current?.getBoundingClientRect();
 
       particles.forEach((p, idx) => {
         if (targetRect) {
@@ -141,19 +141,15 @@ export const FloatingParticles = () => {
 
     const updateTarget = (clientX: number, clientY: number) => {
       const element = document.elementFromPoint(clientX, clientY);
-      const target = element?.closest("[data-particle-target]");
-      if (target) {
-        targetRectRef.current = target.getBoundingClientRect();
-      } else {
-        targetRectRef.current = null;
-      }
+      const target = element?.closest("[data-particle-target]") as HTMLElement | null;
+      targetElementRef.current = target;
     };
 
     const handleMouseMove = (e: MouseEvent) => updateTarget(e.clientX, e.clientY);
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches[0]) updateTarget(e.touches[0].clientX, e.touches[0].clientY);
     };
-    const handleEnd = () => { targetRectRef.current = null; };
+    const handleEnd = () => { targetElementRef.current = null; };
 
     const handleResize = () => {
       init();

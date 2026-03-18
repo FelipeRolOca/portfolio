@@ -1,7 +1,15 @@
 import { motion } from "motion/react";
-import { ExternalLink, QrCode, Map, Settings, ShieldCheck, Palette, Zap, Layout, MousePointer2 } from "lucide-react";
+import { ExternalLink, Github, Code2, Layers, Cpu, Globe } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { BorderBeam } from "./ui/BorderBeam";
+import { SpotlightCard } from "./ui/SpotlightCard";
+import { TextReveal } from "./ui/TextReveal";
+import { Magnetic } from "./ui/Magnetic";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
 
 export function Projects() {
   const featuredProjects = [
@@ -45,63 +53,68 @@ export function Projects() {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
   return (
     <section id="projects" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16 relative z-20">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">My Work</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-white">Featured Projects</h3>
-        </motion.div>
+          <TextReveal text="Featured Projects" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+        </div>
 
         {/* Featured Projects */}
         <div className="flex flex-col gap-20 mb-20">
           {featuredProjects.map((project, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true, margin: "-100px" }}
               className=""
             >
-              <div className="bg-zinc-900 rounded-3xl overflow-visible border border-zinc-800 grid lg:grid-cols-2 hover:border-zinc-700 transition-colors shadow-2xl relative">
+              <SpotlightCard className="overflow-visible border border-zinc-800 grid lg:grid-cols-2 group hover:border-zinc-700 transition-colors shadow-2xl relative">
                 <BorderBeam size={500} duration={12} delay={index * 0.5} borderWidth={8} offset={-18} />
                 {/* Image Side */}
-                <div className={`relative h-64 lg:h-auto overflow-hidden group ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
+                <div className={`relative h-64 lg:h-auto overflow-hidden ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
                   <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
                   <ImageWithFallback
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
                   />
                 </div>
 
                 {/* Content Side */}
-                <div className="p-8 lg:p-12 flex flex-col justify-center relative">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-[60px]" />
-
-                  <h4 className="text-blue-400 font-mono text-sm mb-2">{project.type}</h4>
-                  <h3 className="text-3xl font-bold text-white mb-6">{project.title}</h3>
-
-                  <div className="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50 mb-6 backdrop-blur">
-                    <p className="text-zinc-400 leading-relaxed text-sm sm:text-base mb-4">
-                      {project.description}
-                    </p>
-                    <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-zinc-800/50">
-                      {project.highlights.map((h, i) => (
-                        <div key={i} className="flex items-center gap-2 text-zinc-300 text-sm">
-                          <span className="text-cyan-400">{h.icon}</span>
-                          {h.text}
-                        </div>
-                      ))}
-                    </div>
+                <div className="p-8 lg:p-12 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-blue-400 font-medium tracking-wider text-sm uppercase">{project.type}</span>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mb-8">
+                  <h4 className="text-2xl lg:text-3xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">{project.title}</h4>
+                  <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3 mb-8">
+                    {project.highlights.map((h, i) => (
+                      <div key={i} className="flex items-center gap-2 text-zinc-300 text-sm">
+                        <span className="text-cyan-400">{h.icon}</span>
+                        {h.text}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-10">
                     {project.tech.map((t, i) => (
                       <span key={i} className="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700">
                         {t}
@@ -109,75 +122,92 @@ export function Projects() {
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-white text-zinc-950 rounded-xl hover:bg-zinc-200 transition-colors font-bold"
-                    >
-                      View Live <ExternalLink className="w-4 h-4" />
-                    </a>
+                  <div className="flex items-center gap-6">
+                    <Magnetic>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-white font-bold hover:text-blue-400 transition-colors text-lg group/link"
+                      >
+                        Visit Website
+                        <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                      </a>
+                    </Magnetic>
                   </div>
                 </div>
-              </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>
 
+        <div className="text-center mb-16 relative z-20">
+          <TextReveal text="More Projects" className="text-3xl font-bold text-white justify-center" />
+        </div>
+
         {/* Other Projects */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-8 max-w-2xl mx-auto lg:max-w-none">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid md:grid-cols-2 lg:grid-cols-1 gap-8 max-w-2xl mx-auto lg:max-w-none"
+        >
           {otherProjects.map((project, idx) => (
-            <motion.div
+            <motion.div 
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-visible hover:border-zinc-700 transition-all group hover:-translate-y-1 shadow-lg lg:grid lg:grid-cols-3 relative"
+              variants={itemVariants}
+              className="relative overflow-visible"
             >
-              <BorderBeam size={300} duration={10} delay={idx * 0.8} borderWidth={5} offset={-12} />
-              <div className="h-48 lg:h-auto overflow-hidden relative">
-                <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors z-10" />
-                <ImageWithFallback
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-8 lg:col-span-2 flex flex-col justify-center">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">{project.title}</h3>
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-zinc-500 hover:text-white transition-colors"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                  </a>
+              <SpotlightCard className="overflow-visible group relative h-full lg:grid lg:grid-cols-3">
+                <BorderBeam size={300} duration={10} delay={idx * 0.8} borderWidth={5} offset={-12} />
+                <div className="h-48 lg:h-auto overflow-hidden relative">
+                  <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors z-10" />
+                  <ImageWithFallback
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((t, i) => (
-                    <span key={i} className="text-xs font-mono text-zinc-400 bg-zinc-950 px-2 py-1 rounded">
-                      {t}
-                    </span>
-                  ))}
+                <div className="p-8 lg:col-span-2 flex flex-col justify-center">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">{project.title}</h3>
+                    <Magnetic>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-zinc-500 hover:text-white transition-colors"
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
+                    </Magnetic>
+                  </div>
+                  <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tech.map((t, i) => (
+                      <span key={i} className="text-xs font-mono text-zinc-400 bg-zinc-950 px-2 py-1 rounded">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <Magnetic strength={0.2}>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium text-sm"
+                    >
+                      Visit Website <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </Magnetic>
                 </div>
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium text-sm"
-                >
-                  Visit Website <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
+              </SpotlightCard>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

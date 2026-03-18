@@ -7,6 +7,8 @@ import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { DotBackground } from "./components/ui/DotBackground";
+import { FloatingParticles } from "./components/ui/FloatingParticles";
+import { CustomCursor } from "./components/ui/CustomCursor";
 import { useEffect } from "react";
 
 export function Portfolio() {
@@ -20,8 +22,9 @@ export function Portfolio() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-950 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative">
+    <div className="min-h-screen bg-zinc-950 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative overflow-x-hidden">
       <DotBackground />
+      <CustomCursor />
       <Navbar />
       <main className="relative z-10">
         <Hero />

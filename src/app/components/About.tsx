@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { BookOpen, Lightbulb, Users } from "lucide-react";
 import { FloatingParticles } from "./ui/FloatingParticles";
+import { SpotlightCard } from "./ui/SpotlightCard";
+import { TextReveal } from "./ui/TextReveal";
 
 export function About() {
   const containerVariants = {
@@ -17,6 +19,10 @@ export function About() {
     <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
       <FloatingParticles />
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">My Motivation</h2>
+          <TextReveal text="Why I Do What I Do" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+        </div>
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -47,29 +53,35 @@ export function About() {
           </div>
 
           {/* Value Props Cards */}
-          <motion.div variants={containerVariants} className="grid sm:grid-cols-2 gap-6">
-            <motion.div variants={itemVariants} data-particle-target className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors">
-              <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
-                <BookOpen className="w-6 h-6 text-blue-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Continuous Learning</h3>
-              <p className="text-zinc-400 text-sm">Always exploring new frameworks, databases, and architectural patterns to expand my technical stack.</p>
+          <motion.div variants={containerVariants} className="grid sm:grid-cols-2 gap-6 relative z-10">
+            <motion.div variants={itemVariants}>
+              <SpotlightCard data-particle-target className="p-6 h-full">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
+                  <BookOpen className="w-6 h-6 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Continuous Learning</h3>
+                <p className="text-zinc-400 text-sm">Always exploring new frameworks, databases, and architectural patterns to expand my technical stack.</p>
+              </SpotlightCard>
             </motion.div>
 
-            <motion.div variants={itemVariants} data-particle-target className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors sm:mt-8">
-              <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
-                <Lightbulb className="w-6 h-6 text-cyan-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Practical Focus</h3>
-              <p className="text-zinc-400 text-sm">Building tools that automate tasks, track data, and validate real-world inputs.</p>
+            <motion.div variants={itemVariants} className="sm:mt-8">
+              <SpotlightCard data-particle-target className="p-6 h-full">
+                <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
+                  <Lightbulb className="w-6 h-6 text-cyan-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Practical Focus</h3>
+                <p className="text-zinc-400 text-sm">Building tools that automate tasks, track data, and validate real-world inputs.</p>
+              </SpotlightCard>
             </motion.div>
 
-            <motion.div variants={itemVariants} data-particle-target className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors sm:col-span-2">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
-                <Users className="w-6 h-6 text-emerald-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Collaborative Spirit</h3>
-              <p className="text-zinc-400 text-sm">Experience working in teams, freelance environments, and administrative roles where clear communication is key to delivering successful technical projects.</p>
+            <motion.div variants={itemVariants} className="sm:col-span-2">
+              <SpotlightCard data-particle-target className="p-6 h-full">
+                <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
+                  <Users className="w-6 h-6 text-emerald-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Effective Collaboration</h3>
+                <p className="text-zinc-400 text-sm">I believe that clear communication and teamwork are the foundations of any successful project.</p>
+              </SpotlightCard>
             </motion.div>
           </motion.div>
 

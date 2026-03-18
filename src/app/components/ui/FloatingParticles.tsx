@@ -58,26 +58,46 @@ export const FloatingParticles = () => {
 
       const targetRect = targetRectRef.current;
 
-      particles.forEach((p) => {
+      particles.forEach((p, idx) => {
         if (targetRect) {
           // Calculate target position relative to the LOCAL canvas/container
           const containerRect = container.getBoundingClientRect();
-          const localTargetLeft = targetRect.left - containerRect.left;
-          const localTargetTop = targetRect.top - containerRect.top;
+          const localLeft = targetRect.left - containerRect.left;
+          const localTop = targetRect.top - containerRect.top;
+          const localRight = localLeft + targetRect.width;
+          const localBottom = localTop + targetRect.height;
           
-          const targetX = localTargetLeft - 10 + Math.random() * (targetRect.width + 20);
-          const targetY = localTargetTop - 10 + Math.random() * (targetRect.height + 20);
+          // Distribute particles along the perimeter
+          // Each particle gets a fixed spot on the perimeter based on its index
+          const perimeter = 2 * (targetRect.width + targetRect.height);
+          const step = perimeter / particles.length;
+          const pos = (idx * step + Date.now() * 0.05) % perimeter;
+
+          let targetX, targetY;
+          if (pos < targetRect.width) {
+            targetX = localLeft + pos;
+            targetY = localTop - 4; // Top edge
+          } else if (pos < targetRect.width + targetRect.height) {
+            targetX = localRight + 4;
+            targetY = localTop + (pos - targetRect.width); // Right edge
+          } else if (pos < 2 * targetRect.width + targetRect.height) {
+            targetX = localRight - (pos - (targetRect.width + targetRect.height));
+            targetY = localBottom + 4; // Bottom edge
+          } else {
+            targetX = localLeft - 4;
+            targetY = localBottom - (pos - (2 * targetRect.width + targetRect.height)); // Left edge
+          }
 
           const dx = targetX - p.x;
           const dy = targetY - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          const force = 0.08;
+          const force = 0.25; // Faster attraction
           p.vx += (dx / dist) * force;
           p.vy += (dy / dist) * force;
           
-          p.vx *= 0.92;
-          p.vy *= 0.92;
+          p.vx *= 0.88; // More damped for precision
+          p.vy *= 0.88;
         } else {
           // Drifting motion
           p.vx += (Math.random() - 0.5) * 0.01;
@@ -100,11 +120,19 @@ export const FloatingParticles = () => {
         if (p.y > height) p.y = 0;
 
         const time = Date.now() * 0.001;
-        const l = p.baseColor.l + Math.sin(time + p.x * 0.01) * 10;
+        const l = p.baseColor.l + Math.sin(time + p.x * 0.01) * 15;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, ${l}%, 0.35)`;
+        // Increased intensity: high opacity and glow-like fill
+        ctx.fillStyle = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, ${l}%, ${targetRect ? 0.7 : 0.45})`;
         ctx.fill();
+        
+        if (targetRect) {
+          ctx.shadowBlur = 4;
+          ctx.shadowColor = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, 70%, 0.5)`;
+        } else {
+          ctx.shadowBlur = 0;
+        }
       });
 
       animationFrameId = requestAnimationFrame(draw);

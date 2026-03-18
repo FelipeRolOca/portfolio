@@ -74,7 +74,7 @@ export const FloatingParticles = () => {
           const pos = (idx * step + Date.now() * 0.05) % perimeter;
 
           let targetX, targetY;
-          const offset = 6; // Slightly more distance from the border
+          const offset = 12; // More distance from the border for clarity
           if (pos < targetRect.width) {
             targetX = localLeft + pos;
             targetY = localTop - offset; // Top edge
@@ -93,12 +93,12 @@ export const FloatingParticles = () => {
           const dy = targetY - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          const force = 0.5; // Much faster attraction
-          p.vx += (dx / dist) * force;
-          p.vy += (dy / dist) * force;
+          // Near-instant attraction: snap 40% of the distance each frame
+          p.vx += dx * 0.4;
+          p.vy += dy * 0.4;
           
-          p.vx *= 0.82; // Increased damping for snappy stop
-          p.vy *= 0.82;
+          p.vx *= 0.5; // High damping to prevent overshoot during snap
+          p.vy *= 0.5;
         } else {
           // Drifting motion
           p.vx += (Math.random() - 0.5) * 0.01;

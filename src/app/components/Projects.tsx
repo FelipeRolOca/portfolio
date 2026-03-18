@@ -68,8 +68,8 @@ export function Projects() {
               viewport={{ once: true, margin: "-100px" }}
               className=""
             >
-              <div className="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 grid lg:grid-cols-2 hover:border-zinc-700 transition-colors shadow-2xl relative">
-                <BorderBeam size={450} duration={12} delay={index * 0.5} borderWidth={6} offset={-5} />
+              <div className="bg-zinc-900 rounded-3xl overflow-visible border border-zinc-800 grid lg:grid-cols-2 hover:border-zinc-700 transition-colors shadow-2xl relative">
+                <BorderBeam size={500} duration={12} delay={index * 0.5} borderWidth={8} offset={-18} />
                 {/* Image Side */}
                 <div className={`relative h-64 lg:h-auto overflow-hidden group ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
                   <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
@@ -133,9 +133,9 @@ export function Projects() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all group hover:-translate-y-1 shadow-lg lg:grid lg:grid-cols-3 relative"
+              className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-visible hover:border-zinc-700 transition-all group hover:-translate-y-1 shadow-lg lg:grid lg:grid-cols-3 relative"
             >
-              <BorderBeam size={250} duration={10} delay={idx * 0.8} borderWidth={2} />
+              <BorderBeam size={300} duration={10} delay={idx * 0.8} borderWidth={5} offset={-12} />
               <div className="h-48 lg:h-auto overflow-hidden relative">
                 <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors z-10" />
                 <ImageWithFallback

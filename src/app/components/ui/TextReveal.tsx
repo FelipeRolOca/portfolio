@@ -30,23 +30,23 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
   };
 
   return (
-    <motion.h3
+    <motion.span
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className={cn("flex flex-wrap items-center", className)}
+      className={cn("inline-flex flex-wrap items-center", className)}
     >
       {letters.map((char, i) => (
         <motion.span
           key={i}
           variants={childVariants}
-          className={char === " " ? "mr-2" : ""}
+          className={char === " " ? "mr-2 whitespace-pre" : ""}
           transition={{ duration: 0.4 }}
         >
           {char}
         </motion.span>
       ))}
-    </motion.h3>
+    </motion.span>
   );
 };

@@ -90,11 +90,10 @@ export function Contact() {
             <div className="space-y-6">
               {contactInfo.map((info, idx) => (
                 <Magnetic key={idx} strength={0.2}>
-                  <SpotlightCard>
+                  <SpotlightCard data-particle-target>
                     <a 
                       href={info.link}
                       className="flex items-center gap-6 p-4 rounded-2xl transition-all group relative z-10"
-                      data-particle-target
                     >
                       <div className="p-4 bg-zinc-950 rounded-xl group-hover:scale-110 transition-transform shadow-inner">
                         {info.icon}
@@ -135,8 +134,8 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <SpotlightCard className="p-8 rounded-3xl relative z-10">
-              <form onSubmit={handleSubmit} data-particle-target className="space-y-6">
+            <SpotlightCard data-particle-target className="p-8 rounded-3xl relative z-10">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-zinc-400">Your Name</label>
                   <input 

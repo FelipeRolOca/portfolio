@@ -79,8 +79,11 @@ export function Experience() {
               {/* Content Box */}
               <div className={`w-full md:w-1/2 pl-14 md:pl-0 ${idx % 2 === 0 ? "md:pr-14 md:text-right" : "md:pl-14 md:text-left"
                 }`}>
-                <SpotlightCard className="overflow-visible group relative p-6">
-                  <div data-particle-target className="absolute inset-0" />
+                <SpotlightCard 
+                  className="overflow-visible group relative"
+                  innerClassName="p-6"
+                  data-particle-target
+                >
                   <BorderBeam size={250} duration={10} delay={idx * 0.5} borderWidth={6} offset={-15} />
                   <h4 className="text-xl font-bold text-white mb-2">{exp.role}</h4>
                   <div className={`flex flex-wrap items-center gap-4 mb-4 text-sm text-zinc-400 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"

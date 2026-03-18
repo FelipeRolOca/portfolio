@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { BookOpen, Lightbulb, Users } from "lucide-react";
+import { FloatingParticles } from "./ui/FloatingParticles";
 
 export function About() {
   const containerVariants = {
@@ -13,7 +14,8 @@ export function About() {
   };
 
   return (
-    <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative">
+    <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
+      <FloatingParticles />
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <motion.div
           initial="hidden"

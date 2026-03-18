@@ -68,7 +68,7 @@ export function Projects() {
               viewport={{ once: true, margin: "-100px" }}
               className=""
             >
-              <div data-particle-target className="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 grid lg:grid-cols-2 hover:border-zinc-700 transition-colors shadow-2xl relative">
+              <div className="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 grid lg:grid-cols-2 hover:border-zinc-700 transition-colors shadow-2xl relative">
                 <BorderBeam size={400} duration={12} delay={index * 0.5} borderWidth={3} offset={-2} />
                 {/* Image Side */}
                 <div className={`relative h-64 lg:h-auto overflow-hidden group ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
@@ -133,8 +133,6 @@ export function Projects() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: idx * 0.2 }}
-              data-particle-target
               className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all group hover:-translate-y-1 shadow-lg lg:grid lg:grid-cols-3 relative"
             >
               <BorderBeam size={250} duration={10} delay={idx * 0.8} borderWidth={2} />

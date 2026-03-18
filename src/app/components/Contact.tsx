@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin, Send, ExternalLink } from "lucide-react";
+import { FloatingParticles } from "./ui/FloatingParticles";
 import { useState } from "react";
 
 export function Contact() {
@@ -57,6 +58,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
+      <FloatingParticles />
       {/* Background glow */}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none" />
 
@@ -92,7 +94,8 @@ export function Contact() {
                 <a 
                   key={idx}
                   href={info.link}
-                  className="flex items-center gap-6 p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800 transition-all group"
+                  className="flex items-center gap-6 p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800 transition-all group relative z-10"
+                  data-particle-target
                 >
                   <div className="p-4 bg-zinc-950 rounded-xl group-hover:scale-110 transition-transform shadow-inner">
                     {info.icon}
@@ -131,7 +134,7 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <form onSubmit={handleSubmit} className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl shadow-2xl space-y-6">
+            <form onSubmit={handleSubmit} data-particle-target className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl shadow-2xl space-y-6 relative z-10">
               <div className="space-y-2">
                 <label htmlFor="name" className="text-sm font-medium text-zinc-400">Your Name</label>
                 <input 

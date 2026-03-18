@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { Briefcase, MapPin, Calendar } from "lucide-react";
+import { FloatingParticles } from "./ui/FloatingParticles";
+import { Briefcase, Calendar, MapPin, ChevronRight, GraduationCap } from "lucide-react";
 import { BorderBeam } from "./ui/BorderBeam";
 
 const experiences = [
@@ -44,7 +45,8 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative">
+    <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
+      <FloatingParticles />
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -7,7 +7,6 @@ import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { DotBackground } from "./components/ui/DotBackground";
-import { FloatingParticles } from "./components/ui/FloatingParticles";
 import { useEffect } from "react";
 
 export function Portfolio() {
@@ -23,7 +22,6 @@ export function Portfolio() {
   return (
     <div className="min-h-screen bg-zinc-950 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative">
       <DotBackground />
-      <FloatingParticles />
       <Navbar />
       <main className="relative z-10">
         <Hero />

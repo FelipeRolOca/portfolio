@@ -74,17 +74,18 @@ export const FloatingParticles = () => {
           const pos = (idx * step + Date.now() * 0.05) % perimeter;
 
           let targetX, targetY;
+          const offset = 6; // Slightly more distance from the border
           if (pos < targetRect.width) {
             targetX = localLeft + pos;
-            targetY = localTop - 4; // Top edge
+            targetY = localTop - offset; // Top edge
           } else if (pos < targetRect.width + targetRect.height) {
-            targetX = localRight + 4;
+            targetX = localRight + offset;
             targetY = localTop + (pos - targetRect.width); // Right edge
           } else if (pos < 2 * targetRect.width + targetRect.height) {
             targetX = localRight - (pos - (targetRect.width + targetRect.height));
-            targetY = localBottom + 4; // Bottom edge
+            targetY = localBottom + offset; // Bottom edge
           } else {
-            targetX = localLeft - 4;
+            targetX = localLeft - offset;
             targetY = localBottom - (pos - (2 * targetRect.width + targetRect.height)); // Left edge
           }
 
@@ -92,12 +93,12 @@ export const FloatingParticles = () => {
           const dy = targetY - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          const force = 0.25; // Faster attraction
+          const force = 0.5; // Much faster attraction
           p.vx += (dx / dist) * force;
           p.vy += (dy / dist) * force;
           
-          p.vx *= 0.88; // More damped for precision
-          p.vy *= 0.88;
+          p.vx *= 0.82; // Increased damping for snappy stop
+          p.vy *= 0.82;
         } else {
           // Drifting motion
           p.vx += (Math.random() - 0.5) * 0.01;

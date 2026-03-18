@@ -69,7 +69,7 @@ export function Projects() {
               className=""
             >
               <div className="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 grid lg:grid-cols-2 hover:border-zinc-700 transition-colors shadow-2xl relative">
-                <BorderBeam size={400} duration={12} delay={index * 0.5} borderWidth={3} offset={-2} />
+                <BorderBeam size={450} duration={12} delay={index * 0.5} borderWidth={6} offset={-5} />
                 {/* Image Side */}
                 <div className={`relative h-64 lg:h-auto overflow-hidden group ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
                   <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />

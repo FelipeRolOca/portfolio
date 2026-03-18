@@ -27,6 +27,7 @@ export const FloatingParticles = () => {
     let animationFrameId: number;
     let width = container.offsetWidth;
     let height = container.offsetHeight;
+    let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); // cap for perf
 
     const particles: Particle[] = [];
     const particleCount = 80; // Reduced density
@@ -34,8 +35,11 @@ export const FloatingParticles = () => {
     const init = () => {
       width = container.offsetWidth;
       height = container.offsetHeight;
-      canvas.width = width;
-      canvas.height = height;
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      // draw in CSS pixels
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       particles.length = 0;
       for (let i = 0; i < particleCount; i++) {
@@ -57,11 +61,11 @@ export const FloatingParticles = () => {
       ctx.clearRect(0, 0, width, height);
 
       const targetRect = targetElementRef.current?.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
 
       particles.forEach((p, idx) => {
         if (targetRect) {
           // Calculate target position relative to the LOCAL canvas/container
-          const containerRect = container.getBoundingClientRect();
           const localLeft = targetRect.left - containerRect.left;
           const localTop = targetRect.top - containerRect.top;
           const localRight = localLeft + targetRect.width;
@@ -91,14 +95,13 @@ export const FloatingParticles = () => {
 
           const dx = targetX - p.x;
           const dy = targetY - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          // Near-instant attraction: snap 40% of the distance each frame
-          p.vx += dx * 0.4;
-          p.vy += dy * 0.4;
-          
-          p.vx *= 0.5; // High damping to prevent overshoot during snap
-          p.vy *= 0.5;
+          // Smooth follow (no explosive acceleration). This prevents "shooting" when bounds change.
+          const follow = 0.08; // higher = snappier, still stable
+          p.x += dx * follow;
+          p.y += dy * follow;
+          // bleed off drift velocity while locked on target
+          p.vx *= 0.6;
+          p.vy *= 0.6;
         } else {
           // Drifting motion
           p.vx += (Math.random() - 0.5) * 0.01;
@@ -109,10 +112,9 @@ export const FloatingParticles = () => {
             p.vx *= 0.9;
             p.vy *= 0.9;
           }
+          p.x += p.vx;
+          p.y += p.vy;
         }
-
-        p.x += p.vx;
-        p.y += p.vy;
 
         // Wrap around within section
         if (p.x < 0) p.x = width;

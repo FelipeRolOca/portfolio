@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ExternalLink, Github, Code2, Layers, Cpu, Globe } from "lucide-react";
+import { ExternalLink, Github, Code2, Layers, Cpu, Globe, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";

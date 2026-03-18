@@ -10,16 +10,18 @@ interface BorderBeamProps {
   colorFrom?: string;
   colorTo?: string;
   delay?: number;
+  offset?: number;
 }
 
 export const BorderBeam = ({
   className,
   size = 200,
   duration = 15,
-  borderWidth = 1.5,
+  borderWidth = 2,
   colorFrom = "#3b82f6",
   colorTo = "#60a5fa",
   delay = 0,
+  offset = 0,
 }: BorderBeamProps) => {
   return (
     <div
@@ -31,10 +33,12 @@ export const BorderBeam = ({
           "--color-from": colorFrom,
           "--color-to": colorTo,
           "--delay": `${delay}s`,
+          "--offset": `${offset}px`,
         } as React.CSSProperties
       }
       className={cn(
-        "pointer-events-none absolute inset-0 rounded-[inherit] [border:calc(var(--border-width)*1)_solid_transparent]",
+        "pointer-events-none absolute rounded-[inherit] [border:calc(var(--border-width)*1)_solid_transparent]",
+        "inset-[var(--offset)]",
 
         // mask-image logic to show only the border
         "![mask-clip:padding-box,border-box] ![mask-composite:intersect] [mask-image:linear-gradient(transparent,transparent),linear-gradient(white,white)]",

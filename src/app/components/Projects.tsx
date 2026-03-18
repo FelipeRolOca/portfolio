@@ -8,7 +8,7 @@ export function Projects() {
       title: "Paper Pops",
       type: "Featured Project",
       image: "/paper-pops-preview.jpeg",
-      description: "Sitio web interactivo que combina diseño creativo con funcionalidades dinámicas para un portafolio moderno.",
+      description: "Interactive website that combines creative design with dynamic functionality for a modern portfolio.",
       tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
       liveUrl: "https://paper-pops.vercel.app/",
       highlights: [
@@ -47,7 +47,7 @@ export function Projects() {
   return (
     <section id="projects" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -60,7 +60,7 @@ export function Projects() {
         {/* Featured Projects */}
         <div className="flex flex-col gap-20 mb-20">
           {featuredProjects.map((project, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -71,20 +71,20 @@ export function Projects() {
                 {/* Image Side */}
                 <div className={`relative h-64 lg:h-auto overflow-hidden group ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
                   <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
-                  <ImageWithFallback 
-                    src={project.image} 
-                    alt={project.title} 
+                  <ImageWithFallback
+                    src={project.image}
+                    alt={project.title}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
-                
+
                 {/* Content Side */}
                 <div className="p-8 lg:p-12 flex flex-col justify-center relative">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-[60px]" />
-                  
+
                   <h4 className="text-blue-400 font-mono text-sm mb-2">{project.type}</h4>
                   <h3 className="text-3xl font-bold text-white mb-6">{project.title}</h3>
-                  
+
                   <div className="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50 mb-6 backdrop-blur">
                     <p className="text-zinc-400 leading-relaxed text-sm sm:text-base mb-4">
                       {project.description}
@@ -108,8 +108,8 @@ export function Projects() {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <a 
-                      href={project.liveUrl} 
+                    <a
+                      href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-6 py-3 bg-white text-zinc-950 rounded-xl hover:bg-zinc-200 transition-colors font-bold"
@@ -126,7 +126,7 @@ export function Projects() {
         {/* Other Projects */}
         <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-8 max-w-2xl mx-auto lg:max-w-none">
           {otherProjects.map((project, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -136,17 +136,17 @@ export function Projects() {
             >
               <div className="h-48 lg:h-auto overflow-hidden relative">
                 <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors z-10" />
-                <ImageWithFallback 
-                  src={project.image} 
-                  alt={project.title} 
+                <ImageWithFallback
+                  src={project.image}
+                  alt={project.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-8 lg:col-span-2 flex flex-col justify-center">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">{project.title}</h3>
-                  <a 
-                    href={project.liveUrl} 
+                  <a
+                    href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-zinc-500 hover:text-white transition-colors"
@@ -164,7 +164,7 @@ export function Projects() {
                     </span>
                   ))}
                 </div>
-                <a 
+                <a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"

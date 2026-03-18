@@ -46,7 +46,7 @@ export function About() {
 
           {/* Value Props Cards */}
           <motion.div variants={containerVariants} className="grid sm:grid-cols-2 gap-6">
-            <motion.div variants={itemVariants} className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors">
+            <motion.div variants={itemVariants} data-particle-target className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors">
               <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
                 <BookOpen className="w-6 h-6 text-blue-400" />
               </div>
@@ -54,7 +54,7 @@ export function About() {
               <p className="text-zinc-400 text-sm">Always exploring new frameworks, databases, and architectural patterns to expand my technical stack.</p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors sm:mt-8">
+            <motion.div variants={itemVariants} data-particle-target className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors sm:mt-8">
               <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
                 <Lightbulb className="w-6 h-6 text-cyan-400" />
               </div>
@@ -62,7 +62,7 @@ export function About() {
               <p className="text-zinc-400 text-sm">Building tools that automate tasks, track data, and validate real-world inputs.</p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors sm:col-span-2">
+            <motion.div variants={itemVariants} data-particle-target className="bg-zinc-900/50 backdrop-blur border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors sm:col-span-2">
               <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
                 <Users className="w-6 h-6 text-emerald-400" />
               </div>

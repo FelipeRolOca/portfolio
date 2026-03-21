@@ -122,7 +122,8 @@ export function Skills() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 12 }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="pointer-events-none absolute left-6 right-6 bottom-6"
+                    className="pointer-events-none absolute left-4 right-4 bottom-0 translate-y-3"
+                      style={{ zIndex: 1 }}
                     >
                       <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_40px_rgba(0,0,0,0.4)] backdrop-blur-lg">
                         {category.usageNote}

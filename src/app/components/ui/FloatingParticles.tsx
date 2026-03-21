@@ -59,13 +59,20 @@ export const FloatingParticles = () => {
       }
     };
 
+    let lastTargetRect: DOMRect | null = null;
+    const targetHoldDuration = 1400;
+    const targetExpire = { current: 0 };
+
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const targetRect = targetElementRef.current?.getBoundingClientRect();
+      let targetRect = targetElementRef.current?.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const orbitTime = performance.now() * 0.0015;
       const glowTime = performance.now() * 0.001;
+      if (canHover && !targetRect && lastTargetRect && performance.now() < targetExpire.current) {
+        targetRect = lastTargetRect;
+      }
 
       particles.forEach((p, idx) => {
         if (targetRect) {
@@ -148,6 +155,9 @@ export const FloatingParticles = () => {
       const target = element?.closest("[data-particle-target]") as HTMLElement | null;
       if (!target) {
         targetElementRef.current = null;
+        if (canHover && lastTargetRect) {
+          targetExpire.current = performance.now() + targetHoldDuration;
+        }
         return;
       }
 
@@ -159,7 +169,18 @@ export const FloatingParticles = () => {
         targetRect.right >= containerRect.left &&
         targetRect.left <= containerRect.right;
 
-      targetElementRef.current = isInsideContainer ? target : null;
+      if (isInsideContainer) {
+        targetElementRef.current = target;
+        if (canHover) {
+          lastTargetRect = targetRect;
+          targetExpire.current = performance.now() + targetHoldDuration;
+        }
+      } else {
+        targetElementRef.current = null;
+        if (canHover && lastTargetRect) {
+          targetExpire.current = performance.now() + targetHoldDuration;
+        }
+      }
     };
 
     const handleMouseMove = (e: MouseEvent) => updateTarget(e.clientX, e.clientY);
@@ -170,6 +191,8 @@ export const FloatingParticles = () => {
     };
     const handleResize = () => {
       init();
+      lastTargetRect = null;
+      targetExpire.current = 0;
     };
 
     init();

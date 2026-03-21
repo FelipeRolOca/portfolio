@@ -1,5 +1,6 @@
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
+import { QuickFacts } from "./components/QuickFacts";
 import { About } from "./components/About";
 import { Skills } from "./components/Skills";
 import { Experience } from "./components/Experience";
@@ -28,6 +29,7 @@ export function Portfolio() {
       <Navbar />
       <main className="relative z-10">
         <Hero />
+        <QuickFacts />
         <About />
         <Skills />
         <Experience />

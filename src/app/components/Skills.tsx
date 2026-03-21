@@ -1,36 +1,46 @@
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { 
   Code, 
   Globe, 
   Database, 
   Wrench,
-  Zap
+  Zap,
+  ChevronDown
 } from "lucide-react";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
+import { useCanHover } from "./ui/use-can-hover";
 
 export function Skills() {
+  const canHover = useCanHover();
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const skillCategories = [
     {
       title: "Programming",
       icon: <Code className="w-5 h-5 text-blue-400" />,
-      skills: ["Java", "JavaScript", "Python", "C"]
+      skills: ["Java", "JavaScript", "Python", "C"],
+      usageNote: "Used in academic work, frontend logic, scripting, and practical application development."
     },
     {
       title: "Web Development",
       icon: <Globe className="w-5 h-5 text-cyan-400" />,
-      skills: ["HTML", "CSS", "Next.js", "React"]
+      skills: ["HTML", "CSS", "Next.js", "React"],
+      usageNote: "Applied to responsive websites, modern UI work, and full-stack product interfaces."
     },
     {
       title: "Databases",
       icon: <Database className="w-5 h-5 text-emerald-400" />,
-      skills: ["SQL Oracle", "MongoDB", "Neo4j"]
+      skills: ["SQL Oracle", "MongoDB", "Neo4j"],
+      usageNote: "Used for structured data, business workflows, and backend-oriented information handling."
     },
     {
       title: "Tools & Environments",
       icon: <Wrench className="w-5 h-5 text-orange-400" />,
-      skills: ["Git", "WordPress", "VS Code", "Eclipse"]
+      skills: ["Git", "WordPress", "VS Code", "Eclipse"],
+      usageNote: "Part of my day-to-day workflow for development, site delivery, and iteration."
     }
   ];
 
@@ -70,10 +80,13 @@ export function Skills() {
               key={idx}
               variants={itemVariants}
               className="relative overflow-visible group"
+              onMouseEnter={canHover ? () => setOpenIndex(idx) : undefined}
+              onMouseLeave={canHover ? () => setOpenIndex(current => (current === idx ? null : current)) : undefined}
             >
               <SpotlightCard
                 className="overflow-visible group relative h-full"
                 innerClassName="p-6"
+                data-particle-target
               >
                 <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
                 <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
@@ -91,6 +104,33 @@ export function Skills() {
                     </li>
                   ))}
                 </ul>
+
+                <div className="mt-6 pt-4 border-t border-zinc-800/80">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                    className="w-full flex items-center justify-between text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
+                    <span>How I use this</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`} />
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {openIndex === idx && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="mt-4 text-sm leading-relaxed text-zinc-300">
+                          {category.usageNote}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </SpotlightCard>
             </motion.div>
           ))}

@@ -1,10 +1,12 @@
-import { motion } from "motion/react";
-import { ExternalLink, Github, Code2, Layers, Cpu, Globe, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+import { ExternalLink, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck, ChevronDown } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
+import { useCanHover } from "./ui/use-can-hover";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -12,6 +14,10 @@ const itemVariants = {
 };
 
 export function Projects() {
+  const canHover = useCanHover();
+  const [openFeaturedIndex, setOpenFeaturedIndex] = useState<number | null>(null);
+  const [openOtherIndex, setOpenOtherIndex] = useState<number | null>(null);
+
   const featuredProjects = [
     {
       title: "Paper Pops",
@@ -20,6 +26,11 @@ export function Projects() {
       description: "Interactive website that combines creative design with dynamic functionality for a modern portfolio.",
       tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
       liveUrl: "https://paper-pops.vercel.app/",
+      meta: {
+        role: "Frontend Developer",
+        problem: "Showcase a creative digital identity through motion and interaction.",
+        value: "Demonstrates UI creativity, animation control, and strong visual direction."
+      },
       highlights: [
         { icon: <Palette className="w-4 h-4" />, text: "Creative Design" },
         { icon: <Zap className="w-4 h-4" />, text: "Dynamic Features" },
@@ -34,6 +45,11 @@ export function Projects() {
       description: "A full-stack web application designed for comprehensive employee attendance tracking. Features real-time QR and barcode scanning, precise GPS validation to ensure location accuracy, and a powerful admin dashboard. Built with advanced automation using Google Apps Script to streamline reporting.",
       tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
       liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
+      meta: {
+        role: "Full Stack Developer",
+        problem: "Control attendance reliably with location-aware validation and automated reporting.",
+        value: "Combines product thinking, backend workflows, and real operational utility in one system."
+      },
       highlights: [
         { icon: <QrCode className="w-4 h-4" />, text: "QR/Barcode scanning" },
         { icon: <Map className="w-4 h-4" />, text: "GPS Location Validation" },
@@ -49,7 +65,12 @@ export function Projects() {
       description: "Professional business website for an HR services company. Features modern responsive design, service showcases, and optimized for search engines and performance.",
       tech: ["Web Development", "SEO", "Responsive Design"],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
-      liveUrl: "https://jjserviciosempresarialesrrhh.com/"
+      liveUrl: "https://jjserviciosempresarialesrrhh.com/",
+      meta: {
+        role: "Web Developer",
+        problem: "Present services clearly and professionally for a business audience.",
+        value: "Improves online presence with stronger structure, mobile usability, and SEO-oriented organization."
+      }
     }
   ];
 
@@ -81,6 +102,8 @@ export function Projects() {
               transition={{ duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true, margin: "-100px" }}
               className=""
+              onMouseEnter={canHover ? () => setOpenFeaturedIndex(index) : undefined}
+              onMouseLeave={canHover ? () => setOpenFeaturedIndex(current => (current === index ? null : current)) : undefined}
             >
               <SpotlightCard 
                 className="overflow-visible border border-zinc-800 group hover:border-zinc-700 transition-colors shadow-2xl relative"
@@ -139,6 +162,44 @@ export function Projects() {
                       </a>
                     </Magnetic>
                   </div>
+
+                  <div className="mt-6 pt-5 border-t border-zinc-800/80">
+                    <button
+                      type="button"
+                      onClick={() => setOpenFeaturedIndex(openFeaturedIndex === index ? null : index)}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                    >
+                      {openFeaturedIndex === index ? "Hide project details" : "Explore project details"}
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openFeaturedIndex === index ? "rotate-180" : ""}`} />
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {openFeaturedIndex === index && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-5 grid gap-3 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 sm:grid-cols-3">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Role</p>
+                              <p className="text-sm text-white">{project.meta.role}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Problem Solved</p>
+                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Why It Matters</p>
+                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </SpotlightCard>
             </motion.div>
@@ -162,6 +223,8 @@ export function Projects() {
               key={idx}
               variants={itemVariants}
               className="relative overflow-visible"
+              onMouseEnter={canHover ? () => setOpenOtherIndex(idx) : undefined}
+              onMouseLeave={canHover ? () => setOpenOtherIndex(current => (current === idx ? null : current)) : undefined}
             >
               <SpotlightCard 
                 className="overflow-visible group relative h-full"
@@ -211,6 +274,44 @@ export function Projects() {
                       Visit Website <ExternalLink className="w-4 h-4" />
                     </a>
                   </Magnetic>
+
+                  <div className="mt-5 pt-4 border-t border-zinc-800/80">
+                    <button
+                      type="button"
+                      onClick={() => setOpenOtherIndex(openOtherIndex === idx ? null : idx)}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                    >
+                      {openOtherIndex === idx ? "Hide details" : "More details"}
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openOtherIndex === idx ? "rotate-180" : ""}`} />
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {openOtherIndex === idx && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-4 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 space-y-3">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Role</p>
+                              <p className="text-sm text-white">{project.meta.role}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Problem Solved</p>
+                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Why It Matters</p>
+                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </SpotlightCard>
             </motion.div>

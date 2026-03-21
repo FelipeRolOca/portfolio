@@ -1,6 +1,7 @@
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { FloatingParticles } from "./ui/FloatingParticles";
-import { Briefcase, Calendar, MapPin, ChevronRight, GraduationCap } from "lucide-react";
+import { Calendar, MapPin, ChevronDown } from "lucide-react";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -18,7 +19,12 @@ const experiences = [
       "Integrated Google Apps Script for automated reporting and data sync",
       "Implemented QR/barcode scanning and GPS validation for accurate attendance",
       "Created admin panel for managing employees, reports, and system settings"
-    ]
+    ],
+    details: {
+      responsibilities: ["Full-stack implementation", "Deployment, onboarding, and support"],
+      tools: ["Next.js", "Supabase", "Vercel", "Google Apps Script"],
+      outcome: "Turned a real attendance workflow into a production-ready SaaS tool."
+    }
   },
   {
     role: "Freelance Web Developer",
@@ -30,7 +36,12 @@ const experiences = [
       "Built responsive website using modern web technologies",
       "Optimized for search engines and performance",
       "Implemented contact forms and business service showcases"
-    ]
+    ],
+    details: {
+      responsibilities: ["UI structure and content organization", "Mobile optimization and site setup"],
+      tools: ["WordPress", "Elementor", "SEO-focused content structure"],
+      outcome: "Delivered a business-facing website with clearer presentation and better usability."
+    }
   },
   {
     role: "Administrative Assistant",
@@ -42,11 +53,18 @@ const experiences = [
       "Developed automated scripts to reduce manual data handling time",
       "Managed employee payroll and administrative documentation",
       "Improved internal communication and data organization workflows"
-    ]
+    ],
+    details: {
+      responsibilities: ["Payroll platform updates", "Document organization", "Communication support"],
+      tools: ["Administrative platforms", "Digital documentation workflows"],
+      outcome: "Helped keep operational processes more ordered and easier to follow."
+    }
   },
 ];
 
 export function Experience() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
       <FloatingParticles />
@@ -86,6 +104,7 @@ export function Experience() {
                 >
                   <BorderBeam size={250} duration={10} delay={idx * 0.5} borderWidth={6} offset={-15} />
                   <h4 className="text-xl font-bold text-white mb-2">{exp.role}</h4>
+                  <p className="text-sm font-medium text-blue-400/90 mb-3">{exp.company}</p>
                   <div className={`flex flex-wrap items-center gap-4 mb-4 text-sm text-zinc-400 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
                     }`}>
                     <div className="flex items-center gap-1.5">
@@ -110,6 +129,66 @@ export function Experience() {
                       </span>
                     ))}
                   </div>
+
+                  <div className={`mt-5 ${idx % 2 === 0 ? "md:flex md:justify-end" : "md:flex md:justify-start"}`}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                    >
+                      {openIndex === idx ? "Hide details" : "View details"}
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                  </div>
+
+                  <AnimatePresence initial={false}>
+                    {openIndex === idx && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                        animate={{ height: "auto", opacity: 1, marginTop: 20 }}
+                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-4 sm:p-5 space-y-4">
+                          <div>
+                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Key Responsibilities</p>
+                            <div className="flex flex-wrap gap-2">
+                              {exp.details.responsibilities.map((item, detailIdx) => (
+                                <span
+                                  key={detailIdx}
+                                  className="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-300"
+                                >
+                                  {item}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Tools Used</p>
+                            <div className="flex flex-wrap gap-2">
+                              {exp.details.tools.map((tool, toolIdx) => (
+                                <span
+                                  key={toolIdx}
+                                  className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200"
+                                >
+                                  {tool}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Practical Outcome</p>
+                            <p className="text-sm text-zinc-300 leading-relaxed">{exp.details.outcome}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </SpotlightCard>
               </div>
             </motion.div>

@@ -30,7 +30,7 @@ export function Contact() {
       icon: <MapPin className="w-6 h-6 text-emerald-400" />,
       title: "Location",
       value: "San Pedro, Buenos Aires, Argentina",
-      link: "#"
+      link: ""
     }
   ];
 

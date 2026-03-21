@@ -13,49 +13,49 @@ import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { useCanHover } from "./ui/use-can-hover";
 
+const skillCategories = [
+  {
+    title: "Programming",
+    icon: <Code className="w-5 h-5 text-blue-400" />,
+    skills: ["Java", "JavaScript", "Python", "C"],
+    usageNote: "Used in academic work, frontend logic, scripting, and practical application development."
+  },
+  {
+    title: "Web Development",
+    icon: <Globe className="w-5 h-5 text-cyan-400" />,
+    skills: ["HTML", "CSS", "Next.js", "React"],
+    usageNote: "Applied to responsive websites, modern UI work, and full-stack product interfaces."
+  },
+  {
+    title: "Databases",
+    icon: <Database className="w-5 h-5 text-emerald-400" />,
+    skills: ["SQL Oracle", "MongoDB", "Neo4j"],
+    usageNote: "Used for structured data, business workflows, and backend-oriented information handling."
+  },
+  {
+    title: "Tools & Environments",
+    icon: <Wrench className="w-5 h-5 text-orange-400" />,
+    skills: ["Git", "WordPress", "VS Code", "Eclipse"],
+    usageNote: "Part of my day-to-day workflow for development, site delivery, and iteration."
+  }
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
 export function Skills() {
   const canHover = useCanHover();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const skillCategories = [
-    {
-      title: "Programming",
-      icon: <Code className="w-5 h-5 text-blue-400" />,
-      skills: ["Java", "JavaScript", "Python", "C"],
-      usageNote: "Used in academic work, frontend logic, scripting, and practical application development."
-    },
-    {
-      title: "Web Development",
-      icon: <Globe className="w-5 h-5 text-cyan-400" />,
-      skills: ["HTML", "CSS", "Next.js", "React"],
-      usageNote: "Applied to responsive websites, modern UI work, and full-stack product interfaces."
-    },
-    {
-      title: "Databases",
-      icon: <Database className="w-5 h-5 text-emerald-400" />,
-      skills: ["SQL Oracle", "MongoDB", "Neo4j"],
-      usageNote: "Used for structured data, business workflows, and backend-oriented information handling."
-    },
-    {
-      title: "Tools & Environments",
-      icon: <Wrench className="w-5 h-5 text-orange-400" />,
-      skills: ["Git", "WordPress", "VS Code", "Eclipse"],
-      usageNote: "Part of my day-to-day workflow for development, site delivery, and iteration."
-    }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
 
   return (
     <section id="skills" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative overflow-hidden">
@@ -85,7 +85,7 @@ export function Skills() {
             >
               <SpotlightCard
                 className="overflow-visible group relative h-full"
-                innerClassName="p-6 pb-16"
+                innerClassName={`p-6 ${canHover ? "pb-16" : ""}`}
               >
                 <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
                 <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
@@ -115,22 +115,40 @@ export function Skills() {
                   </button>
                 </div>
 
-                <AnimatePresence initial={false}>
-                  {openIndex === idx && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 12 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="pointer-events-none absolute left-4 right-4 -bottom-24"
-                      style={{ zIndex: 1 }}
-                    >
-                      <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-lg">
-                        {category.usageNote}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {canHover ? (
+                  <AnimatePresence initial={false}>
+                    {openIndex === idx && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 12 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="pointer-events-none absolute left-4 right-4 -bottom-24"
+                        style={{ zIndex: 1 }}
+                      >
+                        <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-lg">
+                          {category.usageNote}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                ) : (
+                  <AnimatePresence initial={false}>
+                    {openIndex === idx && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                        animate={{ height: "auto", opacity: 1, marginTop: 16 }}
+                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+                          {category.usageNote}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
               </SpotlightCard>
             </motion.div>
           ))}

@@ -16,7 +16,7 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section id="hero" className="relative flex items-center pt-24 pb-18 md:pt-28 md:pb-20 lg:min-h-screen overflow-hidden">
       {/* Background elements */}
       <Parallax offset={100} className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none">
         <div className="w-full h-full" />
@@ -26,14 +26,14 @@ export function Hero() {
       </Parallax>
 
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 w-full">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-14 lg:gap-20">
 
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex-1 text-center lg:text-left"
+            className="flex-1 text-center lg:text-left max-w-3xl"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700/50 mb-6">
               <Terminal className="w-4 h-4 text-cyan-400" />
@@ -53,11 +53,11 @@ export function Hero() {
               with GPS validation to process automation, I bring ideas to production.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start w-full sm:w-auto">
               <Magnetic>
                 <button
                   onClick={() => handleScroll("#projects")}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-zinc-950 font-bold text-lg hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 group"
+                  className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-white text-zinc-950 font-bold text-lg hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 group"
                 >
                   View Projects
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -67,7 +67,7 @@ export function Hero() {
               <Magnetic>
                 <a
                   href="mailto:felipeoca123@hotmail.com"
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-lg hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-lg hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
                   Contact Me
@@ -83,7 +83,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex-1 flex justify-center lg:justify-end w-full max-w-md lg:max-w-none"
           >
-            <Magnetic strength={0.2}>
+              <Magnetic strength={0.2}>
               <div className="relative w-72 h-72 sm:w-96 sm:h-96">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-500 blur-2xl opacity-40 animate-pulse" />
                 <div className="absolute inset-2 rounded-full bg-zinc-900 overflow-hidden border border-zinc-700/50 z-10">

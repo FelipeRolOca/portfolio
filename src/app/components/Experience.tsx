@@ -63,7 +63,7 @@ const experiences = [
 ];
 
 export function Experience() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">

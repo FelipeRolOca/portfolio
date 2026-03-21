@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { useCanHover } from "./use-can-hover";
 
 interface Particle {
   x: number;
@@ -15,6 +16,7 @@ export const FloatingParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const targetElementRef = useRef<HTMLElement | null>(null);
+  const canHover = useCanHover();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -74,34 +76,46 @@ export const FloatingParticles = () => {
           // Distribute particles along the perimeter
           // Each particle gets a fixed spot on the perimeter based on its index
           const perimeter = 2 * (targetRect.width + targetRect.height);
+          const time = performance.now() * 0.0015;
           const step = perimeter / particles.length;
-          const pos = (idx * step + Date.now() * 0.05) % perimeter;
+          const pos = (idx * step + time * 28) % perimeter;
+          const wobble = 4 + (idx % 5);
 
           let targetX, targetY;
-          const offset = 12; // More distance from the border for clarity
+          const offset = 18;
           if (pos < targetRect.width) {
             targetX = localLeft + pos;
-            targetY = localTop - offset; // Top edge
+            targetY = localTop - offset;
           } else if (pos < targetRect.width + targetRect.height) {
             targetX = localRight + offset;
-            targetY = localTop + (pos - targetRect.width); // Right edge
+            targetY = localTop + (pos - targetRect.width);
           } else if (pos < 2 * targetRect.width + targetRect.height) {
             targetX = localRight - (pos - (targetRect.width + targetRect.height));
-            targetY = localBottom + offset; // Bottom edge
+            targetY = localBottom + offset;
           } else {
             targetX = localLeft - offset;
-            targetY = localBottom - (pos - (2 * targetRect.width + targetRect.height)); // Left edge
+            targetY = localBottom - (pos - (2 * targetRect.width + targetRect.height));
           }
+
+          targetX += Math.sin(time + idx * 0.7) * wobble;
+          targetY += Math.cos(time * 1.2 + idx * 0.5) * wobble;
 
           const dx = targetX - p.x;
           const dy = targetY - p.y;
-          // Smooth follow (no explosive acceleration). This prevents "shooting" when bounds change.
-          const follow = 0.08; // higher = snappier, still stable
-          p.x += dx * follow;
-          p.y += dy * follow;
-          // bleed off drift velocity while locked on target
-          p.vx *= 0.6;
-          p.vy *= 0.6;
+          p.vx += dx * 0.0035;
+          p.vy += dy * 0.0035;
+          p.vx *= 0.9;
+          p.vy *= 0.9;
+
+          const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if (speed > 1.8) {
+            const clamp = 1.8 / speed;
+            p.vx *= clamp;
+            p.vy *= clamp;
+          }
+
+          p.x += p.vx;
+          p.y += p.vy;
         } else {
           // Drifting motion
           p.vx += (Math.random() - 0.5) * 0.01;
@@ -122,20 +136,14 @@ export const FloatingParticles = () => {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        const time = Date.now() * 0.001;
+        const time = performance.now() * 0.001;
         const l = p.baseColor.l + Math.sin(time + p.x * 0.01) * 15;
+        ctx.shadowBlur = targetRect ? 5 : 0;
+        ctx.shadowColor = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, 70%, ${targetRect ? 0.45 : 0})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        // Increased intensity: high opacity and glow-like fill
         ctx.fillStyle = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, ${l}%, ${targetRect ? 0.7 : 0.45})`;
         ctx.fill();
-        
-        if (targetRect) {
-          ctx.shadowBlur = 4;
-          ctx.shadowColor = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, 70%, 0.5)`;
-        } else {
-          ctx.shadowBlur = 0;
-        }
       });
 
       animationFrameId = requestAnimationFrame(draw);
@@ -148,10 +156,9 @@ export const FloatingParticles = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => updateTarget(e.clientX, e.clientY);
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches[0]) updateTarget(e.touches[0].clientX, e.touches[0].clientY);
+    const handleEnd = () => {
+      targetElementRef.current = null;
     };
-    const handleEnd = () => { targetElementRef.current = null; };
 
     const handleResize = () => {
       init();
@@ -160,21 +167,18 @@ export const FloatingParticles = () => {
     init();
     draw();
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchstart", handleTouchMove);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleEnd);
+    if (canHover) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
     window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchstart", handleTouchMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleEnd);
       window.removeEventListener("resize", handleResize);
+      handleEnd();
     };
-  }, []);
+  }, [canHover]);
 
   return (
     <div ref={containerRef} className="absolute inset-0 pointer-events-none overflow-hidden">

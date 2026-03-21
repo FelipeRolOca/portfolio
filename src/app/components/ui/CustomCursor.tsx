@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "motion/react";
+import { useCanHover } from "./use-can-hover";
 
 export const CustomCursor = () => {
+  const canHover = useCanHover();
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   
@@ -15,6 +17,14 @@ export const CustomCursor = () => {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    if (!canHover) {
+      setIsVisible(false);
+      setIsHovering(false);
+      mouseX.set(-100);
+      mouseY.set(-100);
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -42,9 +52,9 @@ export const CustomCursor = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [isVisible]);
+  }, [canHover, isVisible, mouseX, mouseY]);
 
-  if (!isVisible) return null;
+  if (!canHover || !isVisible) return null;
 
   return (
     <>

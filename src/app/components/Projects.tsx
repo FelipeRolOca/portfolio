@@ -108,7 +108,6 @@ export function Projects() {
               <SpotlightCard 
                 className="overflow-visible border border-zinc-800 group hover:border-zinc-700 transition-colors shadow-2xl relative"
                 innerClassName="grid lg:grid-cols-2"
-                data-particle-target
               >
                 <BorderBeam size={500} duration={12} delay={index * 0.5} borderWidth={8} offset={-18} />
                 {/* Image Side */}
@@ -229,7 +228,6 @@ export function Projects() {
               <SpotlightCard 
                 className="overflow-visible group relative h-full"
                 innerClassName="lg:grid lg:grid-cols-3"
-                data-particle-target
               >
                 <BorderBeam size={300} duration={10} delay={idx * 0.8} borderWidth={5} offset={-12} />
                 <div className="h-48 lg:h-auto overflow-hidden relative">

@@ -86,7 +86,6 @@ export function Skills() {
               <SpotlightCard
                 className="overflow-visible group relative h-full"
                 innerClassName="p-6"
-                data-particle-target
               >
                 <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
                 <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">

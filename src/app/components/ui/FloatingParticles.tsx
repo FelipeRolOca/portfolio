@@ -146,7 +146,20 @@ export const FloatingParticles = () => {
     const updateTarget = (clientX: number, clientY: number) => {
       const element = document.elementFromPoint(clientX, clientY);
       const target = element?.closest("[data-particle-target]") as HTMLElement | null;
-      targetElementRef.current = target;
+      if (!target) {
+        targetElementRef.current = null;
+        return;
+      }
+
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const isInsideContainer =
+        targetRect.bottom >= containerRect.top &&
+        targetRect.top <= containerRect.bottom &&
+        targetRect.right >= containerRect.left &&
+        targetRect.left <= containerRect.right;
+
+      targetElementRef.current = isInsideContainer ? target : null;
     };
 
     const handleMouseMove = (e: MouseEvent) => updateTarget(e.clientX, e.clientY);
@@ -155,10 +168,6 @@ export const FloatingParticles = () => {
         updateTarget(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
-    const handleEnd = () => {
-      targetElementRef.current = null;
-    };
-
     const handleResize = () => {
       init();
     };
@@ -171,8 +180,6 @@ export const FloatingParticles = () => {
     }
     window.addEventListener("touchstart", handleTouchMove, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    window.addEventListener("touchend", handleEnd);
-    window.addEventListener("touchcancel", handleEnd);
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -180,10 +187,8 @@ export const FloatingParticles = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchstart", handleTouchMove);
       window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleEnd);
-      window.removeEventListener("touchcancel", handleEnd);
       window.removeEventListener("resize", handleResize);
-      handleEnd();
+      targetElementRef.current = null;
     };
   }, [canHover]);
 

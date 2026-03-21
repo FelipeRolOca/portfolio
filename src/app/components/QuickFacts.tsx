@@ -51,7 +51,6 @@ export function QuickFacts() {
               className={index === quickFacts.length - 1 ? "col-span-2 lg:col-span-1" : ""}
             >
               <SpotlightCard
-                data-particle-target
                 className="h-full border-zinc-800/80 bg-zinc-900/65 transition-transform duration-300 hover:-translate-y-1"
                 innerClassName="p-4 sm:p-5 min-h-[112px]"
               >

@@ -118,14 +118,14 @@ export function Skills() {
                 <AnimatePresence initial={false}>
                   {openIndex === idx && (
                     <motion.div
-                      initial={{ opacity: 0, y: -12 }}
+                      initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -12 }}
+                      exit={{ opacity: 0, y: 12 }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="pointer-events-none absolute left-4 right-4 -top-6"
+                      className="pointer-events-none absolute left-4 right-4 -bottom-24"
                       style={{ zIndex: 1 }}
                     >
-                      <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_40px_rgba(0,0,0,0.4)] backdrop-blur-lg">
+                      <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-lg">
                         {category.usageNote}
                       </div>
                     </motion.div>

@@ -13,76 +13,66 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
-const featuredProjects = [
-  {
-    title: "Paper Pops",
-    type: "Featured Project",
-    image: "/paper-pops-preview.jpeg",
-    description: "Interactive website that combines creative design with dynamic functionality for a modern portfolio.",
-    tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://paper-pops.vercel.app/",
-    meta: {
-      role: "Frontend Developer",
-      problem: "Showcase a creative digital identity through motion and interaction.",
-      value: "Demonstrates UI creativity, animation control, and strong visual direction."
-    },
-    highlights: [
-      { icon: <Palette className="w-4 h-4" />, text: "Creative Design" },
-      { icon: <Zap className="w-4 h-4" />, text: "Dynamic Features" },
-      { icon: <Layout className="w-4 h-4" />, text: "Modern Portfolio" },
-      { icon: <MousePointer2 className="w-4 h-4" />, text: "Interactive Experience" },
-    ]
-  },
-  {
-    title: "JJAsist",
-    type: "Featured Project",
-    image: "https://images.unsplash.com/photo-1685575112968-7dd67bc447b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxciUyMGNvZGUlMjBzY2FubmluZyUyMG1vYmlsZSUyMGFwcCUyMGludGVyZmFjZSUyMG1vZGVybiUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzczNzU4MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    description: "A full-stack web application designed for comprehensive employee attendance tracking. Features real-time QR and barcode scanning, precise GPS validation to ensure location accuracy, and a powerful admin dashboard. Built with advanced automation using Google Apps Script to streamline reporting.",
-    tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
-    liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
-    meta: {
-      role: "Full Stack Developer",
-      problem: "Control attendance reliably with location-aware validation and automated reporting.",
-      value: "Combines product thinking, backend workflows, and real operational utility in one system."
-    },
-    highlights: [
-      { icon: <QrCode className="w-4 h-4" />, text: "QR/Barcode scanning" },
-      { icon: <Map className="w-4 h-4" />, text: "GPS Location Validation" },
-      { icon: <Settings className="w-4 h-4" />, text: "Admin Panel & Reports" },
-      { icon: <ShieldCheck className="w-4 h-4" />, text: "Automated Workflows" },
-    ]
-  }
-];
-
-const otherProjects = [
-  {
-    title: "JJ Servicios Empresariales",
-    description: "Professional business website for an HR services company. Features modern responsive design, service showcases, and optimized for search engines and performance.",
-    tech: ["Web Development", "SEO", "Responsive Design"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
-    liveUrl: "https://jjserviciosempresarialesrrhh.com/",
-    meta: {
-      role: "Web Developer",
-      problem: "Present services clearly and professionally for a business audience.",
-      value: "Improves online presence with stronger structure, mobile usability, and SEO-oriented organization."
-    }
-  }
-];
-
 export function Projects() {
   const canHover = useCanHover();
   const [openFeaturedIndex, setOpenFeaturedIndex] = useState<number | null>(null);
   const [openOtherIndex, setOpenOtherIndex] = useState<number | null>(null);
+
+  const featuredProjects = [
+    {
+      title: "Paper Pops",
+      type: "Featured Project",
+      image: "/paper-pops-preview.jpeg",
+      description: "Interactive website that combines creative design with dynamic functionality for a modern portfolio.",
+      tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+      liveUrl: "https://paper-pops.vercel.app/",
+      meta: {
+        role: "Frontend Developer",
+        problem: "Showcase a creative digital identity through motion and interaction.",
+        value: "Demonstrates UI creativity, animation control, and strong visual direction."
+      },
+      highlights: [
+        { icon: <Palette className="w-4 h-4" />, text: "Creative Design" },
+        { icon: <Zap className="w-4 h-4" />, text: "Dynamic Features" },
+        { icon: <Layout className="w-4 h-4" />, text: "Modern Portfolio" },
+        { icon: <MousePointer2 className="w-4 h-4" />, text: "Interactive Experience" },
+      ]
+    },
+    {
+      title: "JJAsist",
+      type: "Featured Project",
+      image: "https://images.unsplash.com/photo-1685575112968-7dd67bc447b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxciUyMGNvZGUlMjBzY2FubmluZyUyMG1vYmlsZSUyMGFwcCUyMGludGVyZmFjZSUyMG1vZGVybiUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzczNzU4MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      description: "A full-stack web application designed for comprehensive employee attendance tracking. Features real-time QR and barcode scanning, precise GPS validation to ensure location accuracy, and a powerful admin dashboard. Built with advanced automation using Google Apps Script to streamline reporting.",
+      tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
+      liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
+      meta: {
+        role: "Full Stack Developer",
+        problem: "Control attendance reliably with location-aware validation and automated reporting.",
+        value: "Combines product thinking, backend workflows, and real operational utility in one system."
+      },
+      highlights: [
+        { icon: <QrCode className="w-4 h-4" />, text: "QR/Barcode scanning" },
+        { icon: <Map className="w-4 h-4" />, text: "GPS Location Validation" },
+        { icon: <Settings className="w-4 h-4" />, text: "Admin Panel & Reports" },
+        { icon: <ShieldCheck className="w-4 h-4" />, text: "Automated Workflows" },
+      ]
+    }
+  ];
+
+  const otherProjects = [
+    {
+      title: "JJ Servicios Empresariales",
+      description: "Professional business website for an HR services company. Features modern responsive design, service showcases, and optimized for search engines and performance.",
+      tech: ["Web Development", "SEO", "Responsive Design"],
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
+      liveUrl: "https://jjserviciosempresarialesrrhh.com/",
+      meta: {
+        role: "Web Developer",
+        problem: "Present services clearly and professionally for a business audience.",
+        value: "Improves online presence with stronger structure, mobile usability, and SEO-oriented organization."
+      }
+    }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },

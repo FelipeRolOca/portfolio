@@ -13,48 +13,49 @@ import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { useCanHover } from "./ui/use-can-hover";
 
-const skillCategories = [
-  {
-    title: "Programming",
-    icon: <Code className="w-5 h-5 text-blue-400" />,
-    skills: ["Java", "JavaScript", "Python", "C"],
-    usageNote: "Used in academic work, frontend logic, scripting, and practical application development."
-  },
-  {
-    title: "Web Development",
-    icon: <Globe className="w-5 h-5 text-cyan-400" />,
-    skills: ["HTML", "CSS", "Next.js", "React"],
-    usageNote: "Applied to responsive websites, modern UI work, and full-stack product interfaces."
-  },
-  {
-    title: "Databases",
-    icon: <Database className="w-5 h-5 text-emerald-400" />,
-    skills: ["SQL Oracle", "MongoDB", "Neo4j"],
-    usageNote: "Used for structured data, business workflows, and backend-oriented information handling."
-  },
-  {
-    title: "Tools & Environments",
-    icon: <Wrench className="w-5 h-5 text-orange-400" />,
-    skills: ["Git", "WordPress", "VS Code", "Eclipse"],
-    usageNote: "Part of my day-to-day workflow for development, site delivery, and iteration."
-  }
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-};
-
 export function Skills() {
   const canHover = useCanHover();
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const skillCategories = [
+    {
+      title: "Programming",
+      icon: <Code className="w-5 h-5 text-blue-400" />,
+      skills: ["Java", "JavaScript", "Python", "C"],
+      usageNote: "Used in academic work, frontend logic, scripting, and practical application development."
+    },
+    {
+      title: "Web Development",
+      icon: <Globe className="w-5 h-5 text-cyan-400" />,
+      skills: ["HTML", "CSS", "Next.js", "React"],
+      usageNote: "Applied to responsive websites, modern UI work, and full-stack product interfaces."
+    },
+    {
+      title: "Databases",
+      icon: <Database className="w-5 h-5 text-emerald-400" />,
+      skills: ["SQL Oracle", "MongoDB", "Neo4j"],
+      usageNote: "Used for structured data, business workflows, and backend-oriented information handling."
+    },
+    {
+      title: "Tools & Environments",
+      icon: <Wrench className="w-5 h-5 text-orange-400" />,
+      skills: ["Git", "WordPress", "VS Code", "Eclipse"],
+      usageNote: "Part of my day-to-day workflow for development, site delivery, and iteration."
+    }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
 
   return (
     <section id="skills" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative overflow-hidden">

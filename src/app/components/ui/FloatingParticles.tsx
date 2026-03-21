@@ -64,6 +64,8 @@ export const FloatingParticles = () => {
 
       const targetRect = targetElementRef.current?.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
+      const orbitTime = performance.now() * 0.0015;
+      const glowTime = performance.now() * 0.001;
 
       particles.forEach((p, idx) => {
         if (targetRect) {
@@ -76,9 +78,8 @@ export const FloatingParticles = () => {
           // Distribute particles along the perimeter
           // Each particle gets a fixed spot on the perimeter based on its index
           const perimeter = 2 * (targetRect.width + targetRect.height);
-          const time = performance.now() * 0.0015;
           const step = perimeter / particles.length;
-          const pos = (idx * step + time * 28) % perimeter;
+          const pos = (idx * step + orbitTime * 28) % perimeter;
           const wobble = 4 + (idx % 5);
 
           let targetX, targetY;
@@ -97,25 +98,19 @@ export const FloatingParticles = () => {
             targetY = localBottom - (pos - (2 * targetRect.width + targetRect.height));
           }
 
-          targetX += Math.sin(time + idx * 0.7) * wobble;
-          targetY += Math.cos(time * 1.2 + idx * 0.5) * wobble;
+          targetX += Math.sin(orbitTime + idx * 0.7) * wobble;
+          targetY += Math.cos(orbitTime * 1.2 + idx * 0.5) * wobble;
 
           const dx = targetX - p.x;
           const dy = targetY - p.y;
-          p.vx += dx * 0.0035;
-          p.vy += dy * 0.0035;
-          p.vx *= 0.9;
-          p.vy *= 0.9;
-
-          const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-          if (speed > 1.8) {
-            const clamp = 1.8 / speed;
-            p.vx *= clamp;
-            p.vy *= clamp;
-          }
-
-          p.x += p.vx;
-          p.y += p.vy;
+          const follow = 0.24;
+          const maxStep = 24;
+          const nextX = dx * follow;
+          const nextY = dy * follow;
+          p.x += Math.max(-maxStep, Math.min(maxStep, nextX));
+          p.y += Math.max(-maxStep, Math.min(maxStep, nextY));
+          p.vx *= 0.5;
+          p.vy *= 0.5;
         } else {
           // Drifting motion
           p.vx += (Math.random() - 0.5) * 0.01;
@@ -136,8 +131,7 @@ export const FloatingParticles = () => {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        const time = performance.now() * 0.001;
-        const l = p.baseColor.l + Math.sin(time + p.x * 0.01) * 15;
+        const l = p.baseColor.l + Math.sin(glowTime + p.x * 0.01) * 15;
         ctx.shadowBlur = targetRect ? 5 : 0;
         ctx.shadowColor = `hsla(${p.baseColor.h}, ${p.baseColor.s}%, 70%, ${targetRect ? 0.45 : 0})`;
         ctx.beginPath();
@@ -156,6 +150,11 @@ export const FloatingParticles = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => updateTarget(e.clientX, e.clientY);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches[0]) {
+        updateTarget(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
     const handleEnd = () => {
       targetElementRef.current = null;
     };
@@ -170,11 +169,19 @@ export const FloatingParticles = () => {
     if (canHover) {
       window.addEventListener("mousemove", handleMouseMove);
     }
+    window.addEventListener("touchstart", handleTouchMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleEnd);
+    window.addEventListener("touchcancel", handleEnd);
     window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleTouchMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleEnd);
+      window.removeEventListener("touchcancel", handleEnd);
       window.removeEventListener("resize", handleResize);
       handleEnd();
     };

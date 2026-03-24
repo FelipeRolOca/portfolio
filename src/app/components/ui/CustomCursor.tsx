@@ -36,7 +36,6 @@ export const CustomCursor = () => {
       if (
         target.closest("button") || 
         target.closest("a") || 
-        target.closest("[data-particle-target]") ||
         target.style.cursor === "pointer"
       ) {
         setIsHovering(true);

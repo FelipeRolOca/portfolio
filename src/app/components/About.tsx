@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { BookOpen, Lightbulb, Users } from "lucide-react";
-import { FloatingParticles } from "./ui/FloatingParticles";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 
@@ -17,7 +16,6 @@ export function About() {
 
   return (
     <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
-      <FloatingParticles />
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <div className="text-center mb-16">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">My Motivation</h2>
@@ -55,7 +53,7 @@ export function About() {
           {/* Value Props Cards */}
           <motion.div variants={containerVariants} className="grid sm:grid-cols-2 gap-6 relative z-10">
             <motion.div variants={itemVariants}>
-              <SpotlightCard data-particle-target className="p-6 h-full">
+              <SpotlightCard className="p-6 h-full">
                 <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
                   <BookOpen className="w-6 h-6 text-blue-400" />
                 </div>
@@ -65,7 +63,7 @@ export function About() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="sm:mt-8">
-              <SpotlightCard data-particle-target className="p-6 h-full">
+              <SpotlightCard className="p-6 h-full">
                 <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
                   <Lightbulb className="w-6 h-6 text-cyan-400" />
                 </div>
@@ -75,7 +73,7 @@ export function About() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="sm:col-span-2">
-              <SpotlightCard data-particle-target className="p-6 h-full">
+              <SpotlightCard className="p-6 h-full">
                 <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
                   <Users className="w-6 h-6 text-emerald-400" />
                 </div>

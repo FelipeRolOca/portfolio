@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin, Send, ExternalLink } from "lucide-react";
-import { FloatingParticles } from "./ui/FloatingParticles";
 import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -61,7 +60,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
-      <FloatingParticles />
       {/* Background glow */}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none" />
 
@@ -90,7 +88,7 @@ export function Contact() {
             <div className="space-y-6">
               {contactInfo.map((info, idx) => (
                 <Magnetic key={idx} strength={0.2}>
-                  <SpotlightCard data-particle-target>
+                  <SpotlightCard>
                     <a 
                       href={info.link}
                       className="flex items-center gap-6 p-4 rounded-2xl transition-all group relative z-10"
@@ -134,7 +132,7 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <SpotlightCard data-particle-target className="p-8 rounded-3xl relative z-10">
+            <SpotlightCard className="p-8 rounded-3xl relative z-10">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-zinc-400">Your Name</label>

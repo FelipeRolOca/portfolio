@@ -33,13 +33,13 @@ const quickFacts = [
 export function QuickFacts() {
   return (
     <section className="relative pt-4 pb-12 md:pt-6 md:pb-14">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-12">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5"
+          className="grid grid-cols-1 min-[560px]:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5"
         >
           {quickFacts.map((fact, index) => (
             <motion.div
@@ -48,19 +48,19 @@ export function QuickFacts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: index * 0.08 }}
-              className={index === quickFacts.length - 1 ? "col-span-2 lg:col-span-1" : ""}
+              className={index === quickFacts.length - 1 ? "min-[560px]:col-span-2 lg:col-span-1" : ""}
             >
               <SpotlightCard
                 className="h-full border-zinc-800/80 bg-zinc-900/65 transition-transform duration-300 hover:-translate-y-1"
-                innerClassName="p-4 sm:p-5 min-h-[112px]"
+                innerClassName="p-5 sm:p-5 min-h-[124px]"
               >
-                <div className="flex items-start gap-3">
+                <div className="flex flex-col items-start gap-4 min-[720px]:flex-row min-[720px]:items-start">
                   <div className="p-2.5 rounded-xl bg-zinc-950/90 border border-zinc-800 shadow-inner">
                     {fact.icon}
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 w-full">
                     <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-1">{fact.label}</p>
-                    <p className="text-sm sm:text-base font-semibold text-white leading-snug max-w-[18ch]">{fact.value}</p>
+                    <p className="text-sm sm:text-base font-semibold text-white leading-snug break-words pr-1">{fact.value}</p>
                   </div>
                 </div>
               </SpotlightCard>

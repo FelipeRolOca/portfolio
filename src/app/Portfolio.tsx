@@ -8,7 +8,6 @@ import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { DotBackground } from "./components/ui/DotBackground";
-import { FloatingParticles } from "./components/ui/FloatingParticles";
 import { CustomCursor } from "./components/ui/CustomCursor";
 import { useEffect } from "react";
 

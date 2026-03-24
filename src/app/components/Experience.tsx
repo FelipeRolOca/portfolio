@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { FloatingParticles } from "./ui/FloatingParticles";
 import { Calendar, MapPin, ChevronDown } from "lucide-react";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
@@ -67,7 +66,6 @@ export function Experience() {
 
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
-      <FloatingParticles />
       <Parallax offset={120} className="absolute top-1/3 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none">
         <div className="w-full h-full" />
       </Parallax>
@@ -100,7 +98,6 @@ export function Experience() {
                 <SpotlightCard 
                   className="overflow-visible group relative"
                   innerClassName="p-6"
-                  data-particle-target
                 >
                   <BorderBeam size={250} duration={10} delay={idx * 0.5} borderWidth={6} offset={-15} />
                   <h4 className="text-xl font-bold text-white mb-2">{exp.role}</h4>

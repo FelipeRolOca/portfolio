@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
-import { Mail, Phone, MapPin, Send, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Mail, Phone, MapPin, Send, ExternalLink, MessageCircle, Smartphone, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -12,7 +12,8 @@ export function Contact() {
     email: "",
     message: ""
   });
-  const { t } = useLanguage();
+  const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
+  const { t, language } = useLanguage();
 
   const contactInfo = [
     {
@@ -22,16 +23,33 @@ export function Contact() {
       link: "mailto:felipeoca123@hotmail.com"
     },
     {
+      type: "phone",
       icon: <Phone className="w-6 h-6 text-cyan-400" />,
       title: t.contact.phone,
       value: "+54 9 3329 523459",
-      link: "tel:+5493329523459"
     },
     {
       icon: <MapPin className="w-6 h-6 text-emerald-400" />,
       title: t.contact.location,
       value: t.contact.locationValue,
-      
+    }
+  ];
+
+  const phoneOptions = [
+    { 
+      label: language === "es" ? "WhatsApp" : "WhatsApp", 
+      icon: <MessageCircle className="w-4 h-4 text-emerald-400" />,
+      href: "https://wa.me/5493329523459"
+    },
+    { 
+      label: language === "es" ? "Llamar" : "Call", 
+      icon: <Phone className="w-4 h-4 text-cyan-400" />,
+      href: "tel:+5493329523459"
+    },
+    { 
+      label: language === "es" ? "SMS" : "Message", 
+      icon: <Smartphone className="w-4 h-4 text-orange-400" />,
+      href: "sms:+5493329523459"
     }
   ];
 
@@ -88,22 +106,71 @@ export function Contact() {
 
             <div className="space-y-6">
               {contactInfo.map((info, idx) => (
-                <Magnetic key={idx} strength={0.2}>
-                  <SpotlightCard>
-                    <a 
-                      href={info.link}
-                      className="flex items-center gap-6 p-4 rounded-2xl transition-all group relative z-10"
-                    >
-                      <div className="p-4 bg-zinc-950 rounded-xl group-hover:scale-110 transition-transform shadow-inner">
-                        {info.icon}
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-zinc-500 mb-1">{info.title}</h5>
-                        <p className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{info.value}</p>
-                      </div>
-                    </a>
-                  </SpotlightCard>
-                </Magnetic>
+                <div key={idx} className="relative">
+                  {info.type === "phone" ? (
+                    <Magnetic strength={0.1}>
+                      <SpotlightCard className="relative overflow-visible">
+                        <button 
+                          onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
+                          className="w-full flex items-center gap-6 p-4 rounded-2xl transition-all group relative z-10"
+                        >
+                          <div className="p-4 bg-zinc-950 rounded-xl group-hover:scale-110 transition-transform shadow-inner">
+                            {info.icon}
+                          </div>
+                          <div className="text-left">
+                            <h5 className="text-sm font-medium text-zinc-500 mb-1">{info.title}</h5>
+                            <p className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{info.value}</p>
+                          </div>
+                        </button>
+
+                        <AnimatePresence>
+                          {phoneMenuOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                              className="absolute top-full left-0 right-0 mt-3 z-50 p-2 bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 rounded-2xl shadow-2xl flex flex-col gap-1 mx-2"
+                            >
+                              {phoneOptions.map((opt, optIdx) => (
+                                <a
+                                  key={optIdx}
+                                  href={opt.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all group/opt"
+                                  onClick={() => setPhoneMenuOpen(false)}
+                                >
+                                  <div className="p-2 bg-zinc-950 rounded-lg group-hover/opt:scale-110 transition-transform">
+                                    {opt.icon}
+                                  </div>
+                                  <span className="font-bold flex-1">{opt.label}</span>
+                                  <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover/opt:opacity-50" />
+                                </a>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </SpotlightCard>
+                    </Magnetic>
+                  ) : (
+                    <Magnetic strength={0.2}>
+                      <SpotlightCard>
+                        <a 
+                          href={info.link}
+                          className="flex items-center gap-6 p-4 rounded-2xl transition-all group relative z-10"
+                        >
+                          <div className="p-4 bg-zinc-950 rounded-xl group-hover:scale-110 transition-transform shadow-inner">
+                            {info.icon}
+                          </div>
+                          <div>
+                            <h5 className="text-sm font-medium text-zinc-500 mb-1">{info.title}</h5>
+                            <p className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{info.value}</p>
+                          </div>
+                        </a>
+                      </SpotlightCard>
+                    </Magnetic>
+                  )}
+                </div>
               ))}
             </div>
 

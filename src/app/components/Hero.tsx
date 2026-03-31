@@ -66,13 +66,13 @@ export function Hero() {
               </Magnetic>
 
               <Magnetic>
-                <a
-                  href="mailto:felipeoca123@hotmail.com"
+                <button
+                  onClick={() => handleScroll("#contact")}
                   className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-lg hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
                   {t.hero.contactBtn}
-                </a>
+                </button>
               </Magnetic>
             </div>
           </motion.div>

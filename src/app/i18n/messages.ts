@@ -11,7 +11,7 @@ export const messages = {
       experience: "Experience",
       projects: "Projects",
       contact: "Contact",
-      toggle: "ES"
+      toggle: "Español"
     },
     hero: {
       badge: "Computer Engineering Student",
@@ -180,7 +180,7 @@ export const messages = {
       experience: "Experiencia",
       projects: "Proyectos",
       contact: "Contacto",
-      toggle: "EN"
+      toggle: "English"
     },
     hero: {
       badge: "Estudiante de Ingeniería Informática",

@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X, Code2, Languages } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -54,8 +54,9 @@ export function Navbar() {
               ))}
               <button
                 onClick={toggleLanguage}
-                className="text-zinc-400 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium"
+                className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors px-4 py-2 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 text-sm font-semibold group"
               >
+                <Languages className="w-4 h-4 text-cyan-400 group-hover:rotate-12 transition-transform" />
                 {t.navbar.toggle}
               </button>
             </div>
@@ -92,9 +93,12 @@ export function Navbar() {
             ))}
             <button
               onClick={toggleLanguage}
-              className="text-zinc-400 hover:text-white block w-full text-left px-3 py-3 rounded-md text-base font-medium"
+              className="flex items-center gap-3 w-full text-left px-3 py-4 rounded-xl text-base font-bold text-zinc-300 hover:text-white hover:bg-zinc-900 transition-all border border-zinc-900/50"
             >
-              {t.navbar.toggle}
+              <div className="p-2 bg-zinc-900 rounded-lg">
+                <Languages className="w-5 h-5 text-cyan-400" />
+              </div>
+              <span className="flex-1">{t.navbar.toggle}</span>
             </button>
           </div>
         </motion.div>

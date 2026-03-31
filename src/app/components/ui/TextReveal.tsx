@@ -18,7 +18,7 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
+        staggerChildren: 0.03,
         delayChildren: delay,
       },
     },
@@ -31,6 +31,7 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
 
   return (
     <motion.span
+      key={text}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"

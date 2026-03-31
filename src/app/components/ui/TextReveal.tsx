@@ -11,14 +11,14 @@ interface TextRevealProps {
 }
 
 export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
-  const letters = text.split("");
+  const words = text.split(" ");
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.03,
+        staggerChildren: 0.05,
         delayChildren: delay,
       },
     },
@@ -37,15 +37,18 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
       viewport={{ once: true }}
       className={cn("inline-flex flex-wrap items-center", className)}
     >
-      {letters.map((char, i) => (
-        <motion.span
-          key={i}
-          variants={childVariants}
-          className={char === " " ? "mr-2 whitespace-pre" : ""}
-          transition={{ duration: 0.4 }}
-        >
-          {char}
-        </motion.span>
+      {words.map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-flex whitespace-nowrap mr-[0.25em]">
+          {word.split("").map((char, charIndex) => (
+            <motion.span
+              key={charIndex}
+              variants={childVariants}
+              transition={{ duration: 0.4 }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
       ))}
     </motion.span>
   );

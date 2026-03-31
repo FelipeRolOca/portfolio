@@ -242,7 +242,7 @@ export const messages = {
       toolsUsed: "Herramientas Utilizadas",
       practicalOutcome: "Resultado Práctico",
 
-      job1Role: "Full Stack Developer",
+      job1Role: "Desarrollador Full Stack",
       job1Company: "JJAsist (Proyecto Freelance)",
       job1Period: "2026 - Presente",
       job1Location: "Remoto",
@@ -306,7 +306,7 @@ export const messages = {
 
       p2Type: "Proyecto Destacado",
       p2Desc: "Aplicación web full-stack diseñada para la asistencia y control horario. Integra lectura de QR, validación GPS para seguridad, y envíos automáticos configurados con Apps Script.",
-      p2MetaRole: "Full Stack Developer",
+      p2MetaRole: "Desarrollador Full Stack",
       p2MetaProblem: "Controlar la asistencia de forma confiable logrando validar ubicación y reduciendo tiempos de reporte.",
       p2MetaValue: "Combina visión general del producto, utilidades backend y operatividad real en línea.",
       p2H1: "Lector QR/Barras",

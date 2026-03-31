@@ -44,7 +44,7 @@ export function Hero() {
 
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
               <span className="text-2xl sm:text-3xl md:text-4xl text-zinc-400 block mb-4">{t.hero.greeting}</span>
-              <TextReveal text={t.hero.role} className="inline" /> <br className="hidden sm:block" />
+              <TextReveal text={t.hero.role} /> <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                 {t.hero.stack}
               </span>

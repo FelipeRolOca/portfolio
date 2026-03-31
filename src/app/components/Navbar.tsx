@@ -1,16 +1,23 @@
 import { motion } from "motion/react";
 import { Menu, X, Code2 } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
+
+  const toggleLanguage = () => {
+    setLanguage(language === "en" ? "es" : "en");
+    setIsOpen(false);
+  };
 
   const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
+    { name: t.navbar.about, href: "#about" },
+    { name: t.navbar.skills, href: "#skills" },
+    { name: t.navbar.experience, href: "#experience" },
+    { name: t.navbar.projects, href: "#projects" },
+    { name: t.navbar.contact, href: "#contact" },
   ];
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -45,6 +52,12 @@ export function Navbar() {
                   {link.name}
                 </a>
               ))}
+              <button
+                onClick={toggleLanguage}
+                className="text-zinc-400 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {t.navbar.toggle}
+              </button>
             </div>
           </div>
           
@@ -77,6 +90,12 @@ export function Navbar() {
                 {link.name}
               </a>
             ))}
+            <button
+              onClick={toggleLanguage}
+              className="text-zinc-400 hover:text-white block w-full text-left px-3 py-3 rounded-md text-base font-medium"
+            >
+              {t.navbar.toggle}
+            </button>
           </div>
         </motion.div>
       )}

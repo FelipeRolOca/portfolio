@@ -7,6 +7,7 @@ import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useCanHover } from "./ui/use-can-hover";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -17,44 +18,45 @@ export function Projects() {
   const canHover = useCanHover();
   const [openFeaturedIndex, setOpenFeaturedIndex] = useState<number | null>(null);
   const [openOtherIndex, setOpenOtherIndex] = useState<number | null>(null);
+  const { t } = useLanguage();
 
   const featuredProjects = [
     {
       title: "Paper Pops",
-      type: "Featured Project",
+      type: t.projects.p1Type,
       image: "/paper-pops-preview.jpeg",
-      description: "Interactive website that combines creative design with dynamic functionality for a modern portfolio.",
+      description: t.projects.p1Desc,
       tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
       liveUrl: "https://paper-pops.vercel.app/",
       meta: {
-        role: "Frontend Developer",
-        problem: "Showcase a creative digital identity through motion and interaction.",
-        value: "Demonstrates UI creativity, animation control, and strong visual direction."
+        role: t.projects.p1MetaRole,
+        problem: t.projects.p1MetaProblem,
+        value: t.projects.p1MetaValue
       },
       highlights: [
-        { icon: <Palette className="w-4 h-4" />, text: "Creative Design" },
-        { icon: <Zap className="w-4 h-4" />, text: "Dynamic Features" },
-        { icon: <Layout className="w-4 h-4" />, text: "Modern Portfolio" },
-        { icon: <MousePointer2 className="w-4 h-4" />, text: "Interactive Experience" },
+        { icon: <Palette className="w-4 h-4" />, text: t.projects.p1H1 },
+        { icon: <Zap className="w-4 h-4" />, text: t.projects.p1H2 },
+        { icon: <Layout className="w-4 h-4" />, text: t.projects.p1H3 },
+        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p1H4 },
       ]
     },
     {
       title: "JJAsist",
-      type: "Featured Project",
+      type: t.projects.p2Type,
       image: "https://images.unsplash.com/photo-1685575112968-7dd67bc447b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxciUyMGNvZGUlMjBzY2FubmluZyUyMG1vYmlsZSUyMGFwcCUyMGludGVyZmFjZSUyMG1vZGVybiUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzczNzU4MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      description: "A full-stack web application designed for comprehensive employee attendance tracking. Features real-time QR and barcode scanning, precise GPS validation to ensure location accuracy, and a powerful admin dashboard. Built with advanced automation using Google Apps Script to streamline reporting.",
+      description: t.projects.p2Desc,
       tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
       liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
       meta: {
-        role: "Full Stack Developer",
-        problem: "Control attendance reliably with location-aware validation and automated reporting.",
-        value: "Combines product thinking, backend workflows, and real operational utility in one system."
+        role: t.projects.p2MetaRole,
+        problem: t.projects.p2MetaProblem,
+        value: t.projects.p2MetaValue
       },
       highlights: [
-        { icon: <QrCode className="w-4 h-4" />, text: "QR/Barcode scanning" },
-        { icon: <Map className="w-4 h-4" />, text: "GPS Location Validation" },
-        { icon: <Settings className="w-4 h-4" />, text: "Admin Panel & Reports" },
-        { icon: <ShieldCheck className="w-4 h-4" />, text: "Automated Workflows" },
+        { icon: <QrCode className="w-4 h-4" />, text: t.projects.p2H1 },
+        { icon: <Map className="w-4 h-4" />, text: t.projects.p2H2 },
+        { icon: <Settings className="w-4 h-4" />, text: t.projects.p2H3 },
+        { icon: <ShieldCheck className="w-4 h-4" />, text: t.projects.p2H4 },
       ]
     }
   ];
@@ -62,14 +64,14 @@ export function Projects() {
   const otherProjects = [
     {
       title: "JJ Servicios Empresariales",
-      description: "Professional business website for an HR services company. Features modern responsive design, service showcases, and optimized for search engines and performance.",
-      tech: ["Web Development", "SEO", "Responsive Design"],
+      description: t.projects.p3Desc,
+      tech: [t.projects.p3Tech1, t.projects.p3Tech2, t.projects.p3Tech3],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
       liveUrl: "https://jjserviciosempresarialesrrhh.com/",
       meta: {
-        role: "Web Developer",
-        problem: "Present services clearly and professionally for a business audience.",
-        value: "Improves online presence with stronger structure, mobile usability, and SEO-oriented organization."
+        role: t.projects.p3MetaRole,
+        problem: t.projects.p3MetaProblem,
+        value: t.projects.p3MetaValue
       }
     }
   ];
@@ -88,8 +90,8 @@ export function Projects() {
     <section id="projects" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <div className="text-center mb-16 relative z-20">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">My Work</h2>
-          <TextReveal text="Featured Projects" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.projects.sectionSubtitle}</h2>
+          <TextReveal text={t.projects.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
 
         {/* Featured Projects */}
@@ -141,9 +143,9 @@ export function Projects() {
                   </div>
 
                   <div className="flex flex-wrap gap-2 mb-10">
-                    {project.tech.map((t, i) => (
+                    {project.tech.map((tItem, i) => (
                       <span key={i} className="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700">
-                        {t}
+                        {tItem}
                       </span>
                     ))}
                   </div>
@@ -156,7 +158,7 @@ export function Projects() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-white font-bold hover:text-blue-400 transition-colors text-lg group/link"
                       >
-                        Visit Website
+                        {t.projects.visitWebsite}
                         <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                       </a>
                     </Magnetic>
@@ -168,7 +170,7 @@ export function Projects() {
                       onClick={() => setOpenFeaturedIndex(openFeaturedIndex === index ? null : index)}
                       className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
                     >
-                      {openFeaturedIndex === index ? "Hide project details" : "Explore project details"}
+                      {openFeaturedIndex === index ? t.projects.hideProjectDetails : t.projects.exploreProjectDetails}
                       <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openFeaturedIndex === index ? "rotate-180" : ""}`} />
                     </button>
 
@@ -183,15 +185,15 @@ export function Projects() {
                         >
                           <div className="mt-5 grid gap-3 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 sm:grid-cols-3">
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Role</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.role}</p>
                               <p className="text-sm text-white">{project.meta.role}</p>
                             </div>
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Problem Solved</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.problemSolved}</p>
                               <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
                             </div>
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Why It Matters</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.whyItMatters}</p>
                               <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
                             </div>
                           </div>
@@ -206,7 +208,7 @@ export function Projects() {
         </div>
 
         <div className="text-center mb-16 relative z-20">
-          <TextReveal text="More Projects" className="text-3xl font-bold text-white justify-center" />
+          <TextReveal text={t.projects.moreProjectsTitle} className="text-3xl font-bold text-white justify-center" />
         </div>
 
         {/* Other Projects */}
@@ -256,9 +258,9 @@ export function Projects() {
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tech.map((t, i) => (
+                    {project.tech.map((tItem, i) => (
                       <span key={i} className="text-xs font-mono text-zinc-400 bg-zinc-950 px-2 py-1 rounded">
-                        {t}
+                        {tItem}
                       </span>
                     ))}
                   </div>
@@ -269,7 +271,7 @@ export function Projects() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium text-sm"
                     >
-                      Visit Website <ExternalLink className="w-4 h-4" />
+                      {t.projects.visitWebsite} <ExternalLink className="w-4 h-4" />
                     </a>
                   </Magnetic>
 
@@ -279,7 +281,7 @@ export function Projects() {
                       onClick={() => setOpenOtherIndex(openOtherIndex === idx ? null : idx)}
                       className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
                     >
-                      {openOtherIndex === idx ? "Hide details" : "More details"}
+                      {openOtherIndex === idx ? t.projects.hideProjectDetails : t.projects.moreDetails}
                       <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openOtherIndex === idx ? "rotate-180" : ""}`} />
                     </button>
 
@@ -294,15 +296,15 @@ export function Projects() {
                         >
                           <div className="mt-4 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 space-y-3">
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Role</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.role}</p>
                               <p className="text-sm text-white">{project.meta.role}</p>
                             </div>
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Problem Solved</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.problemSolved}</p>
                               <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
                             </div>
                             <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Why It Matters</p>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.whyItMatters}</p>
                               <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
                             </div>
                           </div>

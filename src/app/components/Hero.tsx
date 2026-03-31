@@ -4,8 +4,10 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { Parallax } from "./ui/Parallax";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Hero() {
+  const { t } = useLanguage();
   const profileImg = "/felipe.png";
 
   const handleScroll = (href: string) => {
@@ -37,20 +39,19 @@ export function Hero() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700/50 mb-6">
               <Terminal className="w-4 h-4 text-cyan-400" />
-              <span className="text-sm font-medium text-zinc-300">Computer Engineering Student</span>
+              <span className="text-sm font-medium text-zinc-300">{t.hero.badge}</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
-              <span className="text-3xl md:text-4xl text-zinc-400 block mb-4">Hi, I'm Felipe.</span>
-              <TextReveal text="Full Stack Developer" className="inline-flex" /> <br />
+              <span className="text-3xl md:text-4xl text-zinc-400 block mb-4">{t.hero.greeting}</span>
+              <TextReveal text={t.hero.role} className="inline-flex" /> <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-                Next.js, SQL & Automation
+                {t.hero.stack}
               </span>
             </h1>
 
             <p className="text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              I build real-world systems that solve practical problems. From employee attendance tracking
-              with GPS validation to process automation, I bring ideas to production.
+              {t.hero.description}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start w-full sm:w-auto">
@@ -59,7 +60,7 @@ export function Hero() {
                   onClick={() => handleScroll("#projects")}
                   className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-white text-zinc-950 font-bold text-lg hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 group"
                 >
-                  View Projects
+                  {t.hero.projectsBtn}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Magnetic>
@@ -70,7 +71,7 @@ export function Hero() {
                   className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-lg hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
-                  Contact Me
+                  {t.hero.contactBtn}
                 </a>
               </Magnetic>
             </div>

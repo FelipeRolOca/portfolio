@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -11,24 +12,25 @@ export function Contact() {
     email: "",
     message: ""
   });
+  const { t } = useLanguage();
 
   const contactInfo = [
     {
       icon: <Mail className="w-6 h-6 text-blue-400" />,
-      title: "Email",
+      title: t.contact.email,
       value: "felipeoca123@hotmail.com",
       link: "mailto:felipeoca123@hotmail.com"
     },
     {
       icon: <Phone className="w-6 h-6 text-cyan-400" />,
-      title: "Phone",
+      title: t.contact.phone,
       value: "+54 9 3329 523459",
       link: "tel:+5493329523459"
     },
     {
       icon: <MapPin className="w-6 h-6 text-emerald-400" />,
-      title: "Location",
-      value: "San Pedro, Buenos Aires, Argentina",
+      title: t.contact.location,
+      value: t.contact.locationValue,
       
     }
   ];
@@ -65,8 +67,8 @@ export function Contact() {
 
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
         <div className="text-center mb-16 relative z-20">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">Get In Touch</h2>
-          <TextReveal text="Let's Work Together" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.contact.sectionSubtitle}</h2>
+          <TextReveal text={t.contact.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -78,10 +80,9 @@ export function Contact() {
             className="space-y-8"
           >
             <div>
-              <h4 className="text-2xl font-bold text-white mb-4">Ready for new opportunities.</h4>
+              <h4 className="text-2xl font-bold text-white mb-4">{t.contact.title}</h4>
               <p className="text-zinc-400 text-lg leading-relaxed mb-10">
-                I'm currently looking for trainee or junior roles in IT to grow professionally. 
-                Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                {t.contact.subtitle}
               </p>
             </div>
 
@@ -108,7 +109,7 @@ export function Contact() {
 
             {/* Live Links */}
             <div className="pt-6 border-t border-zinc-800">
-              <h5 className="text-sm font-medium text-zinc-500 mb-4">Live Projects</h5>
+              <h5 className="text-sm font-medium text-zinc-500 mb-4">{t.contact.liveProjects}</h5>
               <div className="space-y-3">
                 {liveLinks.map((link, idx) => (
                   <a 
@@ -135,7 +136,7 @@ export function Contact() {
             <SpotlightCard className="p-8 rounded-3xl relative z-10">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium text-zinc-400">Your Name</label>
+                  <label htmlFor="name" className="text-sm font-medium text-zinc-400">{t.contact.nameLabel}</label>
                   <input 
                     type="text" 
                     id="name"
@@ -143,12 +144,12 @@ export function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                    placeholder="Enter your full name"
+                    placeholder={t.contact.namePlaceholder}
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-zinc-400">Email Address</label>
+                  <label htmlFor="email" className="text-sm font-medium text-zinc-400">{t.contact.emailLabel}</label>
                   <input 
                     type="email" 
                     id="email"
@@ -156,12 +157,12 @@ export function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                    placeholder="Enter your email address"
+                    placeholder={t.contact.emailPlaceholder}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-zinc-400">Your Message</label>
+                  <label htmlFor="message" className="text-sm font-medium text-zinc-400">{t.contact.messageLabel}</label>
                   <textarea 
                     id="message"
                     required
@@ -169,7 +170,7 @@ export function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
-                    placeholder="Tell me about your project or opportunity..."
+                    placeholder={t.contact.messagePlaceholder}
                   />
                 </div>
 
@@ -178,7 +179,7 @@ export function Contact() {
                     type="submit"
                     className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold text-lg hover:from-blue-500 hover:to-cyan-500 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-blue-500/25"
                   >
-                    Send Message
+                    {t.contact.sendBtn}
                     <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </button>
                 </Magnetic>

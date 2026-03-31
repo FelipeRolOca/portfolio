@@ -15,7 +15,6 @@ export function Portfolio() {
   useEffect(() => {
     // Ensuring dark theme styles are applied globally to the body
     document.body.classList.add('bg-zinc-950', 'text-zinc-50');
-    document.title = "Felipe Roldan Ocampo | Full Stack Developer";
     return () => {
       document.body.classList.remove('bg-zinc-950', 'text-zinc-50');
     };

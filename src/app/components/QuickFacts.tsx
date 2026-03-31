@@ -1,36 +1,39 @@
 import { motion } from "motion/react";
 import { BriefcaseBusiness, GraduationCap, Languages, MapPin, Sparkles } from "lucide-react";
 import { SpotlightCard } from "./ui/SpotlightCard";
-
-const quickFacts = [
-  {
-    label: "Age",
-    value: "20 years old",
-    icon: <Sparkles className="w-5 h-5 text-blue-400" />,
-  },
-  {
-    label: "Education",
-    value: "Computer Engineering Student",
-    icon: <GraduationCap className="w-5 h-5 text-cyan-400" />,
-  },
-  {
-    label: "Focus",
-    value: "Open to Trainee / Junior IT Roles",
-    icon: <BriefcaseBusiness className="w-5 h-5 text-emerald-400" />,
-  },
-  {
-    label: "English",
-    value: "B2 Level",
-    icon: <Languages className="w-5 h-5 text-orange-400" />,
-  },
-  {
-    label: "Location",
-    value: "San Pedro, Buenos Aires",
-    icon: <MapPin className="w-5 h-5 text-rose-400" />,
-  },
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function QuickFacts() {
+  const { t } = useLanguage();
+
+  const quickFacts = [
+    {
+      label: t.quickFacts.ageLabel,
+      value: t.quickFacts.ageValue,
+      icon: <Sparkles className="w-5 h-5 text-blue-400" />,
+    },
+    {
+      label: t.quickFacts.educationLabel,
+      value: t.quickFacts.educationValue,
+      icon: <GraduationCap className="w-5 h-5 text-cyan-400" />,
+    },
+    {
+      label: t.quickFacts.focusLabel,
+      value: t.quickFacts.focusValue,
+      icon: <BriefcaseBusiness className="w-5 h-5 text-emerald-400" />,
+    },
+    {
+      label: t.quickFacts.englishLabel,
+      value: t.quickFacts.englishValue,
+      icon: <Languages className="w-5 h-5 text-orange-400" />,
+    },
+    {
+      label: t.quickFacts.locationLabel,
+      value: t.quickFacts.locationValue,
+      icon: <MapPin className="w-5 h-5 text-rose-400" />,
+    },
+  ];
+
   return (
     <section className="relative pt-4 pb-12 md:pt-6 md:pb-14">
       <div className="max-w-7xl mx-auto px-5 sm:px-12">

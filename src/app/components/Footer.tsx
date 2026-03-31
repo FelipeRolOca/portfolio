@@ -1,7 +1,9 @@
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-zinc-950 border-t border-zinc-900 py-12 relative overflow-hidden">
@@ -15,7 +17,7 @@ export function Footer() {
           </div>
 
           <p className="text-zinc-500 text-sm font-medium text-center">
-            Full Stack Developer | San Pedro, Buenos Aires, Argentina
+            {t.footer.subtitle}
           </p>
 
           <div className="flex items-center gap-4">
@@ -45,7 +47,7 @@ export function Footer() {
 
         <div className="mt-8 pt-8 border-t border-zinc-800 text-center">
           <p className="text-zinc-600 text-sm">
-            © {currentYear} Felipe Roldan Ocampo. All rights reserved.
+            © {currentYear} Felipe Roldan Ocampo. {t.footer.allRightsReserved}
           </p>
         </div>
       </div>

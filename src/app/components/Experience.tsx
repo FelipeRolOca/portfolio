@@ -5,64 +5,53 @@ import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Parallax } from "./ui/Parallax";
-
-const experiences = [
-  {
-    role: "Full Stack Developer",
-    company: "JJAsist (Freelance Project)",
-    period: "2026 - Present",
-    location: "Remote",
-    description: "Developed a comprehensive employee attendance tracking system with real-time QR and barcode scanning, GPS location validation, and a powerful admin dashboard.",
-    bullets: [
-      "Built with Next.js, Supabase, and Vercel for scalable deployment",
-      "Integrated Google Apps Script for automated reporting and data sync",
-      "Implemented QR/barcode scanning and GPS validation for accurate attendance",
-      "Created admin panel for managing employees, reports, and system settings"
-    ],
-    details: {
-      responsibilities: ["Full-stack implementation", "Deployment, onboarding, and support"],
-      tools: ["Next.js", "Supabase", "Vercel", "Google Apps Script"],
-      outcome: "Turned a real attendance workflow into a production-ready SaaS tool."
-    }
-  },
-  {
-    role: "Freelance Web Developer",
-    company: "JJ Servicios Empresariales",
-    period: "2025 - Present",
-    location: "Remote",
-    description: "Designed and developed a professional business website for an HR services company, focusing on modern UI/UX and SEO optimization.",
-    bullets: [
-      "Built responsive website using modern web technologies",
-      "Optimized for search engines and performance",
-      "Implemented contact forms and business service showcases"
-    ],
-    details: {
-      responsibilities: ["UI structure and content organization", "Mobile optimization and site setup"],
-      tools: ["WordPress", "Elementor", "SEO-focused content structure"],
-      outcome: "Delivered a business-facing website with clearer presentation and better usability."
-    }
-  },
-  {
-    role: "Administrative Assistant",
-    company: "Corporate Services",
-    period: "2025 - 2026",
-    location: "Office",
-    description: "Managed data entry, organized employee payroll, and streamlined internal communication processes.",
-    bullets: [
-      "Developed automated scripts to reduce manual data handling time",
-      "Managed employee payroll and administrative documentation",
-      "Improved internal communication and data organization workflows"
-    ],
-    details: {
-      responsibilities: ["Payroll platform updates", "Document organization", "Communication support"],
-      tools: ["Administrative platforms", "Digital documentation workflows"],
-      outcome: "Helped keep operational processes more ordered and easier to follow."
-    }
-  },
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { t } = useLanguage();
+
+  const experiences = [
+    {
+      role: t.experience.job1Role,
+      company: t.experience.job1Company,
+      period: t.experience.job1Period,
+      location: t.experience.job1Location,
+      description: t.experience.job1Desc,
+      bullets: t.experience.job1Bullets,
+      details: {
+        responsibilities: t.experience.job1Resp,
+        tools: ["Next.js", "Supabase", "Vercel", "Google Apps Script"],
+        outcome: t.experience.job1Outcome
+      }
+    },
+    {
+      role: t.experience.job2Role,
+      company: t.experience.job2Company,
+      period: t.experience.job2Period,
+      location: t.experience.job2Location,
+      description: t.experience.job2Desc,
+      bullets: t.experience.job2Bullets,
+      details: {
+        responsibilities: t.experience.job2Resp,
+        tools: ["WordPress", "Elementor", "SEO"],
+        outcome: t.experience.job2Outcome
+      }
+    },
+    {
+      role: t.experience.job3Role,
+      company: t.experience.job3Company,
+      period: t.experience.job3Period,
+      location: t.experience.job3Location,
+      description: t.experience.job3Desc,
+      bullets: t.experience.job3Bullets,
+      details: {
+        responsibilities: t.experience.job3Resp,
+        tools: ["Administrative platforms", "Digital documentation"],
+        outcome: t.experience.job3Outcome
+      }
+    },
+  ];
 
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
@@ -71,8 +60,8 @@ export function Experience() {
       </Parallax>
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <div className="text-center mb-20 relative z-20">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">My Journey</h2>
-          <TextReveal text="Education & Experience" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.experience.sectionSubtitle}</h2>
+          <TextReveal text={t.experience.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
 
         <div className="max-w-4xl mx-auto relative">
@@ -133,7 +122,7 @@ export function Experience() {
                       onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                       className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
                     >
-                      {openIndex === idx ? "Hide details" : "View details"}
+                      {openIndex === idx ? t.experience.hideDetails : t.experience.viewDetails}
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
                       />
@@ -151,7 +140,7 @@ export function Experience() {
                       >
                         <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-4 sm:p-5 space-y-4">
                           <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Key Responsibilities</p>
+                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.keyResp}</p>
                             <div className="flex flex-wrap gap-2">
                               {exp.details.responsibilities.map((item, detailIdx) => (
                                 <span
@@ -165,7 +154,7 @@ export function Experience() {
                           </div>
 
                           <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Tools Used</p>
+                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.toolsUsed}</p>
                             <div className="flex flex-wrap gap-2">
                               {exp.details.tools.map((tool, toolIdx) => (
                                 <span
@@ -179,7 +168,7 @@ export function Experience() {
                           </div>
 
                           <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Practical Outcome</p>
+                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.practicalOutcome}</p>
                             <p className="text-sm text-zinc-300 leading-relaxed">{exp.details.outcome}</p>
                           </div>
                         </div>

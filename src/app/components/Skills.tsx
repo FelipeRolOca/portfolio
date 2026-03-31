@@ -12,33 +12,7 @@ import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { useCanHover } from "./ui/use-can-hover";
-
-const skillCategories = [
-  {
-    title: "Programming",
-    icon: <Code className="w-5 h-5 text-blue-400" />,
-    skills: ["Java", "JavaScript", "Python", "C"],
-    usageNote: "Used in academic work, frontend logic, scripting, and practical application development."
-  },
-  {
-    title: "Web Development",
-    icon: <Globe className="w-5 h-5 text-cyan-400" />,
-    skills: ["HTML", "CSS", "Next.js", "React"],
-    usageNote: "Applied to responsive websites, modern UI work, and full-stack product interfaces."
-  },
-  {
-    title: "Databases",
-    icon: <Database className="w-5 h-5 text-emerald-400" />,
-    skills: ["SQL Oracle", "MongoDB", "Neo4j"],
-    usageNote: "Used for structured data, business workflows, and backend-oriented information handling."
-  },
-  {
-    title: "Tools & Environments",
-    icon: <Wrench className="w-5 h-5 text-orange-400" />,
-    skills: ["Git", "WordPress", "VS Code", "Eclipse"],
-    usageNote: "Part of my day-to-day workflow for development, site delivery, and iteration."
-  }
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -56,6 +30,34 @@ const itemVariants = {
 export function Skills() {
   const canHover = useCanHover();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { t } = useLanguage();
+
+  const skillCategories = [
+    {
+      title: t.skills.cat1Title,
+      icon: <Code className="w-5 h-5 text-blue-400" />,
+      skills: ["Java", "JavaScript", "Python", "C"],
+      usageNote: t.skills.cat1Note
+    },
+    {
+      title: t.skills.cat2Title,
+      icon: <Globe className="w-5 h-5 text-cyan-400" />,
+      skills: ["HTML", "CSS", "Next.js", "React"],
+      usageNote: t.skills.cat2Note
+    },
+    {
+      title: t.skills.cat3Title,
+      icon: <Database className="w-5 h-5 text-emerald-400" />,
+      skills: ["SQL Oracle", "MongoDB", "Neo4j"],
+      usageNote: t.skills.cat3Note
+    },
+    {
+      title: t.skills.cat4Title,
+      icon: <Wrench className="w-5 h-5 text-orange-400" />,
+      skills: ["Git", "WordPress", "VS Code", "Eclipse"],
+      usageNote: t.skills.cat4Note
+    }
+  ];
 
   return (
     <section id="skills" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative overflow-hidden">
@@ -64,8 +66,8 @@ export function Skills() {
 
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
         <div className="text-center mb-16 relative z-20">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">Technical Arsenal</h2>
-          <TextReveal text="Skills & Technologies" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.skills.sectionSubtitle}</h2>
+          <TextReveal text={t.skills.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
 
         <motion.div 
@@ -110,7 +112,7 @@ export function Skills() {
                     onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
                     className="w-full flex items-center justify-between text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
                   >
-                    <span>How I use this</span>
+                    <span>{t.skills.howIUseThis}</span>
                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`} />
                   </button>
                 </div>
@@ -164,7 +166,7 @@ export function Skills() {
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-zinc-900/50 border border-zinc-800 rounded-full">
             <Zap className="w-4 h-4 text-cyan-400" />
             <span className="text-zinc-400 text-sm">
-              Also: QR/Barcode scanning, GPS validation, Google Apps Script
+              {t.skills.note}
             </span>
           </div>
         </motion.div>

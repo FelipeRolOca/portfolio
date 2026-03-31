@@ -2,8 +2,10 @@ import { motion } from "motion/react";
 import { BookOpen, Lightbulb, Users } from "lucide-react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export function About() {
+  const { t } = useLanguage();
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.2 } }
@@ -18,8 +20,8 @@ export function About() {
     <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">My Motivation</h2>
-          <TextReveal text="Why I Do What I Do" className="text-3xl md:text-4xl font-bold text-white justify-center" />
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.about.sectionSubtitle}</h2>
+          <TextReveal text={t.about.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
         <motion.div
           initial="hidden"
@@ -31,22 +33,18 @@ export function About() {
           {/* Text Content */}
           <div className="space-y-8">
             <motion.div variants={itemVariants}>
-              <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">About Me</h2>
+              <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.about.aboutSubtitle}</h2>
               <p className="text-3xl sm:text-4xl font-bold text-white leading-tight">
-                Student, Developer & <br /> Problem Solver
+                {t.about.aboutTitleLine1} <br /> {t.about.aboutTitleLine2}
               </p>
             </motion.div>
 
             <motion.p variants={itemVariants} className="text-zinc-400 text-lg leading-relaxed">
-              I am 20 years old, a Computer Engineering student with experience in data management
-              and web development. I work with Java, SQL, JavaScript and web tools. I'm seeking
-              a trainee or junior role in IT to grow professionally.
+              {t.about.p1}
             </motion.p>
 
             <motion.p variants={itemVariants} className="text-zinc-400 text-lg leading-relaxed">
-              Beyond the classroom, I'm constantly learning and applying my skills to build
-              full-stack applications. My focus is always on creating efficient, maintainable,
-              and practical systems that solve real business problems.
+              {t.about.p2}
             </motion.p>
           </div>
 
@@ -57,8 +55,8 @@ export function About() {
                 <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
                   <BookOpen className="w-6 h-6 text-blue-400" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Continuous Learning</h3>
-                <p className="text-zinc-400 text-sm">Always exploring new frameworks, databases, and architectural patterns to expand my technical stack.</p>
+                <h3 className="text-xl font-bold text-white mb-2">{t.about.card1Title}</h3>
+                <p className="text-zinc-400 text-sm">{t.about.card1Desc}</p>
               </SpotlightCard>
             </motion.div>
 
@@ -67,8 +65,8 @@ export function About() {
                 <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
                   <Lightbulb className="w-6 h-6 text-cyan-400" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Practical Focus</h3>
-                <p className="text-zinc-400 text-sm">Building tools that automate tasks, track data, and validate real-world inputs.</p>
+                <h3 className="text-xl font-bold text-white mb-2">{t.about.card2Title}</h3>
+                <p className="text-zinc-400 text-sm">{t.about.card2Desc}</p>
               </SpotlightCard>
             </motion.div>
 
@@ -77,8 +75,8 @@ export function About() {
                 <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
                   <Users className="w-6 h-6 text-emerald-400" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Effective Collaboration</h3>
-                <p className="text-zinc-400 text-sm">I believe that clear communication and teamwork are the foundations of any successful project.</p>
+                <h3 className="text-xl font-bold text-white mb-2">{t.about.card3Title}</h3>
+                <p className="text-zinc-400 text-sm">{t.about.card3Desc}</p>
               </SpotlightCard>
             </motion.div>
           </motion.div>

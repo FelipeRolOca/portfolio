@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import { Mail, Phone, MapPin, Send, ExternalLink, MessageCircle, Smartphone, MessageSquare } from "lucide-react";
+import { Mail, Phone, MapPin, Send, ExternalLink, MessageCircle, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -109,7 +109,7 @@ export function Contact() {
                 <div key={idx} className="relative">
                   {info.type === "phone" ? (
                     <Magnetic strength={0.1}>
-                      <SpotlightCard className="relative overflow-visible">
+                      <SpotlightCard className="relative">
                         <button 
                           onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
                           className="w-full flex items-center gap-6 p-4 rounded-2xl transition-all group relative z-10"
@@ -123,30 +123,33 @@ export function Contact() {
                           </div>
                         </button>
 
-                        <AnimatePresence>
+                        <AnimatePresence initial={false}>
                           {phoneMenuOpen && (
                             <motion.div
-                              initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                              animate={{ opacity: 1, scale: 1, y: 0 }}
-                              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                              className="absolute top-full left-0 right-0 mt-3 z-50 p-2 bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 rounded-2xl shadow-2xl flex flex-col gap-1 mx-2"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: "easeOut" }}
+                              className="overflow-hidden"
                             >
-                              {phoneOptions.map((opt, optIdx) => (
-                                <a
-                                  key={optIdx}
-                                  href={opt.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all group/opt"
-                                  onClick={() => setPhoneMenuOpen(false)}
-                                >
-                                  <div className="p-2 bg-zinc-950 rounded-lg group-hover/opt:scale-110 transition-transform">
-                                    {opt.icon}
-                                  </div>
-                                  <span className="font-bold flex-1">{opt.label}</span>
-                                  <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover/opt:opacity-50" />
-                                </a>
-                              ))}
+                              <div className="mt-3 p-2 bg-zinc-900/50 border border-zinc-800 rounded-2xl flex flex-col gap-1 mx-2 mb-4">
+                                {phoneOptions.map((opt, optIdx) => (
+                                  <a
+                                    key={optIdx}
+                                    href={opt.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all group/opt"
+                                    onClick={() => setPhoneMenuOpen(false)}
+                                  >
+                                    <div className="p-2 bg-zinc-950 rounded-lg group-hover/opt:scale-110 transition-transform">
+                                      {opt.icon}
+                                    </div>
+                                    <span className="font-bold flex-1">{opt.label}</span>
+                                    <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover/opt:opacity-50" />
+                                  </a>
+                                ))}
+                              </div>
                             </motion.div>
                           )}
                         </AnimatePresence>

@@ -172,7 +172,7 @@ export const messages = {
   },
   es: {
     meta: {
-      title: "Felipe Roldán Ocampo | Full Stack Developer",
+      title: "Felipe Roldán Ocampo | Desarrollador Full Stack",
     },
     navbar: {
       about: "Sobre Mí",
@@ -185,7 +185,7 @@ export const messages = {
     hero: {
       badge: "Estudiante de Ingeniería Informática",
       greeting: "Hola, soy Felipe.",
-      role: "Full Stack Developer",
+      role: "Desarrollador Full Stack",
       stack: "Next.js, SQL y Automatización",
       description: "Construyo sistemas reales que resuelven problemas prácticos. Desde el control de asistencia con validación GPS hasta la automatización, llevo las ideas a producción.",
       projectsBtn: "Ver Proyectos",
@@ -341,7 +341,7 @@ export const messages = {
       sendBtn: "Enviar Mensaje",
     },
     footer: {
-      subtitle: "Full Stack Developer | San Pedro, Buenos Aires, Argentina",
+      subtitle: "Desarrollador Full Stack | San Pedro, Buenos Aires, Argentina",
       allRightsReserved: "Todos los derechos reservados.",
     }
   }

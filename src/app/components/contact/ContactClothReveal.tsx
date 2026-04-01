@@ -40,7 +40,6 @@ export const CONTACT_CLOTH_CONFIG = {
   iterations: 5,
   gravity: -5.8,
   drag: 0.985,
-  activationDelayMs: 950,
   restDuration: 1.9,
   peelDuration: 1.9,
   flyDuration: 2.45,
@@ -499,10 +498,8 @@ function ClothSimulationMesh({
 
 function FallbackCover({
   active,
-  onDone,
 }: {
   active: boolean;
-  onDone: () => void;
 }) {
   return (
     <motion.div
@@ -518,10 +515,7 @@ function FallbackCover({
           : { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 }
       }
       transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-      onAnimationComplete={() => {
-        if (active) onDone();
-      }}
-      className="absolute inset-0 overflow-hidden rounded-[inherit] border border-white/18"
+      className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit] border border-white/18"
       style={{
         backgroundImage: [
           "radial-gradient(circle at 18% 18%, rgba(255,255,255,0.82), transparent 18%)",
@@ -540,7 +534,7 @@ function FallbackCover({
 
 export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const activationTimeoutRef = useRef<number | null>(null);
+  const fallbackTimeoutRef = useRef<number | null>(null);
   const reducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
   const [webglSupported] = useState(() =>
@@ -566,31 +560,6 @@ export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!rootRef.current || active || revealed) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) {
-          activationTimeoutRef.current = window.setTimeout(() => {
-            setActive(true);
-          }, CONTACT_CLOTH_CONFIG.activationDelayMs);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.82 },
-    );
-
-    observer.observe(rootRef.current);
-    return () => {
-      observer.disconnect();
-      if (activationTimeoutRef.current !== null) {
-        window.clearTimeout(activationTimeoutRef.current);
-      }
-    };
-  }, [active, revealed]);
-
   const fallbackMode = reducedMotion || isMobile || !webglSupported;
 
   const finishReveal = () => {
@@ -598,15 +567,45 @@ export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps
     onRevealComplete?.();
   };
 
+  useEffect(() => {
+    if (!fallbackMode || !active || revealed) return;
+    fallbackTimeoutRef.current = window.setTimeout(() => {
+      finishReveal();
+    }, 1650);
+
+    return () => {
+      if (fallbackTimeoutRef.current !== null) {
+        window.clearTimeout(fallbackTimeoutRef.current);
+      }
+    };
+  }, [active, fallbackMode, revealed]);
+
+  const handleActivate = () => {
+    if (active || revealed) return;
+    setActive(true);
+  };
+
   if (revealed) {
     return null;
   }
 
   return (
-    <div ref={rootRef} className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[inherit]">
+    <div
+      ref={rootRef}
+      onClick={handleActivate}
+      className={`absolute inset-0 z-20 overflow-hidden rounded-[inherit] ${active ? "pointer-events-none" : "pointer-events-auto cursor-pointer"}`}
+    >
       <AnimatePresence mode="wait">
         {fallbackMode ? (
-          <FallbackCover key="fallback" active={active} onDone={finishReveal} />
+          <motion.div
+            key="fallback-shell"
+            initial={false}
+            animate={!active ? { scale: [1, 1.003, 1] } : { scale: 1 }}
+            transition={!active ? { duration: 2.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.2 }}
+            className="absolute inset-0"
+          >
+            <FallbackCover active={active} />
+          </motion.div>
         ) : bounds.width > 0 && bounds.height > 0 ? (
           <motion.div
             key="canvas"
@@ -617,7 +616,7 @@ export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps
             <Canvas
               dpr={[1, 1.6]}
               gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-              className="absolute inset-0"
+              className="pointer-events-none absolute inset-0"
             >
               <perspectiveCamera makeDefault position={[0, 0.02, 3.6]} fov={28} />
               <ambientLight intensity={1.1} />
@@ -625,9 +624,18 @@ export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps
               <directionalLight position={[1.5, -0.5, 1.2]} intensity={0.55} color="#9dc3ee" />
               <ClothSimulationMesh aspect={bounds.width / bounds.height} active={active} onComplete={finishReveal} />
             </Canvas>
+            {!active && (
+              <motion.div
+                animate={{ y: [0, -3, 0], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                className="pointer-events-none absolute bottom-5 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/35 bg-slate-950/38 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/92 shadow-[0_14px_30px_rgba(0,0,0,0.28)] backdrop-blur-md"
+              >
+                Click to reveal
+              </motion.div>
+            )}
           </motion.div>
         ) : (
-          <FallbackCover key="placeholder" active={false} onDone={() => undefined} />
+          <FallbackCover key="placeholder" active={false} />
         )}
       </AnimatePresence>
     </div>

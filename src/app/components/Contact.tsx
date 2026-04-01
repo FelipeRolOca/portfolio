@@ -13,6 +13,8 @@ export function Contact() {
     message: ""
   });
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
+  const [mailCoverStarted, setMailCoverStarted] = useState(false);
+  const [mailCoverLifted, setMailCoverLifted] = useState(false);
   const { t, language } = useLanguage();
 
   const contactInfo = [
@@ -76,6 +78,14 @@ export function Contact() {
       ...prev,
       [e.target.id]: e.target.value
     }));
+  };
+
+  const handleFormViewportEnter = () => {
+    if (mailCoverStarted) return;
+    setMailCoverStarted(true);
+    window.setTimeout(() => {
+      setMailCoverLifted(true);
+    }, 350);
   };
 
   return (
@@ -214,8 +224,65 @@ export function Contact() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
+            onViewportEnter={handleFormViewportEnter}
           >
-            <SpotlightCard className="p-8 rounded-3xl relative z-10">
+            <SpotlightCard className="p-8 rounded-3xl relative z-10 overflow-hidden">
+              <AnimatePresence>
+                {!mailCoverLifted && (
+                  <motion.div
+                    initial={{ opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 }}
+                    animate={
+                      mailCoverStarted
+                        ? {
+                            x: [0, 8, 150],
+                            y: [0, -18, -120],
+                            rotate: [0, -2, 14],
+                            scale: [1, 1.01, 0.92],
+                            opacity: [1, 1, 0],
+                          }
+                        : {
+                            x: 0,
+                            y: 0,
+                            rotate: 0,
+                            scale: 1,
+                            opacity: 1,
+                          }
+                    }
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="pointer-events-none absolute inset-0 z-30 origin-bottom-left"
+                  >
+                    <motion.div
+                      animate={
+                        mailCoverStarted
+                          ? { borderRadius: ["28px", "34px 30px 38px 26px", "42px 18px 44px 22px"] }
+                          : { borderRadius: "28px" }
+                      }
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                      className="relative h-full w-full overflow-hidden border border-white/20 bg-[#dfe8f7]"
+                      style={{
+                        backgroundImage: [
+                          "radial-gradient(circle at 18% 16%, rgba(255,255,255,0.88), transparent 22%)",
+                          "radial-gradient(circle at 78% 24%, rgba(146, 201, 255, 0.30), transparent 26%)",
+                          "radial-gradient(circle at 62% 72%, rgba(84, 170, 255, 0.18), transparent 28%)",
+                          "linear-gradient(140deg, rgba(255,255,255,0.96) 0%, rgba(227,238,255,0.94) 26%, rgba(194,220,255,0.92) 58%, rgba(170,205,255,0.9) 100%)",
+                        ].join(", "),
+                        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -14px 28px rgba(111, 163, 230, 0.18), 0 20px 50px rgba(0,0,0,0.18)",
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-[linear-gradient(105deg,transparent_0%,rgba(255,255,255,0.34)_14%,transparent_28%,transparent_52%,rgba(150,192,245,0.20)_64%,transparent_82%)] opacity-80" />
+                      <div className="absolute inset-x-0 top-[18%] h-px bg-white/45 blur-[1px]" />
+                      <div className="absolute left-[10%] top-[22%] h-[140%] w-[1px] -rotate-[12deg] bg-sky-200/30 blur-[1px]" />
+                      <div className="absolute right-[18%] top-[-6%] h-[125%] w-[1px] rotate-[14deg] bg-blue-200/35 blur-[1px]" />
+                      <div className="absolute inset-x-[14%] top-[54%] h-10 rounded-full bg-white/24 blur-2xl" />
+                      <div className="absolute -left-10 bottom-[-18%] h-36 w-40 rounded-full bg-white/34 blur-3xl" />
+                      <div className="absolute right-8 top-8 h-20 w-20 rounded-full border border-white/30 bg-white/10 blur-[1px]" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,transparent_58%,rgba(122,168,230,0.10)_100%)]" />
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-zinc-400">{t.contact.nameLabel}</label>

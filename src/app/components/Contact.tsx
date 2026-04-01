@@ -1,39 +1,10 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Mail, Phone, MapPin, Send, ExternalLink, MessageCircle, Smartphone } from "lucide-react";
-import { lazy, Suspense, useState } from "react";
+import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useLanguage } from "../i18n/LanguageContext";
-
-const ContactClothReveal = lazy(() =>
-  import("./contact/ContactClothReveal").then((module) => ({
-    default: module.ContactClothReveal,
-  })),
-);
-
-function ContactClothFallback() {
-  return (
-    <div
-      className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[inherit] border border-white/18"
-      style={{
-        backgroundImage: [
-          "radial-gradient(circle at 16% 16%, rgba(255,255,255,0.48), transparent 14%)",
-          "linear-gradient(160deg, rgba(219,232,247,0.98) 0%, rgba(191,211,233,0.97) 30%, rgba(155,184,215,0.98) 66%, rgba(121,153,193,1) 100%)",
-        ].join(", "),
-        boxShadow: "inset 0 2px 0 rgba(255,255,255,0.55), inset 0 -26px 34px rgba(57,93,137,0.20), 0 24px 36px rgba(0,0,0,0.18)",
-      }}
-    >
-      <div className="absolute inset-0 bg-[linear-gradient(106deg,transparent_0%,rgba(255,255,255,0.16)_12%,transparent_22%,transparent_36%,rgba(84,117,161,0.16)_50%,transparent_62%,rgba(255,255,255,0.14)_74%,transparent_92%)]" />
-      <div className="absolute left-[10%] top-[-4%] h-[118%] w-px -rotate-[10deg] bg-white/28" />
-      <div className="absolute left-[32%] top-[-4%] h-[118%] w-px rotate-[4deg] bg-sky-100/18" />
-      <div className="absolute right-[22%] top-[-6%] h-[122%] w-px rotate-[12deg] bg-blue-100/24" />
-      <div className="absolute inset-x-[10%] top-[18%] h-10 rounded-full bg-white/16 blur-2xl" />
-      <div className="absolute inset-x-[16%] top-[46%] h-12 rounded-full bg-blue-100/10 blur-2xl" />
-      <div className="absolute inset-x-[18%] bottom-[8%] h-[4.5rem] rounded-full bg-slate-900/10 blur-3xl" />
-    </div>
-  );
-}
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -244,12 +215,8 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <SpotlightCard className="p-8 rounded-3xl relative z-10 overflow-hidden">
-              <Suspense fallback={<ContactClothFallback />}>
-                <ContactClothReveal />
-              </Suspense>
-
-              <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
+            <SpotlightCard className="p-8 rounded-3xl relative z-10">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-zinc-400">{t.contact.nameLabel}</label>
                   <input 

@@ -40,9 +40,10 @@ export const CONTACT_CLOTH_CONFIG = {
   iterations: 5,
   gravity: -5.8,
   drag: 0.985,
-  restDuration: 1.1,
-  peelDuration: 1.25,
-  flyDuration: 1.8,
+  activationDelayMs: 950,
+  restDuration: 1.9,
+  peelDuration: 1.9,
+  flyDuration: 2.45,
   coverPadding: 1.06,
 };
 
@@ -539,6 +540,7 @@ function FallbackCover({
 
 export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const activationTimeoutRef = useRef<number | null>(null);
   const reducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
   const [webglSupported] = useState(() =>
@@ -571,15 +573,22 @@ export function ContactClothReveal({ onRevealComplete }: ContactClothRevealProps
       (entries) => {
         const entry = entries[0];
         if (entry?.isIntersecting) {
-          setActive(true);
+          activationTimeoutRef.current = window.setTimeout(() => {
+            setActive(true);
+          }, CONTACT_CLOTH_CONFIG.activationDelayMs);
           observer.disconnect();
         }
       },
-      { threshold: 0.45 },
+      { threshold: 0.82 },
     );
 
     observer.observe(rootRef.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (activationTimeoutRef.current !== null) {
+        window.clearTimeout(activationTimeoutRef.current);
+      }
+    };
   }, [active, revealed]);
 
   const fallbackMode = reducedMotion || isMobile || !webglSupported;

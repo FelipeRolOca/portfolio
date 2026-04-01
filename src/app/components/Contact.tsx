@@ -18,16 +18,19 @@ function ContactClothFallback() {
       className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[inherit] border border-white/18"
       style={{
         backgroundImage: [
-          "radial-gradient(circle at 18% 18%, rgba(255,255,255,0.82), transparent 18%)",
-          "linear-gradient(160deg, rgba(255,255,255,0.95) 0%, rgba(229,237,247,0.94) 35%, rgba(197,212,230,0.95) 100%)",
+          "radial-gradient(circle at 16% 16%, rgba(255,255,255,0.48), transparent 14%)",
+          "linear-gradient(160deg, rgba(219,232,247,0.98) 0%, rgba(191,211,233,0.97) 30%, rgba(155,184,215,0.98) 66%, rgba(121,153,193,1) 100%)",
         ].join(", "),
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -18px 28px rgba(94,122,160,0.18), 0 18px 36px rgba(0,0,0,0.18)",
+        boxShadow: "inset 0 2px 0 rgba(255,255,255,0.55), inset 0 -26px 34px rgba(57,93,137,0.20), 0 24px 36px rgba(0,0,0,0.18)",
       }}
     >
-      <div className="absolute inset-0 bg-[linear-gradient(104deg,transparent_0%,rgba(255,255,255,0.20)_12%,transparent_24%,transparent_42%,rgba(116,142,178,0.16)_54%,transparent_70%)]" />
-      <div className="absolute left-[12%] top-[8%] h-[110%] w-px -rotate-[8deg] bg-white/30" />
-      <div className="absolute right-[24%] top-[-4%] h-[116%] w-px rotate-[12deg] bg-slate-300/24" />
-      <div className="absolute inset-x-[16%] bottom-[8%] h-14 rounded-full bg-slate-500/10 blur-3xl" />
+      <div className="absolute inset-0 bg-[linear-gradient(106deg,transparent_0%,rgba(255,255,255,0.16)_12%,transparent_22%,transparent_36%,rgba(84,117,161,0.16)_50%,transparent_62%,rgba(255,255,255,0.14)_74%,transparent_92%)]" />
+      <div className="absolute left-[10%] top-[-4%] h-[118%] w-px -rotate-[10deg] bg-white/28" />
+      <div className="absolute left-[32%] top-[-4%] h-[118%] w-px rotate-[4deg] bg-sky-100/18" />
+      <div className="absolute right-[22%] top-[-6%] h-[122%] w-px rotate-[12deg] bg-blue-100/24" />
+      <div className="absolute inset-x-[10%] top-[18%] h-10 rounded-full bg-white/16 blur-2xl" />
+      <div className="absolute inset-x-[16%] top-[46%] h-12 rounded-full bg-blue-100/10 blur-2xl" />
+      <div className="absolute inset-x-[18%] bottom-[8%] h-[4.5rem] rounded-full bg-slate-900/10 blur-3xl" />
     </div>
   );
 }

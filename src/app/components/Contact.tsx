@@ -1,10 +1,36 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Mail, Phone, MapPin, Send, ExternalLink, MessageCircle, Smartphone } from "lucide-react";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useLanguage } from "../i18n/LanguageContext";
+
+const ContactClothReveal = lazy(() =>
+  import("./contact/ContactClothReveal").then((module) => ({
+    default: module.ContactClothReveal,
+  })),
+);
+
+function ContactClothFallback() {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[inherit] border border-white/18"
+      style={{
+        backgroundImage: [
+          "radial-gradient(circle at 18% 18%, rgba(255,255,255,0.82), transparent 18%)",
+          "linear-gradient(160deg, rgba(255,255,255,0.95) 0%, rgba(229,237,247,0.94) 35%, rgba(197,212,230,0.95) 100%)",
+        ].join(", "),
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -18px 28px rgba(94,122,160,0.18), 0 18px 36px rgba(0,0,0,0.18)",
+      }}
+    >
+      <div className="absolute inset-0 bg-[linear-gradient(104deg,transparent_0%,rgba(255,255,255,0.20)_12%,transparent_24%,transparent_42%,rgba(116,142,178,0.16)_54%,transparent_70%)]" />
+      <div className="absolute left-[12%] top-[8%] h-[110%] w-px -rotate-[8deg] bg-white/30" />
+      <div className="absolute right-[24%] top-[-4%] h-[116%] w-px rotate-[12deg] bg-slate-300/24" />
+      <div className="absolute inset-x-[16%] bottom-[8%] h-14 rounded-full bg-slate-500/10 blur-3xl" />
+    </div>
+  );
+}
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -216,7 +242,11 @@ export function Contact() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <SpotlightCard className="p-8 rounded-3xl relative z-10 overflow-hidden">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <Suspense fallback={<ContactClothFallback />}>
+                <ContactClothReveal />
+              </Suspense>
+
+              <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-zinc-400">{t.contact.nameLabel}</label>
                   <input 
@@ -261,18 +291,10 @@ export function Contact() {
                     type="submit"
                     whileHover={{ scale: 1.015 }}
                     whileTap={{ scale: 0.985 }}
-                    className="relative w-full overflow-hidden py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold text-lg hover:from-blue-500 hover:to-cyan-500 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-blue-500/25"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold text-lg hover:from-blue-500 hover:to-cyan-500 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-blue-500/25"
                   >
+                    <span>{t.contact.sendBtn}</span>
                     <motion.span
-                      aria-hidden="true"
-                      initial={{ x: "-140%", opacity: 0 }}
-                      whileHover={{ x: "140%", opacity: 1 }}
-                      transition={{ duration: 0.7, ease: "easeInOut" }}
-                      className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-transparent via-white/35 to-transparent skew-x-[-22deg]"
-                    />
-                    <span className="relative z-10">{t.contact.sendBtn}</span>
-                    <motion.span
-                      className="relative z-10"
                       whileHover={{ x: 4, y: -2 }}
                       transition={{ type: "spring", stiffness: 260, damping: 14 }}
                     >

@@ -121,8 +121,7 @@ const styles = `
 }
 
 .gooey-nav-container .effect.filter {
-  filter: blur(7px) contrast(100) blur(0);
-  mix-blend-mode: lighten;
+  filter: url('#gooey-filter');
 }
 
 .gooey-nav-container .effect.filter::before {
@@ -130,7 +129,6 @@ const styles = `
   position: absolute;
   inset: -75px;
   z-index: -2;
-  background: transparent;
 }
 
 .gooey-nav-container .effect.filter::after {
@@ -362,6 +360,18 @@ export default function GooeyNav({
   return (
     <div className="gooey-nav-container" ref={containerRef}>
       <style>{styles}</style>
+      <svg style={{ position: "absolute", width: 0, height: 0 }} aria-hidden="true">
+        <filter id="gooey-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
+            result="gooey"
+          />
+          <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
+        </filter>
+      </svg>
       <nav aria-label="Primary navigation">
         <ul ref={navRef}>
           {items.map((item, index) => (

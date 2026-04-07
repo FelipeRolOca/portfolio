@@ -8,24 +8,28 @@ import {
   Sparkles,
   Wrench,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
+import GooeyNav from "./ui/GooeyNav";
 
 export function Navbar() {
   const { language, setLanguage, t } = useLanguage();
   const [activeHref, setActiveHref] = useState("#about");
 
+  const navLinks = useMemo(
+    () => [
+      { name: t.navbar.about, href: "#about", icon: Sparkles },
+      { name: t.navbar.skills, href: "#skills", icon: Wrench },
+      { name: t.navbar.experience, href: "#experience", icon: BriefcaseBusiness },
+      { name: t.navbar.projects, href: "#projects", icon: FolderKanban },
+      { name: t.navbar.contact, href: "#contact", icon: Mail },
+    ],
+    [t]
+  );
+
   const toggleLanguage = () => {
     setLanguage(language === "en" ? "es" : "en");
   };
-
-  const navLinks = [
-    { name: t.navbar.about, href: "#about", icon: Sparkles },
-    { name: t.navbar.skills, href: "#skills", icon: Wrench },
-    { name: t.navbar.experience, href: "#experience", icon: BriefcaseBusiness },
-    { name: t.navbar.projects, href: "#projects", icon: FolderKanban },
-    { name: t.navbar.contact, href: "#contact", icon: Mail },
-  ];
 
   const handleScroll = (href: string) => {
     const element = document.querySelector(href);
@@ -36,7 +40,7 @@ export function Navbar() {
 
   useEffect(() => {
     const updateActiveSection = () => {
-      const threshold = window.innerHeight * 0.35;
+      const threshold = window.innerHeight * 0.4;
       let currentHref = navLinks[0]?.href ?? "#about";
 
       navLinks.forEach((link) => {
@@ -63,36 +67,28 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
-        <div className="max-w-7xl mx-auto px-6 sm:px-12">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            <div className="flex-shrink-0 flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-600 flex items-center justify-center shadow-lg shadow-blue-950/30">
-                <Code2 className="text-white w-6 h-6" />
+      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-6 sm:px-12">
+          <div className="flex h-16 items-center justify-between md:h-20">
+            <div className="flex flex-shrink-0 items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-600 shadow-lg shadow-blue-950/30">
+                <Code2 className="h-6 w-6 text-white" />
               </div>
-              <span className="text-lg md:text-xl font-bold text-white tracking-tight">Felipe Roldan</span>
+              <span className="text-lg font-bold tracking-tight text-white md:text-xl">Felipe Roldan</span>
             </div>
 
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleScroll(link.href);
-                    }}
-                    className="text-zinc-400 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    {link.name}
-                  </a>
-                ))}
+              <div className="ml-10 flex items-center gap-4">
+                <GooeyNav
+                  items={navLinks.map((link) => ({ label: link.name, href: link.href }))}
+                  activeHref={activeHref}
+                  onItemSelect={handleScroll}
+                />
                 <button
                   onClick={toggleLanguage}
-                  className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors px-4 py-2 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 text-sm font-semibold group"
+                  className="group flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-2 text-sm font-semibold text-zinc-400 transition-colors hover:border-zinc-700 hover:text-white"
                 >
-                  <Languages className="w-4 h-4 text-cyan-400 group-hover:rotate-12 transition-transform" />
+                  <Languages className="h-4 w-4 text-cyan-400 transition-transform group-hover:rotate-12" />
                   {t.navbar.toggle}
                 </button>
               </div>
@@ -113,42 +109,52 @@ export function Navbar() {
       </nav>
 
       <div
-        className="md:hidden fixed bottom-4 left-1/2 z-[70] w-[calc(100%-1rem)] max-w-sm -translate-x-1/2"
-        style={{ paddingBottom: "max(0rem, env(safe-area-inset-bottom))" }}
+        className="fixed inset-x-0 bottom-0 z-[70] px-3 md:hidden"
+        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
       >
-        <div className="relative overflow-hidden rounded-[30px] border border-zinc-800/80 bg-zinc-950/92 px-2 py-2 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
-          <div className="pointer-events-none absolute inset-x-10 top-0 h-16 rounded-full bg-blue-500/10 blur-2xl" />
+        <div className="mx-auto max-w-sm">
+          <div className="relative overflow-visible rounded-t-[30px] border-x border-t border-zinc-800/80 bg-zinc-950/96 px-2 pb-3 pt-2 shadow-[0_-10px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+            <div className="pointer-events-none absolute inset-x-10 top-0 h-16 rounded-full bg-blue-500/10 blur-2xl" />
 
-          <div className="relative grid grid-cols-5 items-center gap-1">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive = activeHref === link.href;
+            <div className="relative grid grid-cols-5 items-end gap-1">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const isActive = activeHref === link.href;
 
-              return (
-                <button
-                  key={link.href}
-                  type="button"
-                  onClick={() => handleScroll(link.href)}
-                  className="relative flex h-[62px] items-center justify-center rounded-2xl"
-                  aria-label={link.name}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="mobile-nav-indicator"
-                      transition={{ type: "spring", stiffness: 280, damping: 24 }}
-                      className="absolute inset-1 rounded-[20px] border border-blue-500/30 bg-gradient-to-b from-blue-500/25 via-cyan-500/15 to-transparent shadow-[0_10px_30px_rgba(14,165,233,0.18)]"
-                    />
-                  )}
+                return (
+                  <button
+                    key={link.href}
+                    type="button"
+                    onClick={() => handleScroll(link.href)}
+                    className="relative flex h-[66px] items-center justify-center rounded-2xl"
+                    aria-label={link.name}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="mobile-nav-bubble"
+                        transition={{ type: "spring", stiffness: 320, damping: 26 }}
+                        className="absolute left-1/2 top-1 h-[54px] w-[54px] -translate-x-1/2 rounded-full border border-blue-200/80 bg-white shadow-[0_10px_30px_rgba(96,165,250,0.35)]"
+                      />
+                    )}
 
-                  <div className="relative z-10 flex flex-col items-center justify-center">
-                    <Icon className={`h-[20px] w-[20px] transition-all ${isActive ? "text-white -translate-y-0.5 scale-105" : "text-zinc-500"}`} />
-                    <span className={`mt-1 h-1.5 w-1.5 rounded-full transition-all ${isActive ? "bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.75)]" : "bg-transparent"}`} />
-                    <span className="sr-only">{link.name}</span>
-                  </div>
-                </button>
-              );
-            })}
+                    {isActive && (
+                      <motion.div
+                        layoutId="mobile-nav-shadow"
+                        transition={{ type: "spring", stiffness: 320, damping: 26 }}
+                        className="absolute left-1/2 top-0 h-[60px] w-[60px] -translate-x-1/2 rounded-full border-4 border-zinc-950/90"
+                      />
+                    )}
+
+                    <div className="relative z-10 flex flex-col items-center justify-center">
+                      <Icon className={`h-[20px] w-[20px] transition-all ${isActive ? "text-zinc-950 -translate-y-2 scale-105" : "translate-y-1 text-zinc-500"}`} />
+                      {!isActive && <span className="mt-2 h-1.5 w-1.5 rounded-full bg-transparent" />}
+                      <span className="sr-only">{link.name}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

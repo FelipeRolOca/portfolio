@@ -5,9 +5,6 @@ import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useLanguage } from "../i18n/LanguageContext";
-import LiquidEther from "./ui/LiquidEther";
-
-const CONTACT_LIQUID_COLORS = ["#5227FF", "#FF9FFC", "#B19EEF"] as const;
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -82,27 +79,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-[#060010] border-t border-white/10 relative overflow-hidden isolate">
-      <div className="absolute inset-0 z-0">
-        <LiquidEther
-          colors={CONTACT_LIQUID_COLORS as unknown as string[]}
-          mouseForce={20}
-          cursorSize={100}
-          isViscous
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
-          isBounce={false}
-          autoDemo
-          autoSpeed={0.5}
-          autoIntensity={2.2}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
-          autoRampDuration={0.6}
-        />
-      </div>
-
+    <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden isolate">
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
         <div className="text-center mb-16 relative z-20">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.contact.sectionSubtitle}</h2>

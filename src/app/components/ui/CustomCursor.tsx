@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { useCanHover } from "./use-can-hover";
+import "./FluidGlassCursor.css";
 
 export const CustomCursor = () => {
   const canHover = useCanHover();
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
+  const [isPressing, setIsPressing] = useState(false);
 
-  const springConfig = { damping: 25, stiffness: 250, mass: 0.5 };
+  const mouseX = useMotionValue(-120);
+  const mouseY = useMotionValue(-120);
+
+  const springConfig = { damping: 22, stiffness: 260, mass: 0.55 };
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
@@ -20,36 +22,53 @@ export const CustomCursor = () => {
     if (!canHover) {
       setIsVisible(false);
       setIsHovering(false);
-      mouseX.set(-100);
-      mouseY.set(-100);
+      setIsPressing(false);
+      mouseX.set(-120);
+      mouseY.set(-120);
+      document.documentElement.style.removeProperty("cursor");
+      document.body.style.removeProperty("cursor");
       return;
     }
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+    document.documentElement.style.cursor = "none";
+    document.body.style.cursor = "none";
+
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseX.set(event.clientX);
+      mouseY.set(event.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.closest("button") || 
-        target.closest("a") || 
-        target.style.cursor === "pointer"
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const handleMouseOver = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      const interactive = target.closest(
+        "button, a, input, textarea, select, [role='button'], [data-cursor='interactive']"
+      );
+      setIsHovering(Boolean(interactive));
     };
+
+    const handleMouseDown = () => setIsPressing(true);
+    const handleMouseUp = () => setIsPressing(false);
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseenter", handleMouseEnter);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseenter", handleMouseEnter);
+      document.documentElement.style.removeProperty("cursor");
+      document.body.style.removeProperty("cursor");
     };
   }, [canHover, isVisible, mouseX, mouseY]);
 
@@ -57,8 +76,9 @@ export const CustomCursor = () => {
 
   return (
     <>
+      <style>{`*, *::before, *::after { cursor: none !important; }`}</style>
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-blue-500/50 pointer-events-none z-[9999] mix-blend-difference"
+        className="fluid-glass-cursor"
         style={{
           x: cursorX,
           y: cursorY,
@@ -66,20 +86,18 @@ export const CustomCursor = () => {
           translateY: "-50%",
         }}
         animate={{
-          scale: isHovering ? 2.5 : 1,
-          backgroundColor: isHovering ? "rgba(59, 130, 246, 0.2)" : "rgba(59, 130, 246, 0)",
+          scale: isPressing ? 0.92 : isHovering ? 1.12 : 1,
+          width: isHovering ? 88 : 74,
+          height: isHovering ? 88 : 74,
+          rotate: isHovering ? 10 : 0,
+          opacity: isVisible ? 1 : 0,
         }}
-        transition={{ type: "spring", bounce: 0.3 }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-blue-400 pointer-events-none z-[9999]"
-        style={{
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
+        transition={{ type: "spring", stiffness: 240, damping: 22 }}
+      >
+        <span className="fluid-glass-ring" />
+        <span className="fluid-glass-glint" />
+        <span className="fluid-glass-core" />
+      </motion.div>
     </>
   );
 };

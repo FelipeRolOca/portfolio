@@ -1,0 +1,83 @@
+.fluid-glass-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 74px;
+  height: 74px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 9999;
+  isolation: isolate;
+  overflow: hidden;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background:
+    radial-gradient(circle at 30% 28%, rgb(255 255 255 / 0.6), transparent 28%),
+    radial-gradient(circle at 70% 72%, rgb(96 165 250 / 0.22), transparent 34%),
+    linear-gradient(145deg, rgb(255 255 255 / 0.24), rgb(255 255 255 / 0.07));
+  border: 1px solid rgb(255 255 255 / 0.32);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.25),
+    inset 0 -10px 20px rgb(3 7 18 / 0.18),
+    0 16px 38px rgb(14 165 233 / 0.18),
+    0 8px 18px rgb(15 23 42 / 0.18);
+}
+
+.fluid-glass-cursor::before,
+.fluid-glass-cursor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.fluid-glass-cursor::before {
+  inset: 6px;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  opacity: 0.95;
+}
+
+.fluid-glass-cursor::after {
+  inset: -1px;
+  background:
+    radial-gradient(circle at 24% 20%, rgb(255 255 255 / 0.48), transparent 22%),
+    radial-gradient(circle at 75% 30%, rgb(34 211 238 / 0.16), transparent 26%),
+    radial-gradient(circle at 58% 82%, rgb(167 139 250 / 0.16), transparent 30%);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.fluid-glass-core {
+  position: absolute;
+  inset: 17px;
+  border-radius: 9999px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.42), rgb(255 255 255 / 0.08)),
+    radial-gradient(circle at 28% 24%, rgb(255 255 255 / 0.85), transparent 24%);
+  box-shadow:
+    inset 0 0 12px rgb(255 255 255 / 0.18),
+    0 0 24px rgb(103 232 249 / 0.14);
+  opacity: 0.92;
+}
+
+.fluid-glass-glint {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  width: 22px;
+  height: 14px;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.65);
+  filter: blur(2px);
+  opacity: 0.9;
+  transform: rotate(-18deg);
+}
+
+.fluid-glass-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  border-left: 1px solid rgb(125 211 252 / 0.35);
+  border-right: 1px solid rgb(196 181 253 / 0.35);
+  opacity: 0.9;
+}

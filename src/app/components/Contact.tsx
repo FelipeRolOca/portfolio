@@ -5,6 +5,7 @@ import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useLanguage } from "../i18n/LanguageContext";
+import Antigravity from "./ui/Antigravity";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -80,6 +81,26 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden isolate">
+      <div className="absolute inset-0 z-0 opacity-90">
+        <Antigravity
+          count={300}
+          magnetRadius={6}
+          ringRadius={7}
+          waveSpeed={0.4}
+          waveAmplitude={1}
+          particleSize={1.5}
+          lerpSpeed={0.05}
+          color="#5227FF"
+          autoAnimate
+          particleVariance={1}
+          rotationSpeed={0}
+          depthFactor={1}
+          pulseSpeed={3}
+          particleShape="capsule"
+          fieldStrength={10}
+        />
+      </div>
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(9,9,11,0.08)_35%,rgba(9,9,11,0.44)_100%)]" />
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
         <div className="text-center mb-16 relative z-20">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.contact.sectionSubtitle}</h2>

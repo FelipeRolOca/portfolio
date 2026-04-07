@@ -32,12 +32,16 @@ const styles = `
   display: flex;
   gap: 2em;
   list-style: none;
-  padding: 0 1em;
+  padding: 0.35em 1em;
   margin: 0;
   position: relative;
   z-index: 3;
   color: white;
   text-shadow: 0 1px 1px hsl(205deg 30% 10% / 0.2);
+  border-radius: 999px;
+  border: 1px solid rgb(141 224 255 / 12%);
+  background: linear-gradient(180deg, rgb(9 14 28 / 82%), rgb(5 9 20 / 72%));
+  box-shadow: 0 18px 40px rgb(2 6 23 / 24%);
 }
 
 .gooey-nav-container nav ul li {
@@ -72,7 +76,7 @@ const styles = `
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: #8de0ff;
+  background: linear-gradient(180deg, #d9f7ff 0%, #8de0ff 100%);
   opacity: 0;
   transform: scale(0);
   transition: all 0.3s ease;
@@ -133,7 +137,7 @@ const styles = `
   content: "";
   position: absolute;
   inset: 0;
-  background: #8de0ff;
+  background: linear-gradient(180deg, #d9f7ff 0%, #8de0ff 100%);
   transform: scale(0);
   opacity: 0;
   z-index: -1;
@@ -250,7 +254,7 @@ export default function GooeyNav({
   particleDistances = [90, 10],
   particleR = 100,
   timeVariance = 300,
-  colors = ["#38bdf8", "#60a5fa", "#22d3ee", "#a78bfa"],
+  colors = ["#38bdf8", "#8b5cf6", "#22d3ee", "#67e8f9"],
 }: GooeyNavProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLUListElement | null>(null);

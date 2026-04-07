@@ -67,11 +67,11 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md">
+      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-cyan-500/10 bg-[rgba(5,7,18,0.78)] backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-6 sm:px-12">
           <div className="flex h-16 items-center justify-between md:h-20">
             <div className="flex flex-shrink-0 items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-600 shadow-lg shadow-blue-950/30">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/20 bg-gradient-to-tr from-sky-500 to-cyan-400 shadow-[0_12px_30px_rgba(34,211,238,0.18)]">
                 <Code2 className="h-6 w-6 text-white" />
               </div>
               <span className="text-lg font-bold tracking-tight text-white md:text-xl">Felipe Roldan</span>
@@ -86,9 +86,9 @@ export function Navbar() {
                 />
                 <button
                   onClick={toggleLanguage}
-                  className="group flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-2 text-sm font-semibold text-zinc-400 transition-colors hover:border-zinc-700 hover:text-white"
+                  className="group flex items-center gap-2 rounded-2xl border border-cyan-400/15 bg-[rgba(10,15,30,0.72)] px-4 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-cyan-300/30 hover:text-white"
                 >
-                  <Languages className="h-4 w-4 text-cyan-400 transition-transform group-hover:rotate-12" />
+                  <Languages className="h-4 w-4 text-cyan-300 transition-transform group-hover:rotate-12" />
                   {t.navbar.toggle}
                 </button>
               </div>
@@ -97,10 +97,10 @@ export function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={toggleLanguage}
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/80 px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-zinc-200 shadow-[0_8px_30px_rgba(0,0,0,0.28)]"
+                className="inline-flex items-center gap-2 rounded-full border border-cyan-400/15 bg-[rgba(10,15,30,0.82)] px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-zinc-100 shadow-[0_10px_30px_rgba(0,0,0,0.24)]"
                 aria-label={t.navbar.toggle}
               >
-                <Languages className="h-4 w-4 text-cyan-400" />
+                <Languages className="h-4 w-4 text-cyan-300" />
                 <span>{language === "en" ? "ES" : "EN"}</span>
               </button>
             </div>
@@ -113,8 +113,9 @@ export function Navbar() {
         style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
       >
         <div className="mx-auto max-w-sm">
-          <div className="relative overflow-visible rounded-t-[30px] border-x border-t border-zinc-800/80 bg-zinc-950/96 px-2 pb-3 pt-2 shadow-[0_-10px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
-            <div className="pointer-events-none absolute inset-x-10 top-0 h-16 rounded-full bg-blue-500/10 blur-2xl" />
+          <div className="relative overflow-hidden rounded-[32px] border border-cyan-400/12 bg-[rgba(8,12,24,0.9)] px-2 pb-2 pt-2 shadow-[0_18px_45px_rgba(2,6,23,0.42)] backdrop-blur-2xl">
+            <div className="pointer-events-none absolute inset-x-10 top-2 h-14 rounded-full bg-cyan-400/8 blur-2xl" />
+            <div className="pointer-events-none absolute inset-px rounded-[31px] border border-white/5" />
 
             <div className="relative grid grid-cols-5 items-end gap-1">
               {navLinks.map((link) => {
@@ -134,7 +135,7 @@ export function Navbar() {
                       <motion.div
                         layoutId="mobile-nav-bubble"
                         transition={{ type: "spring", stiffness: 320, damping: 26 }}
-                        className="absolute left-1/2 top-1 h-[54px] w-[54px] -translate-x-1/2 rounded-full border border-blue-200/80 bg-white shadow-[0_10px_30px_rgba(96,165,250,0.35)]"
+                        className="absolute left-1/2 top-[5px] h-[56px] w-[56px] -translate-x-1/2 rounded-full border border-cyan-200/50 bg-[linear-gradient(180deg,#d8f8ff_0%,#8de0ff_100%)] shadow-[0_12px_30px_rgba(34,211,238,0.25)]"
                       />
                     )}
 
@@ -142,12 +143,16 @@ export function Navbar() {
                       <motion.div
                         layoutId="mobile-nav-shadow"
                         transition={{ type: "spring", stiffness: 320, damping: 26 }}
-                        className="absolute left-1/2 top-0 h-[60px] w-[60px] -translate-x-1/2 rounded-full border-4 border-zinc-950/90"
+                        className="absolute left-1/2 top-0 h-[62px] w-[62px] -translate-x-1/2 rounded-full border-[5px] border-[rgba(8,12,24,0.94)]"
                       />
                     )}
 
                     <div className="relative z-10 flex flex-col items-center justify-center">
-                      <Icon className={`h-[20px] w-[20px] transition-all ${isActive ? "text-zinc-950 -translate-y-2 scale-105" : "translate-y-1 text-zinc-500"}`} />
+                      <Icon
+                        className={`h-[20px] w-[20px] transition-all ${
+                          isActive ? "text-slate-950 -translate-y-2 scale-105" : "translate-y-1 text-zinc-500"
+                        }`}
+                      />
                       {!isActive && <span className="mt-2 h-1.5 w-1.5 rounded-full bg-transparent" />}
                       <span className="sr-only">{link.name}</span>
                     </div>

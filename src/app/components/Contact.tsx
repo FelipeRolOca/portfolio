@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Mail, Phone, MapPin, Send, ExternalLink, MessageCircle, Smartphone } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useLanguage } from "../i18n/LanguageContext";
+import LiquidEther from "./ui/LiquidEther";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export function Contact() {
   });
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
   const { t, language } = useLanguage();
+  const contactLiquidColors = useMemo(() => ["#1d4ed8", "#0891b2", "#0f766e"] as const, []);
 
   const contactInfo = [
     {
@@ -79,8 +81,16 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
-      {/* Background glow */}
+    <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden isolate">
+      <div className="absolute inset-0 pointer-events-none opacity-75">
+        <LiquidEther
+          colors={contactLiquidColors}
+          mouseForce={16}
+          autoSpeed={0.24}
+          className="scale-110"
+        />
+      </div>
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.18),transparent_32%),radial-gradient(circle_at_85%_20%,rgba(8,145,178,0.18),transparent_28%),linear-gradient(180deg,rgba(9,9,11,0.40),rgba(9,9,11,0.78))]" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">

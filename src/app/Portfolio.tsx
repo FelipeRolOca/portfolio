@@ -21,7 +21,7 @@ export function Portfolio() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-zinc-950 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative overflow-x-hidden">
+    <div className="min-h-screen bg-zinc-950 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative overflow-x-hidden pb-24 md:pb-0">
       <DotBackground />
       <CustomCursor />
       <Navbar />

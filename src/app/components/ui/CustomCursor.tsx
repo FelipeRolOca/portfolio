@@ -189,11 +189,13 @@ function FluidGlassCursorScene({ cursor }: { cursor: CursorState }) {
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999]">
       <Canvas
+        style={{ pointerEvents: "none" }}
         camera={{ position: [0, 0, 20], fov: 15 }}
         dpr={[1, 1.5]}
         gl={{ alpha: true, antialias: true }}
         onCreated={({ gl }) => {
           gl.setClearColor(0x000000, 0);
+          gl.domElement.style.pointerEvents = "none";
         }}
       >
         <FluidLens cursor={cursor} />

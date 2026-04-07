@@ -69,11 +69,12 @@ export function QuickFacts() {
                 contentClassName="min-h-[124px]"
                 glowColor={fact.glowColor}
                 colors={fact.borderColors}
-                backgroundColor="rgba(24, 24, 27, 0.72)"
-                borderRadius={22}
-                glowRadius={28}
+                backgroundColor="#060010"
+                borderRadius={28}
+                glowRadius={40}
                 glowIntensity={1}
-                fillOpacity={0.24}
+                coneSpread={25}
+                fillOpacity={0.5}
               >
                 <SpotlightCard
                   className="h-full border-transparent bg-transparent shadow-none"

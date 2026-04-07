@@ -1,49 +1,35 @@
-import React, {
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
   Children,
   cloneElement,
-  createRef,
   forwardRef,
   isValidElement,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
-import gsap from "gsap";
 import { cn } from "./utils";
-import { useCanHover } from "./use-can-hover";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   customClassName?: string;
 }
 
 interface CardSwapProps {
-  width?: number;
-  height?: number;
-  cardDistance?: number;
-  verticalDistance?: number;
   delay?: number;
   pauseOnHover?: boolean;
   onCardClick?: (index: number) => void;
-  skewAmount?: number;
-  easing?: "elastic" | "smooth";
   className?: string;
+  viewportClassName?: string;
   children: React.ReactNode;
 }
-
-type Slot = {
-  x: number;
-  y: number;
-  z: number;
-  zIndex: number;
-};
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(({ customClassName, className, ...rest }, ref) => (
   <div
     ref={ref}
     {...rest}
     className={cn(
-      "absolute left-1/2 top-1/2 overflow-hidden rounded-[28px] border border-zinc-800/90 bg-zinc-950/95 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl",
+      "h-full w-full overflow-hidden rounded-[28px] border border-zinc-800/90 bg-zinc-950/95 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl",
       "before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_42%)]",
       customClassName,
       className
@@ -53,227 +39,128 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({ customClassName, cl
 
 Card.displayName = "Card";
 
-const makeSlot = (index: number, distanceX: number, distanceY: number, total: number): Slot => ({
-  x: index * distanceX,
-  y: -index * distanceY,
-  z: -index * distanceX * 1.35,
-  zIndex: total - index,
-});
-
-const placeCard = (element: HTMLDivElement, slot: Slot, skew: number) => {
-  gsap.set(element, {
-    x: slot.x,
-    y: slot.y,
-    z: slot.z,
-    xPercent: -50,
-    yPercent: -50,
-    skewY: skew,
-    transformOrigin: "center center",
-    zIndex: slot.zIndex,
-    force3D: true,
-  });
-};
-
 export default function CardSwap({
-  width = 320,
-  height = 220,
-  cardDistance = 44,
-  verticalDistance = 30,
-  delay = 4200,
+  delay = 5000,
   pauseOnHover = true,
   onCardClick,
-  skewAmount = 4,
-  easing = "elastic",
   className,
+  viewportClassName,
   children,
 }: CardSwapProps) {
-  const canHover = useCanHover();
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const childArray = useMemo(
     () => Children.toArray(children).filter((child): child is React.ReactElement<CardProps> => isValidElement<CardProps>(child)),
     [children]
   );
-  const refs = useMemo(() => childArray.map(() => createRef<HTMLDivElement>()), [childArray.length]);
-  const order = useRef<number[]>([]);
-  const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  const intervalRef = useRef<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const config =
-    easing === "elastic"
-      ? {
-          ease: "elastic.out(0.6,0.82)",
-          dropDuration: 1.55,
-          moveDuration: 1.35,
-          returnDuration: 1.4,
-          promoteOverlap: 0.82,
-          returnDelay: 0.08,
-        }
-      : {
-          ease: "power2.inOut",
-          dropDuration: 0.75,
-          moveDuration: 0.75,
-          returnDuration: 0.7,
-          promoteOverlap: 0.42,
-          returnDelay: 0.16,
-        };
+  const total = childArray.length;
+
+  const goTo = (nextIndex: number) => {
+    if (!total) return;
+    const normalized = (nextIndex + total) % total;
+    setDirection(normalized > activeIndex ? 1 : normalized < activeIndex ? -1 : direction);
+    setActiveIndex(normalized);
+  };
+
+  const goNext = () => {
+    setDirection(1);
+    setActiveIndex((current) => (current + 1) % total);
+  };
+
+  const goPrev = () => {
+    setDirection(-1);
+    setActiveIndex((current) => (current - 1 + total) % total);
+  };
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setPrefersReducedMotion(mediaQuery.matches);
+    if (total < 2) return;
+    if (pauseOnHover && isHovered) return;
 
-    update();
-    mediaQuery.addEventListener("change", update);
+    const intervalId = window.setInterval(() => {
+      setDirection(1);
+      setActiveIndex((current) => (current + 1) % total);
+    }, delay);
 
-    return () => mediaQuery.removeEventListener("change", update);
-  }, []);
+    return () => window.clearInterval(intervalId);
+  }, [delay, isHovered, pauseOnHover, total]);
 
   useEffect(() => {
-    if (!refs.length) return;
+    if (activeIndex > total - 1) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, total]);
 
-    order.current = Array.from({ length: refs.length }, (_, index) => index);
-    let cleanupHover: (() => void) | undefined;
+  if (!total) return null;
 
-    const contextCleanup = gsap.context(() => {
-      refs.forEach((ref, index) => {
-        if (!ref.current) return;
-        placeCard(ref.current, makeSlot(index, cardDistance, verticalDistance, refs.length), skewAmount);
-      });
-
-      if (prefersReducedMotion || refs.length < 2) return;
-
-      const swap = () => {
-        const [front, ...rest] = order.current;
-        if (front === undefined || rest.length === 0) return;
-
-        const frontElement = refs[front]?.current;
-        if (!frontElement) return;
-
-        const timeline = gsap.timeline({
-          onComplete: () => {
-            order.current = [...rest, front];
-          },
-        });
-        timelineRef.current = timeline;
-
-        timeline.to(frontElement, {
-          y: `+=${Math.max(height * 1.4, 320)}`,
-          duration: config.dropDuration,
-          ease: config.ease,
-        });
-
-        timeline.addLabel("promote", `-=${config.dropDuration * config.promoteOverlap}`);
-        rest.forEach((itemIndex, slotIndex) => {
-          const element = refs[itemIndex]?.current;
-          if (!element) return;
-
-          const slot = makeSlot(slotIndex, cardDistance, verticalDistance, refs.length);
-          timeline.set(element, { zIndex: slot.zIndex }, "promote");
-          timeline.to(
-            element,
-            {
-              x: slot.x,
-              y: slot.y,
-              z: slot.z,
-              duration: config.moveDuration,
-              ease: config.ease,
-            },
-            `promote+=${slotIndex * 0.12}`
-          );
-        });
-
-        const lastSlot = makeSlot(refs.length - 1, cardDistance, verticalDistance, refs.length);
-        timeline.addLabel("return", `promote+=${config.moveDuration * config.returnDelay}`);
-        timeline.call(() => {
-          gsap.set(frontElement, { zIndex: lastSlot.zIndex });
-        }, undefined, "return");
-        timeline.to(
-          frontElement,
-          {
-            x: lastSlot.x,
-            y: lastSlot.y,
-            z: lastSlot.z,
-            duration: config.returnDuration,
-            ease: config.ease,
-          },
-          "return"
-        );
-      };
-
-      swap();
-      intervalRef.current = window.setInterval(swap, delay);
-
-      if (pauseOnHover && canHover && containerRef.current) {
-        const pause = () => {
-          timelineRef.current?.pause();
-          if (intervalRef.current) {
-            window.clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-        };
-
-        const resume = () => {
-          timelineRef.current?.play();
-          if (!intervalRef.current) {
-            intervalRef.current = window.setInterval(swap, delay);
-          }
-        };
-
-        const node = containerRef.current;
-        node.addEventListener("mouseenter", pause);
-        node.addEventListener("mouseleave", resume);
-        cleanupHover = () => {
-          node.removeEventListener("mouseenter", pause);
-          node.removeEventListener("mouseleave", resume);
-        };
-      }
-    }, containerRef);
-
-    return () => {
-      if (intervalRef.current) {
-        window.clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-
-      timelineRef.current?.kill();
-      timelineRef.current = null;
-      cleanupHover?.();
-      contextCleanup.revert();
-    };
-  }, [
-    canHover,
-    cardDistance,
-    config.dropDuration,
-    config.ease,
-    config.moveDuration,
-    config.promoteOverlap,
-    config.returnDelay,
-    config.returnDuration,
-    delay,
-    height,
-    pauseOnHover,
-    prefersReducedMotion,
-    refs,
-    skewAmount,
-    verticalDistance,
-  ]);
+  const activeChild = childArray[activeIndex];
 
   return (
     <div
-      ref={containerRef}
-      className={cn("relative h-full w-full overflow-visible [perspective:1100px]", className)}
-      style={{ transformStyle: "preserve-3d" }}
+      className={cn("flex h-full w-full flex-col", className)}
+      onMouseEnter={pauseOnHover ? () => setIsHovered(true) : undefined}
+      onMouseLeave={pauseOnHover ? () => setIsHovered(false) : undefined}
     >
-      {childArray.map((child, index) =>
-        cloneElement(child as React.ReactElement<any>, {
-          key: index,
-          ref: refs[index],
-          style: { width, height, ...(child.props.style ?? {}) },
-          onClick: (event: React.MouseEvent<HTMLDivElement>) => {
-            child.props.onClick?.(event);
-            onCardClick?.(index);
-          },
-        })
+      <div className={cn("relative min-h-[300px] flex-1 overflow-hidden rounded-[28px]", viewportClassName)}>
+        <AnimatePresence custom={direction} initial={false} mode="wait">
+          <motion.div
+            key={activeIndex}
+            custom={direction}
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: direction > 0 ? 54 : -54, scale: 0.98 }}
+            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, x: 0, scale: 1 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: direction > 0 ? -54 : 54, scale: 0.98 }}
+            transition={{ duration: prefersReducedMotion ? 0.18 : 0.42, ease: "easeOut" }}
+            className="absolute inset-0"
+          >
+            {cloneElement(activeChild as React.ReactElement<any>, {
+              style: { width: "100%", height: "100%", ...(activeChild.props.style ?? {}) },
+              onClick: (event: React.MouseEvent<HTMLDivElement>) => {
+                activeChild.props.onClick?.(event);
+                onCardClick?.(activeIndex);
+              },
+            })}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {total > 1 && (
+        <div className="mt-5 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={goPrev}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/80 text-zinc-300 transition-colors hover:border-zinc-700 hover:text-white"
+              aria-label="Previous card"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/80 text-zinc-300 transition-colors hover:border-zinc-700 hover:text-white"
+              aria-label="Next card"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {childArray.map((child, index) => (
+              <button
+                key={`${child.key ?? "card"}-${index}`}
+                type="button"
+                onClick={() => goTo(index)}
+                aria-label={`Go to card ${index + 1}`}
+                className={cn(
+                  "h-2.5 rounded-full transition-all",
+                  index === activeIndex ? "w-8 bg-cyan-300" : "w-2.5 bg-zinc-700 hover:bg-zinc-500"
+                )}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

@@ -68,7 +68,7 @@ const styles = `
 }
 
 .gooey-nav-container nav ul li:focus-within {
-  box-shadow: 0 0 0.5px 1.5px rgba(103, 232, 249, 0.85);
+  box-shadow: 0 0 0.5px 1.5px white;
 }
 
 .gooey-nav-container nav ul li::after {
@@ -76,7 +76,7 @@ const styles = `
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: linear-gradient(180deg, #d9f7ff 0%, #8de0ff 100%);
+  background: white;
   opacity: 0;
   transform: scale(0);
   transition: all 0.3s ease;
@@ -130,14 +130,14 @@ const styles = `
   position: absolute;
   inset: -75px;
   z-index: -2;
-  background: transparent;
+  background: black;
 }
 
 .gooey-nav-container .effect.filter::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, #d9f7ff 0%, #8de0ff 100%);
+  background: white;
   transform: scale(0);
   opacity: 0;
   z-index: -1;

@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { BriefcaseBusiness, GraduationCap, Languages, MapPin, Sparkles } from "lucide-react";
-import { SpotlightCard } from "./ui/SpotlightCard";
 import { useLanguage } from "../i18n/LanguageContext";
 import BorderGlow from "./ui/BorderGlow";
 
@@ -66,7 +65,6 @@ export function QuickFacts() {
             >
               <BorderGlow
                 className="h-full transition-transform duration-300 hover:-translate-y-1"
-                contentClassName="min-h-[124px]"
                 glowColor={fact.glowColor}
                 colors={fact.borderColors}
                 backgroundColor="#060010"
@@ -76,13 +74,9 @@ export function QuickFacts() {
                 coneSpread={25}
                 fillOpacity={0.5}
               >
-                <SpotlightCard
-                  className="h-full border-transparent bg-transparent shadow-none"
-                  innerClassName="p-5 sm:p-5 min-h-[124px]"
-                  spotlightColor="rgba(34, 211, 238, 0.10)"
-                >
+                <div className="p-5 sm:p-5 min-h-[124px] h-full flex flex-col justify-center">
                   <div className="flex flex-col items-start gap-4 min-[720px]:flex-row min-[720px]:items-start">
-                    <div className="p-2.5 rounded-xl bg-zinc-950/90 border border-zinc-800 shadow-inner">
+                    <div className="p-2.5 rounded-xl bg-zinc-950/90 border border-zinc-800 shadow-inner flex items-center justify-center">
                       {fact.icon}
                     </div>
                     <div className="min-w-0 w-full">
@@ -90,7 +84,7 @@ export function QuickFacts() {
                       <p className="text-sm sm:text-base font-semibold text-white leading-snug break-words pr-1">{fact.value}</p>
                     </div>
                   </div>
-                </SpotlightCard>
+                </div>
               </BorderGlow>
             </motion.div>
           ))}

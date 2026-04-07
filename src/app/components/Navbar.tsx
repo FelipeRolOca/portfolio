@@ -133,27 +133,18 @@ export function Navbar() {
                   >
                     {isActive && (
                       <motion.div
-                        layoutId="mobile-nav-bubble"
+                        layoutId="mobile-nav-indicator"
                         transition={{ type: "spring", stiffness: 320, damping: 26 }}
-                        className="absolute left-1/2 top-[5px] h-[56px] w-[56px] -translate-x-1/2 rounded-full border border-cyan-200/50 bg-[linear-gradient(180deg,#d8f8ff_0%,#8de0ff_100%)] shadow-[0_12px_30px_rgba(34,211,238,0.25)]"
-                      />
-                    )}
-
-                    {isActive && (
-                      <motion.div
-                        layoutId="mobile-nav-shadow"
-                        transition={{ type: "spring", stiffness: 320, damping: 26 }}
-                        className="absolute left-1/2 top-0 h-[62px] w-[62px] -translate-x-1/2 rounded-full border-[5px] border-[rgba(8,12,24,0.94)]"
+                        className="absolute top-2 h-1 w-8 rounded-full bg-cyan-400 shadow-[0_2px_10px_rgba(34,211,238,0.6)]"
                       />
                     )}
 
                     <div className="relative z-10 flex flex-col items-center justify-center">
                       <Icon
-                        className={`h-[20px] w-[20px] transition-all ${
-                          isActive ? "text-slate-950 -translate-y-2 scale-105" : "translate-y-1 text-zinc-500"
+                        className={`h-[22px] w-[22px] transition-all duration-300 ${
+                          isActive ? "text-cyan-400 scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)] translate-y-1" : "text-zinc-500 hover:text-zinc-300"
                         }`}
                       />
-                      {!isActive && <span className="mt-2 h-1.5 w-1.5 rounded-full bg-transparent" />}
                       <span className="sr-only">{link.name}</span>
                     </div>
                   </button>

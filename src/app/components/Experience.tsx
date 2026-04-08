@@ -38,7 +38,6 @@ export function Experience() {
         outcome: t.experience.job2Outcome
       }
     },
-    },
   ];
 
   return (

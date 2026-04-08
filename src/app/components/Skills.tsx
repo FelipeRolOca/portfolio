@@ -26,8 +26,75 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
+interface SkillCategory {
+  title: string;
+  icon: JSX.Element;
+  skills: string[];
+  usageNote: string;
+}
+
+function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number; t: any }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <motion.div 
+      variants={itemVariants}
+      className="relative overflow-visible group"
+    >
+      <SpotlightCard
+        className="overflow-visible group relative h-full flex flex-col"
+        innerClassName="p-6 flex flex-col h-full"
+      >
+        <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
+        <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
+          <div className="p-2 bg-zinc-800 rounded-lg group-hover:scale-110 transition-transform">
+            {category.icon}
+          </div>
+          <h4 className="text-lg font-bold text-white">{category.title}</h4>
+        </div>
+        
+        <ul className="space-y-3 mb-6">
+          {category.skills.map((skill, sIdx) => (
+            <li key={sIdx} className="flex items-center gap-2 text-zinc-400">
+              <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
+              <span className="font-medium hover:text-zinc-200 transition-colors">{skill}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto">
+          <div className="pt-4 border-t border-zinc-800/80">
+            <button
+              type="button"
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors"
+            >
+              {t.skills.howIUseThis}
+              <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="mt-4 text-[13px] text-zinc-300 font-medium leading-relaxed">
+                    {category.usageNote}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </SpotlightCard>
+    </motion.div>
+  );
+}
+
 export function Skills() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { t } = useLanguage();
 
   const skillCategories = [
@@ -76,61 +143,7 @@ export function Skills() {
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl lg:max-w-none mx-auto items-start"
         >
           {skillCategories.map((category, idx) => (
-            <motion.div 
-              key={idx}
-              variants={itemVariants}
-              className="relative overflow-visible group"
-            >
-              <SpotlightCard
-                className="overflow-visible group relative h-full"
-                innerClassName="p-6"
-              >
-                <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
-                <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
-                  <div className="p-2 bg-zinc-800 rounded-lg group-hover:scale-110 transition-transform">
-                    {category.icon}
-                  </div>
-                  <h4 className="text-lg font-bold text-white">{category.title}</h4>
-                </div>
-                
-                <ul className="space-y-3">
-                  {category.skills.map((skill, sIdx) => (
-                    <li key={sIdx} className="flex items-center gap-2 text-zinc-400">
-                      <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-                      <span className="font-medium hover:text-zinc-200 transition-colors">{skill}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto pt-6">
-                  <div className="pt-4 border-t border-zinc-800/80">
-                    <button
-                      type="button"
-                      onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                      className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors"
-                    >
-                      {t.skills.howIUseThis}
-                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`} />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {openIndex === idx && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="overflow-hidden"
-                        >
-                          <p className="mt-4 text-sm text-zinc-400 leading-relaxed italic">
-                            {category.usageNote}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              </SpotlightCard>
-            </motion.div>
+            <SkillCard key={idx} category={category} idx={idx} t={t} />
           ))}
         </motion.div>
 

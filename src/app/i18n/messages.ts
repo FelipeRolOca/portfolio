@@ -97,7 +97,7 @@ export const messages = {
       ],
       job2Resp: ["UI structure and content organization", "Mobile optimization and site setup"],
       job2Outcome: "Delivered a business-facing website with clearer presentation and better usability.",
-
+    },
     projects: {
       sectionSubtitle: "My Work",
       sectionTitle: "Featured Projects",
@@ -257,7 +257,7 @@ export const messages = {
       job2Resp: ["Estructuras de UI e información", "Optimización móvil y puesta en marcha"],
       job2Outcome: "Entregué un portal de negocios con una presentación clara y alta usabilidad.",
 
-
+    },
     projects: {
       sectionSubtitle: "Mi Trabajo",
       sectionTitle: "Proyectos Destacados",

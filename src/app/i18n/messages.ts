@@ -97,19 +97,7 @@ export const messages = {
       ],
       job2Resp: ["UI structure and content organization", "Mobile optimization and site setup"],
       job2Outcome: "Delivered a business-facing website with clearer presentation and better usability.",
-      job3Role: "Administrative Assistant",
-      job3Company: "Corporate Services",
-      job3Period: "2025 - 2026",
-      job3Location: "Office",
-      job3Desc: "Managed data entry, organized employee payroll, and streamlined internal communication processes.",
-      job3Bullets: [
-        "Developed automated scripts to reduce manual data handling time",
-        "Managed employee payroll and administrative documentation",
-        "Improved internal communication and data organization workflows"
-      ],
-      job3Resp: ["Payroll platform updates", "Document organization", "Communication support"],
-      job3Outcome: "Helped keep operational processes more ordered and easier to follow."
-    },
+
     projects: {
       sectionSubtitle: "My Work",
       sectionTitle: "Featured Projects",
@@ -269,19 +257,7 @@ export const messages = {
       job2Resp: ["Estructuras de UI e información", "Optimización móvil y puesta en marcha"],
       job2Outcome: "Entregué un portal de negocios con una presentación clara y alta usabilidad.",
 
-      job3Role: "Asistente Administrativo",
-      job3Company: "Servicios Corporativos",
-      job3Period: "2025 - 2026",
-      job3Location: "Oficina",
-      job3Desc: "Gestioné el ingreso de datos, organicé la nómina y agilicé procesos de comunicación interna.",
-      job3Bullets: [
-        "Desarrollé scripts para reducir el tiempo de gestión manual en la carga de datos",
-        "Gestión de nómina de empleados y documentación administrativa",
-        "Mejora en la comunicación interna y flujos de organización"
-      ],
-      job3Resp: ["Actualizaciones de plataforma", "Organización de documentos", "Soporte comunicacional"],
-      job3Outcome: "Ayudé a mantener procesos operativos más ordenados y fáciles de seguir."
-    },
+
     projects: {
       sectionSubtitle: "Mi Trabajo",
       sectionTitle: "Proyectos Destacados",

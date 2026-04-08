@@ -38,18 +38,6 @@ export function Experience() {
         outcome: t.experience.job2Outcome
       }
     },
-    {
-      role: t.experience.job3Role,
-      company: t.experience.job3Company,
-      period: t.experience.job3Period,
-      location: t.experience.job3Location,
-      description: t.experience.job3Desc,
-      bullets: t.experience.job3Bullets,
-      details: {
-        responsibilities: t.experience.job3Resp,
-        tools: ["Administrative platforms", "Digital documentation"],
-        outcome: t.experience.job3Outcome
-      }
     },
   ];
 

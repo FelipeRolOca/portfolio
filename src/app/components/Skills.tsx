@@ -1,17 +1,14 @@
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { motion } from "motion/react";
 import { 
   Code, 
   Globe, 
   Database, 
-  Wrench,
-  Zap,
-  ChevronDown
+  Wrench, 
+  Zap 
 } from "lucide-react";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
-import { useCanHover } from "./ui/use-can-hover";
 import { useLanguage } from "../i18n/LanguageContext";
 
 const containerVariants = {
@@ -28,8 +25,6 @@ const itemVariants = {
 };
 
 export function Skills() {
-  const canHover = useCanHover();
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { t } = useLanguage();
 
   const skillCategories = [
@@ -82,12 +77,10 @@ export function Skills() {
               key={idx}
               variants={itemVariants}
               className="relative overflow-visible group"
-              onMouseEnter={canHover ? () => setOpenIndex(idx) : undefined}
-              onMouseLeave={canHover ? () => setOpenIndex(current => (current === idx ? null : current)) : undefined}
             >
               <SpotlightCard
                 className="overflow-visible group relative h-full"
-                innerClassName={`p-6 ${canHover ? "pb-16" : ""}`}
+                innerClassName="p-6"
               >
                 <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
                 <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
@@ -106,51 +99,16 @@ export function Skills() {
                   ))}
                 </ul>
 
-                <div className="mt-6 pt-4 border-t border-zinc-800/80">
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                    className="w-full flex items-center justify-between text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                  >
-                    <span>{t.skills.howIUseThis}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`} />
-                  </button>
+                <div className="mt-auto pt-6">
+                  <div className="pt-4 border-t border-zinc-800/80">
+                    <p className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-2">
+                      {t.skills.howIUseThis}
+                    </p>
+                    <p className="text-sm text-zinc-400 leading-relaxed italic">
+                      {category.usageNote}
+                    </p>
+                  </div>
                 </div>
-
-                {canHover ? (
-                  <AnimatePresence initial={false}>
-                    {openIndex === idx && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 12 }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="pointer-events-none absolute left-4 right-4 -bottom-24"
-                        style={{ zIndex: 1 }}
-                      >
-                        <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-lg">
-                          {category.usageNote}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                ) : (
-                  <AnimatePresence initial={false}>
-                    {openIndex === idx && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                        animate={{ height: "auto", opacity: 1, marginTop: 16 }}
-                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 p-4 text-sm leading-relaxed text-zinc-300 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
-                          {category.usageNote}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
               </SpotlightCard>
             </motion.div>
           ))}

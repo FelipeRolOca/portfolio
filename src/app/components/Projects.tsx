@@ -17,7 +17,6 @@ const itemVariants = {
 export function Projects() {
   const canHover = useCanHover();
   const [openFeaturedIndex, setOpenFeaturedIndex] = useState<number | null>(null);
-  const [openOtherIndex, setOpenOtherIndex] = useState<number | null>(null);
   const { t } = useLanguage();
 
   const featuredProjects = [
@@ -58,23 +57,29 @@ export function Projects() {
         { icon: <Settings className="w-4 h-4" />, text: t.projects.p2H3 },
         { icon: <ShieldCheck className="w-4 h-4" />, text: t.projects.p2H4 },
       ]
-    }
-  ];
-
-  const otherProjects = [
+    },
     {
       title: "JJ Servicios Empresariales",
+      type: t.projects.p1Type,
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
       description: t.projects.p3Desc,
       tech: [t.projects.p3Tech1, t.projects.p3Tech2, t.projects.p3Tech3],
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
       liveUrl: "https://jjserviciosempresarialesrrhh.com/",
       meta: {
         role: t.projects.p3MetaRole,
         problem: t.projects.p3MetaProblem,
         value: t.projects.p3MetaValue
-      }
+      },
+      highlights: [
+        { icon: <Layout className="w-4 h-4" />, text: t.projects.p3Tech1 },
+        { icon: <Zap className="w-4 h-4" />, text: t.projects.p3Tech2 },
+        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p3Tech3 },
+        { icon: <Settings className="w-4 h-4" />, text: "UI / UX" },
+      ]
     }
   ];
+
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -205,118 +210,7 @@ export function Projects() {
               </SpotlightCard>
             </motion.div>
           ))}
-        </div>
 
-        <div className="text-center mb-16 relative z-20">
-          <TextReveal text={t.projects.moreProjectsTitle} className="text-3xl font-bold text-white justify-center" />
-        </div>
-
-        {/* Other Projects */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-1 gap-8 max-w-2xl mx-auto lg:max-w-none"
-        >
-          {otherProjects.map((project, idx) => (
-            <motion.div 
-              key={idx}
-              variants={itemVariants}
-              className="relative overflow-visible"
-              onMouseEnter={canHover ? () => setOpenOtherIndex(idx) : undefined}
-              onMouseLeave={canHover ? () => setOpenOtherIndex(current => (current === idx ? null : current)) : undefined}
-            >
-              <SpotlightCard 
-                className="overflow-visible group relative h-full"
-                innerClassName="lg:grid lg:grid-cols-3"
-              >
-                <BorderBeam size={300} duration={10} delay={idx * 0.8} borderWidth={5} offset={-12} />
-                <div className="h-48 lg:h-auto overflow-hidden relative">
-                  <div className="absolute inset-0 bg-zinc-950/20 group-hover:bg-transparent transition-colors z-10" />
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-8 lg:col-span-2 flex flex-col justify-center">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">{project.title}</h3>
-                    <Magnetic>
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-500 hover:text-white transition-colors"
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                      </a>
-                    </Magnetic>
-                  </div>
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tech.map((tItem, i) => (
-                      <span key={i} className="text-xs font-mono text-zinc-400 bg-zinc-950 px-2 py-1 rounded">
-                        {tItem}
-                      </span>
-                    ))}
-                  </div>
-                  <Magnetic strength={0.2}>
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium text-sm"
-                    >
-                      {t.projects.visitWebsite} <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </Magnetic>
-
-                  <div className="mt-5 pt-4 border-t border-zinc-800/80">
-                    <button
-                      type="button"
-                      onClick={() => setOpenOtherIndex(openOtherIndex === idx ? null : idx)}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                    >
-                      {openOtherIndex === idx ? t.projects.hideProjectDetails : t.projects.moreDetails}
-                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openOtherIndex === idx ? "rotate-180" : ""}`} />
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {openOtherIndex === idx && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-4 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 space-y-3">
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.role}</p>
-                              <p className="text-sm text-white">{project.meta.role}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.problemSolved}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.whyItMatters}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              </SpotlightCard>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

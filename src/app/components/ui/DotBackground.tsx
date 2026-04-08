@@ -111,6 +111,11 @@ export const DotBackground = () => {
     };
 
     const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("button, a, input, textarea, select, [role='button'], nav, .prevent-dot-wave")) {
+        return;
+      }
+
       wavesRef.current.push({
         x: e.clientX,
         y: e.clientY,

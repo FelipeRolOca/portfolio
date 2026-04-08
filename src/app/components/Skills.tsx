@@ -1,10 +1,12 @@
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
 import { 
   Code, 
   Globe, 
   Database, 
   Wrench, 
-  Zap 
+  Zap,
+  ChevronDown
 } from "lucide-react";
 import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
@@ -25,6 +27,7 @@ const itemVariants = {
 };
 
 export function Skills() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { t } = useLanguage();
 
   const skillCategories = [
@@ -101,12 +104,29 @@ export function Skills() {
 
                 <div className="mt-auto pt-6">
                   <div className="pt-4 border-t border-zinc-800/80">
-                    <p className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-2">
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                      className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors"
+                    >
                       {t.skills.howIUseThis}
-                    </p>
-                    <p className="text-sm text-zinc-400 leading-relaxed italic">
-                      {category.usageNote}
-                    </p>
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`} />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {openIndex === idx && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <p className="mt-4 text-sm text-zinc-400 leading-relaxed italic">
+                            {category.usageNote}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </SpotlightCard>

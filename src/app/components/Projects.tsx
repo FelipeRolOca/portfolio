@@ -210,7 +210,7 @@ export function Projects() {
               </SpotlightCard>
             </motion.div>
           ))}
-
+        </div>
       </div>
     </section>
   );

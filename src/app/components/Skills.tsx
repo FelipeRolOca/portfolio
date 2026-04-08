@@ -70,7 +70,7 @@ export function Skills() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid lg:grid-cols-4 gap-6 max-w-xl lg:max-w-none mx-auto"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl lg:max-w-none mx-auto"
         >
           {skillCategories.map((category, idx) => (
             <motion.div 

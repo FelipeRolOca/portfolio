@@ -81,26 +81,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden isolate">
-      <div className="absolute inset-0 z-0 hidden md:block opacity-60">
-        <Antigravity
-          count={120}
-          magnetRadius={7}
-          ringRadius={8}
-          waveSpeed={0.3}
-          waveAmplitude={0.6}
-          particleSize={0.9}
-          lerpSpeed={0.03}
-          color="#3b82f6"
-          autoAnimate
-          particleVariance={0.6}
-          rotationSpeed={0}
-          depthFactor={0.8}
-          pulseSpeed={1}
-          particleShape="sphere"
-          fieldStrength={4}
-        />
-      </div>
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.04)_0%,rgba(9,9,11,0.08)_35%,rgba(9,9,11,0.44)_100%)] md:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(9,9,11,0.08)_35%,rgba(9,9,11,0.44)_100%)]" />
+
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
         <div className="text-center mb-16 relative z-20">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.contact.sectionSubtitle}</h2>

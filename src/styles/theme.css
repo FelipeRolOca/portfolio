@@ -118,11 +118,24 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --animate-border-beam: border-beam var(--duration) infinite linear;
+  --animate-tilt: tilt 10s infinite linear;
 }
 
 @keyframes border-beam {
   100% {
     offset-distance: 100%;
+  }
+}
+
+@keyframes tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
   }
 }
 

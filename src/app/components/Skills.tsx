@@ -64,12 +64,16 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
               ))}
             </ul>
 
-            <div className="mt-auto">
+            <div className="mt-auto relative z-50" style={{ transform: 'translateZ(50px)', transformStyle: 'preserve-3d' }}>
               <div className="pt-4 border-t border-zinc-800/80">
                 <button
                   type="button"
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(!isOpen);
+                  }}
+                  style={{ transform: 'translateZ(60px)' }}
+                  className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors pointer-events-auto"
                 >
                   {t.skills.howIUseThis}
                   <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />

@@ -61,13 +61,13 @@ export function Hero() {
                 className="w-full sm:w-auto min-w-[240px]"
                 variant="default"
                 size="lg"
-                glow={true}
+                glow={false}
                 textEffect="normal"
                 uppercase={true}
                 rounded="custom"
-                shimmerColor="rgba(59, 130, 246, 0.4)"
-                shimmerSize="0.1em"
-                shimmerDuration="4s"
+                shimmerColor="rgba(59, 130, 246, 0.1)"
+                shimmerSize="0.04em"
+                shimmerDuration="5s"
                 borderRadius="100px"
                 background="rgba(0, 0, 0, 1)"
               >
@@ -80,13 +80,13 @@ export function Hero() {
                 className="w-full sm:w-auto min-w-[240px]"
                 variant="outline"
                 size="lg"
-                glow={true}
+                glow={false}
                 textEffect="normal"
                 uppercase={true}
                 rounded="custom"
-                shimmerColor="rgba(6, 182, 212, 0.6)"
-                shimmerSize="0.12em"
-                shimmerDuration="3.5s"
+                shimmerColor="rgba(6, 182, 212, 0.1)"
+                shimmerSize="0.04em"
+                shimmerDuration="6s"
                 borderRadius="100px"
                 background="rgba(0, 0, 0, 1)"
               >

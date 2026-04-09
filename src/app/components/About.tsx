@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { BookOpen, Lightbulb, Users } from "lucide-react";
-import { SpotlightCard } from "./ui/SpotlightCard";
+import GlowingBorderCard from "./ui/glowingbordercard";
 import { TextReveal } from "./ui/TextReveal";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -49,33 +49,45 @@ export function About() {
 
           <motion.div variants={containerVariants} className="grid sm:grid-cols-2 gap-6 relative z-10">
             <motion.div variants={itemVariants}>
-              <SpotlightCard className="p-6 h-full">
+              <GlowingBorderCard 
+                className="h-full"
+                fromColor="blue-600"
+                toColor="blue-400"
+              >
                 <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
                   <BookOpen className="w-6 h-6 text-blue-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{t.about.card1Title}</h3>
                 <p className="text-zinc-400 text-sm">{t.about.card1Desc}</p>
-              </SpotlightCard>
+              </GlowingBorderCard>
             </motion.div>
 
             <motion.div variants={itemVariants} className="sm:mt-8">
-              <SpotlightCard className="p-6 h-full">
+              <GlowingBorderCard 
+                className="h-full"
+                fromColor="cyan-600"
+                toColor="cyan-400"
+              >
                 <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
                   <Lightbulb className="w-6 h-6 text-cyan-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{t.about.card2Title}</h3>
                 <p className="text-zinc-400 text-sm">{t.about.card2Desc}</p>
-              </SpotlightCard>
+              </GlowingBorderCard>
             </motion.div>
 
             <motion.div variants={itemVariants} className="sm:col-span-2">
-              <SpotlightCard className="p-6 h-full">
+              <GlowingBorderCard 
+                className="h-full"
+                fromColor="emerald-600"
+                toColor="emerald-400"
+              >
                 <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
                   <Users className="w-6 h-6 text-emerald-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{t.about.card3Title}</h3>
                 <p className="text-zinc-400 text-sm">{t.about.card3Desc}</p>
-              </SpotlightCard>
+              </GlowingBorderCard>
             </motion.div>
           </motion.div>
         </motion.div>

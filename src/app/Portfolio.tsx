@@ -9,6 +9,7 @@ import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { DotBackground } from "./components/ui/DotBackground";
 import { CustomCursor } from "./components/ui/CustomCursor";
+import { LaptopIntro } from "./components/ui/LaptopIntro";
 import { useEffect } from "react";
 
 export function Portfolio() {
@@ -22,6 +23,7 @@ export function Portfolio() {
 
   return (
     <div className="min-h-screen bg-zinc-950 font-sans selection:bg-blue-500/30 selection:text-blue-200 relative overflow-x-hidden pb-32 md:pb-0">
+      <LaptopIntro />
       <DotBackground />
       <CustomCursor />
       <Navbar />

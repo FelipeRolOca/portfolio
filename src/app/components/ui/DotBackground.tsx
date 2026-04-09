@@ -63,15 +63,15 @@ export const DotBackground = () => {
         const dy = my - dot.y;
         const mouseDistance = Math.sqrt(dx * dx + dy * dy);
 
-        let size = 2.5;
-        let opacity = 0.28;
+        let size = 1.5;
+        let opacity = 0.13;
         let r = 161, g = 161, b = 170; // zinc-400
 
         // Mouse interaction
         if (mouseDistance < mouseRadius) {
           const factor = 1 - mouseDistance / mouseRadius;
           size += factor * 3;
-          opacity = 0.28 + factor * 0.55;
+          opacity = 0.13 + factor * 0.65;
           r = 59; g = 130; b = 246;
         }
 

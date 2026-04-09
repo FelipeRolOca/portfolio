@@ -2,7 +2,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { ExternalLink, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck, ChevronDown } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
@@ -113,10 +112,10 @@ export function Projects() {
               onMouseLeave={canHover ? () => setOpenFeaturedIndex(current => (current === index ? null : current)) : undefined}
             >
               <SpotlightCard 
-                className="overflow-visible border border-zinc-800 group hover:border-zinc-700 transition-colors shadow-2xl relative"
+                className="border border-zinc-800 group hover:border-zinc-700 transition-colors shadow-2xl relative"
                 innerClassName="grid lg:grid-cols-2"
               >
-                <BorderBeam size={500} duration={12} delay={index * 0.5} borderWidth={8} offset={-18} />
+
                 {/* Image Side */}
                 <div className={`relative h-64 lg:h-auto overflow-hidden ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
                   <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />

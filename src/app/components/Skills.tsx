@@ -8,7 +8,6 @@ import {
   Zap,
   ChevronDown
 } from "lucide-react";
-import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -42,10 +41,10 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
       className="relative overflow-visible group"
     >
       <SpotlightCard
-        className="overflow-visible group relative h-full flex flex-col"
+        className="group relative h-full flex flex-col"
         innerClassName="p-6 flex flex-col h-full"
       >
-        <BorderBeam size={150} duration={8} delay={idx * 0.5} borderWidth={4} offset={-8} />
+
         <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
           <div className="p-2 bg-zinc-800 rounded-lg group-hover:scale-110 transition-transform">
             {category.icon}

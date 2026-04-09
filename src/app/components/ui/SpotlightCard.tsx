@@ -47,13 +47,16 @@ export const SpotlightCard = ({
       )}
       {...props}
     >
-      <motion.div
-        className={cn(
-          "pointer-events-none absolute -inset-px z-0 transition-opacity duration-300",
-          canHover ? "opacity-0 group-hover:opacity-100" : "hidden"
-        )}
-        style={canHover ? { background } : undefined}
-      />
+      {/* Spotlight highlight layer clipped to the card's rounded corners */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit] z-0">
+        <motion.div
+          className={cn(
+            "absolute -inset-px transition-opacity duration-300",
+            canHover ? "opacity-0 group-hover:opacity-100" : "hidden"
+          )}
+          style={canHover ? { background } : undefined}
+        />
+      </div>
       <div className={cn("relative z-10 w-full h-full", innerClassName)}>{children}</div>
     </div>
   );

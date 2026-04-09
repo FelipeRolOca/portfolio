@@ -45,7 +45,7 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
       <CardTilt tiltMaxAngle={8} scale={1.03} className="w-full h-full">
         <CardTiltContent>
           <SpotlightCard
-            className="group relative h-full flex flex-col"
+            className="group relative h-full flex flex-col overflow-visible"
             innerClassName="p-6 flex flex-col h-full"
           >
             <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">

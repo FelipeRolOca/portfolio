@@ -51,8 +51,8 @@ export function About() {
             <motion.div variants={itemVariants}>
               <GlowingBorderCard 
                 className="h-full"
-                fromColor="blue-600"
-                toColor="blue-400"
+                fromColor="from-blue-600"
+                toColor="to-blue-400"
               >
                 <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
                   <BookOpen className="w-6 h-6 text-blue-400" />
@@ -65,8 +65,8 @@ export function About() {
             <motion.div variants={itemVariants} className="sm:mt-8">
               <GlowingBorderCard 
                 className="h-full"
-                fromColor="cyan-600"
-                toColor="cyan-400"
+                fromColor="from-cyan-600"
+                toColor="to-cyan-400"
               >
                 <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
                   <Lightbulb className="w-6 h-6 text-cyan-400" />
@@ -79,8 +79,8 @@ export function About() {
             <motion.div variants={itemVariants} className="sm:col-span-2">
               <GlowingBorderCard 
                 className="h-full"
-                fromColor="emerald-600"
-                toColor="emerald-400"
+                fromColor="from-emerald-600"
+                toColor="to-emerald-400"
               >
                 <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
                   <Users className="w-6 h-6 text-emerald-400" />

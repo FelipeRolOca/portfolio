@@ -18,15 +18,20 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.03,
+        staggerChildren: 0.08,
         delayChildren: delay,
       },
     },
   };
 
-  const childVariants = {
-    hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  const wordVariants = {
+    hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.35, ease: "easeOut" },
+    },
   };
 
   return (
@@ -36,20 +41,12 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className={cn("inline-flex flex-wrap items-center", className)}
+      className={cn("inline-flex flex-wrap items-center gap-x-[0.25em]", className)}
     >
       {words.map((word, wordIndex) => (
-        <span key={wordIndex} className="inline-flex whitespace-nowrap mr-[0.25em]">
-          {word.split("").map((char, charIndex) => (
-            <motion.span
-              key={charIndex}
-              variants={childVariants}
-              transition={{ duration: 0.4 }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </span>
+        <motion.span key={wordIndex} variants={wordVariants} className="whitespace-nowrap">
+          {word}
+        </motion.span>
       ))}
     </motion.span>
   );

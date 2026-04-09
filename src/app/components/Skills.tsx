@@ -1,14 +1,13 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { 
-  Code, 
-  Globe, 
-  Database, 
-  Wrench, 
+import {
+  Code,
+  Globe,
+  Database,
+  Wrench,
   Zap,
   ChevronDown
 } from "lucide-react";
-import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { CardTilt, CardTiltContent } from "./ui/card-tilt";
 import { TextReveal } from "./ui/TextReveal";
@@ -38,7 +37,7 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       variants={itemVariants}
       className="relative group h-full"
     >
@@ -54,7 +53,7 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
               </div>
               <h4 className="text-lg font-bold text-white">{category.title}</h4>
             </div>
-            
+
             <ul className="space-y-3 mb-6">
               {category.skills.map((skill, sIdx) => (
                 <li key={sIdx} className="flex items-center gap-2 text-zinc-400">
@@ -64,7 +63,7 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
               ))}
             </ul>
 
-            <div className="mt-auto relative z-50" style={{ transform: 'translateZ(50px)', transformStyle: 'preserve-3d' }}>
+            <div className="mt-auto relative z-50">
               <div className="pt-4 border-t border-zinc-800/80">
                 <button
                   type="button"
@@ -72,8 +71,7 @@ function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number;
                     e.stopPropagation();
                     setIsOpen(!isOpen);
                   }}
-                  style={{ transform: 'translateZ(60px)' }}
-                  className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors pointer-events-auto"
+                  className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors pointer-events-auto cursor-pointer"
                 >
                   {t.skills.howIUseThis}
                   <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
@@ -143,7 +141,7 @@ export function Skills() {
           <TextReveal text={t.skills.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -156,7 +154,7 @@ export function Skills() {
         </motion.div>
 
         {/* Additional Skills Note */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}

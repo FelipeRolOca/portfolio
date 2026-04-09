@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useMotionValue, useTransform } from "motion/react";
+import React, { useRef, useEffect } from "react";
 import { cn } from "./utils";
 import { useCanHover } from "./use-can-hover";
 
@@ -21,42 +20,49 @@ export const SpotlightCard = ({
 }: SpotlightCardProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canHover = useCanHover();
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  useEffect(() => {
     if (!canHover || !containerRef.current) return;
-    const { left, top } = containerRef.current.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
-  };
 
-  const background = useTransform(
-    [mouseX, mouseY],
-    ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, ${spotlightColor}, transparent 80%)`
-  );
+    const container = containerRef.current;
+    let rafId: number;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      rafId = requestAnimationFrame(() => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        container.style.setProperty("--mouse-x", `${x}px`);
+        container.style.setProperty("--mouse-y", `${y}px`);
+      });
+    };
+
+    container.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      cancelAnimationFrame(rafId);
+      container.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [canHover]);
 
   return (
     <div
       ref={containerRef}
-      onMouseMove={canHover ? handleMouseMove : undefined}
       className={cn(
         "group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 transition-colors hover:border-zinc-700",
         (className || "").includes("overflow-visible") ? "overflow-visible" : "overflow-hidden",
         className
       )}
+      style={{
+        ["--spotlight-color" as any]: spotlightColor,
+      }}
       {...props}
     >
-      {/* Spotlight highlight layer clipped to the card's rounded corners */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit] z-0">
-        <motion.div
-          className={cn(
-            "absolute -inset-px transition-opacity duration-300",
-            canHover ? "opacity-0 group-hover:opacity-100" : "hidden"
-          )}
-          style={canHover ? { background } : undefined}
-        />
-      </div>
+      <div 
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+        style={{
+          background: `radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), var(--spotlight-color), transparent 80%)`,
+        }}
+      />
       <div className={cn("relative z-10 w-full h-full", innerClassName)}>{children}</div>
     </div>
   );

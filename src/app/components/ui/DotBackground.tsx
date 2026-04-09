@@ -12,7 +12,7 @@ interface Wave {
 
 export const DotBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
+  const mouseRef = useRef({ x: -9999, y: -9999 });
   const wavesRef = useRef<Wave[]>([]);
 
   useEffect(() => {
@@ -25,11 +25,12 @@ export const DotBackground = () => {
     let animationFrameId: number;
     let width = window.innerWidth;
     let height = window.innerHeight;
+    let mousePending = false;
 
-    const dots: { x: number; y: number; baseSize: number }[] = [];
-    const spacing = 35;
-    const mouseRadius = 150; // Increased mouse radius for better visibility
-    const waveWidth = 100;
+    const dots: { x: number; y: number }[] = [];
+    const spacing = 50; // was 35 — reduces dot count by ~50%
+    const mouseRadius = 120;
+    const waveWidth = 80;
 
     const init = () => {
       width = window.innerWidth;
@@ -40,7 +41,7 @@ export const DotBackground = () => {
       dots.length = 0;
       for (let x = spacing / 2; x < width; x += spacing) {
         for (let y = spacing / 2; y < height; y += spacing) {
-          dots.push({ x, y, baseSize: 1.2 }); // Increased base size
+          dots.push({ x, y });
         }
       }
     };
@@ -49,98 +50,88 @@ export const DotBackground = () => {
       ctx.clearRect(0, 0, width, height);
 
       const now = Date.now();
-      // Update waves
       wavesRef.current = wavesRef.current.filter((wave) => {
-        const elapsed = now - wave.startTime;
-        wave.radius = elapsed * 0.5; // Wave speed
+        wave.radius = (now - wave.startTime) * 0.45;
         return wave.radius < wave.maxRadius;
       });
 
-      dots.forEach((dot) => {
-        const dx = mouseRef.current.x - dot.x;
-        const dy = mouseRef.current.y - dot.y;
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+
+      for (const dot of dots) {
+        const dx = mx - dot.x;
+        const dy = my - dot.y;
         const mouseDistance = Math.sqrt(dx * dx + dy * dy);
 
-        let size = dot.baseSize;
-        let opacity = 0.25; // Increased base opacity
-        let color = "rgba(161, 161, 170"; // zinc-400
-        let offsetX = 0;
-        let offsetY = 0;
+        let size = 1.2;
+        let opacity = 0.22;
+        let r = 161, g = 161, b = 170; // zinc-400
 
         // Mouse interaction
         if (mouseDistance < mouseRadius) {
           const factor = 1 - mouseDistance / mouseRadius;
-          size += factor * 2.5;
-          opacity = 0.25 + factor * 0.5;
-          color = "59, 130, 246"; // blue-500
+          size += factor * 2;
+          opacity = 0.22 + factor * 0.5;
+          r = 59; g = 130; b = 246;
         }
 
-        // Wave interaction
-        wavesRef.current.forEach((wave) => {
+        // Wave interaction (no displacement — saves per-dot trig)
+        for (const wave of wavesRef.current) {
           const wdx = dot.x - wave.x;
           const wdy = dot.y - wave.y;
           const waveDistance = Math.sqrt(wdx * wdx + wdy * wdy);
-
           if (waveDistance < wave.radius && waveDistance > wave.radius - waveWidth) {
-            const factor = 1 - (wave.radius - waveDistance) / waveWidth;
-            const intensity = Math.sin(factor * Math.PI); // Smooth pulse
-            
-            size += intensity * 4;
-            opacity = Math.min(1, opacity + intensity * 0.6);
-            color = "59, 130, 246"; // blue-500
-
-            // Displacement effect
-            const push = intensity * 15;
-            const angle = Math.atan2(wdy, wdx);
-            offsetX += Math.cos(angle) * push;
-            offsetY += Math.sin(angle) * push;
+            const intensity = Math.sin(((wave.radius - waveDistance) / waveWidth) * Math.PI);
+            size += intensity * 3;
+            opacity = Math.min(0.9, opacity + intensity * 0.5);
+            r = 59; g = 130; b = 246;
           }
-        });
+        }
 
         ctx.beginPath();
-        ctx.arc(dot.x + offsetX, dot.y + offsetY, size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${color}, ${opacity})`;
+        ctx.arc(dot.x, dot.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${opacity})`;
         ctx.fill();
-      });
+      }
 
       animationFrameId = requestAnimationFrame(draw);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      // Throttle: only update between frames
+      if (!mousePending) {
+        mousePending = true;
+        requestAnimationFrame(() => {
+          mouseRef.current = { x: e.clientX, y: e.clientY };
+          mousePending = false;
+        });
+      }
     };
 
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest("button, a, input, textarea, select, [role='button'], nav, .prevent-dot-wave")) {
-        return;
-      }
-
+      if (target.closest("button, a, input, textarea, select, [role='button'], nav")) return;
       wavesRef.current.push({
         x: e.clientX,
         y: e.clientY,
         radius: 0,
-        maxRadius: Math.max(width, height) * 1.5,
+        maxRadius: Math.max(width, height),
         startTime: Date.now(),
       });
-    };
-
-    const handleResize = () => {
-      init();
     };
 
     init();
     draw();
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mousedown", handleClick);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mousedown", handleClick, { passive: true });
+    window.addEventListener("resize", init);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleClick);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", init);
     };
   }, []);
 
@@ -148,7 +139,7 @@ export const DotBackground = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ background: "transparent" }}
+      style={{ background: "transparent", willChange: "contents" }}
     />
   );
 };

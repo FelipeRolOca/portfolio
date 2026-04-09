@@ -5,7 +5,6 @@ import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { useLanguage } from "../i18n/LanguageContext";
-import Antigravity from "./ui/Antigravity";
 
 export function Contact() {
   const [formData, setFormData] = useState({

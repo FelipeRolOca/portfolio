@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { Calendar, MapPin, ChevronDown } from "lucide-react";
-import { BorderBeam } from "./ui/BorderBeam";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Parallax } from "./ui/Parallax";
@@ -75,7 +74,6 @@ export function Experience() {
                   className="overflow-visible group relative"
                   innerClassName="p-6"
                 >
-                  <BorderBeam size={250} duration={10} delay={idx * 0.5} borderWidth={6} offset={-15} />
                   <h4 className="text-xl font-bold text-white mb-2">{exp.role}</h4>
                   <p className="text-sm font-medium text-blue-400/90 mb-3">{exp.company}</p>
                   <div className={`flex flex-wrap items-center gap-4 mb-4 text-sm text-zinc-400 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"

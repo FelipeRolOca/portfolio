@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowRight, Mail, Terminal } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { TextReveal } from "./ui/TextReveal";
@@ -20,11 +20,11 @@ export function Hero() {
 
   return (
     <section id="hero" className="relative flex items-center pt-24 pb-18 md:pt-28 md:pb-20 lg:min-h-screen overflow-hidden">
-      {/* Background elements */}
-      <Parallax offset={100} className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none">
+      {/* Background elements - Optimized blurs */}
+      <Parallax offset={60} className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none opacity-50">
         <div className="w-full h-full" />
       </Parallax>
-      <Parallax offset={-150} className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none">
+      <Parallax offset={-80} className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none opacity-50">
         <div className="w-full h-full" />
       </Parallax>
 
@@ -105,7 +105,7 @@ export function Hero() {
           >
               <Magnetic strength={0.2}>
               <div className="relative w-72 h-72 sm:w-96 sm:h-96">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-500 blur-2xl opacity-40 animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-500 blur-xl opacity-30 animate-pulse" />
                 <div className="absolute inset-2 rounded-full bg-zinc-900 overflow-hidden border border-zinc-700/50 z-10">
                   <ImageWithFallback
                     src={profileImg}

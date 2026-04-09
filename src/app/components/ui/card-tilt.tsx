@@ -9,6 +9,7 @@ import {
   MotionValue,
 } from 'motion/react';
 import { cn } from './utils';
+import { useCanHover } from './use-can-hover';
 
 interface CardTiltProps {
   children: React.ReactNode;
@@ -25,9 +26,9 @@ interface CardTiltContentProps {
 }
 
 const CardTiltContext = React.createContext<{
-  rotateX: MotionValue<number>;
-  rotateY: MotionValue<number>;
-  scale: MotionValue<number>;
+  rotateX: MotionValue<number> | number;
+  rotateY: MotionValue<number> | number;
+  scale: MotionValue<number> | number;
 } | null>(null);
 
 const CardTilt = React.forwardRef<HTMLDivElement, CardTiltProps>(
@@ -44,6 +45,7 @@ const CardTilt = React.forwardRef<HTMLDivElement, CardTiltProps>(
     forwardedRef,
   ) => {
     const containerRef = React.useRef<HTMLDivElement>(null);
+    const canHover = useCanHover();
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -68,19 +70,22 @@ const CardTilt = React.forwardRef<HTMLDivElement, CardTiltProps>(
     const scaleValue = useSpring(1, { stiffness: 300, damping: 30 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!containerRef.current) return;
+      if (!canHover || !containerRef.current) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      const xPct = mouseX / width - 0.5;
-      const yPct = mouseY / height - 0.5;
+      requestAnimationFrame(() => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
 
-      x.set(xPct);
-      y.set(yPct);
-      scaleValue.set(scale);
+        x.set(xPct);
+        y.set(yPct);
+        scaleValue.set(scale);
+      });
     };
 
     const handleMouseLeave = () => {
@@ -92,13 +97,17 @@ const CardTilt = React.forwardRef<HTMLDivElement, CardTiltProps>(
     React.useImperativeHandle(forwardedRef, () => containerRef.current!);
 
     return (
-      <CardTiltContext.Provider value={{ rotateX, rotateY, scale: scaleValue }}>
+      <CardTiltContext.Provider value={{ 
+        rotateX: canHover ? rotateX : 0, 
+        rotateY: canHover ? rotateY : 0, 
+        scale: canHover ? scaleValue : 1 
+      }}>
         <div
           ref={containerRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className={cn('relative inline-block w-full h-full', className)}
-          style={{ perspective: '1000px' }}
+          style={{ perspective: canHover ? '1000px' : 'none' }}
           {...props}
         >
           {showDashedBorder && (
@@ -115,6 +124,7 @@ CardTilt.displayName = 'CardTilt';
 const CardTiltContent = React.forwardRef<HTMLDivElement, CardTiltContentProps>(
   ({ children, className, ...props }, ref) => {
     const context = React.useContext(CardTiltContext);
+    const canHover = useCanHover();
 
     if (!context) {
       throw new Error('CardTiltContent must be used within CardTilt');
@@ -129,7 +139,8 @@ const CardTiltContent = React.forwardRef<HTMLDivElement, CardTiltContentProps>(
           rotateX,
           rotateY,
           scale,
-          transformStyle: 'preserve-3d',
+          transformStyle: canHover ? 'preserve-3d' : 'flat',
+          willChange: canHover ? 'transform' : 'auto',
         }}
         className={cn('relative w-full h-full', className)}
         {...props}

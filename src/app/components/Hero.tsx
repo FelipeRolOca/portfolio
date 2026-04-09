@@ -3,6 +3,7 @@ import { ArrowRight, Mail, Terminal } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
+import { AnimatedButton } from "./ui/animated-button";
 import { Parallax } from "./ui/Parallax";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -54,26 +55,44 @@ export function Hero() {
               {t.hero.description}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start w-full sm:w-auto">
-              <Magnetic>
-                <button
-                  onClick={() => handleScroll("#projects")}
-                  className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-white text-zinc-950 font-bold text-lg hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 group"
-                >
-                  {t.hero.projectsBtn}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </Magnetic>
+            <div className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start w-full sm:w-auto">
+              <AnimatedButton
+                onClick={() => handleScroll("#projects")}
+                className="w-full sm:w-auto min-w-[240px]"
+                variant="default"
+                size="lg"
+                glow={true}
+                textEffect="normal"
+                uppercase={true}
+                rounded="custom"
+                shimmerColor="#3b82f6"
+                shimmerSize="0.15em"
+                shimmerDuration="3s"
+                borderRadius="100px"
+                background="rgba(0, 0, 0, 1)"
+              >
+                {t.hero.projectsBtn}
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </AnimatedButton>
 
-              <Magnetic>
-                <button
-                  onClick={() => handleScroll("#contact")}
-                  className="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-lg hover:bg-zinc-800 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Mail className="w-5 h-5" />
-                  {t.hero.contactBtn}
-                </button>
-              </Magnetic>
+              <AnimatedButton
+                onClick={() => handleScroll("#contact")}
+                className="w-full sm:w-auto min-w-[240px]"
+                variant="outline"
+                size="lg"
+                glow={false}
+                textEffect="normal"
+                uppercase={true}
+                rounded="custom"
+                shimmerColor="#06b6d4"
+                shimmerSize="0.15em"
+                shimmerDuration="3s"
+                borderRadius="100px"
+                background="rgba(0, 0, 0, 1)"
+              >
+                <Mail className="w-5 h-5 mr-2" />
+                {t.hero.contactBtn}
+              </AnimatedButton>
             </div>
           </motion.div>
 

@@ -65,9 +65,9 @@ export function Hero() {
                 textEffect="normal"
                 uppercase={true}
                 rounded="custom"
-                shimmerColor="#3b82f6"
-                shimmerSize="0.15em"
-                shimmerDuration="3s"
+                shimmerColor="rgba(59, 130, 246, 0.4)"
+                shimmerSize="0.1em"
+                shimmerDuration="4s"
                 borderRadius="100px"
                 background="rgba(0, 0, 0, 1)"
               >
@@ -80,13 +80,13 @@ export function Hero() {
                 className="w-full sm:w-auto min-w-[240px]"
                 variant="outline"
                 size="lg"
-                glow={false}
+                glow={true}
                 textEffect="normal"
                 uppercase={true}
                 rounded="custom"
-                shimmerColor="#06b6d4"
-                shimmerSize="0.15em"
-                shimmerDuration="3s"
+                shimmerColor="rgba(6, 182, 212, 0.6)"
+                shimmerSize="0.12em"
+                shimmerDuration="3.5s"
                 borderRadius="100px"
                 background="rgba(0, 0, 0, 1)"
               >

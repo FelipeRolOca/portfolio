@@ -5,6 +5,7 @@ import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { AnimatedButton } from "./ui/animated-button";
 import { Parallax } from "./ui/Parallax";
+import { AuroraBackground } from "./ui/AuroraBackground";
 import { useLanguage } from "../i18n/LanguageContext";
 
 export function Hero() {
@@ -20,13 +21,8 @@ export function Hero() {
 
   return (
     <section id="hero" className="relative flex items-center pt-24 pb-18 md:pt-28 md:pb-20 lg:min-h-screen overflow-hidden">
-      {/* Background elements - Optimized blurs */}
-      <Parallax offset={60} className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none opacity-50">
-        <div className="w-full h-full" />
-      </Parallax>
-      <Parallax offset={-80} className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none opacity-50">
-        <div className="w-full h-full" />
-      </Parallax>
+      {/* Aurora animated background */}
+      <AuroraBackground />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 w-full">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-14 lg:gap-20">

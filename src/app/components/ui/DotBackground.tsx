@@ -28,7 +28,7 @@ export const DotBackground = () => {
     let mousePending = false;
 
     const dots: { x: number; y: number }[] = [];
-    const spacing = 50; // was 35 — reduces dot count by ~50%
+    const spacing = 44; // reduced from 50 for bigger dots that need a bit less gap
     const mouseRadius = 120;
     const waveWidth = 80;
 
@@ -63,15 +63,15 @@ export const DotBackground = () => {
         const dy = my - dot.y;
         const mouseDistance = Math.sqrt(dx * dx + dy * dy);
 
-        let size = 1.2;
-        let opacity = 0.22;
+        let size = 2.5;
+        let opacity = 0.28;
         let r = 161, g = 161, b = 170; // zinc-400
 
         // Mouse interaction
         if (mouseDistance < mouseRadius) {
           const factor = 1 - mouseDistance / mouseRadius;
-          size += factor * 2;
-          opacity = 0.22 + factor * 0.5;
+          size += factor * 3;
+          opacity = 0.28 + factor * 0.55;
           r = 59; g = 130; b = 246;
         }
 

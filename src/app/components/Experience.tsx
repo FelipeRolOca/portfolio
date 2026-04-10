@@ -4,6 +4,7 @@ import { Calendar, MapPin, ChevronDown } from "lucide-react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
 import { Parallax } from "./ui/Parallax";
+import { BorderBeam } from "./ui/BorderBeam";
 import { useLanguage } from "../i18n/LanguageContext";
 
 export function Experience() {
@@ -56,7 +57,7 @@ export function Experience() {
 
           {experiences.map((exp, idx) => (
             <motion.div
-              key={idx}
+              key={`${exp.company}-${exp.role}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -71,95 +72,123 @@ export function Experience() {
               <div className={`w-full md:w-1/2 pl-14 md:pl-0 ${idx % 2 === 0 ? "md:pr-14 md:text-right" : "md:pl-14 md:text-left"
                 }`}>
                 <SpotlightCard 
-                  className="overflow-visible group relative"
-                  innerClassName="p-6"
+                  className="relative h-full overflow-hidden border border-zinc-800/90 bg-zinc-900/60 shadow-[0_18px_45px_rgba(2,6,23,0.35)]"
+                  innerClassName="relative h-full"
+                  spotlightColor="rgba(34, 211, 238, 0.12)"
                 >
-                  <h4 className="text-xl font-bold text-white mb-2">{exp.role}</h4>
-                  <p className="text-sm font-medium text-blue-400/90 mb-3">{exp.company}</p>
-                  <div className={`flex flex-wrap items-center gap-4 mb-4 text-sm text-zinc-400 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
-                    }`}>
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4" />
-                      {exp.period}
+                  <div className="pointer-events-none absolute inset-0 rounded-[inherit]">
+                    <div className="absolute inset-x-10 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.22),transparent_72%)] opacity-80" />
+                    <div className="absolute inset-0 rounded-[inherit] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),transparent_20%,transparent_80%,rgba(34,211,238,0.04))]" />
+                    <BorderBeam
+                      size={210}
+                      duration={12}
+                      borderWidth={1.5}
+                      colorFrom="#22d3ee"
+                      colorTo="#3b82f6"
+                    />
+                    <BorderBeam
+                      size={210}
+                      duration={12}
+                      delay={6}
+                      borderWidth={1.5}
+                      colorFrom="#60a5fa"
+                      colorTo="#67e8f9"
+                      className="opacity-70"
+                    />
+                  </div>
+
+                  <div className="relative z-10 p-6 sm:p-7">
+                    <h4 className="text-lg sm:text-xl font-bold text-white mb-2 leading-tight break-words">{exp.role}</h4>
+                    <p className="text-sm font-medium text-blue-400/90 mb-3 break-words">{exp.company}</p>
+                    <div className={`flex flex-wrap items-center gap-4 mb-4 text-sm text-zinc-400 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
+                      }`}>
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 shrink-0" />
+                        <span className="break-words">{exp.period}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 shrink-0" />
+                        <span className="break-words">{exp.location}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4" />
-                      {exp.location}
+
+                    <p className="text-zinc-400 leading-relaxed break-words">{exp.description}</p>
+
+                    <div className={`mt-4 flex flex-wrap gap-2 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
+                      }`}>
+                      {exp.bullets.map((bullet, sIdx) => (
+                        <span
+                          key={sIdx}
+                          className="px-3 py-1 rounded-full bg-zinc-800/60 border border-zinc-700/70 text-xs font-medium text-blue-300"
+                        >
+                          {bullet}
+                        </span>
+                      ))}
                     </div>
-                  </div>
-                  <p className="text-zinc-400 leading-relaxed">{exp.description}</p>
 
-                  <div className={`mt-4 flex flex-wrap gap-2 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
-                    }`}>
-                    {exp.bullets.map((bullet, sIdx) => (
-                      <span
-                        key={sIdx}
-                        className="px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-xs font-medium text-blue-300"
+                    <div className={`mt-5 ${idx % 2 === 0 ? "md:flex md:justify-end" : "md:flex md:justify-start"}`}>
+                      <button
+                        type="button"
+                        onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                        aria-expanded={openIndex === idx}
+                        aria-controls={`experience-details-${idx}`}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
                       >
-                        {bullet}
-                      </span>
-                    ))}
-                  </div>
+                        {openIndex === idx ? t.experience.hideDetails : t.experience.viewDetails}
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                    </div>
 
-                  <div className={`mt-5 ${idx % 2 === 0 ? "md:flex md:justify-end" : "md:flex md:justify-start"}`}>
-                    <button
-                      type="button"
-                      onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                    >
-                      {openIndex === idx ? t.experience.hideDetails : t.experience.viewDetails}
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                  </div>
+                    <AnimatePresence initial={false}>
+                      {openIndex === idx && (
+                        <motion.div
+                          id={`experience-details-${idx}`}
+                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                          animate={{ height: "auto", opacity: 1, marginTop: 20 }}
+                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 sm:p-5 space-y-4">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.keyResp}</p>
+                              <div className="flex flex-wrap gap-2">
+                                {exp.details.responsibilities.map((item, detailIdx) => (
+                                  <span
+                                    key={detailIdx}
+                                    className="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-300"
+                                  >
+                                    {item}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
 
-                  <AnimatePresence initial={false}>
-                    {openIndex === idx && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                        animate={{ height: "auto", opacity: 1, marginTop: 20 }}
-                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-4 sm:p-5 space-y-4">
-                          <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.keyResp}</p>
-                            <div className="flex flex-wrap gap-2">
-                              {exp.details.responsibilities.map((item, detailIdx) => (
-                                <span
-                                  key={detailIdx}
-                                  className="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-300"
-                                >
-                                  {item}
-                                </span>
-                              ))}
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.toolsUsed}</p>
+                              <div className="flex flex-wrap gap-2">
+                                {exp.details.tools.map((tool, toolIdx) => (
+                                  <span
+                                    key={toolIdx}
+                                    className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200"
+                                  >
+                                    {tool}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.practicalOutcome}</p>
+                              <p className="text-sm text-zinc-300 leading-relaxed">{exp.details.outcome}</p>
                             </div>
                           </div>
-
-                          <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.toolsUsed}</p>
-                            <div className="flex flex-wrap gap-2">
-                              {exp.details.tools.map((tool, toolIdx) => (
-                                <span
-                                  key={toolIdx}
-                                  className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200"
-                                >
-                                  {tool}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.practicalOutcome}</p>
-                            <p className="text-sm text-zinc-300 leading-relaxed">{exp.details.outcome}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </SpotlightCard>
               </div>
             </motion.div>

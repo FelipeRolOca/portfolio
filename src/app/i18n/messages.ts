@@ -66,7 +66,7 @@ export const messages = {
     },
     experience: {
       sectionSubtitle: "My Journey",
-      sectionTitle: "Education & Experience",
+      sectionTitle: "Experience",
       hideDetails: "Hide details",
       viewDetails: "View details",
       keyResp: "Key Responsibilities",
@@ -223,7 +223,7 @@ export const messages = {
     },
     experience: {
       sectionSubtitle: "Mi Trayectoria",
-      sectionTitle: "Educación y Experiencia",
+      sectionTitle: "Experiencia",
       hideDetails: "Ocultar detalles",
       viewDetails: "Ver detalles",
       keyResp: "Responsabilidades Clave",

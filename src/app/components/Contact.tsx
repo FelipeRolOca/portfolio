@@ -28,12 +28,26 @@ export function Contact() {
       title: t.contact.phone,
       value: "+54 9 3329 523459",
     },
-    {
-      icon: <MapPin className="w-6 h-6 text-emerald-400" />,
-      title: t.contact.location,
-      value: t.contact.locationValue,
-    }
   ];
+
+  const locationMapHref = "https://www.google.com/maps?q=-33.6999,-59.6896";
+  const locationCoordinates = "33.6999° S / 59.6896° W";
+  const locationEyebrow = language === "es" ? "Base de trabajo" : "Work base";
+  const locationDescription =
+    language === "es"
+      ? "Trabajo desde San Pedro, Buenos Aires, con disponibilidad para colaborar de forma remota y coordinar reuniones puntuales cuando el proyecto lo pide."
+      : "I work from San Pedro, Buenos Aires, with availability for remote collaboration and occasional in-person meetings when the project calls for it.";
+  const locationMapLabel = language === "es" ? "Abrir en Google Maps" : "Open in Google Maps";
+  const locationMapAlt =
+    language === "es"
+      ? "Mapa neon de Buenos Aires utilizado como apoyo visual de la ubicación del portfolio"
+      : "Neon Buenos Aires map used as the portfolio location visual";
+  const locationTag = language === "es" ? "Disponible remoto" : "Remote-friendly";
+  const locationCardNote =
+    language === "es"
+      ? "Referencia visual de mi ubicación dentro de la provincia."
+      : "Visual reference for where I'm based within the province.";
+  const locationCardEyebrow = language === "es" ? "Vista cartográfica" : "Cartographic view";
 
   const phoneOptions = [
     { 
@@ -108,6 +122,7 @@ export function Contact() {
                   {info.type === "phone" ? (
                     <div className="relative rounded-2xl border border-zinc-800 bg-zinc-900/50 p-4 transition-colors hover:border-zinc-700 shadow-xl">
                       <button 
+                        type="button"
                         onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
                         className="w-full flex items-center gap-6 rounded-2xl transition-all group relative z-10"
                       >
@@ -182,6 +197,100 @@ export function Contact() {
                 </div>
               ))}
             </div>
+
+            <SpotlightCard
+              className="overflow-hidden rounded-[2rem] border-zinc-800/90 bg-zinc-900/50"
+              spotlightColor="rgba(34, 211, 238, 0.14)"
+            >
+              <div className="flex flex-col">
+                <div className="flex flex-col gap-5 p-5 sm:p-6">
+                  <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-zinc-950 shadow-inner ring-1 ring-white/5">
+                        <MapPin className="w-6 h-6 text-emerald-400" />
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300/80">
+                          {locationEyebrow}
+                        </p>
+                        <h5 className="text-xl font-bold text-white sm:text-2xl">
+                          {t.contact.locationValue}
+                        </h5>
+                        <p className="max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+                          {locationDescription}
+                        </p>
+                      </div>
+                    </div>
+
+                    <Magnetic strength={0.2}>
+                      <a
+                        href={locationMapHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2.5 text-sm font-semibold text-cyan-200 transition-colors hover:border-cyan-300/40 hover:bg-cyan-400/15 hover:text-cyan-100"
+                      >
+                        {locationMapLabel}
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </Magnetic>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3 text-xs font-medium">
+                    <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1.5 text-cyan-200">
+                      {locationTag}
+                    </span>
+                    <span className="rounded-full border border-zinc-700 bg-zinc-950/70 px-3 py-1.5 text-zinc-300">
+                      {locationCoordinates}
+                    </span>
+                  </div>
+                </div>
+
+                <a
+                  href={locationMapHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block border-t border-zinc-800/80"
+                >
+                  <div className="relative h-72 overflow-hidden sm:h-80">
+                    <img
+                      src="/buenos_aires_neon_20260409_233022.png"
+                      alt={locationMapAlt}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover object-[center_34%] opacity-75 transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/10 via-zinc-950/15 to-zinc-950/85" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(34,211,238,0.18),transparent_26%),radial-gradient(circle_at_78%_32%,rgba(168,85,247,0.14),transparent_30%)]" />
+
+                    <div className="absolute left-5 top-5 flex items-center gap-3 rounded-full border border-white/10 bg-zinc-950/65 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-zinc-100 backdrop-blur-md">
+                      <span className="relative flex h-2.5 w-2.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400/70" />
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-cyan-300" />
+                      </span>
+                      {t.contact.location}
+                    </div>
+
+                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                      <div className="flex items-end justify-between gap-4 rounded-2xl border border-white/10 bg-zinc-950/55 p-4 backdrop-blur-md">
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-500">
+                            {locationCardEyebrow}
+                          </p>
+                          <p className="mt-2 max-w-md text-sm leading-relaxed text-zinc-200">
+                            {locationCardNote}
+                          </p>
+                        </div>
+
+                        <div className="shrink-0 rounded-full border border-cyan-400/25 bg-cyan-400/10 p-3 text-cyan-200 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
+                          <ExternalLink className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </SpotlightCard>
 
             {/* Live Links */}
             <div className="pt-6 border-t border-zinc-800">

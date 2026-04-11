@@ -118,11 +118,11 @@ export function Projects() {
 
                 {/* Image Side */}
                 <div className={`relative h-64 lg:h-auto overflow-hidden ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
-                  <div className="absolute inset-0 bg-transparent z-10 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
                   <ImageWithFallback
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover grayscale transition-all duration-700 scale-105 group-hover:scale-100"
+                    className="w-full h-full object-cover transition-all duration-700 scale-105 group-hover:scale-100"
                   />
                 </div>
 

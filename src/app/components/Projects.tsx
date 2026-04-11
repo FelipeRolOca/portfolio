@@ -41,7 +41,7 @@ export function Projects() {
     {
       title: "JJAsist",
       type: t.projects.p2Type,
-      image: "https://images.unsplash.com/photo-1685575112968-7dd67bc447b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxxciUyMGNvZGUlMjBzY2FubmluZyUyMG1vYmlsZSUyMGFwcCUyMGludGVyZmFjZSUyMG1vZGVybiUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzczNzU4MDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      image: "/JJ%20ASIST%20(1).png",
       description: t.projects.p2Desc,
       tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
       liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
@@ -60,7 +60,7 @@ export function Projects() {
     {
       title: "JJ Servicios Empresariales",
       type: t.projects.p1Type,
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080",
+      image: "/Captura%20de%20pantalla%202026-04-09%20191343.png",
       description: t.projects.p3Desc,
       tech: [t.projects.p3Tech1, t.projects.p3Tech2, t.projects.p3Tech3],
       liveUrl: "https://jjserviciosempresarialesrrhh.com/",

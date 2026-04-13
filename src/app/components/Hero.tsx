@@ -1,14 +1,17 @@
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { ArrowRight, Mail, Terminal } from "lucide-react";
+import { ArrowRight, Mail, Terminal, MonitorPlay } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { TextReveal } from "./ui/TextReveal";
 import { Magnetic } from "./ui/Magnetic";
 import { AnimatedButton } from "./ui/animated-button";
 import { Parallax } from "./ui/Parallax";
 import { useLanguage } from "../i18n/LanguageContext";
+import { useUIMode } from "../win98/contexts/UIModeContext";
+import { pixelTransition } from "../win98/utils/pixelTransition";
 
 export function Hero() {
   const { t } = useLanguage();
+  const { setMode } = useUIMode();
   const profileImg = "/felipe.png";
 
   const handleScroll = (href: string) => {
@@ -16,6 +19,11 @@ export function Hero() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleModeSwitch = () => {
+    const cleanup = pixelTransition(() => setMode('retro'));
+    // Cleanup will be called automatically when the component unmounts
   };
 
   return (
@@ -92,6 +100,25 @@ export function Hero() {
               >
                 <Mail className="w-5 h-5 mr-2" />
                 {t.hero.contactBtn}
+              </AnimatedButton>
+
+              <AnimatedButton
+                onClick={handleModeSwitch}
+                className="w-full sm:w-auto min-w-[240px] hidden md:inline-flex"
+                variant="outline"
+                size="lg"
+                glow={true}
+                textEffect="normal"
+                uppercase={true}
+                rounded="custom"
+                shimmerColor="rgba(220, 38, 38, 0.1)"
+                shimmerSize="0.04em"
+                shimmerDuration="7s"
+                borderRadius="100px"
+                background="rgba(0, 0, 0, 1)"
+              >
+                <MonitorPlay className="w-5 h-5 mr-2" />
+                {t.hero.modeSwitchBtn}
               </AnimatedButton>
             </div>
           </motion.div>

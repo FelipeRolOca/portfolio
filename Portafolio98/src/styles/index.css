@@ -1,0 +1,57 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Windows 98 cursor */
+* {
+  cursor: default;
+}
+
+button, a, [role="button"] {
+  cursor: pointer;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c0c0c0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 2px solid #c0c0c0;
+  border-right-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  border: 2px solid #ffffff;
+  border-right-color: #808080;
+  border-bottom-color: #808080;
+}
+
+::-webkit-scrollbar-button:hover {
+  background: #d0d0d0;
+}
+
+/* Prevent text selection on UI elements */
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Pixel art rendering */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+svg.pixelated {
+  shape-rendering: crispEdges;
+}

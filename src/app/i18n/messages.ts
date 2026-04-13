@@ -20,7 +20,8 @@ export const messages = {
       stack: "Next.js, SQL & Automation",
       description: "I build web solutions focused on solving real business problems. From professional websites to systems with business logic, automation, and real-time data, I turn ideas into practical production-ready tools.",
       projectsBtn: "View Projects",
-      contactBtn: "Contact Me"
+      contactBtn: "Contact Me",
+      modeSwitchBtn: "Time Travel to 98"
     },
     quickFacts: {
       title: "Quick Facts",
@@ -177,7 +178,8 @@ export const messages = {
       stack: "Next.js, SQL y Automatización",
       description: "Desarrollo soluciones web orientadas a resolver problemas reales en negocios y organizaciones. Desde sitios profesionales hasta sistemas con lógica de negocio, automatización y datos en tiempo real, convierto ideas en herramientas útiles listas para producción.",
       projectsBtn: "Ver Proyectos",
-      contactBtn: "Contáctame"
+      contactBtn: "Contáctame",
+      modeSwitchBtn: "Viajar al 98"
     },
     quickFacts: {
       title: "Datos Rápidos",

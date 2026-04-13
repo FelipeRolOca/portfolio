@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import { Mail, Phone, Send, ExternalLink, MessageCircle, Smartphone } from "lucide-react";
+import { Mail, Phone, Send, ExternalLink, MessageCircle, Smartphone, MapPin } from "lucide-react";
 import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -26,6 +26,11 @@ export function Contact() {
       icon: <Phone className="w-6 h-6 text-cyan-400" />,
       title: t.contact.phone,
       value: "+54 9 3329 523459",
+    },
+    {
+      icon: <MapPin className="w-6 h-6 text-emerald-400" />,
+      title: t.contact.location,
+      value: t.contact.locationValue,
     },
   ];
 

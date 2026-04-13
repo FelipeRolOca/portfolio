@@ -42,9 +42,6 @@ export function Experience() {
 
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
-      <Parallax offset={120} className="absolute top-1/3 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-[120px] pointer-events-none">
-        <div className="w-full h-full" />
-      </Parallax>
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <div className="text-center mb-20 relative z-20">
           <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.experience.sectionSubtitle}</h2>
@@ -66,35 +63,16 @@ export function Experience() {
                 }`}
             >
               {/* Center Dot */}
-              <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-blue-500 border-4 border-zinc-950 transform -translate-x-1/2 mt-1.5 md:mt-0 z-10 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+              <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-blue-500 border-4 border-zinc-950 transform -translate-x-1/2 mt-1.5 md:mt-0 z-10" />
 
               {/* Content Box */}
               <div className={`w-full md:w-1/2 pl-14 md:pl-0 ${idx % 2 === 0 ? "md:pr-14 md:text-right" : "md:pl-14 md:text-left"
                 }`}>
-                <SpotlightCard 
+                <SpotlightCard
                   className="relative h-full overflow-hidden border border-zinc-800/90 bg-zinc-900/60 shadow-[0_18px_45px_rgba(2,6,23,0.35)]"
                   innerClassName="relative h-full"
-                  spotlightColor="rgba(34, 211, 238, 0.12)"
                 >
                   <div className="pointer-events-none absolute inset-0 rounded-[inherit]">
-                    <div className="absolute inset-x-10 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.22),transparent_72%)] opacity-80" />
-                    <div className="absolute inset-0 rounded-[inherit] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),transparent_20%,transparent_80%,rgba(34,211,238,0.04))]" />
-                    <BorderBeam
-                      size={210}
-                      duration={12}
-                      borderWidth={1.5}
-                      colorFrom="#22d3ee"
-                      colorTo="#3b82f6"
-                    />
-                    <BorderBeam
-                      size={210}
-                      duration={12}
-                      delay={6}
-                      borderWidth={1.5}
-                      colorFrom="#60a5fa"
-                      colorTo="#67e8f9"
-                      className="opacity-70"
-                    />
                   </div>
 
                   <div className="relative z-10 p-6 sm:p-7">

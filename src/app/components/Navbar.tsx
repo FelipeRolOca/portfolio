@@ -71,51 +71,53 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg border-b border-[var(--yellow)]' : 'bg-white/60 backdrop-blur-md'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-xl font-bold bg-gradient-to-r from-[var(--yellow-dark)] to-[var(--yellow)] bg-clip-text text-transparent cursor-pointer"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            FO
-          </motion.div>
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg border-b border-[var(--yellow)]' : 'bg-white/60 backdrop-blur-md'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="text-xl font-bold bg-gradient-to-r from-[var(--yellow-dark)] to-[var(--yellow)] bg-clip-text text-transparent cursor-pointer"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              FO
+            </motion.div>
 
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center gap-4">
-              <GooeyNav
-                items={navLinks.map((link) => ({ label: link.name, href: link.href }))}
-                activeHref={activeHref}
-                onItemSelect={scrollToSection}
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleLanguage}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--yellow)]/15 bg-[rgba(10,15,30,0.72)] text-sm font-semibold text-zinc-300 transition-colors hover:border-[var(--yellow)]/30 hover:text-white"
-              >
-                <Globe size={16} className="text-[var(--yellow)]" />
-                <span className="font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
-              </motion.button>
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-center gap-4">
+                <GooeyNav
+                  items={navLinks.map((link) => ({ label: link.name, href: link.href }))}
+                  activeHref={activeHref}
+                  onItemSelect={scrollToSection}
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--yellow)]/30 bg-white text-sm font-semibold text-gray-900 transition-colors hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/10"
+                >
+                  <Globe size={16} className="text-[var(--yellow)]" />
+                  <span className="font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
+                </motion.button>
+              </div>
             </div>
-          </div>
 
-          <button
-            onClick={toggleLanguage}
-            className="md:hidden inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
-          >
-            <Globe size={16} className="text-[var(--yellow-dark)]" />
-            <span>{language === 'es' ? 'EN' : 'ES'}</span>
-          </button>
+            <button
+              onClick={toggleLanguage}
+              className="md:hidden inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
+            >
+              <Globe size={16} className="text-[var(--yellow-dark)]" />
+              <span>{language === 'es' ? 'EN' : 'ES'}</span>
+            </button>
+          </div>
         </div>
-      </div>
+      </motion.nav>
 
       <div
         className="fixed inset-x-0 bottom-0 left-0 right-0 z-[70] px-3 md:hidden"
@@ -165,6 +167,6 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
           </div>
         </div>
       </div>
-    </motion.nav>
+    </>
   );
 }

@@ -159,7 +159,7 @@ export default function Hero({ t }: HeroProps) {
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
-                className="w-36 h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-2xl border-4 border-[var(--yellow)]"
+                className="w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden shadow-2xl border-4 border-[var(--yellow)]"
               >
                 <img
                   src="/felipe.png"

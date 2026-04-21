@@ -15,46 +15,44 @@ export default function Experience({ t, language }: ExperienceProps) {
   const experiences = [
     {
       role: language === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
-      company: 'JJ Servicios Empresariales',
-      date: language === 'es' ? '2023 - Actualidad' : '2023 - Present',
-      location: language === 'es' ? 'Argentina' : 'Argentina',
+      company: language === 'es' ? 'JJAsist (Proyecto Freelance)' : 'JJAsist (Freelance Project)',
+      date: language === 'es' ? '2026 - Presente' : '2026 - Present',
+      location: language === 'es' ? 'Remoto' : 'Remote',
       summary: language === 'es'
-        ? 'Desarrollo de soluciones tecnológicas integrales para optimización de procesos empresariales'
-        : 'Development of comprehensive technology solutions for business process optimization',
+        ? 'Desarrollé un sistema de asistencia con escaneo de códigos QR, validación de ubicación GPS y un potente panel de administración.'
+        : 'Developed a comprehensive employee attendance tracking system with real-time QR and barcode scanning, GPS location validation, and a powerful admin dashboard.',
       achievements: language === 'es'
         ? [
-            'Desarrollo de la plataforma JJAsist para gestión empresarial integral',
-            'Implementación de sistemas de validación geoespacial y códigos QR',
-            'Construcción de arquitecturas escalables con Next.js y Supabase',
-            'Automatización de procesos mediante Google Apps Script',
+            'Construido con Next.js, Supabase y Vercel para un despliegue escalable',
+            'Google Apps Script integrado para reportes automáticos y sincronización',
+            'Escaneo QR/código de barras y validación GPS implementados',
+            'Panel de administración para la gestión de empleados y configuraciones',
           ]
         : [
-            'Development of JJAsist platform for comprehensive business management',
-            'Implementation of geospatial validation and QR code systems',
-            'Building scalable architectures with Next.js and Supabase',
-            'Process automation through Google Apps Script',
+            'Built with Next.js, Supabase, and Vercel for scalable deployment',
+            'Integrated Google Apps Script for automated reporting and data sync',
+            'Implemented QR/barcode scanning and GPS validation for accurate attendance',
+            'Created admin panel for managing employees, reports, and system settings',
           ],
     },
     {
-      role: language === 'es' ? 'Desarrollador Frontend' : 'Frontend Developer',
-      company: 'Paper Pops',
-      date: '2022 - 2023',
+      role: language === 'es' ? 'Desarrollador Web Freelance' : 'Freelance Web Developer',
+      company: 'JJ Servicios Empresariales',
+      date: language === 'es' ? '2025 - Presente' : '2025 - Present',
       location: language === 'es' ? 'Remoto' : 'Remote',
       summary: language === 'es'
-        ? 'Desarrollo de plataformas de comercio electrónico y experiencias web interactivas'
-        : 'Development of e-commerce platforms and interactive web experiences',
+        ? 'Diseñé y desarrollé un sitio web empresarial para una consultora de RRHH, enfocándome en diseño moderno y optimización SEO.'
+        : 'Designed and developed a professional business website for an HR services company, focusing on modern UI/UX and SEO optimization.',
       achievements: language === 'es'
         ? [
-            'Desarrollo de plataforma e-commerce responsiva con React',
-            'Optimización de rendimiento y experiencia de usuario',
-            'Integración de sistemas de pago y gestión de inventario',
-            'Implementación de diseños con precisión técnica',
+            'Desarrollo de sitio web responsivo utilizando tecnologías modernas',
+            'Optimizado para motores de búsqueda y rendimiento',
+            'Implementación de formularios de contacto y catálogo de servicios',
           ]
         : [
-            'Development of responsive e-commerce platform with React',
-            'Performance optimization and user experience enhancement',
-            'Integration of payment systems and inventory management',
-            'Implementation of designs with technical precision',
+            'Built responsive website using modern web technologies',
+            'Optimized for search engines and performance',
+            'Implemented contact forms and business service showcases',
           ],
     },
   ];

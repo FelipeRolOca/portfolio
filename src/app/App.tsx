@@ -78,14 +78,14 @@ const translations: Record<Language, Translation> = {
     hero: {
       greeting: 'Soy',
       name: 'Felipe Roldán Ocampo',
-      role: 'Desarrollador Full Stack',
+      role: 'Estudiante de Ingeniería Informática',
       description: 'Desarrollo soluciones digitales escalables mediante tecnologías modernas y arquitecturas eficientes orientadas al ecosistema empresarial',
       cta1: 'Ver Proyectos',
       cta2: 'Contactar',
     },
     about: {
       title: 'Perfil Profesional',
-      description: 'Desarrollador Full Stack especializado en la construcción de sistemas web escalables, automatización de procesos empresariales y soluciones tecnológicas orientadas a la optimización operativa. Experiencia en desarrollo frontend y backend con enfoque en arquitecturas modernas.',
+      description: 'Estudiante de Ingeniería Informática con pasión por el desarrollo de software. Interesado en construir sistemas web escalables, automatización de procesos y soluciones tecnológicas. En proceso de formación en desarrollo frontend y backend con enfoque en arquitecturas modernas.',
       age: 'Edad',
       education: 'Formación',
       location: 'Ubicación',
@@ -130,14 +130,14 @@ const translations: Record<Language, Translation> = {
     hero: {
       greeting: 'I am',
       name: 'Felipe Roldán Ocampo',
-      role: 'Full Stack Developer',
+      role: 'Computer Engineering Student',
       description: 'Building scalable digital solutions through modern technologies and efficient architectures focused on enterprise ecosystems',
       cta1: 'View Projects',
       cta2: 'Contact',
     },
     about: {
       title: 'Professional Profile',
-      description: 'Full Stack Developer specialized in building scalable web systems, business process automation, and technology solutions focused on operational optimization. Experience in frontend and backend development with emphasis on modern architectures.',
+      description: 'Computer Engineering Student with a passion for software development. Interested in building scalable web systems, business process automation, and technology solutions. Currently learning frontend and backend development with emphasis on modern architectures.',
       age: 'Age',
       education: 'Education',
       location: 'Location',

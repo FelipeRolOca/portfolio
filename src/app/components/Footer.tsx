@@ -14,7 +14,7 @@ export default function Footer({ t, language }: FooterProps) {
         <div className="flex flex-col items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
           <p>Felipe Roldán Ocampo</p>
           <p>
-            {language === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer'}
+            {language === 'es' ? 'Estudiante de Ingeniería Informática' : 'Computer Engineering Student'}
           </p>
           <p>© {currentYear} {t.rights}</p>
         </div>

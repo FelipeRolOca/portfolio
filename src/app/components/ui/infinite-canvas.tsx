@@ -261,8 +261,9 @@ export function InfiniteCanvas({
 
     for (let row = viewWindow.startRow; row < viewWindow.startRow + visibleRows; row += 1) {
       for (let col = viewWindow.startCol; col < viewWindow.startCol + visibleColumns; col += 1) {
-        const index = ((row - viewWindow.startRow) * visibleColumns + (col - viewWindow.startCol)) % preparedCards.length;
-        const child = preparedCards[(index + preparedCards.length) % preparedCards.length];
+        const safeModulo = (n: number, m: number) => ((n % m) + m) % m;
+        const index = safeModulo(row * 7 + col, preparedCards.length);
+        const child = preparedCards[index];
 
         const baseStyle: CSSProperties = {
           position: 'absolute',

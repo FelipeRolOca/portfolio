@@ -115,21 +115,20 @@ export default function Hero({ t }: HeroProps) {
           transition={{ duration: 0.8 }}
           className="relative flex flex-1 justify-center"
         >
-          <div className="relative w-full max-w-[14rem] sm:max-w-[16rem] md:max-w-[23rem]">
-            <div className="absolute -inset-5 rounded-[2.2rem] border border-[var(--yellow)]/18 opacity-70" />
-
+          <div className="relative w-full max-w-[14rem] sm:max-w-[16rem] md:max-w-[20rem] aspect-square mx-auto">
+            <div className="absolute inset-0 rounded-full border-4 border-dashed border-[var(--yellow)]/60 animate-[spin_15s_linear_infinite]" />
+            <div className="absolute inset-2 rounded-full border border-[var(--yellow)]/30 animate-[spin_20s_linear_infinite_reverse]" />
+            
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative overflow-hidden rounded-[2rem] border border-[var(--yellow)]/30 bg-white p-3 shadow-[0_28px_90px_rgba(15,23,42,0.16)] dark:bg-[#121417] dark:shadow-[0_28px_90px_rgba(0,0,0,0.42)]"
+              className="absolute inset-4 overflow-hidden rounded-full bg-[#f7f5ef] dark:bg-[#181b1f] shadow-[0_28px_90px_rgba(15,23,42,0.16)] dark:shadow-[0_28px_90px_rgba(0,0,0,0.42)] border-2 border-white dark:border-[#121417]"
             >
-              <div className="overflow-hidden rounded-[1.4rem] border border-[var(--yellow)]/20 bg-[#f7f5ef] dark:bg-[#181b1f]">
-                <img
-                  src="/felipe.png"
-                  alt="Felipe Roldan"
-                  className="aspect-[4/5] w-full object-contain object-center"
-                />
-              </div>
+              <img
+                src="/felipe.png"
+                alt="Felipe Roldan"
+                className="w-full h-full object-cover object-top"
+              />
             </motion.div>
           </div>
         </motion.div>

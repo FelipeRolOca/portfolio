@@ -75,7 +75,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-lg shadow-lg border-b border-[var(--yellow)]' : 'bg-transparent'
+        isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg border-b border-[var(--yellow)]' : 'bg-white/60 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
@@ -118,13 +118,13 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
       </div>
 
       <div
-        className="fixed inset-x-0 bottom-0 z-[70] px-3 md:hidden"
+        className="fixed inset-x-0 bottom-0 left-0 right-0 z-[70] px-3 md:hidden"
         style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
       >
         <div className="mx-auto max-w-sm">
-          <div className="relative overflow-hidden rounded-[32px] border border-[var(--yellow)]/12 bg-[rgba(8,12,24,0.9)] px-2 pb-2 pt-2 shadow-[0_18px_45px_rgba(2,6,23,0.42)] backdrop-blur-2xl">
-            <div className="pointer-events-none absolute inset-x-10 top-2 h-14 rounded-full bg-[var(--yellow)]/8 blur-2xl" />
-            <div className="pointer-events-none absolute inset-px rounded-[31px] border border-white/5" />
+          <div className="relative overflow-hidden rounded-[32px] border border-[var(--yellow)]/20 bg-white/95 backdrop-blur-xl px-2 pb-2 pt-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+            <div className="pointer-events-none absolute inset-x-10 top-2 h-14 rounded-full bg-[var(--yellow)]/6 blur-2xl" />
+            <div className="pointer-events-none absolute inset-px rounded-[31px] border border-[var(--yellow)]/10" />
 
             <div className="relative grid grid-cols-5 items-end gap-1">
               {navLinks.map((link) => {
@@ -152,8 +152,8 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
                       <Icon
                         className={`h-[22px] w-[22px] transition-all duration-300 ${
                           isActive
-                            ? 'text-[var(--yellow)] scale-110 drop-shadow-[0_0_8px_rgba(255,220,0,0.5)] translate-y-1'
-                            : 'text-zinc-500 hover:text-zinc-300'
+                            ? 'text-[var(--yellow-dark)] scale-110 drop-shadow-[0_0_8px_rgba(255,220,0,0.3)] translate-y-1'
+                            : 'text-gray-400 hover:text-[var(--yellow-dark)]'
                         }`}
                       />
                       <span className="sr-only">{link.name}</span>

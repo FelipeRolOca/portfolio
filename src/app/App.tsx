@@ -172,17 +172,35 @@ const translations: Record<Language, Translation> = {
   },
 };
 
+import { Loader } from './components/ui/Loader';
+import { AnimatePresence, motion } from 'motion/react';
+
 export default function App() {
   const [language, setLanguage] = useState<Language>('es');
   const [isDark, setIsDark] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const t = translations[language];
 
   useEffect(() => {
+    // Check saved theme
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
       setIsDark(true);
       document.documentElement.classList.add('dark');
+    }
+
+    // Handle global loading
+    const handleLoad = () => {
+      // Small delay to ensure smooth transition after everything is parsed
+      setTimeout(() => setIsLoading(false), 500);
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
     }
   }, []);
 
@@ -202,17 +220,34 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen pb-28 md:pb-0 bg-transparent text-foreground overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
-      <BackgroundVideo />
-      <LampToggle isDark={isDark} onToggle={toggleTheme} language={language} />
-      <Navbar language={language} toggleLanguage={toggleLanguage} isDark={isDark} onToggleTheme={toggleTheme} t={t.nav} />
-      <Hero t={t.hero} />
-      <About t={t.about} language={language} />
-      <Skills t={t.skills} />
-      <Experience t={t.experience} language={language} />
-      <Projects t={t.projects} language={language} />
-      <Contact t={t.contact} language={language} />
-      <Footer t={t.footer} language={language} />
-    </div>
+    <>
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            key="loader"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="fixed inset-0 z-[10000]"
+          >
+            <Loader />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className={`min-h-screen pb-28 md:pb-0 bg-transparent text-foreground overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
+        {/* Only mount heavy components when loading is complete to prevent jank */}
+        {!isLoading && <BackgroundVideo />}
+        
+        <LampToggle isDark={isDark} onToggle={toggleTheme} language={language} />
+        <Navbar language={language} toggleLanguage={toggleLanguage} isDark={isDark} onToggleTheme={toggleTheme} t={t.nav} />
+        <Hero t={t.hero} />
+        <About t={t.about} language={language} />
+        <Skills t={t.skills} />
+        <Experience t={t.experience} language={language} />
+        <Projects t={t.projects} language={language} />
+        <Contact t={t.contact} language={language} />
+        <Footer t={t.footer} language={language} />
+      </div>
+    </>
   );
 }

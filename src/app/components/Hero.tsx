@@ -22,21 +22,16 @@ export default function Hero({ t }: HeroProps) {
   };
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-8 md:pt-20 transition-colors duration-1000">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white/70 dark:bg-gray-900/80 backdrop-blur-sm pt-8 md:pt-20 transition-colors duration-1000">
       <div className="absolute inset-0 opacity-20">
         {[...Array(6)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/18 to-transparent"
+            className="absolute w-px bg-gradient-to-b from-transparent via-[var(--yellow)] to-transparent animate-pulse opacity-20"
             style={{
               left: `${16 + i * 14}%`,
               height: '100%',
-            }}
-            animate={{ opacity: [0.08, 0.2, 0.08] }}
-            transition={{
-              duration: 4 + i * 0.2,
-              repeat: Infinity,
-              ease: 'easeInOut',
+              animationDuration: `${4 + i * 0.2}s`
             }}
           />
         ))}

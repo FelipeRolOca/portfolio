@@ -117,7 +117,7 @@ export default function Projects({ t, language }: ProjectsProps) {
 
           <button
             onClick={prevProject}
-            className="absolute left-0 top-1/2 z-10 flex h-10 w-10 md:h-12 md:w-12 -translate-x-2 md:-translate-x-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800"
+            className="absolute left-0 top-1/2 z-10 hidden md:flex h-10 w-10 md:h-12 md:w-12 -translate-x-2 md:-translate-x-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800"
             aria-label={language === 'es' ? 'Proyecto anterior' : 'Previous project'}
           >
             <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-900 dark:text-white" />
@@ -125,7 +125,7 @@ export default function Projects({ t, language }: ProjectsProps) {
 
           <button
             onClick={nextProject}
-            className="absolute right-0 top-1/2 z-10 flex h-10 w-10 md:h-12 md:w-12 translate-x-2 md:translate-x-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800"
+            className="absolute right-0 top-1/2 z-10 hidden md:flex h-10 w-10 md:h-12 md:w-12 translate-x-2 md:translate-x-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800"
             aria-label={language === 'es' ? 'Proyecto siguiente' : 'Next project'}
           >
             <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-900 dark:text-white" />

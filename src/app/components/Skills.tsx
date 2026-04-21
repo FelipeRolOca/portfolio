@@ -119,16 +119,17 @@ export default function Skills({ t }: SkillsProps) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65, delay: 0.12 }}
         >
-          <InfiniteCanvas
-            className="relative h-[320px] w-full md:h-[480px]"
-            cardWidth={218}
-            cardHeight={150}
-            spacing={16}
-            showControls={true}
-            showZoom={true}
-            showStatus={false}
-            showInstructions={false}
-          >
+          <div className="hidden md:block">
+            <InfiniteCanvas
+              className="relative h-[320px] w-full md:h-[480px]"
+              cardWidth={218}
+              cardHeight={150}
+              spacing={16}
+              showControls={false}
+              showZoom={false}
+              showStatus={false}
+              showInstructions={false}
+            >
             {skills.map((skill) => (
               <Card key={skill.name} className="rounded-[1.35rem] border-[var(--yellow)]/12 p-5">
                 <div className="flex h-full flex-col justify-between gap-4">
@@ -153,7 +154,37 @@ export default function Skills({ t }: SkillsProps) {
                 </div>
               </Card>
             ))}
-          </InfiniteCanvas>
+            </InfiniteCanvas>
+          </div>
+
+          <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-6 px-6 no-scrollbar">
+            {skills.map((skill) => (
+              <div key={skill.name} className="snap-center shrink-0 w-[80%] max-w-[280px]">
+                <div className="rounded-[1.35rem] border border-[var(--yellow)]/12 p-5 bg-white/92 shadow-[0_14px_34px_rgba(15,23,42,0.1)] dark:bg-[#111315]/94 dark:shadow-[0_14px_40px_rgba(0,0,0,0.28)] h-full">
+                  <div className="flex h-full flex-col justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.24)]">
+                        {skill.isLucide ? (
+                          <skill.icon className="text-black" size={28} />
+                        ) : (
+                          <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" loading="lazy" decoding="async" draggable={false} />
+                        )}
+                      </div>
+
+                      <div className="flex-1">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">
+                          Skill
+                        </p>
+                        <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
+                      </div>
+                    </div>
+
+                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{skill.detail}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

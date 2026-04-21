@@ -115,7 +115,7 @@ export default function Hero({ t }: HeroProps) {
           transition={{ duration: 0.8 }}
           className="relative flex flex-1 justify-center"
         >
-          <div className="relative w-full max-w-[14rem] sm:max-w-[16rem] md:max-w-[20rem] aspect-square mx-auto">
+          <div className="relative w-[14rem] h-[14rem] sm:w-[16rem] sm:h-[16rem] md:w-[20rem] md:h-[20rem] mx-auto shrink-0">
             <div className="absolute inset-0 rounded-full border-4 border-dashed border-[var(--yellow)]/60 animate-[spin_15s_linear_infinite]" />
             <div className="absolute inset-2 rounded-full border border-[var(--yellow)]/30 animate-[spin_20s_linear_infinite_reverse]" />
             

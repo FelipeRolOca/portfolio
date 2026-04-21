@@ -355,7 +355,7 @@ export function InfiniteCanvas({
 
       <div
         ref={viewportRef}
-        className={`relative h-full w-full ${interactionEnabled ? 'touch-none cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
+        className={`relative h-full w-full select-none ${interactionEnabled ? 'touch-none cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
         style={{ contain: 'layout paint' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}

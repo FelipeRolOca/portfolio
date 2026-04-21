@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, Globe, Sparkles, Wrench, BriefcaseBusiness, FolderKanban, Mail } from 'lucide-react';
 import type { Language, Translation } from '../App';
 import GooeyNav from './ui/GooeyNav';
@@ -7,10 +7,12 @@ import GooeyNav from './ui/GooeyNav';
 interface NavbarProps {
   language: Language;
   toggleLanguage: () => void;
+  toggleTheme: () => void;
+  isDark: boolean;
   t: Translation['nav'];
 }
 
-export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
+export default function Navbar({ language, toggleLanguage, toggleTheme, isDark, t }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState('#about');
@@ -105,16 +107,86 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
                   <Globe size={16} className="text-[var(--yellow)]" />
                   <span className="font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
                 </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={toggleTheme}
+                  className="w-10 h-10 rounded-full bg-white border-2 border-[var(--yellow)]/30 flex items-center justify-center hover:border-[var(--yellow)] transition-all shadow-md"
+                  aria-label="Toggle theme"
+                >
+                  <AnimatePresence mode="wait">
+                    {isDark ? (
+                      <motion.div
+                        key="lamp-on"
+                        initial={{ scale: 0, rotate: -90 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: 90 }}
+                        transition={{ duration: 0.3 }}
+                        className="relative"
+                      >
+                        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_0_15px_rgba(255,220,0,0.6)]">
+                          <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-dark)]" />
+                        </div>
+                        <div className="absolute -inset-1.5 rounded-full bg-[var(--yellow)]/20 blur-lg animate-pulse" />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="lamp-off"
+                        initial={{ scale: 0, rotate: 90 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0, rotate: -90 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-5 h-5 rounded-full bg-gray-300"
+                      />
+                    )}
+                  </AnimatePresence>
+                </motion.button>
               </div>
             </div>
 
-            <button
-              onClick={toggleLanguage}
-              className="md:hidden inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
-            >
-              <Globe size={16} className="text-[var(--yellow-dark)]" />
-              <span>{language === 'es' ? 'EN' : 'ES'}</span>
-            </button>
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={toggleLanguage}
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
+              >
+                <Globe size={16} className="text-[var(--yellow-dark)]" />
+                <span>{language === 'es' ? 'EN' : 'ES'}</span>
+              </button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={toggleTheme}
+                className="w-10 h-10 rounded-full bg-white border-2 border-[var(--yellow)]/30 flex items-center justify-center hover:border-[var(--yellow)] transition-all shadow-md"
+                aria-label="Toggle theme"
+              >
+                <AnimatePresence mode="wait">
+                  {isDark ? (
+                    <motion.div
+                      key="lamp-on"
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 90 }}
+                      transition={{ duration: 0.3 }}
+                      className="relative"
+                    >
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_0_15px_rgba(255,220,0,0.6)]">
+                        <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-dark)]" />
+                      </div>
+                      <div className="absolute -inset-1.5 rounded-full bg-[var(--yellow)]/20 blur-lg animate-pulse" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="lamp-off"
+                      initial={{ scale: 0, rotate: 90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: -90 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-5 h-5 rounded-full bg-gray-300"
+                    />
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            </div>
           </div>
         </div>
       </motion.nav>

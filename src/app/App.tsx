@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'motion/react';
 import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Code2, Database, Globe, Smartphone, QrCode, Cpu } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -9,6 +9,7 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { Lamphome } from './components/ui/Lamphome';
 
 export type Language = 'en' | 'es';
 
@@ -174,15 +175,42 @@ const translations: Record<Language, Translation> = {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('es');
+  const [isDark, setIsDark] = useState(false);
   const t = translations[language];
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'es' ? 'en' : 'es');
   };
 
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    localStorage.setItem('theme', !isDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark');
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar language={language} toggleLanguage={toggleLanguage} t={t.nav} />
+    <div className={`min-h-screen bg-background text-foreground overflow-x-hidden transition-colors duration-500 ${isDark ? 'dark' : ''}`}>
+      <AnimatePresence>
+        {isDark && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 pointer-events-none bg-gradient-to-br from-[var(--yellow)]/20 via-transparent to-transparent z-40"
+          />
+        )}
+      </AnimatePresence>
+      <Navbar language={language} toggleLanguage={toggleLanguage} toggleTheme={toggleTheme} isDark={isDark} t={t.nav} />
       <Hero t={t.hero} />
       <About t={t.about} language={language} />
       <Skills t={t.skills} />

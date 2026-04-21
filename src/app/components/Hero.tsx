@@ -74,7 +74,7 @@ export default function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl"
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl"
           >
             {t.description}
           </motion.p>
@@ -98,7 +98,7 @@ export default function Hero({ t }: HeroProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToContact}
-              className="px-8 py-4 rounded-lg border-2 border-[var(--yellow)] text-gray-900 font-semibold hover:bg-[var(--yellow)]/10 transition-all"
+              className="px-8 py-4 rounded-lg border-2 border-[var(--yellow)] text-gray-900 dark:text-white font-semibold hover:bg-[var(--yellow)]/10 transition-all"
             >
               {t.cta2}
             </motion.button>

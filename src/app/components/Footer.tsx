@@ -11,7 +11,7 @@ export default function Footer({ t, language }: FooterProps) {
   return (
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-8 px-6 transition-colors duration-1000">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col items-center gap-2 text-xs text-gray-400">
+        <div className="flex flex-col items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
           <p>Felipe Roldán Ocampo</p>
           <p>
             {language === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer'}

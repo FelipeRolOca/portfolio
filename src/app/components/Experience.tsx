@@ -69,11 +69,11 @@ export default function Experience({ t, language }: ExperienceProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 text-lg">{t.subtitle}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="relative">
@@ -99,16 +99,16 @@ export default function Experience({ t, language }: ExperienceProps) {
                     scale: 1.02,
                     boxShadow: '0 20px 40px rgba(255, 220, 0, 0.2)',
                   }}
-                  className="flex-1 bg-white rounded-xl p-6 border border-gray-200 hover:border-[var(--yellow)] transition-all ml-8 md:ml-0"
+                  className="flex-1 bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:border-[var(--yellow)] transition-all ml-8 md:ml-0"
                 >
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
                       <Briefcase className="text-black" size={24} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{exp.role}</h3>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{exp.role}</h3>
                       <p className="text-lg text-[var(--yellow-dark)] font-semibold mb-2">{exp.company}</p>
-                      <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
                         <span className="flex items-center gap-1">
                           <Calendar size={14} />
                           {exp.date}
@@ -121,13 +121,13 @@ export default function Experience({ t, language }: ExperienceProps) {
                     </div>
                   </div>
 
-                  <p className="text-gray-700 mb-4">{exp.summary}</p>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">{exp.summary}</p>
 
                   <div className="space-y-2">
                     {exp.achievements.map((achievement, i) => (
                       <div key={i} className="flex items-start gap-2">
                         <CheckCircle className="text-[var(--yellow-dark)] flex-shrink-0 mt-0.5" size={16} />
-                        <p className="text-sm text-gray-600">{achievement}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{achievement}</p>
                       </div>
                     ))}
                   </div>

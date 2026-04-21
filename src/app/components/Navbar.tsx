@@ -76,7 +76,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-[var(--yellow)]/20' : 'bg-white/95 backdrop-blur-xl'
+          isScrolled ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-[var(--yellow)]/20' : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -100,7 +100,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={toggleLanguage}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--yellow)]/30 bg-white text-sm font-semibold text-gray-900 transition-colors hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/10"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--yellow)]/30 bg-white dark:bg-gray-800 text-sm font-semibold text-gray-900 dark:text-white transition-colors hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/10"
                 >
                   <Globe size={16} className="text-[var(--yellow)]" />
                   <span className="font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
@@ -111,7 +111,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
             <div className="md:hidden">
               <button
                 onClick={toggleLanguage}
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white dark:bg-gray-800 px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 dark:text-white shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
               >
                 <Globe size={16} className="text-[var(--yellow-dark)]" />
                 <span>{language === 'es' ? 'EN' : 'ES'}</span>
@@ -157,7 +157,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
                         className={`h-[22px] w-[22px] transition-all duration-300 ${
                           isActive
                             ? 'text-[var(--yellow-dark)] scale-110 drop-shadow-[0_0_8px_rgba(255,220,0,0.3)] translate-y-1'
-                            : 'text-gray-400 hover:text-[var(--yellow-dark)]'
+                            : 'text-gray-400 dark:text-gray-500 hover:text-[var(--yellow-dark)]'
                         }`}
                       />
                       <span className="sr-only">{link.name}</span>

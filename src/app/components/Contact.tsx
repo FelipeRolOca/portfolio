@@ -73,11 +73,11 @@ export default function Contact({ t, language }: ContactProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 text-lg">{t.subtitle}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -88,7 +88,7 @@ export default function Contact({ t, language }: ContactProps) {
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t.name}
                 </label>
                 <input
@@ -96,12 +96,12 @@ export default function Contact({ t, language }: ContactProps) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t.email}
                 </label>
                 <input
@@ -109,12 +109,12 @@ export default function Contact({ t, language }: ContactProps) {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {t.message}
                 </label>
                 <textarea
@@ -145,7 +145,7 @@ export default function Contact({ t, language }: ContactProps) {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.or}</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t.or}</h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.div
@@ -154,7 +154,7 @@ export default function Contact({ t, language }: ContactProps) {
                     className="relative"
                   >
                     {info.type === 'phone' ? (
-                      <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
+                      <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
                         <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
                           <info.icon className="text-black" size={20} />
                         </div>
@@ -162,26 +162,26 @@ export default function Contact({ t, language }: ContactProps) {
                           onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
                           className="flex-1 text-left"
                         >
-                          <p className="text-sm text-gray-500 mb-1">{info.label}</p>
-                          <p className="text-gray-900 font-medium hover:text-[var(--yellow-dark)] transition-colors">{info.value}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{info.label}</p>
+                          <p className="text-gray-900 dark:text-white font-medium hover:text-[var(--yellow-dark)] transition-colors">{info.value}</p>
                         </button>
                       </div>
                     ) : (
-                      <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
+                      <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
                         <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
                           <info.icon className="text-black" size={20} />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-gray-500 mb-1">{info.label}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{info.label}</p>
                           {info.href ? (
                             <a
                               href={info.href}
-                              className="text-gray-900 font-medium hover:text-[var(--yellow-dark)] transition-colors break-all"
+                              className="text-gray-900 dark:text-white font-medium hover:text-[var(--yellow-dark)] transition-colors break-all"
                             >
                               {info.value}
                             </a>
                           ) : (
-                            <p className="text-gray-900 font-medium">{info.value}</p>
+                            <p className="text-gray-900 dark:text-white font-medium">{info.value}</p>
                           )}
                         </div>
                       </div>
@@ -197,14 +197,14 @@ export default function Contact({ t, language }: ContactProps) {
                             transition={{ duration: 0.3, ease: 'easeOut' }}
                             className="overflow-hidden"
                           >
-                            <div className="mt-2 p-2 bg-white border border-[var(--yellow)]/20 rounded-xl flex flex-col gap-1 shadow-lg">
+                            <div className="mt-2 p-2 bg-white dark:bg-gray-800 border border-[var(--yellow)]/20 rounded-xl flex flex-col gap-1 shadow-lg">
                               {phoneOptions.map((opt, optIdx) => (
                                 <a
                                   key={optIdx}
                                   href={opt.href}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-[var(--yellow)]/10 text-gray-700 hover:text-gray-900 transition-all group/opt"
+                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-[var(--yellow)]/10 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all group/opt"
                                   onClick={() => setPhoneMenuOpen(false)}
                                 >
                                   <div className="p-2 bg-[var(--yellow)]/10 rounded-lg group-hover/opt:bg-[var(--yellow)]/20 transition-colors">

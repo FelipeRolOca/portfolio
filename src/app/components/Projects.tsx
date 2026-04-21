@@ -61,11 +61,11 @@ export default function Projects({ t, language }: ProjectsProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 text-lg">{t.subtitle}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="relative">
@@ -82,16 +82,16 @@ export default function Projects({ t, language }: ProjectsProps) {
 
           <button
             onClick={prevProject}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-12 h-12 rounded-full bg-white border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-12 h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
           >
-            <ChevronLeft className="text-gray-900" size={24} />
+            <ChevronLeft className="text-gray-900 dark:text-white" size={24} />
           </button>
 
           <button
             onClick={nextProject}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-12 h-12 rounded-full bg-white border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-12 h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
           >
-            <ChevronRight className="text-gray-900" size={24} />
+            <ChevronRight className="text-gray-900 dark:text-white" size={24} />
           </button>
 
           <div className="flex justify-center gap-2 mt-8">
@@ -121,7 +121,7 @@ export default function Projects({ t, language }: ProjectsProps) {
               className={`cursor-pointer rounded-xl overflow-hidden border-2 transition-all ${
                 index === currentProject
                   ? 'border-[var(--yellow)] shadow-[0_0_30px_rgba(255,220,0,0.3)]'
-                  : 'border-gray-200 hover:border-[var(--yellow)]/50'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-[var(--yellow)]/50'
               }`}
             >
               <div className="aspect-video overflow-hidden">
@@ -131,8 +131,8 @@ export default function Projects({ t, language }: ProjectsProps) {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-4 bg-white">
-                <h3 className="font-semibold text-gray-900">{project.title}</h3>
+              <div className="p-4 bg-white dark:bg-gray-800">
+                <h3 className="font-semibold text-gray-900 dark:text-white">{project.title}</h3>
               </div>
             </motion.div>
           ))}
@@ -171,7 +171,7 @@ function ProjectCard({ project, viewText }: { project: any; viewText: string }) 
         rotateY: tilt.y,
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="bg-white rounded-2xl overflow-hidden border-2 border-[var(--yellow)] shadow-2xl"
+      className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border-2 border-[var(--yellow)] shadow-2xl"
     >
       <div className="aspect-video overflow-hidden relative group">
         <img
@@ -182,8 +182,8 @@ function ProjectCard({ project, viewText }: { project: any; viewText: string }) 
       </div>
 
       <div className="p-8">
-        <h3 className="text-3xl font-bold text-gray-900 mb-4">{project.title}</h3>
-        <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
+        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{project.title}</h3>
+        <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{project.description}</p>
 
         <div className="flex flex-wrap gap-2 mb-6">
           {project.technologies.map((tech: string, i: number) => (

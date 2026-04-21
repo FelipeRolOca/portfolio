@@ -98,11 +98,11 @@ export default function Skills({ t }: SkillsProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 text-lg">{t.subtitle}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="relative">
@@ -125,7 +125,7 @@ export default function Skills({ t }: SkillsProps) {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : {}}
                       transition={{ duration: 0.4, delay: index * 0.05 }}
-                      className="bg-white rounded-xl p-6 border-2 border-gray-200 hover:border-[var(--yellow)] shadow-lg hover:shadow-[0_15px_35px_rgba(255,220,0,0.25)] transition-all group flex flex-col items-center justify-center gap-3 h-full"
+                      className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:border-[var(--yellow)] shadow-lg hover:shadow-[0_15px_35px_rgba(255,220,0,0.25)] transition-all group flex flex-col items-center justify-center gap-3 h-full"
                     >
                       <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center shadow-md group-hover:shadow-[0_8px_20px_rgba(255,220,0,0.4)] transition-all">
                         {skill.isLucide ? (
@@ -134,7 +134,7 @@ export default function Skills({ t }: SkillsProps) {
                           <img src={skill.icon} alt={skill.name} className="w-8 h-8 md:w-9 md:h-9 object-contain" />
                         )}
                       </div>
-                      <h3 className="font-semibold text-gray-900 text-center text-sm md:text-base">{skill.name}</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white text-center text-sm md:text-base">{skill.name}</h3>
                     </motion.div>
                   </CardTiltContent>
                 </CardTilt>
@@ -146,18 +146,18 @@ export default function Skills({ t }: SkillsProps) {
             <>
               <button
                 onClick={prevPage}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
                 aria-label="Previous skills"
               >
-                <ChevronLeft className="text-gray-900" size={20} />
+                <ChevronLeft className="text-gray-900 dark:text-white" size={20} />
               </button>
 
               <button
                 onClick={nextPage}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
                 aria-label="Next skills"
               >
-                <ChevronRight className="text-gray-900" size={20} />
+                <ChevronRight className="text-gray-900 dark:text-white" size={20} />
               </button>
 
               <div className="flex justify-center gap-2 mt-8">

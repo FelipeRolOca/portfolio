@@ -8,49 +8,49 @@ export default function BackgroundVideo() {
     const lightVideo = lightVideoRef.current;
     const darkVideo = darkVideoRef.current;
 
-    // We must ensure the videos are paused so they don't play normally
-    if (lightVideo) lightVideo.pause();
-    if (darkVideo) darkVideo.pause();
-
-    let animationFrameId: number;
+    if (lightVideo) {
+      lightVideo.pause();
+    }
+    if (darkVideo) {
+      darkVideo.pause();
+    }
 
     const handleScroll = () => {
-      // Calculate scroll progress manually to ensure 100% accuracy
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       
-      // Prevent division by zero
       const progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
 
-      // Update Light Video
       if (lightVideo && lightVideo.readyState >= 1 && lightVideo.duration) {
-        const targetTime = progress * lightVideo.duration;
-        // Direct assignment is often more reliable for scrubbing than Lerp on some browsers
-        lightVideo.currentTime = targetTime;
+        requestAnimationFrame(() => {
+          lightVideo.currentTime = progress * lightVideo.duration;
+        });
       }
       
-      // Update Dark Video
       if (darkVideo && darkVideo.readyState >= 1 && darkVideo.duration) {
-        const targetTime = progress * darkVideo.duration;
-        darkVideo.currentTime = targetTime;
+        requestAnimationFrame(() => {
+          darkVideo.currentTime = progress * darkVideo.duration;
+        });
       }
     };
 
-    // Smooth render loop instead of firing directly on scroll event
-    const renderLoop = () => {
-      handleScroll();
-      animationFrameId = requestAnimationFrame(renderLoop);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Trigger once on mount
+    handleScroll();
 
-    animationFrameId = requestAnimationFrame(renderLoop);
+    // In case readyState is 0, add an event listener to update once metadata is loaded
+    if (lightVideo) lightVideo.addEventListener('loadedmetadata', handleScroll);
+    if (darkVideo) darkVideo.addEventListener('loadedmetadata', handleScroll);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('scroll', handleScroll);
+      if (lightVideo) lightVideo.removeEventListener('loadedmetadata', handleScroll);
+      if (darkVideo) darkVideo.removeEventListener('loadedmetadata', handleScroll);
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none flex items-center justify-center bg-white dark:bg-gray-900 transition-colors duration-1000">
+    <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none flex items-center justify-center bg-white dark:bg-black transition-colors duration-1000">
       {/* Light Mode Video */}
       <video
         ref={lightVideoRef}

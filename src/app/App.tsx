@@ -69,7 +69,7 @@ const translations: Record<Language, Translation> = {
   es: {
     nav: {
       about: 'Acerca de',
-      skills: 'Competencias',
+      skills: 'Habilidades',
       experience: 'Experiencia',
       projects: 'Proyectos',
       contact: 'Contacto',
@@ -92,7 +92,7 @@ const translations: Record<Language, Translation> = {
       focus: 'Área de Especialización',
     },
     skills: {
-      title: 'Competencias Técnicas',
+      title: 'Habilidades Técnicas',
       subtitle: 'Tecnologías y herramientas de desarrollo',
     },
     experience: {
@@ -234,7 +234,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <div className={`min-h-screen pb-28 md:pb-0 bg-transparent text-foreground overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
+      <div className={`min-h-screen pb-28 md:pb-0 bg-transparent text-foreground text-outline overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
         {/* Only mount heavy components when loading is complete to prevent jank */}
         {!isLoading && <BackgroundVideo />}
         

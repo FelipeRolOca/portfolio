@@ -160,9 +160,23 @@ export default function Hero({ t }: HeroProps) {
             />
 
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-48 h-48 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center text-6xl font-bold text-black shadow-2xl">
-                FO
-              </div>
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-2xl border-4 border-[var(--yellow)]"
+              >
+                <img
+                  src="/felipe.png"
+                  alt="Felipe Roldán"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
             </div>
           </div>
         </motion.div>

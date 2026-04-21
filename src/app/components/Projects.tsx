@@ -20,7 +20,7 @@ export default function Projects({ t, language }: ProjectsProps) {
         ? 'Plataforma integral de gestión empresarial con validación geoespacial, escaneo de códigos QR y flujos de trabajo automatizados para operaciones de campo.'
         : 'Comprehensive business management platform with geospatial validation, QR code scanning, and automated workflows for field operations.',
       technologies: ['Next.js', 'React', 'Supabase', 'GPS API', 'QR'],
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop',
+      image: '/JJ ASIST (1).png',
       link: '#',
     },
     {
@@ -29,7 +29,7 @@ export default function Projects({ t, language }: ProjectsProps) {
         ? 'Sitio web corporativo y sistema de gestión de servicios con seguimiento en tiempo real y portal de clientes para servicios empresariales.'
         : 'Corporate website and service management system with real-time tracking and client portal for business services.',
       technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
-      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=500&fit=crop',
+      image: '/Captura de pantalla 2026-04-09 191343.png',
       link: '#',
     },
     {
@@ -38,7 +38,7 @@ export default function Projects({ t, language }: ProjectsProps) {
         ? 'Plataforma de comercio electrónico para productos creativos con gestión de inventario e integración de pagos.'
         : 'E-commerce platform for creative paper products with inventory management and payment integration.',
       technologies: ['React', 'JavaScript', 'Stripe', 'Firebase'],
-      image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=500&fit=crop',
+      image: '/paper-pops-preview.jpeg',
       link: '#',
     },
   ];

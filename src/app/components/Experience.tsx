@@ -17,14 +17,14 @@ export default function Experience({ t, language }: ExperienceProps) {
       stats:
         language === 'es'
           ? [
-              { label: 'Experiencias reales', value: '2' },
+              { label: 'Experiencias reales', value: '3' },
               { label: 'En produccion desde', value: '2025' },
-              { label: 'Foco actual', value: 'Web + automatizacion' },
+              { label: 'Foco actual', value: 'Producto + automatizacion' },
             ]
           : [
-              { label: 'Real engagements', value: '2' },
+              { label: 'Real engagements', value: '3' },
               { label: 'Shipping since', value: '2025' },
-              { label: 'Current focus', value: 'Web + automation' },
+              { label: 'Current focus', value: 'Product + automation' },
             ],
       highlightsLabel: language === 'es' ? 'Puntos clave' : 'Highlights',
       stackLabel: language === 'es' ? 'Stack y herramientas' : 'Stack and tools',
@@ -34,6 +34,35 @@ export default function Experience({ t, language }: ExperienceProps) {
   );
 
   const experiences = [
+    {
+      role: language === 'es' ? 'Desarrollador Frontend Freelance' : 'Freelance Frontend Developer',
+      company: 'Paper Pops',
+      date: language === 'es' ? '2026 - Presente' : '2026 - Present',
+      location: language === 'es' ? 'Remoto' : 'Remote',
+      summary:
+        language === 'es'
+          ? 'Tienda online para productos creativos con foco en catalogo visual, experiencia de compra clara y una base escalable para seguir lanzando productos.'
+          : 'Online shop for creative products focused on visual merchandising, a clear purchase flow, and a scalable storefront for new launches.',
+      impact:
+        language === 'es'
+          ? 'Se paso de una presencia simple a una experiencia e-commerce mas cuidada, preparada para mostrar catalogo, gestionar pagos y crecer con nuevas colecciones.'
+          : 'Moved from a simple presence to a more polished e-commerce experience ready to showcase products, process payments, and grow with new collections.',
+      stack: ['React', 'JavaScript', 'Stripe', 'Firebase', 'Responsive UI'],
+      achievements:
+        language === 'es'
+          ? [
+              'Diseno de una tienda visual con jerarquia clara para productos destacados',
+              'Flujo de compra mas directo con integracion de pagos y mejor navegacion',
+              'Ajustes responsive para que el catalogo se vea bien en mobile y desktop',
+              'Base preparada para sumar nuevas colecciones y contenido comercial',
+            ]
+          : [
+              'Built a visual storefront with clearer hierarchy for featured products',
+              'Simplified the purchase flow with payments integration and better navigation',
+              'Responsive polish so the catalog works well on mobile and desktop',
+              'Prepared the foundation for new collections and future marketing content',
+            ],
+    },
     {
       role: language === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
       company: language === 'es' ? 'JJAsist (Proyecto Freelance)' : 'JJAsist (Freelance Project)',

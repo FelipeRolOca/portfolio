@@ -27,7 +27,8 @@ interface ViewWindow {
 }
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-const OVERSCAN = 1;
+const EXTRA_COLUMNS = 1;
+const EXTRA_ROWS = 1;
 
 export function Card({
   className = '',
@@ -36,7 +37,7 @@ export function Card({
 }: React.ComponentProps<typeof BaseCard>) {
   return (
     <BaseCard
-      className={`border-white/60 bg-white/85 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-sm dark:border-white/10 dark:bg-[#111315]/88 dark:shadow-[0_18px_55px_rgba(0,0,0,0.36)] ${className}`}
+      className={`border-white/60 bg-white/92 shadow-[0_14px_34px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-[#111315]/94 dark:shadow-[0_14px_40px_rgba(0,0,0,0.28)] ${className}`}
       style={style}
       {...props}
     />
@@ -61,17 +62,33 @@ export function InfiniteCanvas({
   const frameRef = useRef<number | null>(null);
   const offsetRef = useRef({ x: 0, y: 0 });
   const zoomRef = useRef(1);
-  const windowRef = useRef({ startCol: -OVERSCAN, startRow: -OVERSCAN });
+  const windowRef = useRef({ startCol: 0, startRow: 0 });
 
   const [bounds, setBounds] = useState<CanvasBounds>({ width: 0, height: 0 });
   const [viewWindow, setViewWindow] = useState<ViewWindow>({
-    startCol: -OVERSCAN,
-    startRow: -OVERSCAN,
+    startCol: 0,
+    startRow: 0,
     zoom: 1,
   });
   const [interactionEnabled, setInteractionEnabled] = useState(true);
 
   const cards = useMemo(() => Children.toArray(children), [children]);
+  const preparedCards = useMemo(
+    () =>
+      cards.map((child) => {
+        if (!isValidElement(child)) return child;
+
+        const element = child as ReactElement<{ style?: CSSProperties }>;
+        return cloneElement(element, {
+          style: {
+            ...(element.props.style ?? {}),
+            width: '100%',
+            height: '100%',
+          },
+        });
+      }),
+    [cards]
+  );
   const stepX = cardWidth + spacing;
   const stepY = cardHeight + spacing;
 
@@ -82,8 +99,8 @@ export function InfiniteCanvas({
   };
 
   const getWindowPosition = (x: number, y: number, zoom: number) => ({
-    startCol: Math.floor((-x / zoom) / stepX) - OVERSCAN,
-    startRow: Math.floor((-y / zoom) / stepY) - OVERSCAN,
+    startCol: Math.floor((-x / zoom) / stepX),
+    startRow: Math.floor((-y / zoom) / stepY),
   });
 
   const syncWindow = (force = false) => {
@@ -188,7 +205,7 @@ export function InfiniteCanvas({
   };
 
   const updateZoom = (nextZoom: number, pointer?: { clientX: number; clientY: number }) => {
-    const clampedZoom = clamp(nextZoom, 0.82, 1.35);
+    const clampedZoom = clamp(nextZoom, 0.92, 1.12);
 
     if (!viewportRef.current) {
       zoomRef.current = clampedZoom;
@@ -230,11 +247,11 @@ export function InfiniteCanvas({
     schedulePaint(true);
   };
 
-  const visibleColumns = bounds.width ? Math.ceil(bounds.width / (stepX * viewWindow.zoom)) + OVERSCAN * 2 + 1 : 6;
-  const visibleRows = bounds.height ? Math.ceil(bounds.height / (stepY * viewWindow.zoom)) + OVERSCAN * 2 + 1 : 4;
+  const visibleColumns = bounds.width ? Math.ceil(bounds.width / (stepX * viewWindow.zoom)) + EXTRA_COLUMNS : 5;
+  const visibleRows = bounds.height ? Math.ceil(bounds.height / (stepY * viewWindow.zoom)) + EXTRA_ROWS : 4;
 
   const gridItems = useMemo(() => {
-    if (!cards.length) return [];
+    if (!preparedCards.length) return [];
 
     const items: Array<{
       key: string;
@@ -244,8 +261,8 @@ export function InfiniteCanvas({
 
     for (let row = viewWindow.startRow; row < viewWindow.startRow + visibleRows; row += 1) {
       for (let col = viewWindow.startCol; col < viewWindow.startCol + visibleColumns; col += 1) {
-        const index = ((row - viewWindow.startRow) * visibleColumns + (col - viewWindow.startCol)) % cards.length;
-        const child = cards[(index + cards.length) % cards.length];
+        const index = ((row - viewWindow.startRow) * visibleColumns + (col - viewWindow.startCol)) % preparedCards.length;
+        const child = preparedCards[(index + preparedCards.length) % preparedCards.length];
 
         const baseStyle: CSSProperties = {
           position: 'absolute',
@@ -255,45 +272,35 @@ export function InfiniteCanvas({
           top: `${row * stepY}px`,
         };
 
-        let node = child;
-
-        if (isValidElement(child)) {
-          const element = child as ReactElement<{ style?: CSSProperties }>;
-          node = cloneElement(element, {
-            style: {
-              ...(element.props.style ?? {}),
-              width: '100%',
-              height: '100%',
-            },
-          });
-        }
-
         items.push({
           key: `${row}-${col}`,
-          node,
+          node: child,
           style: baseStyle,
         });
       }
     }
 
     return items;
-  }, [cardHeight, cardWidth, cards, stepX, stepY, viewWindow.startCol, viewWindow.startRow, visibleColumns, visibleRows]);
+  }, [cardHeight, cardWidth, preparedCards, stepX, stepY, viewWindow.startCol, viewWindow.startRow, visibleColumns, visibleRows]);
 
   return (
-    <div className={`relative overflow-hidden rounded-[2rem] border border-[var(--yellow)]/20 bg-white/65 shadow-[0_25px_80px_rgba(15,23,42,0.12)] backdrop-blur dark:bg-[#0f1113]/80 dark:shadow-[0_25px_85px_rgba(0,0,0,0.35)] ${className}`}>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.16),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.22),transparent_16%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_16%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,220,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,220,0,0.05)_1px,transparent_1px)] bg-[size:48px_48px] opacity-60 dark:opacity-35" />
+    <div
+      className={`relative overflow-hidden rounded-[2rem] border border-[var(--yellow)]/20 bg-white/82 shadow-[0_20px_60px_rgba(15,23,42,0.1)] dark:bg-[#0f1113]/92 dark:shadow-[0_20px_70px_rgba(0,0,0,0.28)] ${className}`}
+      style={{ contain: 'layout paint style' }}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.18),transparent_16%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.1),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_16%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,220,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,220,0,0.04)_1px,transparent_1px)] bg-[size:56px_56px] opacity-45 dark:opacity-28" />
 
       <div className="absolute left-4 top-4 z-20 flex flex-wrap gap-2">
         {showStatus && (
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gray-600 shadow-sm backdrop-blur dark:bg-black/35 dark:text-gray-200">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/92 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gray-600 shadow-sm dark:bg-[#131518] dark:text-gray-200">
             {interactionEnabled ? <BadgeCheck size={14} className="text-[var(--yellow-dark)]" /> : <Lock size={14} className="text-gray-400" />}
             <span>{interactionEnabled ? 'Canvas activo' : 'Canvas bloqueado'}</span>
           </div>
         )}
 
         {showZoom && (
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gray-600 shadow-sm backdrop-blur dark:bg-black/35 dark:text-gray-200">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/92 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gray-600 shadow-sm dark:bg-[#131518] dark:text-gray-200">
             <Search size={14} className="text-[var(--yellow-dark)]" />
             <span>{Math.round(viewWindow.zoom * 100)}%</span>
           </div>
@@ -301,7 +308,7 @@ export function InfiniteCanvas({
       </div>
 
       {showControls && (
-        <div className="absolute right-4 top-4 z-20 flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/88 p-1.5 shadow-lg backdrop-blur dark:bg-black/35">
+        <div className="absolute right-4 top-4 z-20 flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/94 p-1.5 shadow-lg dark:bg-[#131518]">
           <button
             type="button"
             onClick={() => setInteractionEnabled((current) => !current)}
@@ -340,7 +347,7 @@ export function InfiniteCanvas({
       )}
 
       {showInstructions && (
-        <div className="absolute bottom-4 left-4 z-20 max-w-xs rounded-2xl border border-[var(--yellow)]/20 bg-white/85 px-4 py-3 text-xs leading-relaxed text-gray-600 shadow-lg backdrop-blur dark:bg-black/35 dark:text-gray-300">
+        <div className="absolute bottom-4 left-4 z-20 max-w-xs rounded-2xl border border-[var(--yellow)]/20 bg-white/92 px-4 py-3 text-xs leading-relaxed text-gray-600 shadow-lg dark:bg-[#131518] dark:text-gray-300">
           Arrastra para moverte por el canvas. Usa la rueda o los botones para acercar y alejar.
         </div>
       )}
@@ -348,6 +355,7 @@ export function InfiniteCanvas({
       <div
         ref={viewportRef}
         className={`relative h-full w-full ${interactionEnabled ? 'touch-none cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
+        style={{ contain: 'layout paint' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -356,8 +364,8 @@ export function InfiniteCanvas({
       >
         <div
           ref={canvasRef}
-          className="absolute left-0 top-0 origin-top-left will-change-transform"
-          style={{ transformOrigin: '0 0' }}
+          className="absolute left-0 top-0 origin-top-left transform-gpu will-change-transform"
+          style={{ contain: 'paint', transformOrigin: '0 0' }}
         >
           {gridItems.map((item) => (
             <div key={item.key} style={item.style}>

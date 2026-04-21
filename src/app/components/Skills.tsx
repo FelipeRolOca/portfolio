@@ -120,14 +120,14 @@ export default function Skills({ t }: SkillsProps) {
           transition={{ duration: 0.65, delay: 0.12 }}
         >
           <InfiniteCanvas
-            className="relative h-[460px] w-full md:h-[540px]"
-            cardWidth={236}
-            cardHeight={164}
-            spacing={20}
+            className="relative h-[410px] w-full md:h-[480px]"
+            cardWidth={218}
+            cardHeight={150}
+            spacing={16}
             showControls={true}
             showZoom={true}
-            showStatus={true}
-            showInstructions={true}
+            showStatus={false}
+            showInstructions={false}
           >
             {skills.map((skill) => (
               <Card key={skill.name} className="rounded-[1.35rem] border-[var(--yellow)]/12 p-5">
@@ -137,7 +137,7 @@ export default function Skills({ t }: SkillsProps) {
                       {skill.isLucide ? (
                         <skill.icon className="text-black" size={28} />
                       ) : (
-                        <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" />
+                        <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" loading="lazy" decoding="async" draggable={false} />
                       )}
                     </div>
 

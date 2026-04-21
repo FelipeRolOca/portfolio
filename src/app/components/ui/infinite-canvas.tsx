@@ -1,6 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { Children, cloneElement, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
-import { BadgeCheck, Lock, Move, RotateCcw, Search, SearchMinus, SearchPlus } from 'lucide-react';
+import { BadgeCheck, Lock, Minus, Move, Plus, RotateCcw, Search } from 'lucide-react';
 import { Card as BaseCard } from './card';
 
 interface InfiniteCanvasProps {
@@ -49,6 +49,7 @@ export function InfiniteCanvas({
 }: InfiniteCanvasProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; y: number; pointerId: number } | null>(null);
+  const hasInitializedView = useRef(false);
   const [bounds, setBounds] = useState<CanvasBounds>({ width: 0, height: 0 });
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -72,16 +73,15 @@ export function InfiniteCanvas({
   }, []);
 
   useEffect(() => {
-    if (!bounds.width || !bounds.height) return;
+    if (!bounds.width || !bounds.height || hasInitializedView.current) return;
 
-    const centeredStepX = stepX * zoom;
-    const centeredStepY = stepY * zoom;
+    hasInitializedView.current = true;
 
     setOffset({
-      x: bounds.width / 2 - centeredStepX * 1.35,
-      y: bounds.height / 2 - centeredStepY,
+      x: bounds.width / 2 - stepX * 1.35,
+      y: bounds.height / 2 - stepY,
     });
-  }, [bounds.height, bounds.width, stepX, stepY, zoom]);
+  }, [bounds.height, bounds.width, stepX, stepY]);
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!interactionEnabled) return;
@@ -185,13 +185,14 @@ export function InfiniteCanvas({
         let node = child;
 
         if (isValidElement(child)) {
+          const element = child as ReactElement<{ style?: CSSProperties }>;
           const mergedStyle = {
-            ...(child.props.style ?? {}),
+            ...(element.props.style ?? {}),
             width: '100%',
             height: '100%',
           };
 
-          node = cloneElement(child, {
+          node = cloneElement(element, {
             style: mergedStyle,
           });
         }
@@ -249,7 +250,7 @@ export function InfiniteCanvas({
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-colors hover:bg-[var(--yellow)]/12 dark:bg-white/8 dark:text-white"
             aria-label="Zoom in"
           >
-            <SearchPlus size={18} />
+            <Plus size={18} />
           </button>
           <button
             type="button"
@@ -257,7 +258,7 @@ export function InfiniteCanvas({
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-colors hover:bg-[var(--yellow)]/12 dark:bg-white/8 dark:text-white"
             aria-label="Zoom out"
           >
-            <SearchMinus size={18} />
+            <Minus size={18} />
           </button>
           <button
             type="button"

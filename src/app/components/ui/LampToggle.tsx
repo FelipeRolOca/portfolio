@@ -1,12 +1,14 @@
 import { useRef, useState } from 'react';
 import { motion } from 'motion/react';
+import type { Language } from '../../App';
 
 interface LampToggleProps {
   isDark: boolean;
   onToggle: () => void;
+  language: Language;
 }
 
-export function LampToggle({ isDark, onToggle }: LampToggleProps) {
+export function LampToggle({ isDark, onToggle, language }: LampToggleProps) {
   const [isPulling, setIsPulling] = useState(false);
   const [stringLength, setStringLength] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -24,18 +26,18 @@ export function LampToggle({ isDark, onToggle }: LampToggleProps) {
     if (!rect) return;
 
     const pullDistance = Math.max(0, clientY - rect.top);
-    setStringLength(Math.min(pullDistance, 64));
+    setStringLength(Math.min(pullDistance, 62));
   };
 
   const handlePullEnd = () => {
-    if (stringLength > 40 && !isAnimating) {
+    if (stringLength > 38 && !isAnimating) {
       setIsAnimating(true);
       onToggle();
 
       setTimeout(() => {
         setIsAnimating(false);
         setStringLength(0);
-      }, 800);
+      }, 700);
     } else {
       setStringLength(0);
     }
@@ -43,13 +45,20 @@ export function LampToggle({ isDark, onToggle }: LampToggleProps) {
     setIsPulling(false);
   };
 
+  const label =
+    language === 'es'
+      ? isDark
+        ? 'Tirar para apagar'
+        : 'Tirar para encender'
+      : isDark
+        ? 'Pull to turn off'
+        : 'Pull to turn on';
+
   return (
     <div className="fixed right-4 top-0 z-50 flex select-none flex-col items-center md:right-6">
-      <div className="h-5 w-20 rounded-b-full border border-white/40 bg-white/85 shadow-[0_14px_28px_rgba(15,23,42,0.08)] backdrop-blur dark:border-white/10 dark:bg-neutral-900/85" />
-
       <div
         ref={stringRef}
-        className="relative mt-1 h-40 w-16 touch-none cursor-grab active:cursor-grabbing"
+        className="relative h-36 w-16 touch-none cursor-grab active:cursor-grabbing"
         onMouseDown={handlePullStart}
         onMouseMove={handlePull}
         onMouseUp={handlePullEnd}
@@ -59,64 +68,32 @@ export function LampToggle({ isDark, onToggle }: LampToggleProps) {
         onTouchEnd={handlePullEnd}
       >
         <motion.div
-          animate={{ height: 56 + stringLength }}
+          animate={{ height: 58 + stringLength }}
           transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-          className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-gradient-to-b from-neutral-200 via-neutral-400 to-neutral-500 dark:from-neutral-700 dark:via-neutral-400 dark:to-neutral-200"
+          className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-neutral-400 to-neutral-500 dark:via-neutral-500 dark:to-neutral-300"
         />
 
         <motion.div
           animate={
             isAnimating
-              ? { rotate: [0, 7, -5, 3, 0], y: [stringLength, stringLength + 4, 0] }
-              : { rotate: isPulling ? Math.min(stringLength / 6, 8) : 0, y: stringLength }
+              ? { y: [stringLength, stringLength + 6, 0] }
+              : { y: stringLength, scale: isPulling ? 1.08 : 1 }
           }
           transition={
             isAnimating
-              ? { duration: 0.8, ease: 'easeInOut' }
-              : { type: 'spring', stiffness: 240, damping: 18 }
+              ? { duration: 0.7, ease: 'easeInOut' }
+              : { type: 'spring', stiffness: 260, damping: 18 }
           }
-          className="absolute left-1/2 top-12 -translate-x-1/2"
-        >
-          <div className="flex flex-col items-center">
-            <div className="relative h-10 w-14 rounded-t-full rounded-b-[1rem] border border-neutral-200/80 bg-white/90 shadow-[0_10px_25px_rgba(15,23,42,0.08)] backdrop-blur dark:border-[var(--yellow)]/20 dark:bg-neutral-900/88">
-              <div className="absolute inset-x-2 top-2 h-1 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-            </div>
-
-            <motion.div
-              animate={
-                isDark
-                  ? {
-                      scale: [1, 1.06, 1],
-                      boxShadow: [
-                        '0 0 0 rgba(255,220,0,0)',
-                        '0 0 28px rgba(255,220,0,0.55)',
-                        '0 0 0 rgba(255,220,0,0)',
-                      ],
-                    }
-                  : {
-                      scale: 1,
-                      boxShadow: '0 0 0 rgba(255,220,0,0)',
-                    }
-              }
-              transition={{
-                duration: 2.4,
-                repeat: isDark ? Infinity : 0,
-                ease: 'easeInOut',
-              }}
-              className={`-mt-2 h-9 w-9 rounded-full border ${
-                isDark
-                  ? 'border-[var(--yellow)]/30 bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)]'
-                  : 'border-neutral-300 bg-neutral-200 dark:bg-neutral-700'
-              }`}
-            />
-
-            <div className="mt-3 h-4 w-4 rounded-full bg-neutral-300 shadow-md dark:bg-neutral-500" />
-          </div>
-        </motion.div>
+          className={`absolute left-1/2 top-14 h-8 w-8 -translate-x-1/2 rounded-full border shadow-md ${
+            isDark
+              ? 'border-[var(--yellow)]/35 bg-[var(--yellow)] shadow-[0_0_22px_rgba(255,220,0,0.35)]'
+              : 'border-neutral-300 bg-white'
+          }`}
+        />
       </div>
 
       <p className="mt-2 rounded-full border border-white/30 bg-white/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-gray-500 shadow-sm backdrop-blur dark:border-white/10 dark:bg-neutral-900/80 dark:text-neutral-300">
-        {isDark ? 'Pull to dim' : 'Pull to light'}
+        {label}
       </p>
     </div>
   );

@@ -1,182 +1,160 @@
 import { motion, useInView } from 'motion/react';
-import { useRef, useState } from 'react';
-import { Code2, Database, Globe, QrCode, ChevronLeft, ChevronRight, Server } from 'lucide-react';
+import { useRef } from 'react';
+import { Code2, Database, Globe, PanelsTopLeft, QrCode, Server, type LucideIcon } from 'lucide-react';
 import type { Translation } from '../App';
-import { CardTilt, CardTiltContent } from './ui/CardTilt';
+import { Card, InfiniteCanvas } from './ui/infinite-canvas';
 
 interface SkillsProps {
   t: Translation['skills'];
 }
 
+type SkillItem = {
+  name: string;
+  detail: string;
+  icon: string | LucideIcon;
+  isLucide?: boolean;
+};
+
 export default function Skills({ t }: SkillsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [currentPage, setCurrentPage] = useState(0);
 
-  const skills = [
+  const skills: SkillItem[] = [
     {
       name: 'GitHub',
+      detail: 'Control de versiones y colaboracion',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
     },
     {
       name: 'Next.js',
+      detail: 'Apps y sitios full stack',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
     },
     {
       name: 'React',
+      detail: 'Interfaces dinamicas y componentes',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
     },
     {
       name: 'JavaScript',
+      detail: 'Logica de producto y frontend',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
     },
     {
       name: 'Python',
+      detail: 'Scripts, automatizacion y backend',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
     },
     {
       name: 'Java',
+      detail: 'Base academica y programacion estructurada',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
     },
     {
       name: 'SQL',
+      detail: 'Datos, consultas y modelado',
       icon: Database,
       isLucide: true,
     },
     {
       name: 'Supabase',
+      detail: 'Base de datos y auth',
       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg',
     },
     {
       name: 'Vercel',
+      detail: 'Deploy y hosting moderno',
       icon: Server,
       isLucide: true,
     },
     {
-      name: 'HTML',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+      name: 'WordPress',
+      detail: 'Sitios institucionales y gestion de contenido',
+      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg',
     },
     {
-      name: 'CSS',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+      name: 'Elementor',
+      detail: 'Maquetacion visual y landings',
+      icon: PanelsTopLeft,
+      isLucide: true,
     },
     {
       name: 'Google Apps Script',
+      detail: 'Procesos y reportes automatizados',
       icon: Code2,
       isLucide: true,
     },
     {
       name: 'QR / Barcode',
+      detail: 'Lectura y validacion operativa',
       icon: QrCode,
       isLucide: true,
     },
     {
       name: 'GPS',
+      detail: 'Ubicacion y chequeos en campo',
       icon: Globe,
       isLucide: true,
     },
   ];
 
-  const itemsPerPage = 8;
-  const totalPages = Math.ceil(skills.length / itemsPerPage);
-  const currentSkills = skills.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-
-  const nextPage = () => {
-    setCurrentPage((prev) => (prev + 1) % totalPages);
-  };
-
-  const prevPage = () => {
-    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
-
   return (
-    <section id="skills" ref={ref} className="py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-1000">
-      <div className="max-w-5xl mx-auto relative z-10">
+    <section id="skills" ref={ref} className="bg-white px-6 py-20 transition-colors duration-1000 dark:bg-gray-900">
+      <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+          <h2 className="mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-4xl font-bold text-transparent dark:from-white dark:to-gray-300 md:text-5xl">
             {t.title}
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 dark:text-gray-300 text-lg">{t.subtitle}</p>
+          <div className="mx-auto mb-4 h-1 w-20 rounded-full bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)]" />
+          <p className="text-lg text-gray-600 dark:text-gray-300">{t.subtitle}</p>
         </motion.div>
 
-        <div className="relative">
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4 md:gap-6"
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65, delay: 0.12 }}
+        >
+          <InfiniteCanvas
+            className="relative h-[540px] w-full md:h-[620px]"
+            cardWidth={250}
+            cardHeight={176}
+            spacing={24}
+            showControls={true}
+            showZoom={true}
+            showStatus={true}
+            showInstructions={true}
           >
-            {currentSkills.map((skill, index) => (
-              <div key={`${currentPage}-${index}`} className="aspect-square">
-                <CardTilt
-                  className="h-full"
-                  tiltMaxAngle={12}
-                  scale={1.08}
-                >
-                  <CardTiltContent className="h-full">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                      className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-gray-200 dark:border-gray-700 hover:border-[var(--yellow)] shadow-lg hover:shadow-[0_15px_35px_rgba(255,220,0,0.25)] transition-all group flex flex-col items-center justify-center gap-3 h-full"
-                    >
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center shadow-md group-hover:shadow-[0_8px_20px_rgba(255,220,0,0.4)] transition-all">
-                        {skill.isLucide ? (
-                          <skill.icon className="text-black" size={28} />
-                        ) : (
-                          <img src={skill.icon} alt={skill.name} className="w-8 h-8 md:w-9 md:h-9 object-contain" />
-                        )}
-                      </div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white text-center text-sm md:text-base">{skill.name}</h3>
-                    </motion.div>
-                  </CardTiltContent>
-                </CardTilt>
-              </div>
+            {skills.map((skill) => (
+              <Card key={skill.name} className="rounded-[1.35rem] border-[var(--yellow)]/12 p-5">
+                <div className="flex h-full flex-col justify-between gap-4">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.24)]">
+                      {skill.isLucide ? (
+                        <skill.icon className="text-black" size={28} />
+                      ) : (
+                        <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" />
+                      )}
+                    </div>
+
+                    <div className="flex-1">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">
+                        Skill
+                      </p>
+                      <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
+                    </div>
+                  </div>
+
+                  <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{skill.detail}</p>
+                </div>
+              </Card>
             ))}
-          </motion.div>
-
-          {totalPages > 1 && (
-            <>
-              <button
-                onClick={prevPage}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
-                aria-label="Previous skills"
-              >
-                <ChevronLeft className="text-gray-900 dark:text-white" size={20} />
-              </button>
-
-              <button
-                onClick={nextPage}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
-                aria-label="Next skills"
-              >
-                <ChevronRight className="text-gray-900 dark:text-white" size={20} />
-              </button>
-
-              <div className="flex justify-center gap-2 mt-8">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentPage(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentPage
-                        ? 'bg-[var(--yellow)] w-8'
-                        : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                    aria-label={`Go to page ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+          </InfiniteCanvas>
+        </motion.div>
       </div>
     </section>
   );

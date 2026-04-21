@@ -23,41 +23,18 @@ export default function Hero({ t }: HeroProps) {
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white pt-20 transition-colors duration-1000 dark:bg-gray-900">
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 flex justify-center">
-        <div className="relative h-[30rem] w-[min(92vw,72rem)]">
-          <motion.div
-            initial={{ opacity: 0, y: -18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="absolute left-1/2 top-0 h-12 w-28 -translate-x-1/2 rounded-b-[2rem] border border-[var(--yellow)]/20 bg-white/80 shadow-[0_12px_30px_rgba(255,220,0,0.14)] backdrop-blur dark:bg-gray-900/85 dark:shadow-[0_12px_32px_rgba(255,220,0,0.2)]"
-          />
-
-          <motion.div
-            animate={{ opacity: [0.45, 0.72, 0.45], scaleX: [1, 1.03, 1] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute left-1/2 top-10 h-[28rem] w-full -translate-x-1/2 bg-[linear-gradient(180deg,rgba(255,220,0,0.28)_0%,rgba(255,220,0,0.12)_30%,rgba(255,220,0,0.04)_60%,transparent_78%)] opacity-45 blur-3xl [clip-path:polygon(48%_0%,52%_0%,88%_100%,12%_100%)] dark:opacity-100"
-          />
-
-          <motion.div
-            animate={{ opacity: [0.5, 0.8, 0.5], scale: [1, 1.05, 1] }}
-            transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute left-1/2 top-10 h-36 w-[28rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,228,130,0.55),transparent_72%)] blur-3xl dark:opacity-95"
-          />
-        </div>
-      </div>
-
       <div className="absolute inset-0 opacity-20">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/25 to-transparent"
+            className="absolute w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/18 to-transparent"
             style={{
-              left: `${12 + i * 11}%`,
+              left: `${16 + i * 14}%`,
               height: '100%',
             }}
-            animate={{ opacity: [0.12, 0.28, 0.12] }}
+            animate={{ opacity: [0.08, 0.2, 0.08] }}
             transition={{
-              duration: 3.5 + i * 0.25,
+              duration: 4 + i * 0.2,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
@@ -65,7 +42,7 @@ export default function Hero({ t }: HeroProps) {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col-reverse items-center gap-8 px-6 py-20 md:flex-row md:gap-12">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col-reverse items-center gap-10 px-6 py-20 md:flex-row md:gap-14">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -138,36 +115,24 @@ export default function Hero({ t }: HeroProps) {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative flex-1"
+          className="relative flex flex-1 justify-center"
         >
-          <div className="relative mx-auto aspect-square w-full max-w-xs md:max-w-md">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 26, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 rounded-full border border-dashed border-[var(--yellow)]/30"
-            />
+          <div className="relative w-full max-w-[21rem] md:max-w-[23rem]">
+            <div className="absolute -inset-5 rounded-[2.2rem] border border-[var(--yellow)]/18 opacity-70" />
 
             <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-8 rounded-full border border-[var(--yellow)]/35"
-            />
-
-            <motion.div
-              animate={{ scale: [1, 1.08, 1], opacity: [0.28, 0.4, 0.28] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute inset-16 rounded-full bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] blur-3xl"
-            />
-
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                animate={{ y: [0, -8, 0], scale: [1, 1.03, 1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                className="h-48 w-48 overflow-hidden rounded-full border-4 border-[var(--yellow)] shadow-[0_20px_60px_rgba(255,220,0,0.22)] md:h-64 md:w-64 lg:h-72 lg:w-72"
-              >
-                <img src="/felipe.png" alt="Felipe Roldan" className="h-full w-full object-cover" />
-              </motion.div>
-            </div>
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative overflow-hidden rounded-[2rem] border border-[var(--yellow)]/30 bg-white p-3 shadow-[0_28px_90px_rgba(15,23,42,0.16)] dark:bg-[#121417] dark:shadow-[0_28px_90px_rgba(0,0,0,0.42)]"
+            >
+              <div className="overflow-hidden rounded-[1.4rem] border border-[var(--yellow)]/20 bg-[#f7f5ef] dark:bg-[#181b1f]">
+                <img
+                  src="/felipe.png"
+                  alt="Felipe Roldan"
+                  className="aspect-[4/5] w-full object-contain object-center"
+                />
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

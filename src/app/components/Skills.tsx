@@ -90,7 +90,7 @@ export default function Skills({ t }: SkillsProps) {
   };
 
   return (
-    <section id="skills" ref={ref} className="py-20 px-6 bg-white">
+    <section id="skills" ref={ref} className="py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-1000">
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

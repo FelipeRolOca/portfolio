@@ -192,9 +192,14 @@ export default function App() {
   };
 
   const toggleTheme = () => {
-    setIsDark(!isDark);
-    localStorage.setItem('theme', !isDark ? 'dark' : 'light');
-    document.documentElement.classList.toggle('dark');
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
+    if (newIsDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   };
 
   return (

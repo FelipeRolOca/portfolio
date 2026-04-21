@@ -126,7 +126,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
         style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
       >
         <div className="mx-auto max-w-sm">
-          <div className="relative overflow-hidden rounded-[32px] border border-[var(--yellow)]/20 bg-white/95 backdrop-blur-xl px-2 pb-2 pt-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+          <div className="relative overflow-hidden rounded-[32px] border border-[var(--yellow)]/20 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-2 pb-2 pt-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-colors duration-1000">
             <div className="pointer-events-none absolute inset-x-10 top-2 h-14 rounded-full bg-[var(--yellow)]/6 blur-2xl" />
             <div className="pointer-events-none absolute inset-px rounded-[31px] border border-[var(--yellow)]/10" />
 

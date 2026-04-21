@@ -103,8 +103,8 @@ const translations: Record<Language, Translation> = {
     },
     projects: {
       title: 'Proyectos Destacados',
-      subtitle: 'Desarrollos y soluciones implementadas',
-      viewProject: 'Ver Proyecto',
+      subtitle: 'Productos, sitios y soluciones reales',
+      viewProject: 'Ver Sitio',
     },
     contact: {
       title: 'Contacto Profesional',
@@ -155,8 +155,8 @@ const translations: Record<Language, Translation> = {
     },
     projects: {
       title: 'Featured Projects',
-      subtitle: 'Developments and implemented solutions',
-      viewProject: 'View Project',
+      subtitle: 'Real products, websites, and business solutions',
+      viewProject: 'View Site',
     },
     contact: {
       title: 'Professional Contact',
@@ -204,17 +204,6 @@ export default function App() {
 
   return (
     <div className={`min-h-screen bg-background text-foreground overflow-x-hidden transition-all duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
-      <AnimatePresence>
-        {isDark && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1000, ease: 'easeInOut' }}
-            className="fixed inset-0 pointer-events-none bg-gradient-to-br from-[var(--yellow)]/10 via-transparent to-transparent z-40"
-          />
-        )}
-      </AnimatePresence>
       <LampToggle isDark={isDark} onToggle={toggleTheme} />
       <Navbar language={language} toggleLanguage={toggleLanguage} t={t.nav} />
       <Hero t={t.hero} />

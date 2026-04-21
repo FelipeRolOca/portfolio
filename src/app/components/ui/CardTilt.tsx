@@ -1,4 +1,6 @@
-import { useRef, useState, ReactNode, useEffect } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import { useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useSpring } from 'motion/react';
 
 interface CardTiltProps {
   children: ReactNode;
@@ -14,6 +16,18 @@ interface CardTiltContentProps {
   className?: string;
 }
 
+const tiltSpring = {
+  stiffness: 190,
+  damping: 20,
+  mass: 0.75,
+};
+
+const scaleSpring = {
+  stiffness: 220,
+  damping: 18,
+  mass: 0.7,
+};
+
 export function CardTilt({
   children,
   className = '',
@@ -23,94 +37,73 @@ export function CardTilt({
   scale = 1.05,
 }: CardTiltProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState('');
+
+  const rotateX = useSpring(0, tiltSpring);
+  const rotateY = useSpring(0, tiltSpring);
+  const hoverScale = useSpring(1, scaleSpring);
+  const pointerX = useMotionValue(50);
+  const pointerY = useMotionValue(50);
+  const pointerActive = useMotionValue(0);
+  const pointerXVar = useMotionTemplate`${pointerX}%`;
+  const pointerYVar = useMotionTemplate`${pointerY}%`;
+
+  const resetTilt = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+    hoverScale.set(1);
+    pointerX.set(50);
+    pointerY.set(50);
+    pointerActive.set(0);
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const relativeX = (e.clientX - rect.left) / rect.width;
+    const relativeY = (e.clientY - rect.top) / rect.height;
 
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const maxX = tiltReverse ? tiltMaxAngle : -tiltMaxAngle;
+    const maxY = tiltReverse ? -tiltMaxAngle : tiltMaxAngle;
 
-    const rotateX = ((y - centerY) / centerY) * -tiltMaxAngle;
-    const rotateY = ((x - centerX) / centerX) * tiltMaxAngle;
-
-    const finalRotateX = tiltReverse ? -rotateX : rotateX;
-    const finalRotateY = tiltReverse ? -rotateY : rotateY;
-
-    setTransform(
-      `perspective(1000px) rotateX(${finalRotateX}deg) rotateY(${finalRotateY}deg) scale(${scale})`
-    );
+    rotateX.set((relativeY - 0.5) * maxX * 2);
+    rotateY.set((relativeX - 0.5) * maxY * 2);
+    hoverScale.set(scale);
+    pointerX.set(relativeX * 100);
+    pointerY.set(relativeY * 100);
+    pointerActive.set(glareEnable ? 1 : 0.92);
   };
 
-  const handleMouseLeave = () => {
-    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)');
-  };
+  const tiltStyle = {
+    rotateX,
+    rotateY,
+    scale: hoverScale,
+    transformStyle: 'preserve-3d',
+    willChange: 'transform',
+    '--pointer-x': pointerXVar,
+    '--pointer-y': pointerYVar,
+    '--pointer-active': pointerActive,
+  } as CSSProperties;
 
   return (
     <div
       ref={ref}
       className={className}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform,
-        transition: 'transform 0.1s ease-out',
-      }}
+      onMouseEnter={() => hoverScale.set(scale)}
+      onMouseLeave={resetTilt}
+      style={{ perspective: '1600px' }}
     >
-      {children}
+      <motion.div style={tiltStyle}>
+        {children}
+      </motion.div>
     </div>
   );
 }
 
 export function CardTiltContent({ children, className = '' }: CardTiltContentProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setMousePos({ x: 50, y: 50 });
-  };
-
-  const topLineOffset = (mousePos.y / 100) * 20 - 10;
-  const bottomLineOffset = (mousePos.y / 100) * 20 - 10;
-  const leftLineOffset = (mousePos.x / 100) * 20 - 10;
-  const rightLineOffset = (mousePos.x / 100) * 20 - 10;
-
   return (
-    <div
-      ref={ref}
-      className={`relative ${className}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--yellow)]/20" />
-      <div
-        className="pointer-events-none absolute inset-x-4 h-px bg-gradient-to-r from-transparent via-[var(--yellow)]/30 to-transparent transition-all duration-150 ease-out"
-        style={{ top: `calc(1rem + ${topLineOffset}px)` }}
-      />
-      <div
-        className="pointer-events-none absolute inset-x-4 h-px bg-gradient-to-r from-transparent via-[var(--yellow)]/30 to-transparent transition-all duration-150 ease-out"
-        style={{ bottom: `calc(1rem + ${bottomLineOffset}px)` }}
-      />
-      <div
-        className="pointer-events-none absolute inset-y-4 w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/30 to-transparent transition-all duration-150 ease-out"
-        style={{ left: `calc(1rem + ${leftLineOffset}px)` }}
-      />
-      <div
-        className="pointer-events-none absolute inset-y-4 w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/30 to-transparent transition-all duration-150 ease-out"
-        style={{ right: `calc(1rem + ${rightLineOffset}px)` }}
-      />
+    <div className={`relative h-full [transform-style:preserve-3d] ${className}`}>
       {children}
     </div>
   );

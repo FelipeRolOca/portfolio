@@ -2,19 +2,19 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
+  --background: #fafafa;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
+  --primary: oklch(0.75 0.15 90);
+  --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.95 0.0058 264.53);
   --secondary-foreground: #030213;
   --muted: #ececf0;
   --muted-foreground: #717182;
-  --accent: #e9ebef;
+  --accent: oklch(0.75 0.15 90);
   --accent-foreground: #030213;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
@@ -24,7 +24,7 @@
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.75 0.15 90);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -39,6 +39,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --yellow: oklch(0.75 0.15 90);
+  --yellow-glow: oklch(0.85 0.18 90);
+  --yellow-dark: oklch(0.65 0.13 85);
 }
 
 .dark {
@@ -117,31 +120,15 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --animate-border-beam: border-beam var(--duration) infinite linear;
-  --animate-tilt: tilt 10s infinite linear;
-}
-
-@keyframes border-beam {
-  100% {
-    offset-distance: 100%;
-  }
-}
-
-@keyframes tilt {
-  0%, 50%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(1deg);
-  }
-  75% {
-    transform: rotate(-1deg);
-  }
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -197,5 +184,19 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+
+@layer utilities {
+  .glow-yellow {
+    box-shadow: 0 0 20px rgba(255, 220, 0, 0.4);
+  }
+
+  .glow-yellow-strong {
+    box-shadow: 0 0 30px rgba(255, 220, 0, 0.6);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255, 220, 0, 0.5);
   }
 }

@@ -1,216 +1,213 @@
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import { ExternalLink, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck, ChevronDown } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { SpotlightCard } from "./ui/SpotlightCard";
-import { TextReveal } from "./ui/TextReveal";
-import { Magnetic } from "./ui/Magnetic";
-import { useCanHover } from "./ui/use-can-hover";
-import { useLanguage } from "../i18n/LanguageContext";
+import { motion, useInView } from 'motion/react';
+import { useRef, useState } from 'react';
+import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import type { Translation, Language } from '../App';
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-};
+interface ProjectsProps {
+  t: Translation['projects'];
+  language: Language;
+}
 
-export function Projects() {
-  const canHover = useCanHover();
-  const [openFeaturedIndex, setOpenFeaturedIndex] = useState<number | null>(null);
-  const { t } = useLanguage();
+export default function Projects({ t, language }: ProjectsProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [currentProject, setCurrentProject] = useState(0);
 
-  const featuredProjects = [
+  const projects = [
     {
-      title: "Paper Pops",
-      type: t.projects.p1Type,
-      image: "/paper-pops-preview.jpeg",
-      description: t.projects.p1Desc,
-      tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
-      liveUrl: "https://paper-pops.vercel.app/",
-      meta: {
-        role: t.projects.p1MetaRole,
-        problem: t.projects.p1MetaProblem,
-        value: t.projects.p1MetaValue
-      },
-      highlights: [
-        { icon: <Palette className="w-4 h-4" />, text: t.projects.p1H1 },
-        { icon: <Zap className="w-4 h-4" />, text: t.projects.p1H2 },
-        { icon: <Layout className="w-4 h-4" />, text: t.projects.p1H3 },
-        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p1H4 },
-      ]
+      title: 'JJAsist',
+      description: language === 'es'
+        ? 'Plataforma integral de gestión empresarial con validación geoespacial, escaneo de códigos QR y flujos de trabajo automatizados para operaciones de campo.'
+        : 'Comprehensive business management platform with geospatial validation, QR code scanning, and automated workflows for field operations.',
+      technologies: ['Next.js', 'React', 'Supabase', 'GPS API', 'QR'],
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop',
+      link: '#',
     },
     {
-      title: "JJAsist",
-      type: t.projects.p2Type,
-      image: "/JJ%20ASIST%20(1).png",
-      description: t.projects.p2Desc,
-      tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
-      liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
-      meta: {
-        role: t.projects.p2MetaRole,
-        problem: t.projects.p2MetaProblem,
-        value: t.projects.p2MetaValue
-      },
-      highlights: [
-        { icon: <QrCode className="w-4 h-4" />, text: t.projects.p2H1 },
-        { icon: <Map className="w-4 h-4" />, text: t.projects.p2H2 },
-        { icon: <Settings className="w-4 h-4" />, text: t.projects.p2H3 },
-        { icon: <ShieldCheck className="w-4 h-4" />, text: t.projects.p2H4 },
-      ]
+      title: 'JJ Servicios Empresariales',
+      description: language === 'es'
+        ? 'Sitio web corporativo y sistema de gestión de servicios con seguimiento en tiempo real y portal de clientes para servicios empresariales.'
+        : 'Corporate website and service management system with real-time tracking and client portal for business services.',
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=500&fit=crop',
+      link: '#',
     },
     {
-      title: "JJ Servicios Empresariales",
-      type: t.projects.p1Type,
-      image: "/Captura%20de%20pantalla%202026-04-09%20191343.png",
-      description: t.projects.p3Desc,
-      tech: [t.projects.p3Tech1, t.projects.p3Tech2, t.projects.p3Tech3],
-      liveUrl: "https://jjserviciosempresarialesrrhh.com/",
-      meta: {
-        role: t.projects.p3MetaRole,
-        problem: t.projects.p3MetaProblem,
-        value: t.projects.p3MetaValue
-      },
-      highlights: [
-        { icon: <Layout className="w-4 h-4" />, text: t.projects.p3Tech1 },
-        { icon: <Zap className="w-4 h-4" />, text: t.projects.p3Tech2 },
-        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p3Tech3 },
-        { icon: <Settings className="w-4 h-4" />, text: "UI / UX" },
-      ]
-    }
+      title: 'Paper Pops',
+      description: language === 'es'
+        ? 'Plataforma de comercio electrónico para productos creativos con gestión de inventario e integración de pagos.'
+        : 'E-commerce platform for creative paper products with inventory management and payment integration.',
+      technologies: ['React', 'JavaScript', 'Stripe', 'Firebase'],
+      image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=500&fit=crop',
+      link: '#',
+    },
   ];
 
+  const nextProject = () => {
+    setCurrentProject((prev) => (prev + 1) % projects.length);
+  };
 
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
+  const prevProject = () => {
+    setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length);
   };
 
   return (
-    <section id="projects" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        <div className="text-center mb-16 relative z-20">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.projects.sectionSubtitle}</h2>
-          <TextReveal text={t.projects.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
+    <section id="projects" ref={ref} className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--yellow)]/5 rounded-full blur-3xl" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            {t.title}
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
+          <p className="text-gray-600 text-lg">{t.subtitle}</p>
+        </motion.div>
+
+        <div className="relative">
+          <motion.div
+            key={currentProject}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl mx-auto"
+          >
+            <ProjectCard project={projects[currentProject]} viewText={t.viewProject} />
+          </motion.div>
+
+          <button
+            onClick={prevProject}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-12 h-12 rounded-full bg-white border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
+          >
+            <ChevronLeft className="text-gray-900" size={24} />
+          </button>
+
+          <button
+            onClick={nextProject}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-12 h-12 rounded-full bg-white border-2 border-[var(--yellow)] flex items-center justify-center hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-all z-10"
+          >
+            <ChevronRight className="text-gray-900" size={24} />
+          </button>
+
+          <div className="flex justify-center gap-2 mt-8">
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentProject(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentProject
+                    ? 'bg-[var(--yellow)] w-8'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Featured Projects */}
-        <div className="flex flex-col gap-20 mb-20">
-          {featuredProjects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+          {projects.map((project, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className=""
-              onMouseEnter={canHover ? () => setOpenFeaturedIndex(index) : undefined}
-              onMouseLeave={canHover ? () => setOpenFeaturedIndex(current => (current === index ? null : current)) : undefined}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -8 }}
+              onClick={() => setCurrentProject(index)}
+              className={`cursor-pointer rounded-xl overflow-hidden border-2 transition-all ${
+                index === currentProject
+                  ? 'border-[var(--yellow)] shadow-[0_0_30px_rgba(255,220,0,0.3)]'
+                  : 'border-gray-200 hover:border-[var(--yellow)]/50'
+              }`}
             >
-              <SpotlightCard 
-                className="border border-zinc-800 group hover:border-zinc-700 transition-colors shadow-2xl relative"
-                innerClassName="grid lg:grid-cols-2"
-              >
-
-                {/* Image Side */}
-                <div className={`relative overflow-hidden bg-zinc-900 min-h-[300px] ${index % 2 !== 0 ? 'lg:order-last' : ''}`}>
-                  <div className="absolute inset-0 bg-blue-500/10 z-10 group-hover:bg-transparent transition-colors duration-500" />
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-all duration-700 scale-100 group-hover:scale-105"
-                  />
-                </div>
-
-                {/* Content Side */}
-                <div className="p-8 lg:p-12 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-blue-400 font-medium tracking-wider text-sm uppercase">{project.type}</span>
-                  </div>
-
-                  <h4 className="text-2xl lg:text-3xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">{project.title}</h4>
-                  <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3 mb-8">
-                    {project.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center gap-2 text-zinc-300 text-sm">
-                        <span className="text-cyan-400">{h.icon}</span>
-                        {h.text}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-10">
-                    {project.tech.map((tItem, i) => (
-                      <span key={i} className="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-sm rounded-full border border-zinc-700">
-                        {tItem}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-6">
-                    <Magnetic>
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-white font-bold hover:text-blue-400 transition-colors text-lg group/link"
-                      >
-                        {t.projects.visitWebsite}
-                        <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                      </a>
-                    </Magnetic>
-                  </div>
-
-                  <div className="mt-6 pt-5 border-t border-zinc-800/80">
-                    <button
-                      type="button"
-                      onClick={() => setOpenFeaturedIndex(openFeaturedIndex === index ? null : index)}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                    >
-                      {openFeaturedIndex === index ? t.projects.hideProjectDetails : t.projects.exploreProjectDetails}
-                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${openFeaturedIndex === index ? "rotate-180" : ""}`} />
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {openFeaturedIndex === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-5 grid gap-3 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 sm:grid-cols-3">
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.role}</p>
-                              <p className="text-sm text-white">{project.meta.role}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.problemSolved}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.whyItMatters}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              </SpotlightCard>
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4 bg-white">
+                <h3 className="font-semibold text-gray-900">{project.title}</h3>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectCard({ project, viewText }: { project: any; viewText: string }) {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setTilt({
+      x: (y - 0.5) * 10,
+      y: (x - 0.5) * -10,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX: tilt.x,
+        rotateY: tilt.y,
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="bg-white rounded-2xl overflow-hidden border-2 border-[var(--yellow)] shadow-2xl"
+    >
+      <div className="aspect-video overflow-hidden relative group">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
+
+      <div className="p-8">
+        <h3 className="text-3xl font-bold text-gray-900 mb-4">{project.title}</h3>
+        <p className="text-gray-600 mb-6 leading-relaxed">{project.description}</p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.technologies.map((tech: string, i: number) => (
+            <span
+              key={i}
+              className="px-3 py-1 rounded-full bg-[var(--yellow)]/10 text-[var(--yellow-dark)] text-sm font-medium border border-[var(--yellow)]/20"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <motion.a
+          href={project.link}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black font-semibold hover:shadow-[0_0_30px_rgba(255,220,0,0.5)] transition-all"
+        >
+          {viewText}
+          <ExternalLink size={18} />
+        </motion.a>
+      </div>
+    </motion.div>
   );
 }

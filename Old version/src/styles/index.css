@@ -1,0 +1,21 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Windows 98 Cursors */
+.win98-cursors,
+.win98-cursors body {
+  cursor: url("/cursors/win98-arrow.cur") 0 0, auto;
+}
+
+.win98-cursors a,
+.win98-cursors button,
+.win98-cursors [role="button"],
+.win98-cursors input,
+.win98-cursors textarea,
+.win98-cursors select,
+.win98-cursors label,
+.win98-cursors summary,
+.win98-cursors [data-cursor="pointer"] {
+  cursor: url("/cursors/win98-hand.cur") 6 2, pointer;
+}

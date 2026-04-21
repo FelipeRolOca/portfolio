@@ -1,176 +1,141 @@
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import { Calendar, MapPin, ChevronDown } from "lucide-react";
-import { SpotlightCard } from "./ui/SpotlightCard";
-import { TextReveal } from "./ui/TextReveal";
-import { Parallax } from "./ui/Parallax";
-import { BorderBeam } from "./ui/BorderBeam";
-import { useLanguage } from "../i18n/LanguageContext";
+import { motion, useInView } from 'motion/react';
+import { useRef } from 'react';
+import { Briefcase, Calendar, MapPin, CheckCircle } from 'lucide-react';
+import type { Translation, Language } from '../App';
 
-export function Experience() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const { t } = useLanguage();
+interface ExperienceProps {
+  t: Translation['experience'];
+  language: Language;
+}
+
+export default function Experience({ t, language }: ExperienceProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const experiences = [
     {
-      role: t.experience.job1Role,
-      company: t.experience.job1Company,
-      period: t.experience.job1Period,
-      location: t.experience.job1Location,
-      description: t.experience.job1Desc,
-      bullets: t.experience.job1Bullets,
-      details: {
-        responsibilities: t.experience.job1Resp,
-        tools: ["Next.js", "Supabase", "Vercel", "Google Apps Script"],
-        outcome: t.experience.job1Outcome
-      }
+      role: language === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
+      company: 'JJ Servicios Empresariales',
+      date: language === 'es' ? '2023 - Actualidad' : '2023 - Present',
+      location: language === 'es' ? 'Argentina' : 'Argentina',
+      summary: language === 'es'
+        ? 'Desarrollo de soluciones tecnológicas integrales para optimización de procesos empresariales'
+        : 'Development of comprehensive technology solutions for business process optimization',
+      achievements: language === 'es'
+        ? [
+            'Desarrollo de la plataforma JJAsist para gestión empresarial integral',
+            'Implementación de sistemas de validación geoespacial y códigos QR',
+            'Construcción de arquitecturas escalables con Next.js y Supabase',
+            'Automatización de procesos mediante Google Apps Script',
+          ]
+        : [
+            'Development of JJAsist platform for comprehensive business management',
+            'Implementation of geospatial validation and QR code systems',
+            'Building scalable architectures with Next.js and Supabase',
+            'Process automation through Google Apps Script',
+          ],
     },
     {
-      role: t.experience.job2Role,
-      company: t.experience.job2Company,
-      period: t.experience.job2Period,
-      location: t.experience.job2Location,
-      description: t.experience.job2Desc,
-      bullets: t.experience.job2Bullets,
-      details: {
-        responsibilities: t.experience.job2Resp,
-        tools: ["WordPress", "Elementor", "SEO"],
-        outcome: t.experience.job2Outcome
-      }
+      role: language === 'es' ? 'Desarrollador Frontend' : 'Frontend Developer',
+      company: 'Paper Pops',
+      date: '2022 - 2023',
+      location: language === 'es' ? 'Remoto' : 'Remote',
+      summary: language === 'es'
+        ? 'Desarrollo de plataformas de comercio electrónico y experiencias web interactivas'
+        : 'Development of e-commerce platforms and interactive web experiences',
+      achievements: language === 'es'
+        ? [
+            'Desarrollo de plataforma e-commerce responsiva con React',
+            'Optimización de rendimiento y experiencia de usuario',
+            'Integración de sistemas de pago y gestión de inventario',
+            'Implementación de diseños con precisión técnica',
+          ]
+        : [
+            'Development of responsive e-commerce platform with React',
+            'Performance optimization and user experience enhancement',
+            'Integration of payment systems and inventory management',
+            'Implementation of designs with technical precision',
+          ],
     },
   ];
 
   return (
-    <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        <div className="text-center mb-20 relative z-20">
-          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.experience.sectionSubtitle}</h2>
-          <TextReveal text={t.experience.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
-        </div>
+    <section id="experience" ref={ref} className="py-20 px-6 bg-white relative overflow-hidden">
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-[var(--yellow)]/5 rounded-full blur-3xl" />
 
-        <div className="max-w-4xl mx-auto relative">
-          {/* Vertical line timeline */}
-          <div className="absolute left-6 md:left-1/2 top-4 bottom-4 w-px bg-zinc-800 transform md:-translate-x-1/2" />
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            {t.title}
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
+          <p className="text-gray-600 text-lg">{t.subtitle}</p>
+        </motion.div>
 
-          {experiences.map((exp, idx) => (
-            <motion.div
-              key={`${exp.company}-${exp.role}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: idx * 0.2 }}
-              className={`relative flex items-start mb-12 last:mb-0 ${idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+        <div className="relative">
+          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--yellow)] to-[var(--yellow-glow)] transform md:-translate-x-1/2" />
+
+          <div className="space-y-12">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className={`relative flex flex-col md:flex-row gap-8 ${
+                  index % 2 === 0 ? 'md:flex-row-reverse' : ''
                 }`}
-            >
-              {/* Center Dot */}
-              <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-blue-500 border-4 border-zinc-950 transform -translate-x-1/2 mt-1.5 md:mt-0 z-10" />
+              >
+                <div className="flex-1" />
 
-              {/* Content Box */}
-              <div className={`w-full md:w-1/2 pl-14 md:pl-0 ${idx % 2 === 0 ? "md:pr-14 md:text-right" : "md:pl-14 md:text-left"
-                }`}>
-                <SpotlightCard
-                  className="relative h-full overflow-hidden border border-zinc-800/90 bg-zinc-900/60 shadow-[0_18px_45px_rgba(2,6,23,0.35)]"
-                  innerClassName="relative h-full"
+                <div className="absolute left-0 md:left-1/2 w-4 h-4 bg-[var(--yellow)] rounded-full border-4 border-white shadow-lg transform md:-translate-x-1/2 z-10" />
+
+                <motion.div
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow: '0 20px 40px rgba(255, 220, 0, 0.2)',
+                  }}
+                  className="flex-1 bg-white rounded-xl p-6 border border-gray-200 hover:border-[var(--yellow)] transition-all ml-8 md:ml-0"
                 >
-                  <div className="pointer-events-none absolute inset-0 rounded-[inherit]">
-                  </div>
-
-                  <div className="relative z-10 p-6 sm:p-7">
-                    <h4 className="text-lg sm:text-xl font-bold text-white mb-2 leading-tight break-words">{exp.role}</h4>
-                    <p className="text-sm font-medium text-blue-400/90 mb-3 break-words">{exp.company}</p>
-                    <div className={`flex flex-wrap items-center gap-4 mb-4 text-sm text-zinc-400 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
-                      }`}>
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4 shrink-0" />
-                        <span className="break-words">{exp.period}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4 shrink-0" />
-                        <span className="break-words">{exp.location}</span>
-                      </div>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="text-black" size={24} />
                     </div>
-
-                    <p className="text-zinc-400 leading-relaxed break-words">{exp.description}</p>
-
-                    <div className={`mt-4 flex flex-wrap gap-2 ${idx % 2 === 0 ? "md:justify-end" : "md:justify-start"
-                      }`}>
-                      {exp.bullets.map((bullet, sIdx) => (
-                        <span
-                          key={sIdx}
-                          className="px-3 py-1 rounded-full bg-zinc-800/60 border border-zinc-700/70 text-xs font-medium text-blue-300"
-                        >
-                          {bullet}
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-1">{exp.role}</h3>
+                      <p className="text-lg text-[var(--yellow-dark)] font-semibold mb-2">{exp.company}</p>
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={14} />
+                          {exp.date}
                         </span>
-                      ))}
+                        <span className="flex items-center gap-1">
+                          <MapPin size={14} />
+                          {exp.location}
+                        </span>
+                      </div>
                     </div>
-
-                    <div className={`mt-5 ${idx % 2 === 0 ? "md:flex md:justify-end" : "md:flex md:justify-start"}`}>
-                      <button
-                        type="button"
-                        onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                        aria-expanded={openIndex === idx}
-                        aria-controls={`experience-details-${idx}`}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-                      >
-                        {openIndex === idx ? t.experience.hideDetails : t.experience.viewDetails}
-                        <ChevronDown
-                          className={`w-4 h-4 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
-                        />
-                      </button>
-                    </div>
-
-                    <AnimatePresence initial={false}>
-                      {openIndex === idx && (
-                        <motion.div
-                          id={`experience-details-${idx}`}
-                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                          animate={{ height: "auto", opacity: 1, marginTop: 20 }}
-                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 sm:p-5 space-y-4">
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.keyResp}</p>
-                              <div className="flex flex-wrap gap-2">
-                                {exp.details.responsibilities.map((item, detailIdx) => (
-                                  <span
-                                    key={detailIdx}
-                                    className="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-300"
-                                  >
-                                    {item}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.toolsUsed}</p>
-                              <div className="flex flex-wrap gap-2">
-                                {exp.details.tools.map((tool, toolIdx) => (
-                                  <span
-                                    key={toolIdx}
-                                    className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200"
-                                  >
-                                    {tool}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.experience.practicalOutcome}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{exp.details.outcome}</p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
-                </SpotlightCard>
-              </div>
-            </motion.div>
-          ))}
+
+                  <p className="text-gray-700 mb-4">{exp.summary}</p>
+
+                  <div className="space-y-2">
+                    {exp.achievements.map((achievement, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <CheckCircle className="text-[var(--yellow-dark)] flex-shrink-0 mt-0.5" size={16} />
+                        <p className="text-sm text-gray-600">{achievement}</p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

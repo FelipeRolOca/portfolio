@@ -1,159 +1,121 @@
-import { motion } from "motion/react";
-import {
-  BriefcaseBusiness,
-  Code2,
-  FolderKanban,
-  Languages,
-  Mail,
-  Sparkles,
-  Wrench,
-} from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { useLanguage } from "../i18n/LanguageContext";
-import GooeyNav from "./ui/GooeyNav";
+import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
+import { Menu, X, Globe } from 'lucide-react';
+import type { Language, Translation } from '../App';
 
-export function Navbar() {
-  const { language, setLanguage, t } = useLanguage();
-  const [activeHref, setActiveHref] = useState("#about");
+interface NavbarProps {
+  language: Language;
+  toggleLanguage: () => void;
+  t: Translation['nav'];
+}
 
-  const navLinks = useMemo(
-    () => [
-      { name: t.navbar.about, href: "#about", icon: Sparkles },
-      { name: t.navbar.skills, href: "#skills", icon: Wrench },
-      { name: t.navbar.experience, href: "#experience", icon: BriefcaseBusiness },
-      { name: t.navbar.projects, href: "#projects", icon: FolderKanban },
-      { name: t.navbar.contact, href: "#contact", icon: Mail },
-    ],
-    [t]
-  );
-
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "es" : "en");
-  };
-
-  const handleScroll = (href: string) => {
-    const element = document.querySelector(href);
-    if (!element) return;
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
-    setActiveHref(href);
-  };
+export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const updateActiveSection = () => {
-      const threshold = window.innerHeight * 0.4;
-      let currentHref = navLinks[0]?.href ?? "#about";
-
-      navLinks.forEach((link) => {
-        const section = document.querySelector(link.href);
-        if (!section) return;
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= threshold) {
-          currentHref = link.href;
-        }
-      });
-
-      setActiveHref(currentHref);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
     };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    updateActiveSection();
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", updateActiveSection);
-
-    return () => {
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", updateActiveSection);
-    };
-  }, [navLinks]);
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
-    <>
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-cyan-500/10 bg-[rgba(5,7,18,0.78)] backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-6 sm:px-12">
-          <div className="flex h-16 items-center justify-between md:h-20">
-            <div className="flex flex-shrink-0 items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/20 bg-gradient-to-tr from-sky-500 to-cyan-400 shadow-[0_12px_30px_rgba(34,211,238,0.18)]">
-                <Code2 className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-lg font-bold tracking-tight text-white md:text-xl">Felipe Roldan</span>
-            </div>
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/80 backdrop-blur-lg shadow-lg border-b border-[var(--yellow)]' : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="text-xl font-bold bg-gradient-to-r from-[var(--yellow-dark)] to-[var(--yellow)] bg-clip-text text-transparent cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            FO
+          </motion.div>
 
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-center gap-4">
-                <GooeyNav
-                  items={navLinks.map((link) => ({ label: link.name, href: link.href }))}
-                  activeHref={activeHref}
-                  onItemSelect={handleScroll}
-                />
-                <button
-                  onClick={toggleLanguage}
-                  className="group flex items-center gap-2 rounded-2xl border border-cyan-400/15 bg-[rgba(10,15,30,0.72)] px-4 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-cyan-300/30 hover:text-white"
-                >
-                  <Languages className="h-4 w-4 text-cyan-300 transition-transform group-hover:rotate-12" />
-                  {t.navbar.toggle}
-                </button>
-              </div>
-            </div>
-
-            <div className="md:hidden">
-              <button
-                onClick={toggleLanguage}
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-400/15 bg-[rgba(10,15,30,0.82)] px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-zinc-100 shadow-[0_10px_30px_rgba(0,0,0,0.24)]"
-                aria-label={t.navbar.toggle}
+          <div className="hidden md:flex items-center gap-8">
+            {[
+              { label: t.about, id: 'about' },
+              { label: t.skills, id: 'skills' },
+              { label: t.experience, id: 'experience' },
+              { label: t.projects, id: 'projects' },
+              { label: t.contact, id: 'contact' },
+            ].map((item) => (
+              <motion.button
+                key={item.id}
+                whileHover={{ scale: 1.05 }}
+                onClick={() => scrollToSection(item.id)}
+                className="relative text-sm hover:text-[var(--yellow-dark)] transition-colors group"
               >
-                <Languages className="h-4 w-4 text-cyan-300" />
-                <span>{language === "en" ? "ES" : "EN"}</span>
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--yellow)] transition-all duration-300 group-hover:w-full" />
+              </motion.button>
+            ))}
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] transition-shadow"
+            >
+              <Globe size={16} />
+              <span className="font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
+            </motion.button>
+          </div>
+
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-[var(--yellow-dark)]"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden mt-4 py-4 border-t border-[var(--yellow)]/20"
+          >
+            {[
+              { label: t.about, id: 'about' },
+              { label: t.skills, id: 'skills' },
+              { label: t.experience, id: 'experience' },
+              { label: t.projects, id: 'projects' },
+              { label: t.contact, id: 'contact' },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="block w-full text-left py-2 hover:text-[var(--yellow-dark)] transition-colors"
+              >
+                {item.label}
               </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <div
-        className="fixed inset-x-0 bottom-0 z-[70] px-3 md:hidden"
-        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
-      >
-        <div className="mx-auto max-w-sm">
-          <div className="relative overflow-hidden rounded-[32px] border border-cyan-400/12 bg-[rgba(8,12,24,0.9)] px-2 pb-2 pt-2 shadow-[0_18px_45px_rgba(2,6,23,0.42)] backdrop-blur-2xl">
-            <div className="pointer-events-none absolute inset-x-10 top-2 h-14 rounded-full bg-cyan-400/8 blur-2xl" />
-            <div className="pointer-events-none absolute inset-px rounded-[31px] border border-white/5" />
-
-            <div className="relative grid grid-cols-5 items-end gap-1">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                const isActive = activeHref === link.href;
-
-                return (
-                  <button
-                    key={link.href}
-                    type="button"
-                    onClick={() => handleScroll(link.href)}
-                    className="relative flex h-[66px] items-center justify-center rounded-2xl"
-                    aria-label={link.name}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="mobile-nav-indicator"
-                        transition={{ type: "spring", stiffness: 320, damping: 26 }}
-                        className="absolute top-2 h-1 w-8 rounded-full bg-cyan-400 shadow-[0_2px_10px_rgba(34,211,238,0.6)]"
-                      />
-                    )}
-
-                    <div className="relative z-10 flex flex-col items-center justify-center">
-                      <Icon
-                        className={`h-[22px] w-[22px] transition-all duration-300 ${
-                          isActive ? "text-cyan-400 scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)] translate-y-1" : "text-zinc-500 hover:text-zinc-300"
-                        }`}
-                      />
-                      <span className="sr-only">{link.name}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+            ))}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black w-full justify-center"
+            >
+              <Globe size={16} />
+              <span className="font-medium">{language === 'es' ? 'English' : 'Español'}</span>
+            </button>
+          </motion.div>
+        )}
       </div>
-    </>
+    </motion.nav>
   );
 }

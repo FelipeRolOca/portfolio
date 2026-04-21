@@ -122,7 +122,7 @@ export default function Experience({ t, language }: ExperienceProps) {
   ];
 
   return (
-    <section id="experience" ref={ref} className="px-6 py-12 md:py-20 bg-white/70 dark:bg-gray-900/80 backdrop-blur-sm transition-colors duration-1000">
+    <section id="experience" ref={ref} className="px-6 py-12 md:py-20 transition-colors duration-1000">
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

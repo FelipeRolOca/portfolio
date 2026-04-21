@@ -22,7 +22,7 @@ export default function Hero({ t }: HeroProps) {
   };
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white/70 dark:bg-gray-900/80 backdrop-blur-sm pt-8 md:pt-20 transition-colors duration-1000">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-8 md:pt-20 transition-colors duration-1000">
       <div className="absolute inset-0 opacity-20">
         {[...Array(6)].map((_, i) => (
           <div

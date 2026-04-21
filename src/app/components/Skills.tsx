@@ -99,7 +99,7 @@ export default function Skills({ t }: SkillsProps) {
   ];
 
   return (
-    <section id="skills" ref={ref} className="bg-white px-6 py-20 transition-colors duration-1000 dark:bg-gray-900">
+    <section id="skills" ref={ref} className="bg-white px-6 py-12 md:py-20 transition-colors duration-1000 dark:bg-gray-900">
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -120,7 +120,7 @@ export default function Skills({ t }: SkillsProps) {
           transition={{ duration: 0.65, delay: 0.12 }}
         >
           <InfiniteCanvas
-            className="relative h-[410px] w-full md:h-[480px]"
+            className="relative h-[320px] w-full md:h-[480px]"
             cardWidth={218}
             cardHeight={150}
             spacing={16}

@@ -89,7 +89,7 @@ export default function Projects({ t, language }: ProjectsProps) {
   };
 
   return (
-    <section id="projects" ref={ref} className="bg-white px-6 py-20 transition-colors duration-1000 dark:bg-gray-900">
+    <section id="projects" ref={ref} className="bg-white px-6 py-12 md:py-20 transition-colors duration-1000 dark:bg-gray-900">
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -117,18 +117,18 @@ export default function Projects({ t, language }: ProjectsProps) {
 
           <button
             onClick={prevProject}
-            className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800 md:-translate-x-12"
+            className="absolute left-0 top-1/2 z-10 flex h-10 w-10 md:h-12 md:w-12 -translate-x-2 md:-translate-x-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800"
             aria-label={language === 'es' ? 'Proyecto anterior' : 'Previous project'}
           >
-            <ChevronLeft className="text-gray-900 dark:text-white" size={24} />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-900 dark:text-white" />
           </button>
 
           <button
             onClick={nextProject}
-            className="absolute right-0 top-1/2 z-10 flex h-12 w-12 translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800 md:translate-x-12"
+            className="absolute right-0 top-1/2 z-10 flex h-10 w-10 md:h-12 md:w-12 translate-x-2 md:translate-x-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[var(--yellow)] bg-white transition-all hover:bg-[var(--yellow)] hover:shadow-[0_0_20px_rgba(255,220,0,0.5)] dark:bg-gray-800"
             aria-label={language === 'es' ? 'Proyecto siguiente' : 'Next project'}
           >
-            <ChevronRight className="text-gray-900 dark:text-white" size={24} />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-900 dark:text-white" />
           </button>
 
           <div className="mt-8 flex justify-center gap-2">
@@ -153,9 +153,8 @@ export default function Projects({ t, language }: ProjectsProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
               onClick={() => setCurrentProject(index)}
-              className={`overflow-hidden rounded-2xl border-2 text-left transition-all ${
+              className={`overflow-hidden rounded-2xl border-2 text-left transition-all hover:-translate-y-2 ${
                 index === currentProject
                   ? 'border-[var(--yellow)] shadow-[0_0_30px_rgba(255,220,0,0.25)]'
                   : 'border-gray-200 hover:border-[var(--yellow)]/50 dark:border-gray-700'

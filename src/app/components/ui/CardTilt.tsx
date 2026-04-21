@@ -57,7 +57,7 @@ export function CardTilt({
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (!ref.current || window.matchMedia('(hover: none)').matches) return;
 
     const rect = ref.current.getBoundingClientRect();
     const relativeX = (e.clientX - rect.left) / rect.width;
@@ -90,8 +90,12 @@ export function CardTilt({
       ref={ref}
       className={className}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => hoverScale.set(scale)}
-      onMouseLeave={resetTilt}
+      onMouseEnter={() => {
+        if (!window.matchMedia('(hover: none)').matches) hoverScale.set(scale);
+      }}
+      onMouseLeave={() => {
+        resetTilt();
+      }}
       style={{ perspective: '1600px' }}
     >
       <motion.div style={tiltStyle}>

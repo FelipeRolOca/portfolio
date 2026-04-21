@@ -122,7 +122,7 @@ export default function Experience({ t, language }: ExperienceProps) {
   ];
 
   return (
-    <section id="experience" ref={ref} className="bg-white px-6 py-20 transition-colors duration-1000 dark:bg-gray-900">
+    <section id="experience" ref={ref} className="bg-white px-6 py-12 md:py-20 transition-colors duration-1000 dark:bg-gray-900">
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -141,12 +141,12 @@ export default function Experience({ t, language }: ExperienceProps) {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.08 }}
-          className="mb-12 grid gap-4 md:grid-cols-3"
+          className="mb-8 md:mb-12 grid gap-3 md:gap-4 md:grid-cols-3"
         >
           {copy.stats.map((stat) => (
             <div
               key={stat.label}
-              className="rounded-[1.5rem] border border-[var(--yellow)]/16 bg-white/88 p-5 shadow-[0_14px_34px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#111317]"
+              className="rounded-[1.5rem] border border-[var(--yellow)]/16 bg-white/88 p-4 md:p-5 shadow-[0_14px_34px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#111317]"
             >
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">{stat.label}</p>
               <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
@@ -154,8 +154,8 @@ export default function Experience({ t, language }: ExperienceProps) {
           ))}
         </motion.div>
 
-        <div className="relative pl-8 md:pl-12">
-          <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-[var(--yellow)] via-[var(--yellow)]/50 to-transparent md:left-4" />
+        <div className="relative pl-6 md:pl-12">
+          <div className="absolute left-0 top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-[var(--yellow)] via-[var(--yellow)]/50 to-transparent md:left-4" />
 
           <div className="space-y-8">
             {experiences.map((exp, index) => (
@@ -166,7 +166,7 @@ export default function Experience({ t, language }: ExperienceProps) {
                 transition={{ duration: 0.55, delay: index * 0.12 }}
                 className="relative"
               >
-                <div className="absolute -left-[2.15rem] top-8 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--yellow)]/20 bg-white shadow-[0_10px_26px_rgba(255,220,0,0.15)] dark:bg-[#111317] md:-left-[2.45rem]">
+                <div className="absolute -left-10 md:-left-[2.45rem] top-8 z-10 flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-full border border-[var(--yellow)]/20 bg-white shadow-[0_10px_26px_rgba(255,220,0,0.15)] dark:bg-[#111317]">
                   <Sparkles size={16} className="text-[var(--yellow-dark)]" />
                 </div>
 

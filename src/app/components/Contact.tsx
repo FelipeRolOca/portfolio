@@ -64,7 +64,7 @@ export default function Contact({ t, language }: ContactProps) {
   ];
 
   return (
-    <section id="contact" ref={ref} className="py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-1000">
+    <section id="contact" ref={ref} className="py-12 md:py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-1000">
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
@@ -73,11 +73,11 @@ export default function Contact({ t, language }: ContactProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 dark:text-gray-300 text-lg">{t.subtitle}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -96,7 +96,7 @@ export default function Contact({ t, language }: ContactProps) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
+                  className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
                 />
               </div>
 
@@ -109,7 +109,7 @@ export default function Contact({ t, language }: ContactProps) {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
+                  className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all"
                 />
               </div>
 
@@ -122,15 +122,14 @@ export default function Contact({ t, language }: ContactProps) {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all resize-none"
+                  className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all resize-none"
                 />
               </div>
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(255, 220, 0, 0.5)' }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-8 py-4 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all"
+                className="w-full px-6 py-3 md:px-8 md:py-4 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(255,220,0,0.5)] hover:scale-[1.02] transition-all"
               >
                 {t.send}
                 <Send size={18} />
@@ -145,7 +144,7 @@ export default function Contact({ t, language }: ContactProps) {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t.or}</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">{t.or}</h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.div
@@ -154,9 +153,9 @@ export default function Contact({ t, language }: ContactProps) {
                     className="relative"
                   >
                     {info.type === 'phone' ? (
-                      <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
-                          <info.icon className="text-black" size={20} />
+                      <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
+                          <info.icon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                         </div>
                         <button
                           onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
@@ -167,9 +166,9 @@ export default function Contact({ t, language }: ContactProps) {
                         </button>
                       </div>
                     ) : (
-                      <div className="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
-                          <info.icon className="text-black" size={20} />
+                      <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
+                          <info.icon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                         </div>
                         <div className="flex-1">
                           <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{info.label}</p>

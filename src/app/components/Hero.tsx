@@ -22,7 +22,7 @@ export default function Hero({ t }: HeroProps) {
   };
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white pt-20 transition-colors duration-1000 dark:bg-gray-900">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white pt-8 md:pt-20 transition-colors duration-1000 dark:bg-gray-900">
       <div className="absolute inset-0 opacity-20">
         {[...Array(6)].map((_, i) => (
           <motion.div
@@ -42,7 +42,7 @@ export default function Hero({ t }: HeroProps) {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col-reverse items-center gap-10 px-6 py-20 md:flex-row md:gap-14">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col-reverse items-center gap-10 px-6 py-12 md:py-20 md:flex-row md:gap-14">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -62,7 +62,7 @@ export default function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-4 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-5xl font-bold text-transparent dark:from-white dark:via-gray-200 dark:to-white md:text-7xl"
+            className="mb-4 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-3xl font-bold text-transparent dark:from-white dark:via-gray-200 dark:to-white sm:text-4xl md:text-5xl lg:text-7xl"
           >
             {t.name}
           </motion.h1>
@@ -92,19 +92,17 @@ export default function Hero({ t }: HeroProps) {
             className="mb-8 flex flex-wrap justify-center gap-4 md:justify-start"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(255, 220, 0, 0.55)' }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToProjects}
-              className="rounded-full bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] px-8 py-4 font-semibold text-black shadow-lg transition-all hover:shadow-[0_0_30px_rgba(255,220,0,0.45)]"
+              className="rounded-full bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] px-8 py-4 font-semibold text-black shadow-lg transition-all md:hover:scale-105 md:hover:shadow-[0_0_30px_rgba(255,220,0,0.55)] active:scale-95"
             >
               {t.cta1}
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToContact}
-              className="rounded-full border-2 border-[var(--yellow)] px-8 py-4 font-semibold text-gray-900 transition-all hover:bg-[var(--yellow)]/10 dark:text-white"
+              className="rounded-full border-2 border-[var(--yellow)] px-8 py-4 font-semibold text-gray-900 transition-all md:hover:scale-105 md:hover:bg-[var(--yellow)]/10 dark:text-white active:scale-95"
             >
               {t.cta2}
             </motion.button>
@@ -117,7 +115,7 @@ export default function Hero({ t }: HeroProps) {
           transition={{ duration: 0.8 }}
           className="relative flex flex-1 justify-center"
         >
-          <div className="relative w-full max-w-[21rem] md:max-w-[23rem]">
+          <div className="relative w-full max-w-[14rem] sm:max-w-[16rem] md:max-w-[23rem]">
             <div className="absolute -inset-5 rounded-[2.2rem] border border-[var(--yellow)]/18 opacity-70" />
 
             <motion.div

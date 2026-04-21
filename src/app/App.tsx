@@ -198,15 +198,15 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen bg-background text-foreground overflow-x-hidden transition-colors duration-500 ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen bg-background text-foreground overflow-x-hidden transition-all duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
       <AnimatePresence>
         {isDark && (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 pointer-events-none bg-gradient-to-br from-[var(--yellow)]/20 via-transparent to-transparent z-40"
+            transition={{ duration: 1000, ease: 'easeInOut' }}
+            className="fixed inset-0 pointer-events-none bg-gradient-to-br from-[var(--yellow)]/10 via-transparent to-transparent z-40"
           />
         )}
       </AnimatePresence>

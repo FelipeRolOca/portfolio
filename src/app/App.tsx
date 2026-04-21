@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import VideoScroll from './components/VideoScroll';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
@@ -205,6 +206,7 @@ export default function App() {
       <LampToggle isDark={isDark} onToggle={toggleTheme} language={language} />
       <Navbar language={language} toggleLanguage={toggleLanguage} isDark={isDark} onToggleTheme={toggleTheme} t={t.nav} />
       <Hero t={t.hero} />
+      <VideoScroll />
       <About t={t.about} language={language} />
       <Skills t={t.skills} />
       <Experience t={t.experience} language={language} />

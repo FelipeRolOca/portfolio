@@ -9,7 +9,7 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import { Lamphome } from './components/ui/Lamphome';
+import { LampToggle } from './components/ui/LampToggle';
 
 export type Language = 'en' | 'es';
 
@@ -210,7 +210,8 @@ export default function App() {
           />
         )}
       </AnimatePresence>
-      <Navbar language={language} toggleLanguage={toggleLanguage} toggleTheme={toggleTheme} isDark={isDark} t={t.nav} />
+      <LampToggle isDark={isDark} onToggle={toggleTheme} />
+      <Navbar language={language} toggleLanguage={toggleLanguage} t={t.nav} />
       <Hero t={t.hero} />
       <About t={t.about} language={language} />
       <Skills t={t.skills} />

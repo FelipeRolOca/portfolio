@@ -366,7 +366,6 @@ export function InfiniteCanvas({
         <div
           ref={canvasRef}
           className="absolute left-0 top-0 origin-top-left transform-gpu will-change-transform"
-          style={{ contain: 'paint', transformOrigin: '0 0' }}
         >
           {gridItems.map((item) => (
             <div key={item.key} style={item.style}>

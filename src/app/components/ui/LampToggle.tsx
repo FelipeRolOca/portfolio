@@ -59,11 +59,11 @@ export function LampToggle({ isDark, onToggle, language }: LampToggleProps) {
   const label =
     language === 'es'
       ? isDark
-        ? 'Tirar para apagar'
-        : 'Tirar para encender'
+        ? 'Tirar para encender'
+        : 'Tirar para apagar'
       : isDark
-        ? 'Pull to turn off'
-        : 'Pull to turn on';
+        ? 'Pull to turn on'
+        : 'Pull to turn off';
 
   return (
     <div className="fixed right-4 top-0 z-[60] hidden select-none flex-col items-center md:flex md:right-6">

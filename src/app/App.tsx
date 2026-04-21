@@ -201,7 +201,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen pb-28 md:pb-0 bg-background text-foreground overflow-x-hidden transition-all duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen pb-28 md:pb-0 bg-background text-foreground overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
       <LampToggle isDark={isDark} onToggle={toggleTheme} language={language} />
       <Navbar language={language} toggleLanguage={toggleLanguage} isDark={isDark} onToggleTheme={toggleTheme} t={t.nav} />
       <Hero t={t.hero} />

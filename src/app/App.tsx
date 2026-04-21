@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import VideoScroll from './components/VideoScroll';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import BackgroundVideo from './components/BackgroundVideo';
 import { LampToggle } from './components/ui/LampToggle';
 
 export type Language = 'en' | 'es';
@@ -202,11 +202,11 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen pb-28 md:pb-0 bg-background text-foreground overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen pb-28 md:pb-0 bg-transparent text-foreground overflow-x-hidden transition-colors duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
+      <BackgroundVideo />
       <LampToggle isDark={isDark} onToggle={toggleTheme} language={language} />
       <Navbar language={language} toggleLanguage={toggleLanguage} isDark={isDark} onToggleTheme={toggleTheme} t={t.nav} />
       <Hero t={t.hero} />
-      <VideoScroll />
       <About t={t.about} language={language} />
       <Skills t={t.skills} />
       <Experience t={t.experience} language={language} />

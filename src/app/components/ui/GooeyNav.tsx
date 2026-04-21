@@ -36,10 +36,18 @@ const styles = `
   margin: 0;
   position: relative;
   z-index: 3;
+  color: rgb(30 41 59);
+  text-shadow: none;
+  border-radius: 999px;
+  border: 1px solid rgb(0 0 0 / 0.1);
+  background: rgb(255 255 255);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+
+.dark .gooey-nav-container nav ul {
   color: white;
   text-shadow: 0 1px 1px hsl(205deg 30% 10% / 0.2);
-  border-radius: 999px;
-  border: 1px solid rgb(255, 220, 0 / 12%);
+  border: 1px solid rgb(255 220 0 / 12%);
   background: linear-gradient(180deg, rgb(9 14 28 / 82%), rgb(5 9 20 / 72%));
   box-shadow: 0 18px 40px rgb(2 6 23 / 24%);
 }
@@ -53,6 +61,10 @@ const styles = `
     color 0.3s ease,
     box-shadow 0.3s ease;
   box-shadow: 0 0 0.5px 1.5px transparent;
+  color: rgb(71 85 105);
+}
+
+.dark .gooey-nav-container nav ul li {
   color: rgb(228 228 231);
 }
 

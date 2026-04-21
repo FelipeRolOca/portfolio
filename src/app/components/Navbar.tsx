@@ -76,7 +76,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white dark:bg-gray-900 shadow-lg border-b border-[var(--yellow)]/20' : 'bg-white dark:bg-gray-900'
+          isScrolled ? '!bg-white dark:!bg-gray-900 shadow-lg border-b border-[var(--yellow)]/20' : '!bg-white dark:!bg-gray-900'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-4">

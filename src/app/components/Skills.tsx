@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Code2, Database, Globe, PanelsTopLeft, QrCode, Server, type LucideIcon } from 'lucide-react';
 import type { Translation } from '../App';
 import { Card, InfiniteCanvas } from './ui/infinite-canvas';
+import { CardTilt, CardTiltContent } from './ui/CardTilt';
 
 interface SkillsProps {
   t: Translation['skills'];
@@ -157,31 +158,44 @@ export default function Skills({ t }: SkillsProps) {
             </InfiniteCanvas>
           </div>
 
-          <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-6 px-6 no-scrollbar">
+          <div className="mt-12 flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-6 px-6 no-scrollbar">
             {skills.map((skill) => (
               <div key={skill.name} className="snap-center shrink-0 w-[80%] max-w-[280px]">
-                <div className="rounded-[1.35rem] border border-[var(--yellow)]/12 p-5 bg-white/92 shadow-[0_14px_34px_rgba(15,23,42,0.1)] dark:bg-[#111315]/94 dark:shadow-[0_14px_40px_rgba(0,0,0,0.28)] h-full">
-                  <div className="flex h-full flex-col justify-between gap-4">
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.24)]">
-                        {skill.isLucide ? (
-                          <skill.icon className="text-black" size={28} />
-                        ) : (
-                          <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" loading="lazy" decoding="async" draggable={false} />
-                        )}
-                      </div>
+                <CardTilt className="w-full h-full" tiltMaxAngle={10} scale={1.025}>
+                  <CardTiltContent className="h-full">
+                    <div className="relative group rounded-[1.35rem] border border-[var(--yellow)]/12 p-5 bg-white/92 shadow-[0_14px_34px_rgba(15,23,42,0.1)] dark:bg-[#111315]/94 dark:shadow-[0_14px_40px_rgba(0,0,0,0.28)] h-full overflow-hidden">
+                      <div
+                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        style={{
+                          background:
+                            'radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(255,255,255,0.28), rgba(255,220,0,0.16) 18%, transparent 56%)',
+                        }}
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,220,0,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.35),transparent_26%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(255,220,0,0.14),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.08),transparent_24%)]" />
+                      
+                      <div className="flex h-full flex-col justify-between gap-4 relative z-10" style={{ transform: 'translateZ(30px)' }}>
+                        <div className="flex items-start gap-4">
+                          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.24)]">
+                            {skill.isLucide ? (
+                              <skill.icon className="text-black" size={28} />
+                            ) : (
+                              <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" loading="lazy" decoding="async" draggable={false} />
+                            )}
+                          </div>
 
-                      <div className="flex-1">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">
-                          Skill
-                        </p>
-                        <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
+                          <div className="flex-1">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">
+                              Skill
+                            </p>
+                            <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
+                          </div>
+                        </div>
+
+                        <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{skill.detail}</p>
                       </div>
                     </div>
-
-                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{skill.detail}</p>
-                  </div>
-                </div>
+                  </CardTiltContent>
+                </CardTilt>
               </div>
             ))}
           </div>

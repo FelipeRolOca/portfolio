@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Code2, Database, Globe, PanelsTopLeft, QrCode, Server, type LucideIcon } from 'lucide-react';
 import type { Translation } from '../App';
 import { Card, InfiniteCanvas } from './ui/infinite-canvas';
@@ -19,6 +19,34 @@ type SkillItem = {
 export default function Skills({ t }: SkillsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftPos, setScrollLeftPos] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setScrollLeftPos(carouselRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !carouselRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    carouselRef.current.scrollLeft = scrollLeftPos - walk;
+  };
 
   const skills: SkillItem[] = [
     {
@@ -158,7 +186,14 @@ export default function Skills({ t }: SkillsProps) {
             </InfiniteCanvas>
           </div>
 
-          <div className="mt-12 flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-6 px-6 no-scrollbar">
+          <div 
+            ref={carouselRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            className={`mt-12 flex overflow-x-auto gap-4 pb-8 -mx-6 px-6 no-scrollbar select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab snap-x snap-mandatory'}`}
+          >
             {skills.map((skill) => (
               <div key={skill.name} className="snap-center shrink-0 w-[80%] max-w-[280px]">
                 <CardTilt className="w-full h-full" tiltMaxAngle={10} scale={1.025}>

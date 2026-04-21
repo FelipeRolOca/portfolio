@@ -1,6 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'motion/react';
-import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Code2, Database, Globe, Smartphone, QrCode, Cpu } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -205,7 +203,7 @@ export default function App() {
   return (
     <div className={`min-h-screen bg-background text-foreground overflow-x-hidden transition-all duration-1000 ease-in-out ${isDark ? 'dark' : ''}`}>
       <LampToggle isDark={isDark} onToggle={toggleTheme} language={language} />
-      <Navbar language={language} toggleLanguage={toggleLanguage} t={t.nav} />
+      <Navbar language={language} toggleLanguage={toggleLanguage} isDark={isDark} onToggleTheme={toggleTheme} t={t.nav} />
       <Hero t={t.hero} />
       <About t={t.about} language={language} />
       <Skills t={t.skills} />

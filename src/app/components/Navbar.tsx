@@ -1,18 +1,19 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
-import { Menu, X, Globe, Sparkles, Wrench, BriefcaseBusiness, FolderKanban, Mail } from 'lucide-react';
+import { Globe, BriefcaseBusiness, FolderKanban, Mail, Moon, Sparkles, SunMedium, Wrench } from 'lucide-react';
 import type { Language, Translation } from '../App';
 import GooeyNav from './ui/GooeyNav';
 
 interface NavbarProps {
   language: Language;
   toggleLanguage: () => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
   t: Translation['nav'];
 }
 
-export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
+export default function Navbar({ language, toggleLanguage, isDark, onToggleTheme, t }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState('#about');
 
   const navLinks = useMemo(
@@ -30,6 +31,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -42,6 +44,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
       navLinks.forEach((link) => {
         const section = document.querySelector(link.href);
         if (!section) return;
+
         const rect = section.getBoundingClientRect();
         if (rect.top <= threshold) {
           currentHref = link.href;
@@ -66,7 +69,6 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setActiveHref(href);
-      setIsMobileMenuOpen(false);
     }
   };
 
@@ -75,15 +77,15 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white dark:bg-gray-900 shadow-lg border-b border-[var(--yellow)]/20' : 'bg-white dark:bg-gray-900'
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'border-b border-[var(--yellow)]/20 bg-white shadow-lg dark:bg-gray-900' : 'bg-white dark:bg-gray-900'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-xl font-bold bg-gradient-to-r from-[var(--yellow-dark)] to-[var(--yellow)] bg-clip-text text-transparent cursor-pointer"
+              className="cursor-pointer bg-gradient-to-r from-[var(--yellow-dark)] to-[var(--yellow)] bg-clip-text text-xl font-bold text-transparent"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
               FO
@@ -96,11 +98,12 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
                   activeHref={activeHref}
                   onItemSelect={scrollToSection}
                 />
+
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={toggleLanguage}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[var(--yellow)]/30 bg-white dark:bg-gray-800 text-sm font-semibold text-gray-900 dark:text-white transition-colors hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/10"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--yellow)]/30 bg-white px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/10 dark:bg-gray-800 dark:text-white"
                 >
                   <Globe size={16} className="text-[var(--yellow)]" />
                   <span className="font-medium">{language === 'es' ? 'EN' : 'ES'}</span>
@@ -109,13 +112,23 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
             </div>
 
             <div className="md:hidden">
-              <button
-                onClick={toggleLanguage}
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white dark:bg-gray-800 px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 dark:text-white shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
-              >
-                <Globe size={16} className="text-[var(--yellow-dark)]" />
-                <span>{language === 'es' ? 'EN' : 'ES'}</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={toggleLanguage}
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] transition-all hover:bg-[var(--yellow)]/10 dark:bg-gray-800 dark:text-white"
+                >
+                  <Globe size={16} className="text-[var(--yellow-dark)]" />
+                  <span>{language === 'es' ? 'EN' : 'ES'}</span>
+                </button>
+
+                <button
+                  onClick={onToggleTheme}
+                  aria-label={language === 'es' ? 'Cambiar tema' : 'Toggle theme'}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--yellow)]/30 bg-white text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] transition-all hover:bg-[var(--yellow)]/10 dark:bg-gray-800 dark:text-white"
+                >
+                  {isDark ? <Moon size={16} className="text-[var(--yellow-dark)]" /> : <SunMedium size={16} className="text-[var(--yellow-dark)]" />}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -126,7 +139,7 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
         style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
       >
         <div className="mx-auto max-w-sm">
-          <div className="relative overflow-hidden rounded-[32px] border border-[var(--yellow)]/20 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-2 pb-2 pt-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-colors duration-1000">
+          <div className="relative overflow-hidden rounded-[32px] border border-[var(--yellow)]/20 bg-white/95 px-2 pb-2 pt-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-colors duration-1000 dark:bg-gray-900/95">
             <div className="pointer-events-none absolute inset-x-10 top-2 h-14 rounded-full bg-[var(--yellow)]/6 blur-2xl" />
             <div className="pointer-events-none absolute inset-px rounded-[31px] border border-[var(--yellow)]/10" />
 
@@ -156,8 +169,8 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
                       <Icon
                         className={`h-[22px] w-[22px] transition-all duration-300 ${
                           isActive
-                            ? 'text-[var(--yellow-dark)] scale-110 drop-shadow-[0_0_8px_rgba(255,220,0,0.3)] translate-y-1'
-                            : 'text-gray-400 dark:text-gray-500 hover:text-[var(--yellow-dark)]'
+                            ? 'translate-y-1 scale-110 text-[var(--yellow-dark)] drop-shadow-[0_0_8px_rgba(255,220,0,0.3)]'
+                            : 'text-gray-400 hover:text-[var(--yellow-dark)] dark:text-gray-500'
                         }`}
                       />
                       <span className="sr-only">{link.name}</span>

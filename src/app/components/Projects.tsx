@@ -37,6 +37,20 @@ export default function Projects({ t, language }: ProjectsProps) {
 
   const projects: Project[] = [
     {
+      title: 'Paper Pops',
+      category: language === 'es' ? 'E-commerce creativo' : 'Creative e-commerce',
+      subtitle: language === 'es' ? 'Catalogo, stock y pagos' : 'Catalog, stock and payments',
+      status: language === 'es' ? 'Lanzado' : 'Launched',
+      description:
+        language === 'es'
+          ? 'Tienda online para productos creativos, con foco en navegacion clara, exhibicion visual del catalogo y una experiencia de compra simple para convertir visitas en ventas.'
+          : 'Online store for creative products with a clear browsing flow, visual merchandising, and a straightforward checkout experience built to turn visits into sales.',
+      technologies: ['React', 'JavaScript', 'Stripe', 'Firebase'],
+      image: '/paper-pops-preview.jpeg',
+      link: 'https://paper-pops.vercel.app/',
+      Icon: Store,
+    },
+    {
       title: 'JJAsist',
       category: language === 'es' ? 'Sistema de asistencia' : 'Attendance platform',
       subtitle: language === 'es' ? 'QR, GPS y automatizacion' : 'QR, GPS and automation',
@@ -63,20 +77,6 @@ export default function Projects({ t, language }: ProjectsProps) {
       image: '/Captura de pantalla 2026-04-09 191343.png',
       link: 'https://jjserviciosempresarialesrrhh.com/',
       Icon: BriefcaseBusiness,
-    },
-    {
-      title: 'Paper Pops',
-      category: language === 'es' ? 'E-commerce creativo' : 'Creative e-commerce',
-      subtitle: language === 'es' ? 'Catalogo, stock y pagos' : 'Catalog, stock and payments',
-      status: language === 'es' ? 'Lanzado' : 'Launched',
-      description:
-        language === 'es'
-          ? 'Tienda online para productos creativos, con foco en navegacion clara, exhibicion visual del catalogo y una experiencia de compra simple para convertir visitas en ventas.'
-          : 'Online store for creative products with a clear browsing flow, visual merchandising, and a straightforward checkout experience built to turn visits into sales.',
-      technologies: ['React', 'JavaScript', 'Stripe', 'Firebase'],
-      image: '/paper-pops-preview.jpeg',
-      link: 'https://paper-pops.vercel.app/',
-      Icon: Store,
     },
   ];
 

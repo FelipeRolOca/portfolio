@@ -20,7 +20,14 @@ interface CanvasBounds {
   height: number;
 }
 
+interface ViewWindow {
+  startCol: number;
+  startRow: number;
+  zoom: number;
+}
+
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+const OVERSCAN = 1;
 
 export function Card({
   className = '',
@@ -48,16 +55,63 @@ export function InfiniteCanvas({
   showInstructions = true,
 }: InfiniteCanvasProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ x: number; y: number; pointerId: number } | null>(null);
   const hasInitializedView = useRef(false);
+  const frameRef = useRef<number | null>(null);
+  const offsetRef = useRef({ x: 0, y: 0 });
+  const zoomRef = useRef(1);
+  const windowRef = useRef({ startCol: -OVERSCAN, startRow: -OVERSCAN });
+
   const [bounds, setBounds] = useState<CanvasBounds>({ width: 0, height: 0 });
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [viewWindow, setViewWindow] = useState<ViewWindow>({
+    startCol: -OVERSCAN,
+    startRow: -OVERSCAN,
+    zoom: 1,
+  });
   const [interactionEnabled, setInteractionEnabled] = useState(true);
 
   const cards = useMemo(() => Children.toArray(children), [children]);
   const stepX = cardWidth + spacing;
   const stepY = cardHeight + spacing;
+
+  const applyTransform = () => {
+    if (!canvasRef.current) return;
+
+    canvasRef.current.style.transform = `translate3d(${offsetRef.current.x}px, ${offsetRef.current.y}px, 0) scale(${zoomRef.current})`;
+  };
+
+  const getWindowPosition = (x: number, y: number, zoom: number) => ({
+    startCol: Math.floor((-x / zoom) / stepX) - OVERSCAN,
+    startRow: Math.floor((-y / zoom) / stepY) - OVERSCAN,
+  });
+
+  const syncWindow = (force = false) => {
+    const nextWindow = getWindowPosition(offsetRef.current.x, offsetRef.current.y, zoomRef.current);
+
+    if (
+      force ||
+      nextWindow.startCol !== windowRef.current.startCol ||
+      nextWindow.startRow !== windowRef.current.startRow ||
+      zoomRef.current !== viewWindow.zoom
+    ) {
+      windowRef.current = nextWindow;
+      setViewWindow({
+        ...nextWindow,
+        zoom: zoomRef.current,
+      });
+    }
+  };
+
+  const schedulePaint = (forceWindowSync = false) => {
+    if (frameRef.current !== null) return;
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      frameRef.current = null;
+      applyTransform();
+      syncWindow(forceWindowSync);
+    });
+  };
 
   useEffect(() => {
     const updateBounds = () => {
@@ -68,27 +122,46 @@ export function InfiniteCanvas({
     };
 
     updateBounds();
+
+    const resizeObserver = viewportRef.current ? new ResizeObserver(updateBounds) : null;
+    if (viewportRef.current && resizeObserver) {
+      resizeObserver.observe(viewportRef.current);
+    }
+
     window.addEventListener('resize', updateBounds);
-    return () => window.removeEventListener('resize', updateBounds);
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', updateBounds);
+    };
   }, []);
 
   useEffect(() => {
     if (!bounds.width || !bounds.height || hasInitializedView.current) return;
 
     hasInitializedView.current = true;
+    offsetRef.current = {
+      x: bounds.width / 2 - stepX * 1.1,
+      y: bounds.height / 2 - stepY * 0.95,
+    };
+    zoomRef.current = 1;
+    applyTransform();
+    syncWindow(true);
+  }, [bounds.height, bounds.width, stepX, stepY, viewWindow.zoom]);
 
-    setOffset({
-      x: bounds.width / 2 - stepX * 1.35,
-      y: bounds.height / 2 - stepY,
-    });
-  }, [bounds.height, bounds.width, stepX, stepY]);
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!interactionEnabled) return;
 
     dragRef.current = {
-      x: event.clientX - offset.x,
-      y: event.clientY - offset.y,
+      x: event.clientX - offsetRef.current.x,
+      y: event.clientY - offsetRef.current.y,
       pointerId: event.pointerId,
     };
 
@@ -98,67 +171,67 @@ export function InfiniteCanvas({
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!interactionEnabled || !dragRef.current || dragRef.current.pointerId !== event.pointerId) return;
 
-    setOffset({
+    offsetRef.current = {
       x: event.clientX - dragRef.current.x,
       y: event.clientY - dragRef.current.y,
-    });
+    };
+
+    schedulePaint(false);
   };
 
   const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     if (dragRef.current?.pointerId === event.pointerId) {
       dragRef.current = null;
       event.currentTarget.releasePointerCapture(event.pointerId);
+      schedulePaint(false);
     }
   };
 
   const updateZoom = (nextZoom: number, pointer?: { clientX: number; clientY: number }) => {
-    const clampedZoom = clamp(nextZoom, 0.7, 1.75);
+    const clampedZoom = clamp(nextZoom, 0.82, 1.35);
 
     if (!viewportRef.current) {
-      setZoom(clampedZoom);
+      zoomRef.current = clampedZoom;
+      syncWindow(true);
       return;
     }
 
     const rect = viewportRef.current.getBoundingClientRect();
     const anchorX = pointer ? pointer.clientX - rect.left : rect.width / 2;
     const anchorY = pointer ? pointer.clientY - rect.top : rect.height / 2;
-    const worldX = (anchorX - offset.x) / zoom;
-    const worldY = (anchorY - offset.y) / zoom;
+    const worldX = (anchorX - offsetRef.current.x) / zoomRef.current;
+    const worldY = (anchorY - offsetRef.current.y) / zoomRef.current;
 
-    setZoom(clampedZoom);
-    setOffset({
+    zoomRef.current = clampedZoom;
+    offsetRef.current = {
       x: anchorX - worldX * clampedZoom,
       y: anchorY - worldY * clampedZoom,
-    });
+    };
+
+    schedulePaint(true);
   };
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     if (!interactionEnabled) return;
 
     event.preventDefault();
-    const zoomDelta = event.deltaY > 0 ? -0.08 : 0.08;
-    updateZoom(zoom + zoomDelta, { clientX: event.clientX, clientY: event.clientY });
+    const zoomDelta = event.deltaY > 0 ? -0.05 : 0.05;
+    updateZoom(zoomRef.current + zoomDelta, { clientX: event.clientX, clientY: event.clientY });
   };
 
   const resetView = () => {
     if (!bounds.width || !bounds.height) return;
 
-    setZoom(1);
-    setOffset({
-      x: bounds.width / 2 - stepX * 1.35,
-      y: bounds.height / 2 - stepY,
-    });
+    zoomRef.current = 1;
+    offsetRef.current = {
+      x: bounds.width / 2 - stepX * 1.1,
+      y: bounds.height / 2 - stepY * 0.95,
+    };
+    schedulePaint(true);
   };
 
-  const visibleColumns = bounds.width
-    ? Math.ceil(bounds.width / (stepX * zoom)) + 4
-    : 8;
-  const visibleRows = bounds.height
-    ? Math.ceil(bounds.height / (stepY * zoom)) + 4
-    : 6;
-
-  const startCol = Math.floor((-offset.x / zoom) / stepX) - 2;
-  const startRow = Math.floor((-offset.y / zoom) / stepY) - 2;
+  const visibleColumns = bounds.width ? Math.ceil(bounds.width / (stepX * viewWindow.zoom)) + OVERSCAN * 2 + 1 : 6;
+  const visibleRows = bounds.height ? Math.ceil(bounds.height / (stepY * viewWindow.zoom)) + OVERSCAN * 2 + 1 : 4;
 
   const gridItems = useMemo(() => {
     if (!cards.length) return [];
@@ -169,9 +242,9 @@ export function InfiniteCanvas({
       style: CSSProperties;
     }> = [];
 
-    for (let row = startRow; row < startRow + visibleRows; row += 1) {
-      for (let col = startCol; col < startCol + visibleColumns; col += 1) {
-        const index = ((row - startRow) * visibleColumns + (col - startCol)) % cards.length;
+    for (let row = viewWindow.startRow; row < viewWindow.startRow + visibleRows; row += 1) {
+      for (let col = viewWindow.startCol; col < viewWindow.startCol + visibleColumns; col += 1) {
+        const index = ((row - viewWindow.startRow) * visibleColumns + (col - viewWindow.startCol)) % cards.length;
         const child = cards[(index + cards.length) % cards.length];
 
         const baseStyle: CSSProperties = {
@@ -186,14 +259,12 @@ export function InfiniteCanvas({
 
         if (isValidElement(child)) {
           const element = child as ReactElement<{ style?: CSSProperties }>;
-          const mergedStyle = {
-            ...(element.props.style ?? {}),
-            width: '100%',
-            height: '100%',
-          };
-
           node = cloneElement(element, {
-            style: mergedStyle,
+            style: {
+              ...(element.props.style ?? {}),
+              width: '100%',
+              height: '100%',
+            },
           });
         }
 
@@ -206,13 +277,12 @@ export function InfiniteCanvas({
     }
 
     return items;
-  }, [cardHeight, cardWidth, cards, startCol, startRow, stepX, stepY, visibleColumns, visibleRows]);
+  }, [cardHeight, cardWidth, cards, stepX, stepY, viewWindow.startCol, viewWindow.startRow, visibleColumns, visibleRows]);
 
   return (
     <div className={`relative overflow-hidden rounded-[2rem] border border-[var(--yellow)]/20 bg-white/65 shadow-[0_25px_80px_rgba(15,23,42,0.12)] backdrop-blur dark:bg-[#0f1113]/80 dark:shadow-[0_25px_85px_rgba(0,0,0,0.35)] ${className}`}>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.18),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.3),transparent_22%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.16),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.05),transparent_18%)]" />
-
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,220,0,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,220,0,0.06)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70 dark:opacity-40" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.16),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.22),transparent_16%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,220,0,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_16%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,220,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,220,0,0.05)_1px,transparent_1px)] bg-[size:48px_48px] opacity-60 dark:opacity-35" />
 
       <div className="absolute left-4 top-4 z-20 flex flex-wrap gap-2">
         {showStatus && (
@@ -225,7 +295,7 @@ export function InfiniteCanvas({
         {showZoom && (
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/20 bg-white/85 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-gray-600 shadow-sm backdrop-blur dark:bg-black/35 dark:text-gray-200">
             <Search size={14} className="text-[var(--yellow-dark)]" />
-            <span>{Math.round(zoom * 100)}%</span>
+            <span>{Math.round(viewWindow.zoom * 100)}%</span>
           </div>
         )}
       </div>
@@ -236,9 +306,7 @@ export function InfiniteCanvas({
             type="button"
             onClick={() => setInteractionEnabled((current) => !current)}
             className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-              interactionEnabled
-                ? 'bg-[var(--yellow)] text-black'
-                : 'bg-gray-200 text-gray-500 dark:bg-white/10 dark:text-gray-300'
+              interactionEnabled ? 'bg-[var(--yellow)] text-black' : 'bg-gray-200 text-gray-500 dark:bg-white/10 dark:text-gray-300'
             }`}
             aria-label="Toggle canvas interaction"
           >
@@ -246,7 +314,7 @@ export function InfiniteCanvas({
           </button>
           <button
             type="button"
-            onClick={() => updateZoom(zoom + 0.12)}
+            onClick={() => updateZoom(zoomRef.current + 0.08)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-colors hover:bg-[var(--yellow)]/12 dark:bg-white/8 dark:text-white"
             aria-label="Zoom in"
           >
@@ -254,7 +322,7 @@ export function InfiniteCanvas({
           </button>
           <button
             type="button"
-            onClick={() => updateZoom(zoom - 0.12)}
+            onClick={() => updateZoom(zoomRef.current - 0.08)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 transition-colors hover:bg-[var(--yellow)]/12 dark:bg-white/8 dark:text-white"
             aria-label="Zoom out"
           >
@@ -279,7 +347,7 @@ export function InfiniteCanvas({
 
       <div
         ref={viewportRef}
-        className={`relative h-full w-full ${interactionEnabled ? 'cursor-grab active:cursor-grabbing touch-none' : 'cursor-default'}`}
+        className={`relative h-full w-full ${interactionEnabled ? 'touch-none cursor-grab active:cursor-grabbing' : 'cursor-default'}`}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -287,11 +355,9 @@ export function InfiniteCanvas({
         onWheel={handleWheel}
       >
         <div
-          className="absolute left-0 top-0 origin-top-left"
-          style={{
-            transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${zoom})`,
-            transformOrigin: '0 0',
-          }}
+          ref={canvasRef}
+          className="absolute left-0 top-0 origin-top-left will-change-transform"
+          style={{ transformOrigin: '0 0' }}
         >
           {gridItems.map((item) => (
             <div key={item.key} style={item.style}>

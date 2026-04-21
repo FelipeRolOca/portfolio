@@ -1,6 +1,6 @@
 import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
-import { Briefcase, Calendar, CheckCircle, MapPin } from 'lucide-react';
+import { useMemo, useRef } from 'react';
+import { Briefcase, Calendar, CheckCircle2, MapPin, Sparkles } from 'lucide-react';
 import type { Translation, Language } from '../App';
 
 interface ExperienceProps {
@@ -12,6 +12,27 @@ export default function Experience({ t, language }: ExperienceProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  const copy = useMemo(
+    () => ({
+      stats:
+        language === 'es'
+          ? [
+              { label: 'Experiencias reales', value: '2' },
+              { label: 'En produccion desde', value: '2025' },
+              { label: 'Foco actual', value: 'Web + automatizacion' },
+            ]
+          : [
+              { label: 'Real engagements', value: '2' },
+              { label: 'Shipping since', value: '2025' },
+              { label: 'Current focus', value: 'Web + automation' },
+            ],
+      highlightsLabel: language === 'es' ? 'Puntos clave' : 'Highlights',
+      stackLabel: language === 'es' ? 'Stack y herramientas' : 'Stack and tools',
+      impactLabel: language === 'es' ? 'Resultado' : 'Outcome',
+    }),
+    [language]
+  );
+
   const experiences = [
     {
       role: language === 'es' ? 'Desarrollador Full Stack' : 'Full Stack Developer',
@@ -20,21 +41,26 @@ export default function Experience({ t, language }: ExperienceProps) {
       location: language === 'es' ? 'Remoto' : 'Remote',
       summary:
         language === 'es'
-          ? 'Desarrolle un sistema de asistencia con escaneo de codigos QR, validacion GPS y un panel administrativo pensado para operaciones reales.'
-          : 'Built an attendance platform with QR scanning, GPS validation, and an admin panel designed for real operational workflows.',
+          ? 'Sistema de asistencia y operacion en campo con lectura de QR, validacion GPS y panel administrativo para seguimiento diario.'
+          : 'Attendance and field-operations platform with QR scans, GPS validation, and an admin workspace for daily oversight.',
+      impact:
+        language === 'es'
+          ? 'Se transformo un flujo manual de control horario en una herramienta digital con reportes y validaciones automaticas.'
+          : 'Turned a manual attendance workflow into a digital tool with automated validation and reporting.',
+      stack: ['Next.js', 'React', 'Supabase', 'Google Apps Script', 'Vercel', 'GPS / QR'],
       achievements:
         language === 'es'
           ? [
-              'Construido con Next.js, Supabase y Vercel para un despliegue escalable',
-              'Apps Script integrado para reportes automaticos y sincronizacion',
-              'Escaneo QR/codigo de barras y validacion GPS implementados',
+              'Lectura de QR y codigo de barras para fichadas mas rapidas',
+              'Validacion GPS para reforzar el control de ubicacion',
               'Panel administrativo para empleados, reportes y configuraciones',
+              'Automatizacion de reportes y sincronizacion operativa',
             ]
           : [
-              'Built with Next.js, Supabase, and Vercel for scalable deployment',
-              'Integrated Apps Script for automated reporting and sync tasks',
-              'Implemented QR and barcode scanning with GPS validation',
-              'Created an admin panel for employees, reports, and settings',
+              'QR and barcode scanning for faster check-ins',
+              'GPS validation to strengthen location control',
+              'Admin workspace for employees, reports, and settings',
+              'Automated reporting and operational sync flows',
             ],
     },
     {
@@ -44,31 +70,36 @@ export default function Experience({ t, language }: ExperienceProps) {
       location: language === 'es' ? 'Remoto' : 'Remote',
       summary:
         language === 'es'
-          ? 'Disene y publique un sitio institucional para una consultora de RRHH usando WordPress y Elementor, con foco en claridad comercial, SEO on-page y experiencia responsive.'
-          : 'Designed and launched a corporate website for an HR consultancy using WordPress and Elementor, focused on clear messaging, on-page SEO, and responsive UX.',
+          ? 'Sitio institucional para consultora de RRHH con WordPress y Elementor, orientado a claridad comercial, captacion de consultas y presencia digital.'
+          : 'Corporate website for an HR consultancy built with WordPress and Elementor, focused on clarity, lead capture, and stronger digital presence.',
+      impact:
+        language === 'es'
+          ? 'Se entrego una presencia web mas profesional, responsive y mejor organizada para presentar servicios y generar contactos.'
+          : 'Delivered a more professional, responsive web presence to present services clearly and generate inquiries.',
+      stack: ['WordPress', 'Elementor', 'SEO On-Page', 'Responsive Design'],
       achievements:
         language === 'es'
           ? [
-              'Armado del sitio en WordPress con maquetacion visual en Elementor',
-              'Optimizacion SEO on-page, estructura de servicios y jerarquia de contenido',
+              'Maquetacion visual en Elementor con estructura comercial clara',
+              'Optimizacion SEO on-page y jerarquia de contenidos',
               'Formularios de contacto, version mobile y ajustes de rendimiento',
             ]
           : [
-              'Built the site in WordPress with visual layout work in Elementor',
-              'Improved on-page SEO, service structure, and content hierarchy',
-              'Implemented contact forms, mobile polish, and performance adjustments',
+              'Visual layout in Elementor with clearer commercial structure',
+              'Improved on-page SEO and content hierarchy',
+              'Contact forms, mobile polish, and performance adjustments',
             ],
     },
   ];
 
   return (
     <section id="experience" ref={ref} className="bg-white px-6 py-20 transition-colors duration-1000 dark:bg-gray-900">
-      <div className="relative z-10 mx-auto max-w-5xl">
+      <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-12 text-center"
         >
           <h2 className="mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-4xl font-bold text-transparent dark:from-white dark:to-gray-300 md:text-5xl">
             {t.title}
@@ -77,59 +108,102 @@ export default function Experience({ t, language }: ExperienceProps) {
           <p className="text-lg text-gray-600 dark:text-gray-300">{t.subtitle}</p>
         </motion.div>
 
-        <div className="relative">
-          <div className="absolute bottom-0 left-0 top-0 w-0.5 -translate-x-1/2 bg-gradient-to-b from-[var(--yellow)] to-[var(--yellow-glow)] md:left-1/2" />
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, delay: 0.08 }}
+          className="mb-12 grid gap-4 md:grid-cols-3"
+        >
+          {copy.stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-[1.5rem] border border-[var(--yellow)]/16 bg-white/88 p-5 shadow-[0_14px_34px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#111317]"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">{stat.label}</p>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+            </div>
+          ))}
+        </motion.div>
 
-          <div className="space-y-12">
+        <div className="relative pl-8 md:pl-12">
+          <div className="absolute left-2 top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-[var(--yellow)] via-[var(--yellow)]/50 to-transparent md:left-4" />
+
+          <div className="space-y-8">
             {experiences.map((exp, index) => (
-              <motion.div
+              <motion.article
                 key={exp.company}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`relative flex flex-col gap-8 md:flex-row ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                initial={{ opacity: 0, y: 28 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: index * 0.12 }}
+                className="relative"
               >
-                <div className="flex-1" />
+                <div className="absolute -left-[2.15rem] top-8 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--yellow)]/20 bg-white shadow-[0_10px_26px_rgba(255,220,0,0.15)] dark:bg-[#111317] md:-left-[2.45rem]">
+                  <Sparkles size={16} className="text-[var(--yellow-dark)]" />
+                </div>
 
-                <div className="absolute left-0 z-10 h-4 w-4 rounded-full border-4 border-white bg-[var(--yellow)] shadow-lg md:left-1/2 md:-translate-x-1/2" />
+                <div className="overflow-hidden rounded-[1.8rem] border border-[var(--yellow)]/16 bg-white/92 shadow-[0_20px_55px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-[#111317] dark:shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
+                  <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
+                    <div className="border-b border-[var(--yellow)]/12 bg-[linear-gradient(180deg,rgba(255,220,0,0.08),transparent_100%)] p-6 dark:border-white/8 lg:border-b-0 lg:border-r">
+                      <div className="mb-5 flex items-start gap-4">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.2)]">
+                          <Briefcase className="text-black" size={22} />
+                        </div>
 
-                <motion.div
-                  whileHover={{ scale: 1.02, boxShadow: '0 20px 40px rgba(255, 220, 0, 0.2)' }}
-                  className="ml-8 flex-1 rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-[var(--yellow)] dark:border-gray-700 dark:bg-gray-800 md:ml-0"
-                >
-                  <div className="mb-4 flex items-start gap-4">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)]">
-                      <Briefcase className="text-black" size={24} />
-                    </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
+                          <p className="mt-1 text-base font-semibold text-[var(--yellow-dark)]">{exp.company}</p>
+                        </div>
+                      </div>
 
-                    <div className="flex-1">
-                      <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
-                      <p className="mb-2 text-lg font-semibold text-[var(--yellow-dark)]">{exp.company}</p>
-                      <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} />
+                      <div className="mb-5 flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="flex items-center gap-2">
+                          <Calendar size={15} />
                           {exp.date}
                         </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin size={14} />
+                        <span className="flex items-center gap-2">
+                          <MapPin size={15} />
                           {exp.location}
                         </span>
                       </div>
+
+                      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{exp.summary}</p>
+
+                      <div className="mt-6 rounded-[1.25rem] border border-[var(--yellow)]/14 bg-white/70 p-4 dark:bg-white/4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">{copy.impactLabel}</p>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700 dark:text-gray-300">{exp.impact}</p>
+                      </div>
+                    </div>
+
+                    <div className="p-6">
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">{copy.highlightsLabel}</p>
+                        <div className="mt-4 space-y-3">
+                          {exp.achievements.map((achievement) => (
+                            <div key={achievement} className="flex items-start gap-3">
+                              <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-[var(--yellow-dark)]" />
+                              <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{achievement}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-7 border-t border-gray-200/80 pt-5 dark:border-white/8">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">{copy.stackLabel}</p>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {exp.stack.map((item) => (
+                            <span
+                              key={item}
+                              className="rounded-full border border-[var(--yellow)]/18 bg-[var(--yellow)]/10 px-3 py-1 text-sm font-medium text-[var(--yellow-dark)]"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <p className="mb-4 text-gray-700 dark:text-gray-300">{exp.summary}</p>
-
-                  <div className="space-y-2">
-                    {exp.achievements.map((achievement) => (
-                      <div key={achievement} className="flex items-start gap-2">
-                        <CheckCircle className="mt-0.5 flex-shrink-0 text-[var(--yellow-dark)]" size={16} />
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{achievement}</p>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
+                </div>
+              </motion.article>
             ))}
           </div>
         </div>

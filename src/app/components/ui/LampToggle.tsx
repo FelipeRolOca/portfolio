@@ -55,10 +55,10 @@ export function LampToggle({ isDark, onToggle, language }: LampToggleProps) {
         : 'Pull to turn on';
 
   return (
-    <div className="fixed right-4 top-0 z-50 flex select-none flex-col items-center md:right-6">
+    <div className="fixed right-4 top-0 z-[60] hidden select-none flex-col items-center md:flex md:right-6">
       <div
         ref={stringRef}
-        className="relative h-36 w-16 touch-none cursor-grab active:cursor-grabbing"
+        className="relative h-48 w-16 touch-none cursor-grab active:cursor-grabbing"
         onMouseDown={handlePullStart}
         onMouseMove={handlePull}
         onMouseUp={handlePullEnd}
@@ -68,7 +68,7 @@ export function LampToggle({ isDark, onToggle, language }: LampToggleProps) {
         onTouchEnd={handlePullEnd}
       >
         <motion.div
-          animate={{ height: 58 + stringLength }}
+          animate={{ height: 82 + stringLength }}
           transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-neutral-400 to-neutral-500 dark:via-neutral-500 dark:to-neutral-300"
         />
@@ -84,7 +84,7 @@ export function LampToggle({ isDark, onToggle, language }: LampToggleProps) {
               ? { duration: 0.7, ease: 'easeInOut' }
               : { type: 'spring', stiffness: 260, damping: 18 }
           }
-          className={`absolute left-1/2 top-14 h-8 w-8 -translate-x-1/2 rounded-full border shadow-md ${
+          className={`absolute left-1/2 top-20 h-8 w-8 -translate-x-1/2 rounded-full border shadow-md ${
             isDark
               ? 'border-[var(--yellow)]/35 bg-[var(--yellow)] shadow-[0_0_22px_rgba(255,220,0,0.35)]'
               : 'border-neutral-300 bg-white'

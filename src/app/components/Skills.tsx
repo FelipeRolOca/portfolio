@@ -120,10 +120,10 @@ export default function Skills({ t }: SkillsProps) {
           transition={{ duration: 0.65, delay: 0.12 }}
         >
           <InfiniteCanvas
-            className="relative h-[540px] w-full md:h-[620px]"
-            cardWidth={250}
-            cardHeight={176}
-            spacing={24}
+            className="relative h-[460px] w-full md:h-[540px]"
+            cardWidth={236}
+            cardHeight={164}
+            spacing={20}
             showControls={true}
             showZoom={true}
             showStatus={true}

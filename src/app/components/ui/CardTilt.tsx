@@ -67,5 +67,14 @@ export function CardTilt({
 }
 
 export function CardTiltContent({ children, className = '' }: CardTiltContentProps) {
-  return <div className={className}>{children}</div>;
+  return (
+    <div className={`relative ${className}`}>
+      <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--yellow)]/20" />
+      <div className="pointer-events-none absolute inset-x-4 top-4 h-px bg-gradient-to-r from-transparent via-[var(--yellow)]/30 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-4 bottom-4 h-px bg-gradient-to-r from-transparent via-[var(--yellow)]/30 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-4 left-4 w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/30 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-4 right-4 w-px bg-gradient-to-b from-transparent via-[var(--yellow)]/30 to-transparent" />
+      {children}
+    </div>
+  );
 }

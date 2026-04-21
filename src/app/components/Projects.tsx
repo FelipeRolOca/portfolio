@@ -109,7 +109,7 @@ export default function Projects({ t, language }: ProjectsProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        <div className="hidden md:grid md:grid-cols-3 gap-6 mt-16">
           {projects.map((project, index) => (
             <motion.div
               key={index}

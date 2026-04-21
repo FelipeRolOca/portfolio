@@ -22,8 +22,7 @@ export default function Hero({ t }: HeroProps) {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-[var(--yellow)]/5 to-white" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-white">
 
       <div className="absolute inset-0 opacity-30">
         {[...Array(20)].map((_, i) => (
@@ -46,22 +45,13 @@ export default function Hero({ t }: HeroProps) {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="flex-1 text-center md:text-left"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-block px-4 py-2 rounded-full border border-[var(--yellow)] bg-[var(--yellow)]/10 text-sm mb-6"
-          >
-            {t.greeting}
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -122,7 +112,7 @@ export default function Hero({ t }: HeroProps) {
           transition={{ duration: 0.8 }}
           className="flex-1 relative"
         >
-          <div className="relative w-full aspect-square max-w-md mx-auto">
+          <div className="relative w-full aspect-square max-w-xs md:max-w-md mx-auto">
             <motion.div
               animate={{
                 rotate: 360,
@@ -169,7 +159,7 @@ export default function Hero({ t }: HeroProps) {
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
-                className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-2xl border-4 border-[var(--yellow)]"
+                className="w-36 h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-2xl border-4 border-[var(--yellow)]"
               >
                 <img
                   src="/felipe.png"

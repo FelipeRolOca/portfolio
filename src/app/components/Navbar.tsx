@@ -109,9 +109,9 @@ export default function Navbar({ language, toggleLanguage, t }: NavbarProps) {
 
           <button
             onClick={toggleLanguage}
-            className="md:hidden inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/15 bg-[rgba(10,15,30,0.82)] px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-zinc-100 shadow-[0_10px_30px_rgba(0,0,0,0.24)]"
+            className="md:hidden inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/30 bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-gray-900 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:bg-[var(--yellow)]/10 transition-all"
           >
-            <Globe size={16} className="text-[var(--yellow)]" />
+            <Globe size={16} className="text-[var(--yellow-dark)]" />
             <span>{language === 'es' ? 'EN' : 'ES'}</span>
           </button>
         </div>

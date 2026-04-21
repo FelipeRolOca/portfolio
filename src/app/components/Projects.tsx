@@ -52,8 +52,7 @@ export default function Projects({ t, language }: ProjectsProps) {
   };
 
   return (
-    <section id="projects" ref={ref} className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--yellow)]/5 rounded-full blur-3xl" />
+    <section id="projects" ref={ref} className="py-20 px-6 bg-white">
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div

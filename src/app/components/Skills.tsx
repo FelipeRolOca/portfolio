@@ -2,6 +2,7 @@ import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 import { Code2, Database, Globe, QrCode, ChevronLeft, ChevronRight, Server } from 'lucide-react';
 import type { Translation } from '../App';
+import { CardTilt, CardTiltContent } from './ui/CardTilt';
 
 interface SkillsProps {
   t: Translation['skills'];
@@ -89,7 +90,7 @@ export default function Skills({ t }: SkillsProps) {
   };
 
   return (
-    <section id="skills" ref={ref} className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+    <section id="skills" ref={ref} className="py-20 px-6 bg-white">
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -113,27 +114,31 @@ export default function Skills({ t }: SkillsProps) {
             className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4 md:gap-6"
           >
             {currentSkills.map((skill, index) => (
-              <motion.div
-                key={`${currentPage}-${index}`}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                whileHover={{
-                  scale: 1.05,
-                  y: -5,
-                  boxShadow: '0 10px 25px rgba(255, 220, 0, 0.15)',
-                }}
-                className="bg-white rounded-xl p-6 border border-gray-200 hover:border-[var(--yellow)] transition-all group flex flex-col items-center justify-center gap-3 aspect-square"
-              >
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-gradient-to-br from-[var(--yellow)]/10 to-[var(--yellow)]/5 flex items-center justify-center group-hover:from-[var(--yellow)]/20 group-hover:to-[var(--yellow)]/10 transition-all">
-                  {skill.isLucide ? (
-                    <skill.icon className="text-[var(--yellow-dark)]" size={28} />
-                  ) : (
-                    <img src={skill.icon} alt={skill.name} className="w-8 h-8 md:w-9 md:h-9 object-contain" />
-                  )}
-                </div>
-                <h3 className="font-semibold text-gray-900 text-center text-sm md:text-base">{skill.name}</h3>
-              </motion.div>
+              <div key={`${currentPage}-${index}`} className="aspect-square">
+                <CardTilt
+                  className="h-full"
+                  tiltMaxAngle={12}
+                  scale={1.08}
+                >
+                  <CardTiltContent className="h-full">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
+                      className="bg-white rounded-xl p-6 border-2 border-gray-200 hover:border-[var(--yellow)] shadow-lg hover:shadow-[0_15px_35px_rgba(255,220,0,0.25)] transition-all group flex flex-col items-center justify-center gap-3 h-full"
+                    >
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center shadow-md group-hover:shadow-[0_8px_20px_rgba(255,220,0,0.4)] transition-all">
+                        {skill.isLucide ? (
+                          <skill.icon className="text-black" size={28} />
+                        ) : (
+                          <img src={skill.icon} alt={skill.name} className="w-8 h-8 md:w-9 md:h-9 object-contain" />
+                        )}
+                      </div>
+                      <h3 className="font-semibold text-gray-900 text-center text-sm md:text-base">{skill.name}</h3>
+                    </motion.div>
+                  </CardTiltContent>
+                </CardTilt>
+              </div>
             ))}
           </motion.div>
 

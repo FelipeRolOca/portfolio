@@ -2,24 +2,33 @@ import { useScroll } from 'motion/react';
 import { useRef, useEffect } from 'react';
 
 export default function BackgroundVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const lightVideoRef = useRef<HTMLVideoElement>(null);
+  const darkVideoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const lightVideo = lightVideoRef.current;
+    const darkVideo = darkVideoRef.current;
 
-    video.pause();
+    if (lightVideo) lightVideo.pause();
+    if (darkVideo) darkVideo.pause();
 
     let animationFrameId: number;
     let targetTime = 0;
 
     const renderLoop = () => {
-      if (video.duration) {
-        targetTime = scrollYProgress.get() * video.duration;
-        // Smooth interpolation for the scrub
-        video.currentTime += (targetTime - video.currentTime) * 0.1;
+      // Light Video
+      if (lightVideo && lightVideo.duration) {
+        targetTime = scrollYProgress.get() * lightVideo.duration;
+        lightVideo.currentTime += (targetTime - lightVideo.currentTime) * 0.1;
       }
+      
+      // Dark Video
+      if (darkVideo && darkVideo.duration) {
+        targetTime = scrollYProgress.get() * darkVideo.duration;
+        darkVideo.currentTime += (targetTime - darkVideo.currentTime) * 0.1;
+      }
+
       animationFrameId = requestAnimationFrame(renderLoop);
     };
 
@@ -29,17 +38,25 @@ export default function BackgroundVideo() {
   }, [scrollYProgress]);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none dark:hidden overflow-hidden">
+    <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none overflow-hidden">
+      {/* Light Mode Video */}
       <video
-        ref={videoRef}
-        src="/Keyboard_disassembling_for_202604212029.mp4"
-        className="w-full h-full object-cover opacity-50"
+        ref={lightVideoRef}
+        src="/SCROLL LIGHT MODE.mp4"
+        className="w-full h-full object-cover dark:hidden"
         muted
         playsInline
         preload="auto"
       />
-      {/* Overlay to ensure the video stays subtle and text is readable */}
-      <div className="absolute inset-0 bg-white/50 backdrop-blur-[2px]" />
+      {/* Dark Mode Video */}
+      <video
+        ref={darkVideoRef}
+        src="/SCROLL DARK MODE.mp4"
+        className="w-full h-full object-cover hidden dark:block"
+        muted
+        playsInline
+        preload="auto"
+      />
     </div>
   );
 }

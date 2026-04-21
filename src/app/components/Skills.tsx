@@ -117,7 +117,7 @@ export default function Skills({ t }: SkillsProps) {
   ];
 
   return (
-    <section id="skills" ref={ref} className="px-6 py-12 md:py-20 transition-colors duration-1000 dark:bg-gray-900">
+    <section id="skills" ref={ref} className="px-6 py-12 md:py-20 transition-colors duration-1000">
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

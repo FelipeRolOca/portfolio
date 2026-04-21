@@ -64,7 +64,7 @@ export default function Contact({ t, language }: ContactProps) {
   ];
 
   return (
-    <section id="contact" ref={ref} className="py-12 md:py-20 px-6 dark:bg-gray-900 transition-colors duration-1000">
+    <section id="contact" ref={ref} className="py-12 md:py-20 px-6 transition-colors duration-1000">
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div

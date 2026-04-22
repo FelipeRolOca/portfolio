@@ -8,88 +8,83 @@ export default function BackgroundVideo() {
     const lightVideo = lightVideoRef.current;
     const darkVideo = darkVideoRef.current;
 
+    // Pause both — we control playback manually via currentTime
     if (lightVideo) lightVideo.pause();
     if (darkVideo) darkVideo.pause();
 
-    // 0.25 = quarter speed — video uses only the first 25% of its duration across the full page scroll
-    const speedMultiplier = 0.25;
+    // How much of the video to use across the full page scroll (1.0 = all, 0.5 = half, etc.)
+    const SPEED = 0.5;
 
-    // Current interpolated time for each video
-    let currentTimeLight = 0;
-    let currentTimeDark = 0;
+    // Lerp state — tracks the smooth interpolated time
+    let smoothTimeLight = 0;
+    let smoothTimeDark = 0;
     let targetTimeLight = 0;
     let targetTimeDark = 0;
-    let rafId = 0;
 
-    const getScrollProgress = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      return scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
+    const getScrollProgress = (): number => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll <= 0) return 0;
+      return Math.min(Math.max(scrollTop / maxScroll, 0), 1);
     };
 
     const onScroll = () => {
-      const progress = getScrollProgress();
-
-      if (lightVideo && lightVideo.duration) {
-        targetTimeLight = Math.min(progress * speedMultiplier * lightVideo.duration, lightVideo.duration);
-      }
-      if (darkVideo && darkVideo.duration) {
-        targetTimeDark = Math.min(progress * speedMultiplier * darkVideo.duration, darkVideo.duration);
-      }
+      const p = getScrollProgress();
+      if (lightVideo?.duration) targetTimeLight = p * SPEED * lightVideo.duration;
+      if (darkVideo?.duration) targetTimeDark = p * SPEED * darkVideo.duration;
     };
 
-    // Smooth lerp loop — runs every frame regardless of scroll events
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-    const LERP_FACTOR = 0.08; // lower = smoother/slower catch-up
-
+    // Industry-standard rAF loop: lerp towards target on every frame
+    let raf: number;
     const tick = () => {
-      if (lightVideo && lightVideo.readyState >= 1 && lightVideo.duration) {
-        currentTimeLight = lerp(currentTimeLight, targetTimeLight, LERP_FACTOR);
-        if (Math.abs(currentTimeLight - lightVideo.currentTime) > 0.01) {
-          lightVideo.currentTime = currentTimeLight;
-        }
+      const LERP = 0.12; // 0.12 = responsive but smooth; raise for snappier, lower for silkier
+
+      if (lightVideo && lightVideo.readyState >= 2 && lightVideo.duration) {
+        smoothTimeLight += (targetTimeLight - smoothTimeLight) * LERP;
+        lightVideo.currentTime = smoothTimeLight;
       }
-      if (darkVideo && darkVideo.readyState >= 1 && darkVideo.duration) {
-        currentTimeDark = lerp(currentTimeDark, targetTimeDark, LERP_FACTOR);
-        if (Math.abs(currentTimeDark - darkVideo.currentTime) > 0.01) {
-          darkVideo.currentTime = currentTimeDark;
-        }
+
+      if (darkVideo && darkVideo.readyState >= 2 && darkVideo.duration) {
+        smoothTimeDark += (targetTimeDark - smoothTimeDark) * LERP;
+        darkVideo.currentTime = smoothTimeDark;
       }
-      rafId = requestAnimationFrame(tick);
+
+      raf = requestAnimationFrame(tick);
     };
 
-    // Init
-    onScroll();
-    rafId = requestAnimationFrame(tick);
+    // Start loop immediately
+    raf = requestAnimationFrame(tick);
 
+    // Update targets on scroll (passive for performance)
     window.addEventListener('scroll', onScroll, { passive: true });
-    if (lightVideo) lightVideo.addEventListener('loadedmetadata', onScroll);
-    if (darkVideo) darkVideo.addEventListener('loadedmetadata', onScroll);
+
+    // Re-sync when metadata arrives (covers the race condition on load)
+    const syncOnLoad = () => onScroll();
+    if (lightVideo) lightVideo.addEventListener('loadedmetadata', syncOnLoad);
+    if (darkVideo) darkVideo.addEventListener('loadedmetadata', syncOnLoad);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      cancelAnimationFrame(raf);
       window.removeEventListener('scroll', onScroll);
-      if (lightVideo) lightVideo.removeEventListener('loadedmetadata', onScroll);
-      if (darkVideo) darkVideo.removeEventListener('loadedmetadata', onScroll);
+      if (lightVideo) lightVideo.removeEventListener('loadedmetadata', syncOnLoad);
+      if (darkVideo) darkVideo.removeEventListener('loadedmetadata', syncOnLoad);
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none flex items-center justify-center bg-white dark:bg-black transition-colors duration-1000">
-      {/* Light Mode Video */}
+    <div className="fixed inset-0 z-[-1] flex items-center justify-center bg-white dark:bg-black transition-colors duration-1000">
       <video
         ref={lightVideoRef}
         src="/SCROLL LIGHT MODE.mp4"
-        className="absolute w-full h-full object-contain transition-opacity duration-1000 opacity-100 dark:opacity-0"
+        className="absolute w-full h-full object-contain opacity-100 dark:opacity-0 transition-opacity duration-1000"
         muted
         playsInline
         preload="auto"
       />
-      {/* Dark Mode Video */}
       <video
         ref={darkVideoRef}
         src="/SCROLL DARK MODE.mp4"
-        className="absolute w-full h-full object-contain transition-opacity duration-1000 opacity-0 dark:opacity-100"
+        className="absolute w-full h-full object-contain opacity-0 dark:opacity-100 transition-opacity duration-1000"
         muted
         playsInline
         preload="auto"

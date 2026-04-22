@@ -153,7 +153,7 @@ export default function Contact({ t, language }: ContactProps) {
                     className="relative"
                   >
                     {info.type === 'phone' ? (
-                      <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
+                      <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-black dark:border-black dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
                           <info.icon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                         </div>
@@ -161,26 +161,26 @@ export default function Contact({ t, language }: ContactProps) {
                           onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
                           className="flex-1 text-left"
                         >
-                          <p className="text-sm text-gray-800 mb-1">{info.label}</p>
-                          <p className="text-gray-900 font-medium hover:text-[var(--yellow-dark)] transition-colors">{info.value}</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-400 mb-1">{info.label}</p>
+                          <p className="text-gray-900 dark:text-white font-medium hover:text-[var(--yellow-dark)] transition-colors">{info.value}</p>
                         </button>
                       </div>
                     ) : (
-                      <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
+                      <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-black dark:border-black dark:bg-gray-800 hover:border-[var(--yellow)] hover:bg-[var(--yellow)]/5 transition-all">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center flex-shrink-0">
                           <info.icon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-gray-800 mb-1">{info.label}</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-400 mb-1">{info.label}</p>
                           {info.href ? (
                             <a
                               href={info.href}
-                              className="text-gray-900 font-medium hover:text-[var(--yellow-dark)] transition-colors break-all"
+                              className="text-gray-900 dark:text-white font-medium hover:text-[var(--yellow-dark)] transition-colors break-all"
                             >
                               {info.value}
                             </a>
                           ) : (
-                            <p className="text-gray-900 font-medium">{info.value}</p>
+                            <p className="text-gray-900 dark:text-white font-medium">{info.value}</p>
                           )}
                         </div>
                       </div>

@@ -220,25 +220,33 @@
     scrollbar-width: none;  /* Firefox */
   }
 
-  /* Light mode: thin white outline on all text descendants */
+  /* Light mode: high-quality text stroke that stays BEHIND the glyphs */
   .text-outline * {
+    paint-order: stroke fill;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.85);
+    /* Fallback for browsers that don't support text-stroke well */
     text-shadow: 
-      -0.5px -0.5px 0 rgba(255,255,255,0.95),
-       0.5px -0.5px 0 rgba(255,255,255,0.95),
-      -0.5px  0.5px 0 rgba(255,255,255,0.95),
-       0.5px  0.5px 0 rgba(255,255,255,0.95);
+      -1px -1px 0 rgba(255, 255, 255, 0.3),
+       1px -1px 0 rgba(255, 255, 255, 0.3),
+      -1px  1px 0 rgba(255, 255, 255, 0.3),
+       1px  1px 0 rgba(255, 255, 255, 0.3);
   }
-  /* Dark mode: thin black outline on all text descendants */
+
+  /* Dark mode: sharp black stroke */
   .dark .text-outline * {
+    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.85);
     text-shadow: 
-      -0.5px -0.5px 0 rgba(0,0,0,0.95),
-       0.5px -0.5px 0 rgba(0,0,0,0.95),
-      -0.5px  0.5px 0 rgba(0,0,0,0.95),
-       0.5px  0.5px 0 rgba(0,0,0,0.95);
+      -1px -1px 0 rgba(0, 0, 0, 0.3),
+       1px -1px 0 rgba(0, 0, 0, 0.3),
+      -1px  1px 0 rgba(0, 0, 0, 0.3),
+       1px  1px 0 rgba(0, 0, 0, 0.3);
   }
   
   .no-outline,
-  .no-outline * {
+  .no-outline *,
+  svg,
+  [class*="lucide"] {
+    -webkit-text-stroke: 0 !important;
     text-shadow: none !important;
   }
 }

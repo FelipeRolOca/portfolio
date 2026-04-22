@@ -36,18 +36,10 @@ const styles = `
   margin: 0;
   position: relative;
   z-index: 3;
-  color: rgb(30 41 59);
-  text-shadow: none;
-  border-radius: 999px;
-  border: 1px solid rgb(0 0 0 / 0.1);
-  background: rgb(255 255 255);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
-}
-
-.dark .gooey-nav-container nav ul {
   color: white;
   text-shadow: 0 1px 1px hsl(205deg 30% 10% / 0.2);
-  border: 1px solid rgb(255 220 0 / 12%);
+  border-radius: 999px;
+  border: 1px solid rgb(141 224 255 / 12%);
   background: linear-gradient(180deg, rgb(9 14 28 / 82%), rgb(5 9 20 / 72%));
   box-shadow: 0 18px 40px rgb(2 6 23 / 24%);
 }
@@ -61,10 +53,6 @@ const styles = `
     color 0.3s ease,
     box-shadow 0.3s ease;
   box-shadow: 0 0 0.5px 1.5px transparent;
-  color: rgb(71 85 105);
-}
-
-.dark .gooey-nav-container nav ul li {
   color: rgb(228 228 231);
 }
 
@@ -88,7 +76,7 @@ const styles = `
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: var(--yellow, #FFDC00);
+  background: white;
   opacity: 0;
   transform: scale(0);
   transition: all 0.3s ease;
@@ -147,7 +135,7 @@ const styles = `
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--yellow, #FFDC00);
+  background: white;
   transform: scale(0);
   opacity: 0;
   z-index: -1;
@@ -184,7 +172,7 @@ const styles = `
 }
 
 .point {
-  background: var(--color, #FFDC00);
+  background: var(--color, #38bdf8);
   opacity: 1;
   animation: point calc(var(--time)) ease 1 -350ms;
 }
@@ -264,7 +252,7 @@ export default function GooeyNav({
   particleDistances = [90, 10],
   particleR = 100,
   timeVariance = 300,
-  colors = ["#FFDC00", "#FFD700", "#FFC107", "#FFB300"],
+  colors = ["#38bdf8", "#8b5cf6", "#22d3ee", "#67e8f9"],
 }: GooeyNavProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLUListElement | null>(null);

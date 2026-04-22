@@ -1,89 +1,96 @@
-import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
-import { User, GraduationCap, MapPin, Languages, Target, Calendar } from 'lucide-react';
-import type { Translation, Language } from '../App';
-import { CardTilt, CardTiltContent } from './ui/CardTilt';
+import { motion } from "motion/react";
+import { BookOpen, Lightbulb, Users } from "lucide-react";
+import GlowingBorderCard from "./ui/glowingbordercard";
+import { TextReveal } from "./ui/TextReveal";
+import { useLanguage } from "../i18n/LanguageContext";
 
-interface AboutProps {
-  t: Translation['about'];
-  language: Language;
-}
+export function About() {
+  const { t } = useLanguage();
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.2 } }
+  };
 
-export default function About({ t, language }: AboutProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-
-  const stats = [
-    { icon: Calendar, label: t.age, value: '20' },
-    {
-      icon: GraduationCap,
-      label: t.education,
-      value: language === 'es' ? 'Ingeniería en Informática' : 'Computer Engineering'
-    },
-    { icon: MapPin, label: t.location, value: 'San Pedro, Buenos Aires, Argentina' },
-    { icon: Languages, label: t.englishLevel, value: 'B2' },
-    {
-      icon: Target,
-      label: t.focus,
-      value: language === 'es' ? 'Sistemas web y automatización' : 'Web systems and automation'
-    },
-  ];
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
 
   return (
-    <section id="about" ref={ref} className="py-12 md:py-20 px-6 transition-colors duration-1000">
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-            {t.title}
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full" />
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg text-black dark:text-white text-center max-w-3xl mx-auto mb-12"
-        >
-          {t.description}
-        </motion.p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {stats.map((stat, index) => (
-            <div key={index} className="h-full">
-              <CardTilt
-                className="h-full"
-                tiltMaxAngle={10}
-                scale={1.05}
-              >
-                <CardTiltContent className="h-full">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.1 * index }}
-                    className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:border-[var(--yellow)] transition-all group h-full hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,220,0,0.2)]"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(255,220,0,0.4)] transition-shadow">
-                        <stat.icon className="text-black" size={24} />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{stat.label}</p>
-                        <p className="text-lg font-semibold text-gray-900 dark:text-white">{stat.value}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </CardTiltContent>
-              </CardTilt>
-            </div>
-          ))}
+    <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.about.sectionSubtitle}</h2>
+          <TextReveal text={t.about.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
         </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="grid lg:grid-cols-2 gap-16 items-center"
+        >
+          <div className="space-y-8">
+            <motion.div variants={itemVariants}>
+              <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.about.aboutSubtitle}</h2>
+              <p className="text-3xl sm:text-4xl font-bold text-white leading-tight">
+                {t.about.aboutTitleLine1} <br /> {t.about.aboutTitleLine2}
+              </p>
+            </motion.div>
+
+            <motion.p variants={itemVariants} className="text-zinc-400 text-lg leading-relaxed">
+              {t.about.p1}
+            </motion.p>
+
+            <motion.p variants={itemVariants} className="text-zinc-400 text-lg leading-relaxed">
+              {t.about.p2}
+            </motion.p>
+          </div>
+
+          <motion.div variants={containerVariants} className="grid sm:grid-cols-2 gap-6 relative z-10">
+            <motion.div variants={itemVariants}>
+              <GlowingBorderCard 
+                className="h-full"
+                fromColor="from-blue-600"
+                toColor="to-blue-400"
+              >
+                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 border border-blue-500/20">
+                  <BookOpen className="w-6 h-6 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{t.about.card1Title}</h3>
+                <p className="text-zinc-400 text-sm">{t.about.card1Desc}</p>
+              </GlowingBorderCard>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="sm:mt-8">
+              <GlowingBorderCard 
+                className="h-full"
+                fromColor="from-cyan-600"
+                toColor="to-cyan-400"
+              >
+                <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-4 border border-cyan-500/20">
+                  <Lightbulb className="w-6 h-6 text-cyan-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{t.about.card2Title}</h3>
+                <p className="text-zinc-400 text-sm">{t.about.card2Desc}</p>
+              </GlowingBorderCard>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="sm:col-span-2">
+              <GlowingBorderCard 
+                className="h-full"
+                fromColor="from-emerald-600"
+                toColor="to-emerald-400"
+              >
+                <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/20">
+                  <Users className="w-6 h-6 text-emerald-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{t.about.card3Title}</h3>
+                <p className="text-zinc-400 text-sm">{t.about.card3Desc}</p>
+              </GlowingBorderCard>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -2,19 +2,19 @@
 
 :root {
   --font-size: 16px;
-  --background: #fafafa;
+  --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.75 0.15 90);
-  --primary-foreground: oklch(0.145 0 0);
+  --primary: #030213;
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.95 0.0058 264.53);
   --secondary-foreground: #030213;
   --muted: #ececf0;
   --muted-foreground: #717182;
-  --accent: oklch(0.75 0.15 90);
+  --accent: #e9ebef;
   --accent-foreground: #030213;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
@@ -24,7 +24,7 @@
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: oklch(0.75 0.15 90);
+  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -39,9 +39,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --yellow: oklch(0.75 0.15 90);
-  --yellow-glow: oklch(0.85 0.18 90);
-  --yellow-dark: oklch(0.65 0.13 85);
 }
 
 .dark {
@@ -79,9 +76,6 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
-  --yellow: oklch(0.75 0.15 90);
-  --yellow-glow: oklch(0.85 0.18 90);
-  --yellow-dark: oklch(0.65 0.13 85);
 }
 
 @theme inline {
@@ -123,6 +117,26 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --animate-border-beam: border-beam var(--duration) infinite linear;
+  --animate-tilt: tilt 10s infinite linear;
+}
+
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
 }
 
 @layer base {
@@ -130,18 +144,8 @@
     @apply border-border outline-ring/50;
   }
 
-  html {
-    scroll-behavior: smooth;
-    scrollbar-gutter: stable;
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
-
   body {
     @apply bg-background text-foreground;
-    scrollbar-gutter: stable;
-    overflow-x: hidden;
-    overflow-y: scroll;
   }
 
   /**
@@ -193,73 +197,5 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
-  }
-}
-
-@layer utilities {
-  .glow-yellow {
-    box-shadow: 0 0 20px rgba(255, 220, 0, 0.4);
-  }
-
-  .glow-yellow-strong {
-    box-shadow: 0 0 30px rgba(255, 220, 0, 0.6);
-  }
-
-  .text-glow {
-    text-shadow: 0 0 10px rgba(255, 220, 0, 0.5);
-  }
-
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-
-  /* High-quality text stroke that stays BEHIND the glyphs */
-  .text-outline * {
-    paint-order: stroke fill;
-    -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
-  }
-
-  .text-outline h1,
-  .text-outline h2,
-  .text-outline h3,
-  .text-outline .text-3xl,
-  .text-outline .text-4xl,
-  .text-outline .text-5xl,
-  .text-outline .text-6xl,
-  .text-outline .text-7xl {
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.85);
-  }
-
-  /* Dark mode: sharp black stroke */
-  .dark .text-outline * {
-    -webkit-text-stroke: 0.6px rgba(0, 0, 0, 0.8);
-    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-  }
-
-  .dark .text-outline h1,
-  .dark .text-outline h2,
-  .dark .text-outline h3,
-  .dark .text-outline .text-3xl,
-  .dark .text-outline .text-4xl,
-  .dark .text-outline .text-5xl,
-  .dark .text-outline .text-6xl,
-  .dark .text-outline .text-7xl {
-    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.85);
-  }
-  
-  .no-outline,
-  .no-outline *,
-  svg,
-  [class*="lucide"] {
-    -webkit-text-stroke: 0 !important;
-    text-shadow: none !important;
   }
 }

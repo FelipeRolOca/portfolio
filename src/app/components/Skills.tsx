@@ -1,225 +1,161 @@
-import { motion, useInView } from 'motion/react';
-import { useRef, useState, useEffect } from 'react';
-import { Code2, Database, Globe, PanelsTopLeft, QrCode, Server, type LucideIcon } from 'lucide-react';
-import type { Translation } from '../App';
-import { Card, InfiniteCanvas } from './ui/infinite-canvas';
+import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
+import {
+  Code,
+  Globe,
+  Database,
+  Wrench,
+  Zap,
+  ChevronDown
+} from "lucide-react";
+import { TextReveal } from "./ui/TextReveal";
+import { useLanguage } from "../i18n/LanguageContext";
 
-interface SkillsProps {
-  t: Translation['skills'];
-}
-
-type SkillItem = {
-  name: string;
-  detail: string;
-  icon: string | LucideIcon;
-  isLucide?: boolean;
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
 };
 
-export default function Skills({ t }: SkillsProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
 
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [carouselWidth, setCarouselWidth] = useState(0);
+interface SkillCategory {
+  title: string;
+  icon: JSX.Element;
+  skills: string[];
+  usageNote: string;
+}
 
-  useEffect(() => {
-    const updateWidth = () => {
-      if (carouselRef.current) {
-        setCarouselWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
-      }
-    };
-    
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    // Add a slight delay for initial render measurement
-    setTimeout(updateWidth, 100);
-    
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
+function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number; t: any }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const skills: SkillItem[] = [
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="relative h-full"
+    >
+      <div className="h-full flex flex-col p-6 rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm shadow-xl">
+        <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
+          <div className="p-2 bg-zinc-800 rounded-lg group-hover:scale-110 transition-transform">
+            {category.icon}
+          </div>
+          <h4 className="text-lg font-bold text-white">{category.title}</h4>
+        </div>
+
+        <ul className="space-y-3 mb-6">
+          {category.skills.map((skill, sIdx) => (
+            <li key={sIdx} className="flex items-center gap-2 text-zinc-400">
+              <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
+              <span className="font-medium hover:text-zinc-200 transition-colors">{skill}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto relative z-50">
+          <div className="pt-4 border-t border-zinc-800/80">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+              }}
+              className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-cyan-500 font-bold hover:text-cyan-400 transition-colors pointer-events-auto cursor-pointer"
+            >
+              {t.skills.howIUseThis}
+              <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="mt-4 text-[13px] text-zinc-300 font-medium leading-relaxed">
+                    {category.usageNote}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export function Skills() {
+  const { t } = useLanguage();
+
+  const skillCategories = [
     {
-      name: 'GitHub',
-      detail: 'Control de versiones y colaboracion',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+      title: t.skills.cat1Title,
+      icon: <Code className="w-5 h-5 text-blue-400" />,
+      skills: ["Java", "JavaScript", "Python", "C"],
+      usageNote: t.skills.cat1Note
     },
     {
-      name: 'Next.js',
-      detail: 'Apps y sitios full stack',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
+      title: t.skills.cat2Title,
+      icon: <Globe className="w-5 h-5 text-cyan-400" />,
+      skills: ["HTML", "CSS", "Next.js", "React"],
+      usageNote: t.skills.cat2Note
     },
     {
-      name: 'React',
-      detail: 'Interfaces dinamicas y componentes',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+      title: t.skills.cat3Title,
+      icon: <Database className="w-5 h-5 text-emerald-400" />,
+      skills: ["SQL Oracle", "MongoDB", "Neo4j"],
+      usageNote: t.skills.cat3Note
     },
     {
-      name: 'JavaScript',
-      detail: 'Logica de producto y frontend',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-    },
-    {
-      name: 'Python',
-      detail: 'Scripts, automatizacion y backend',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
-    },
-    {
-      name: 'Java',
-      detail: 'Base academica y programacion estructurada',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
-    },
-    {
-      name: 'SQL',
-      detail: 'Datos, consultas y modelado',
-      icon: Database,
-      isLucide: true,
-    },
-    {
-      name: 'Supabase',
-      detail: 'Base de datos y auth',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg',
-    },
-    {
-      name: 'Vercel',
-      detail: 'Deploy y hosting moderno',
-      icon: Server,
-      isLucide: true,
-    },
-    {
-      name: 'WordPress',
-      detail: 'Sitios institucionales y gestion de contenido',
-      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg',
-    },
-    {
-      name: 'Elementor',
-      detail: 'Maquetacion visual y landings',
-      icon: PanelsTopLeft,
-      isLucide: true,
-    },
-    {
-      name: 'Google Apps Script',
-      detail: 'Procesos y reportes automatizados',
-      icon: Code2,
-      isLucide: true,
-    },
-    {
-      name: 'QR / Barcode',
-      detail: 'Lectura y validacion operativa',
-      icon: QrCode,
-      isLucide: true,
-    },
-    {
-      name: 'GPS',
-      detail: 'Ubicacion y chequeos en campo',
-      icon: Globe,
-      isLucide: true,
-    },
+      title: t.skills.cat4Title,
+      icon: <Wrench className="w-5 h-5 text-orange-400" />,
+      skills: ["Git", "WordPress", "VS Code", "Eclipse"],
+      usageNote: t.skills.cat4Note
+    }
   ];
 
   return (
-    <section id="skills" ref={ref} className="px-6 py-12 md:py-20 transition-colors duration-1000">
-      <div className="relative z-10 mx-auto max-w-6xl">
+    <section id="skills" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
+        <div className="text-center mb-16 relative z-20">
+          <h2 className="text-sm font-semibold text-blue-500 uppercase tracking-wider mb-2">{t.skills.sectionSubtitle}</h2>
+          <TextReveal text={t.skills.sectionTitle} className="text-3xl md:text-4xl font-bold text-white justify-center" />
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl lg:max-w-none mx-auto items-start"
         >
-          <h2 className="mb-4 text-4xl font-bold text-black dark:text-white md:text-5xl">
-            {t.title}
-          </h2>
-          <div className="mx-auto mb-4 h-1 w-20 rounded-full bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)]" />
-          <p className="text-lg text-black dark:text-white">{t.subtitle}</p>
+          {skillCategories.map((category, idx) => (
+            <SkillCard key={idx} category={category} idx={idx} t={t} />
+          ))}
         </motion.div>
 
+        {/* Additional Skills Note */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.12 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mt-10 text-center"
         >
-          <div className="hidden md:block">
-            <InfiniteCanvas
-              className="relative h-[320px] w-full md:h-[480px]"
-              cardWidth={218}
-              cardHeight={150}
-              spacing={16}
-              showControls={false}
-              showZoom={false}
-              showStatus={false}
-              showInstructions={false}
-            >
-            {skills.map((skill) => (
-              <Card key={skill.name} className="rounded-[1.35rem] border-[var(--yellow)]/12 p-5">
-                <div className="flex h-full flex-col justify-between gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.24)]">
-                      {skill.isLucide ? (
-                        <skill.icon className="text-black" size={28} />
-                      ) : (
-                        <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" loading="lazy" decoding="async" draggable={false} />
-                      )}
-                    </div>
-
-                    <div className="flex-1">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">
-                        Skill
-                      </p>
-                      <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
-                    </div>
-                  </div>
-
-                  <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{skill.detail}</p>
-                </div>
-              </Card>
-            ))}
-            </InfiniteCanvas>
-          </div>
-
-          <div className="mt-12 overflow-hidden -mx-6 px-6 pb-8" ref={carouselRef}>
-            <motion.div 
-              drag="x"
-              dragConstraints={{ right: 0, left: -carouselWidth }}
-              dragElastic={0.15}
-              dragTransition={{ bounceStiffness: 400, bounceDamping: 25 }}
-              whileTap={{ cursor: "grabbing" }}
-              className="flex gap-4 cursor-grab touch-pan-y"
-            >
-              {skills.map((skill) => (
-                <div key={skill.name} className="shrink-0 w-[280px]">
-                  <div className="relative group rounded-[1.35rem] border border-[var(--yellow)]/12 p-5 bg-white/92 shadow-[0_14px_34px_rgba(15,23,42,0.1)] dark:bg-[#111315]/94 dark:shadow-[0_14px_40px_rgba(0,0,0,0.28)] h-full overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
-                    <div
-                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      style={{
-                        background:
-                          'radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(255,255,255,0.28), rgba(255,220,0,0.16) 18%, transparent 56%)',
-                      }}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,220,0,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.35),transparent_26%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(255,220,0,0.14),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.08),transparent_24%)]" />
-                    
-                    <div className="flex h-[130px] flex-col justify-between gap-4 relative z-10">
-                      <div className="flex items-start gap-4">
-                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--yellow)] to-[var(--yellow-glow)] shadow-[0_10px_24px_rgba(255,220,0,0.24)]">
-                          {skill.isLucide ? (
-                            <skill.icon className="text-black" size={28} />
-                          ) : (
-                            <img src={skill.icon} alt={skill.name} className="h-8 w-8 object-contain" loading="lazy" decoding="async" draggable={false} />
-                          )}
-                        </div>
-
-                        <div className="flex-1">
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--yellow-dark)]">
-                            Skill
-                          </p>
-                          <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
-                        </div>
-                      </div>
-
-                      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{skill.detail}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-zinc-900/50 border border-zinc-800 rounded-full">
+            <Zap className="w-4 h-4 text-cyan-400" />
+            <span className="text-zinc-400 text-sm">
+              {t.skills.note}
+            </span>
           </div>
         </motion.div>
       </div>

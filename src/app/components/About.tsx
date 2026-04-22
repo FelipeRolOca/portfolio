@@ -49,7 +49,7 @@ export default function About({ t, language }: AboutProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg text-gray-900 dark:text-white text-center max-w-3xl mx-auto mb-12"
+          className="text-lg text-black dark:text-white text-center max-w-3xl mx-auto mb-12"
         >
           {t.description}
         </motion.p>

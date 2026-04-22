@@ -97,11 +97,11 @@ export default function Projects({ t, language }: ProjectsProps) {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl">
+          <h2 className="mb-4 text-4xl font-bold text-black dark:text-white md:text-5xl">
             {t.title}
           </h2>
           <div className="mx-auto mb-4 h-1 w-20 rounded-full bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)]" />
-          <p className="text-lg text-gray-600 dark:text-gray-300">{t.subtitle}</p>
+          <p className="text-lg text-black dark:text-white">{t.subtitle}</p>
         </motion.div>
 
         <div className="relative">

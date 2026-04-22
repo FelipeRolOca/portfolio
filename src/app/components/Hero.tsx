@@ -57,7 +57,7 @@ export default function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl md:text-5xl lg:text-7xl"
+            className="mb-4 text-3xl font-bold text-black dark:text-white sm:text-4xl md:text-5xl lg:text-7xl"
           >
             {t.name}
           </motion.h1>
@@ -75,7 +75,7 @@ export default function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="mb-8 max-w-2xl text-lg text-gray-900 dark:text-white md:text-xl"
+            className="mb-8 max-w-2xl text-lg text-black dark:text-white md:text-xl"
           >
             {t.description}
           </motion.p>

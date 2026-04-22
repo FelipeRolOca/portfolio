@@ -77,7 +77,7 @@ export default function Contact({ t, language }: ContactProps) {
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-800 text-base md:text-lg">{t.subtitle}</p>
+          <p className="text-gray-800 dark:text-gray-200 text-base md:text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -88,7 +88,7 @@ export default function Contact({ t, language }: ContactProps) {
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                   {t.name}
                 </label>
                 <input
@@ -101,7 +101,7 @@ export default function Contact({ t, language }: ContactProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                   {t.email}
                 </label>
                 <input
@@ -114,7 +114,7 @@ export default function Contact({ t, language }: ContactProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                   {t.message}
                 </label>
                 <textarea
@@ -122,7 +122,7 @@ export default function Contact({ t, language }: ContactProps) {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required
                   rows={6}
-                  className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all resize-none"
+                  className="w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:border-[var(--yellow)] focus:ring-2 focus:ring-[var(--yellow)]/20 outline-none transition-all resize-none"
                 />
               </div>
 
@@ -144,7 +144,7 @@ export default function Contact({ t, language }: ContactProps) {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6">{t.or}</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">{t.or}</h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.div

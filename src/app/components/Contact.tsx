@@ -129,7 +129,7 @@ export default function Contact({ t, language }: ContactProps) {
               <motion.button
                 type="submit"
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-6 py-3 md:px-8 md:py-4 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(255,220,0,0.5)] hover:scale-[1.02] transition-all"
+                className="w-full px-6 py-3 md:px-8 md:py-4 rounded-lg bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] text-black no-outline font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(255,220,0,0.5)] hover:scale-[1.02] transition-all"
               >
                 {t.send}
                 <Send size={18} />

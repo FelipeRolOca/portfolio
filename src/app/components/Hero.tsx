@@ -97,7 +97,7 @@ export default function Hero({ t }: HeroProps) {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={scrollToContact}
-              className="rounded-full border-2 border-[var(--yellow)] px-8 py-4 font-semibold text-gray-900 no-outline transition-all md:hover:scale-105 md:hover:bg-[var(--yellow)]/10 dark:text-white active:scale-95"
+              className="rounded-full border-2 border-[var(--yellow)] px-8 py-4 font-semibold text-gray-900 transition-all md:hover:scale-105 md:hover:bg-[var(--yellow)]/10 dark:text-white active:scale-95"
             >
               {t.cta2}
             </motion.button>

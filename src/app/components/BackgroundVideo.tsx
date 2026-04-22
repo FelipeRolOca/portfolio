@@ -135,7 +135,7 @@ export default function BackgroundVideo() {
     <div className="fixed inset-0 z-[-1] flex items-center justify-center bg-white dark:bg-black transition-colors duration-1000">
       <video
         ref={lightVideoRef}
-        src="/SCROLL LIGHT MODE 3.mp4"
+        src="/scroll-light.mp4"
         className="absolute w-full h-full object-cover opacity-100 dark:opacity-0 transition-opacity duration-1000"
         style={{ willChange: 'contents' }}
         muted
@@ -144,7 +144,7 @@ export default function BackgroundVideo() {
       />
       <video
         ref={darkVideoRef}
-        src="/SCROLL DARK MODE 3.mp4"
+        src="/scroll-dark.mp4"
         className="absolute w-full h-full object-cover opacity-0 dark:opacity-100 transition-opacity duration-1000"
         style={{ willChange: 'contents' }}
         muted

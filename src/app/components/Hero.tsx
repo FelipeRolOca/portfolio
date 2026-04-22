@@ -48,7 +48,7 @@ export default function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[var(--yellow-dark)]"
+            className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[var(--yellow-dark)] no-outline"
           >
             {t.greeting}
           </motion.p>
@@ -75,7 +75,7 @@ export default function Hero({ t }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="mb-8 max-w-2xl text-lg text-gray-600 dark:text-gray-300 md:text-xl"
+            className="mb-8 max-w-2xl text-lg text-gray-900 dark:text-white md:text-xl"
           >
             {t.description}
           </motion.p>

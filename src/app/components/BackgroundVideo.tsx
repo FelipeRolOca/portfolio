@@ -21,15 +21,20 @@ export default function BackgroundVideo() {
       
       const progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
 
+      // Multiply progress by 1.3 so it finishes earlier (around the Contact section)
+      const speedMultiplier = 1.3;
+      const targetTimeLight = Math.min(progress * speedMultiplier * lightVideo.duration, lightVideo.duration);
+      
       if (lightVideo && lightVideo.readyState >= 1 && lightVideo.duration) {
         requestAnimationFrame(() => {
-          lightVideo.currentTime = progress * lightVideo.duration;
+          lightVideo.currentTime = targetTimeLight;
         });
       }
       
       if (darkVideo && darkVideo.readyState >= 1 && darkVideo.duration) {
+        const targetTimeDark = Math.min(progress * speedMultiplier * darkVideo.duration, darkVideo.duration);
         requestAnimationFrame(() => {
-          darkVideo.currentTime = progress * darkVideo.duration;
+          darkVideo.currentTime = targetTimeDark;
         });
       }
     };

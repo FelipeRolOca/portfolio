@@ -214,4 +214,27 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+  .text-outline {
+    text-shadow: 
+      -2px -2px 0 #ffffff,
+       2px -2px 0 #ffffff,
+      -2px  2px 0 #ffffff,
+       2px  2px 0 #ffffff,
+      -2px  0   0 #ffffff,
+       2px  0   0 #ffffff,
+       0   -2px 0 #ffffff,
+       0    2px 0 #ffffff;
+  }
+  .dark .text-outline {
+    text-shadow: 
+      -2px -2px 0 #000000,
+       2px -2px 0 #000000,
+      -2px  2px 0 #000000,
+       2px  2px 0 #000000,
+      -2px  0   0 #000000,
+       2px  0   0 #000000,
+       0   -2px 0 #000000,
+       0    2px 0 #000000;
+  }
 }

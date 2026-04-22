@@ -8,14 +8,20 @@ export default function BackgroundVideo() {
     const lightVideo = lightVideoRef.current;
     const darkVideo = darkVideoRef.current;
 
-    if (lightVideo) lightVideo.pause();
-    if (darkVideo) darkVideo.pause();
+    if (!lightVideo || !darkVideo) return;
+
+    // Pause both videos
+    lightVideo.pause();
+    darkVideo.pause();
+
+    // Force the browser to start loading — critical for large files
+    lightVideo.load();
+    darkVideo.load();
 
     // How much video time to cover across the full page scroll
     // 3.0 = covers 3x the video duration — half the previous speed
     const SPEED = 3.0;
 
-    // Per-video target times
     let targetLight = 0;
     let targetDark = 0;
     let rafId: number;
@@ -37,7 +43,10 @@ export default function BackgroundVideo() {
       target: number,
       isPlaying: { value: boolean }
     ) => {
-      if (video.readyState < 2 || !video.duration) return;
+      // readyState >= 1 means metadata loaded (duration available); >= 2 means current frame ready.
+      // We use >= 1 here so the seek starts as soon as duration is known, even before
+      // the full first frame is decoded — the browser will decode on demand.
+      if (video.readyState < 1 || !video.duration) return;
 
       const diff = target - video.currentTime;
 
@@ -55,7 +64,10 @@ export default function BackgroundVideo() {
         video.playbackRate = rate;
         if (video.paused && !isPlaying.value) {
           isPlaying.value = true;
-          video.play().catch(() => { isPlaying.value = false; });
+          video.play().catch((err) => {
+            console.warn('[BackgroundVideo] play() blocked:', err);
+            isPlaying.value = false;
+          });
         }
       } else {
         // ↑ Going backward — must seek (browser can't play in reverse)
@@ -69,30 +81,53 @@ export default function BackgroundVideo() {
     const stateDark = { value: false };
 
     const tick = () => {
-      if (lightVideo) updateVideo(lightVideo, targetLight, stateLight);
-      if (darkVideo) updateVideo(darkVideo, targetDark, stateDark);
+      updateVideo(lightVideo, targetLight, stateLight);
+      updateVideo(darkVideo, targetDark, stateDark);
       rafId = requestAnimationFrame(tick);
     };
 
     const onScroll = () => {
-      if (lightVideo?.duration) targetLight = getTarget(lightVideo.duration);
-      if (darkVideo?.duration) targetDark = getTarget(darkVideo.duration);
+      if (lightVideo.duration) targetLight = getTarget(lightVideo.duration);
+      if (darkVideo.duration) targetDark = getTarget(darkVideo.duration);
+    };
+
+    // Triggered when metadata (duration, dimensions) is available
+    const onMeta = () => onScroll();
+
+    // Triggered when the browser confirms the video can actually play
+    const onCanPlay = () => onScroll();
+
+    // Log codec / network errors so they're visible in DevTools
+    const onError = (e: Event) => {
+      const vid = e.currentTarget as HTMLVideoElement;
+      const err = vid.error;
+      console.error('[BackgroundVideo] Failed to load video:', {
+        src: vid.currentSrc,
+        errorCode: err?.code,
+        errorMessage: err?.message,
+      });
     };
 
     // Start rAF loop
     rafId = requestAnimationFrame(tick);
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Sync targets once metadata is available
-    const onMeta = () => onScroll();
-    if (lightVideo) lightVideo.addEventListener('loadedmetadata', onMeta);
-    if (darkVideo) darkVideo.addEventListener('loadedmetadata', onMeta);
+    lightVideo.addEventListener('loadedmetadata', onMeta);
+    darkVideo.addEventListener('loadedmetadata', onMeta);
+    lightVideo.addEventListener('canplay', onCanPlay);
+    darkVideo.addEventListener('canplay', onCanPlay);
+    lightVideo.addEventListener('error', onError);
+    darkVideo.addEventListener('error', onError);
 
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', onScroll);
-      if (lightVideo) lightVideo.removeEventListener('loadedmetadata', onMeta);
-      if (darkVideo) darkVideo.removeEventListener('loadedmetadata', onMeta);
+      lightVideo.removeEventListener('loadedmetadata', onMeta);
+      darkVideo.removeEventListener('loadedmetadata', onMeta);
+      lightVideo.removeEventListener('canplay', onCanPlay);
+      darkVideo.removeEventListener('canplay', onCanPlay);
+      lightVideo.removeEventListener('error', onError);
+      darkVideo.removeEventListener('error', onError);
     };
   }, []);
 
@@ -119,4 +154,3 @@ export default function BackgroundVideo() {
     </div>
   );
 }
-

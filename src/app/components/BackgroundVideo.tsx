@@ -19,8 +19,6 @@ export default function BackgroundVideo() {
     let targetLight = 0;
     let targetDark = 0;
     let rafId: number;
-    let playingLight = false;
-    let playingDark = false;
 
     const getTarget = (duration: number): number => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -103,7 +101,7 @@ export default function BackgroundVideo() {
       <video
         ref={lightVideoRef}
         src="/SCROLL LIGHT MODE 3.mp4"
-        className="absolute w-full h-full object-contain opacity-100 dark:opacity-0 transition-opacity duration-1000"
+        className="absolute w-full h-full object-cover opacity-100 dark:opacity-0 transition-opacity duration-1000"
         style={{ willChange: 'contents' }}
         muted
         playsInline
@@ -112,7 +110,7 @@ export default function BackgroundVideo() {
       <video
         ref={darkVideoRef}
         src="/SCROLL DARK MODE 3.mp4"
-        className="absolute w-full h-full object-contain opacity-0 dark:opacity-100 transition-opacity duration-1000"
+        className="absolute w-full h-full object-cover opacity-0 dark:opacity-100 transition-opacity duration-1000"
         style={{ willChange: 'contents' }}
         muted
         playsInline

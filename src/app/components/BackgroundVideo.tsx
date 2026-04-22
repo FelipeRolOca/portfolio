@@ -8,63 +8,90 @@ export default function BackgroundVideo() {
     const lightVideo = lightVideoRef.current;
     const darkVideo = darkVideoRef.current;
 
-    // Pause — we drive currentTime manually
     if (lightVideo) lightVideo.pause();
     if (darkVideo) darkVideo.pause();
 
-    // SPEED = 2.0: video finishes at ~50% of scroll — very responsive, user doesn't mind early end
-    const SPEED = 2.0;
+    // How much video time to cover across the full page scroll
+    // 6.0 = covers 6x the video duration — video ends early but feels ultra-responsive
+    const SPEED = 6.0;
 
-    let ticking = false;
+    // Per-video target times
+    let targetLight = 0;
+    let targetDark = 0;
+    let rafId: number;
+    let playingLight = false;
+    let playingDark = false;
 
-    const getTime = (duration: number): number => {
+    const getTarget = (duration: number): number => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (maxScroll <= 0) return 0;
-      const progress = Math.min(window.scrollY / maxScroll, 1);
-      return Math.min(progress * SPEED * duration, duration);
+      return Math.min((window.scrollY / maxScroll) * SPEED * duration, duration);
     };
 
-    const applyTime = () => {
-      // readyState 2 = HAVE_CURRENT_DATA: enough data to render the current frame
-      if (lightVideo && lightVideo.readyState >= 2) {
-        lightVideo.currentTime = getTime(lightVideo.duration);
+    /**
+     * Core update logic — called every rAF frame.
+     * Going FORWARD:  play() at a dynamic playbackRate (uses GPU decode pipeline → smooth)
+     * Going BACKWARD: direct seek (unavoidable, but backward scroll is rare)
+     * On target:      pause and snap precisely
+     */
+    const updateVideo = (
+      video: HTMLVideoElement,
+      target: number,
+      isPlaying: { value: boolean }
+    ) => {
+      if (video.readyState < 2 || !video.duration) return;
+
+      const diff = target - video.currentTime;
+
+      if (Math.abs(diff) < 0.05) {
+        // ✓ Within ~1.5 frames of target — snap and pause
+        if (!video.paused) {
+          video.pause();
+          video.currentTime = target;
+          isPlaying.value = false;
+        }
+      } else if (diff > 0) {
+        // ↓ Need to go forward — use play() at a rate proportional to distance
+        // Clamp between 2x and 16x (browser max)
+        const rate = Math.min(Math.max(diff * 15, 2), 16);
+        video.playbackRate = rate;
+        if (video.paused && !isPlaying.value) {
+          isPlaying.value = true;
+          video.play().catch(() => { isPlaying.value = false; });
+        }
+      } else {
+        // ↑ Going backward — must seek (browser can't play in reverse)
+        if (!video.paused) video.pause();
+        isPlaying.value = false;
+        video.currentTime = target;
       }
-      if (darkVideo && darkVideo.readyState >= 2) {
-        darkVideo.currentTime = getTime(darkVideo.duration);
-      }
-      ticking = false;
+    };
+
+    const stateLight = { value: false };
+    const stateDark = { value: false };
+
+    const tick = () => {
+      if (lightVideo) updateVideo(lightVideo, targetLight, stateLight);
+      if (darkVideo) updateVideo(darkVideo, targetDark, stateDark);
+      rafId = requestAnimationFrame(tick);
     };
 
     const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(applyTime);
-      }
+      if (lightVideo?.duration) targetLight = getTarget(lightVideo.duration);
+      if (darkVideo?.duration) targetDark = getTarget(darkVideo.duration);
     };
 
-    // Warmup: apply time immediately once metadata + first frame is ready
-    const warmup = (video: HTMLVideoElement) => {
-      const apply = () => requestAnimationFrame(applyTime);
-      video.addEventListener('canplay', apply, { once: true });
-      video.addEventListener('loadeddata', apply, { once: true });
-      // Force browser to buffer the video aggressively
-      video.load();
-    };
+    // Start rAF loop
+    rafId = requestAnimationFrame(tick);
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-    if (lightVideo) warmup(lightVideo);
-    if (darkVideo) warmup(darkVideo);
-
-    // Also apply on metadata in case canplay fires before listener
-    const onMeta = () => requestAnimationFrame(applyTime);
+    // Sync targets once metadata is available
+    const onMeta = () => onScroll();
     if (lightVideo) lightVideo.addEventListener('loadedmetadata', onMeta);
     if (darkVideo) darkVideo.addEventListener('loadedmetadata', onMeta);
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Initial position
-    requestAnimationFrame(applyTime);
-
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', onScroll);
       if (lightVideo) lightVideo.removeEventListener('loadedmetadata', onMeta);
       if (darkVideo) darkVideo.removeEventListener('loadedmetadata', onMeta);
@@ -73,7 +100,6 @@ export default function BackgroundVideo() {
 
   return (
     <div className="fixed inset-0 z-[-1] flex items-center justify-center bg-white dark:bg-black transition-colors duration-1000">
-      {/* will-change: transform hints the GPU to promote these to their own compositor layer */}
       <video
         ref={lightVideoRef}
         src="/SCROLL LIGHT MODE.mp4"
@@ -95,3 +121,4 @@ export default function BackgroundVideo() {
     </div>
   );
 }
+

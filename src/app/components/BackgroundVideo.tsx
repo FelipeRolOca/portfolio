@@ -12,8 +12,8 @@ export default function BackgroundVideo() {
     if (darkVideo) darkVideo.pause();
 
     // How much video time to cover across the full page scroll
-    // 6.0 = covers 6x the video duration — video ends early but feels ultra-responsive
-    const SPEED = 6.0;
+    // 3.0 = covers 3x the video duration — half the previous speed
+    const SPEED = 3.0;
 
     // Per-video target times
     let targetLight = 0;

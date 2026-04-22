@@ -21,8 +21,8 @@ export default function BackgroundVideo() {
       
       const progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
 
-      // Multiply progress by 1.3 so it finishes earlier (around the Contact section)
-      const speedMultiplier = 1.3;
+      // Multiply progress by 2.0 so it finishes earlier (around the Contact section)
+      const speedMultiplier = 2.0;
       const targetTimeLight = Math.min(progress * speedMultiplier * lightVideo.duration, lightVideo.duration);
       
       if (lightVideo && lightVideo.readyState >= 1 && lightVideo.duration) {

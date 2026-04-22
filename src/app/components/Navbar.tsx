@@ -77,7 +77,7 @@ export default function Navbar({ language, toggleLanguage, isDark, onToggleTheme
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+        className={`fixed left-0 right-0 top-0 z-50 no-outline transition-all duration-300 ${
           isScrolled ? 'border-b border-[var(--yellow)]/20 bg-white shadow-lg dark:bg-gray-900' : 'bg-white dark:bg-gray-900'
         }`}
       >
@@ -135,7 +135,7 @@ export default function Navbar({ language, toggleLanguage, isDark, onToggleTheme
       </motion.nav>
 
       <div
-        className="fixed inset-x-0 bottom-0 left-0 right-0 z-[70] px-3 md:hidden"
+        className="fixed inset-x-0 bottom-0 left-0 right-0 z-[70] px-3 md:hidden no-outline"
         style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
       >
         <div className="mx-auto max-w-sm">

@@ -64,20 +64,20 @@ export default function Contact({ t, language }: ContactProps) {
   ];
 
   return (
-    <section id="contact" ref={ref} className="py-12 md:py-20 px-6 bg-gradient-to-br from-[var(--yellow)]/80 to-[var(--yellow-glow)]/80 backdrop-blur-md transition-colors duration-1000">
+    <section id="contact" ref={ref} className="py-12 md:py-20 px-6 no-outline transition-colors duration-1000">
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 bg-[var(--yellow)] dark:bg-[var(--yellow-dark)] rounded-[2rem] p-8 md:p-12 shadow-2xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
             {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)] mx-auto rounded-full mb-4" />
-          <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg">{t.subtitle}</p>
+          <p className="text-gray-800 text-base md:text-lg">{t.subtitle}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -88,7 +88,7 @@ export default function Contact({ t, language }: ContactProps) {
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-900 mb-2">
                   {t.name}
                 </label>
                 <input
@@ -101,7 +101,7 @@ export default function Contact({ t, language }: ContactProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-900 mb-2">
                   {t.email}
                 </label>
                 <input
@@ -114,7 +114,7 @@ export default function Contact({ t, language }: ContactProps) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-900 mb-2">
                   {t.message}
                 </label>
                 <textarea
@@ -144,7 +144,7 @@ export default function Contact({ t, language }: ContactProps) {
             className="space-y-6"
           >
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">{t.or}</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-6">{t.or}</h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.div
@@ -161,8 +161,8 @@ export default function Contact({ t, language }: ContactProps) {
                           onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
                           className="flex-1 text-left"
                         >
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{info.label}</p>
-                          <p className="text-gray-900 dark:text-white font-medium hover:text-[var(--yellow-dark)] transition-colors">{info.value}</p>
+                          <p className="text-sm text-gray-800 mb-1">{info.label}</p>
+                          <p className="text-gray-900 font-medium hover:text-[var(--yellow-dark)] transition-colors">{info.value}</p>
                         </button>
                       </div>
                     ) : (
@@ -171,16 +171,16 @@ export default function Contact({ t, language }: ContactProps) {
                           <info.icon className="w-4 h-4 md:w-5 md:h-5 text-black" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{info.label}</p>
+                          <p className="text-sm text-gray-800 mb-1">{info.label}</p>
                           {info.href ? (
                             <a
                               href={info.href}
-                              className="text-gray-900 dark:text-white font-medium hover:text-[var(--yellow-dark)] transition-colors break-all"
+                              className="text-gray-900 font-medium hover:text-[var(--yellow-dark)] transition-colors break-all"
                             >
                               {info.value}
                             </a>
                           ) : (
-                            <p className="text-gray-900 dark:text-white font-medium">{info.value}</p>
+                            <p className="text-gray-900 font-medium">{info.value}</p>
                           )}
                         </div>
                       </div>

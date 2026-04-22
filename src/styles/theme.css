@@ -215,18 +215,16 @@
     scrollbar-width: none;  /* Firefox */
   }
 
-  /* Light mode: text is dark, thin white outline for contrast over video */
-  .text-outline {
-    color: inherit;
+  /* Light mode: thin white outline on all text descendants */
+  .text-outline * {
     text-shadow: 
       -0.5px -0.5px 0 rgba(255,255,255,0.95),
        0.5px -0.5px 0 rgba(255,255,255,0.95),
       -0.5px  0.5px 0 rgba(255,255,255,0.95),
        0.5px  0.5px 0 rgba(255,255,255,0.95);
   }
-  /* Dark mode: text is light, thin black outline for contrast over video */
-  .dark .text-outline {
-    color: inherit;
+  /* Dark mode: thin black outline on all text descendants */
+  .dark .text-outline * {
     text-shadow: 
       -0.5px -0.5px 0 rgba(0,0,0,0.95),
        0.5px -0.5px 0 rgba(0,0,0,0.95),
@@ -234,6 +232,7 @@
        0.5px  0.5px 0 rgba(0,0,0,0.95);
   }
   
+  .no-outline,
   .no-outline * {
     text-shadow: none !important;
   }

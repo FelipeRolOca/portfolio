@@ -133,10 +133,15 @@
   html {
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   body {
     @apply bg-background text-foreground;
+    scrollbar-gutter: stable;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   /**

@@ -39,6 +39,8 @@ export function Navbar() {
   };
 
   useEffect(() => {
+    let isTicking = false;
+    
     const updateActiveSection = () => {
       const threshold = window.innerHeight * 0.4;
       let currentHref = navLinks[0]?.href ?? "#about";
@@ -53,15 +55,23 @@ export function Navbar() {
       });
 
       setActiveHref(currentHref);
+      isTicking = false;
+    };
+
+    const onScroll = () => {
+      if (!isTicking) {
+        window.requestAnimationFrame(updateActiveSection);
+        isTicking = true;
+      }
     };
 
     updateActiveSection();
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", updateActiveSection, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
 
     return () => {
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", updateActiveSection);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [navLinks]);
 

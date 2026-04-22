@@ -8,49 +8,69 @@ export default function BackgroundVideo() {
     const lightVideo = lightVideoRef.current;
     const darkVideo = darkVideoRef.current;
 
-    if (lightVideo) {
-      lightVideo.pause();
-    }
-    if (darkVideo) {
-      darkVideo.pause();
-    }
+    if (lightVideo) lightVideo.pause();
+    if (darkVideo) darkVideo.pause();
 
-    const handleScroll = () => {
+    // 0.25 = quarter speed — video uses only the first 25% of its duration across the full page scroll
+    const speedMultiplier = 0.25;
+
+    // Current interpolated time for each video
+    let currentTimeLight = 0;
+    let currentTimeDark = 0;
+    let targetTimeLight = 0;
+    let targetTimeDark = 0;
+    let rafId = 0;
+
+    const getScrollProgress = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      
-      const progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
+      return scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
+    };
 
-      // Multiply progress by 2.0 so it finishes earlier (around the Contact section)
-      const speedMultiplier = 2.0;
-      const targetTimeLight = Math.min(progress * speedMultiplier * lightVideo.duration, lightVideo.duration);
-      
-      if (lightVideo && lightVideo.readyState >= 1 && lightVideo.duration) {
-        requestAnimationFrame(() => {
-          lightVideo.currentTime = targetTimeLight;
-        });
+    const onScroll = () => {
+      const progress = getScrollProgress();
+
+      if (lightVideo && lightVideo.duration) {
+        targetTimeLight = Math.min(progress * speedMultiplier * lightVideo.duration, lightVideo.duration);
       }
-      
-      if (darkVideo && darkVideo.readyState >= 1 && darkVideo.duration) {
-        const targetTimeDark = Math.min(progress * speedMultiplier * darkVideo.duration, darkVideo.duration);
-        requestAnimationFrame(() => {
-          darkVideo.currentTime = targetTimeDark;
-        });
+      if (darkVideo && darkVideo.duration) {
+        targetTimeDark = Math.min(progress * speedMultiplier * darkVideo.duration, darkVideo.duration);
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    // Trigger once on mount
-    handleScroll();
+    // Smooth lerp loop — runs every frame regardless of scroll events
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const LERP_FACTOR = 0.08; // lower = smoother/slower catch-up
 
-    // In case readyState is 0, add an event listener to update once metadata is loaded
-    if (lightVideo) lightVideo.addEventListener('loadedmetadata', handleScroll);
-    if (darkVideo) darkVideo.addEventListener('loadedmetadata', handleScroll);
+    const tick = () => {
+      if (lightVideo && lightVideo.readyState >= 1 && lightVideo.duration) {
+        currentTimeLight = lerp(currentTimeLight, targetTimeLight, LERP_FACTOR);
+        if (Math.abs(currentTimeLight - lightVideo.currentTime) > 0.01) {
+          lightVideo.currentTime = currentTimeLight;
+        }
+      }
+      if (darkVideo && darkVideo.readyState >= 1 && darkVideo.duration) {
+        currentTimeDark = lerp(currentTimeDark, targetTimeDark, LERP_FACTOR);
+        if (Math.abs(currentTimeDark - darkVideo.currentTime) > 0.01) {
+          darkVideo.currentTime = currentTimeDark;
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    // Init
+    onScroll();
+    rafId = requestAnimationFrame(tick);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (lightVideo) lightVideo.addEventListener('loadedmetadata', onScroll);
+    if (darkVideo) darkVideo.addEventListener('loadedmetadata', onScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (lightVideo) lightVideo.removeEventListener('loadedmetadata', handleScroll);
-      if (darkVideo) darkVideo.removeEventListener('loadedmetadata', handleScroll);
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+      if (lightVideo) lightVideo.removeEventListener('loadedmetadata', onScroll);
+      if (darkVideo) darkVideo.removeEventListener('loadedmetadata', onScroll);
     };
   }, []);
 

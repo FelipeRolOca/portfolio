@@ -66,7 +66,7 @@ export default function Contact({ t, language }: ContactProps) {
   return (
     <section id="contact" ref={ref} className="py-12 md:py-20 px-6 no-outline transition-colors duration-1000">
 
-      <div className="max-w-6xl mx-auto relative z-10 bg-[var(--yellow)] dark:bg-[var(--yellow-dark)] rounded-[2rem] p-8 md:p-12 shadow-2xl">
+      <div className="max-w-6xl mx-auto relative z-10 bg-white dark:bg-gray-900 rounded-[2rem] p-8 md:p-12 shadow-2xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

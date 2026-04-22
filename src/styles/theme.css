@@ -215,19 +215,23 @@
     scrollbar-width: none;  /* Firefox */
   }
 
+  /* Light mode: text is dark, thin white outline for contrast over video */
   .text-outline {
+    color: inherit;
     text-shadow: 
-      -1px -1px 0 rgba(255,255,255,0.9),
-       1px -1px 0 rgba(255,255,255,0.9),
-      -1px  1px 0 rgba(255,255,255,0.9),
-       1px  1px 0 rgba(255,255,255,0.9);
+      -0.5px -0.5px 0 rgba(255,255,255,0.95),
+       0.5px -0.5px 0 rgba(255,255,255,0.95),
+      -0.5px  0.5px 0 rgba(255,255,255,0.95),
+       0.5px  0.5px 0 rgba(255,255,255,0.95);
   }
+  /* Dark mode: text is light, thin black outline for contrast over video */
   .dark .text-outline {
+    color: inherit;
     text-shadow: 
-      -1px -1px 0 rgba(0,0,0,0.9),
-       1px -1px 0 rgba(0,0,0,0.9),
-      -1px  1px 0 rgba(0,0,0,0.9),
-       1px  1px 0 rgba(0,0,0,0.9);
+      -0.5px -0.5px 0 rgba(0,0,0,0.95),
+       0.5px -0.5px 0 rgba(0,0,0,0.95),
+      -0.5px  0.5px 0 rgba(0,0,0,0.95),
+       0.5px  0.5px 0 rgba(0,0,0,0.95);
   }
   
   .no-outline * {

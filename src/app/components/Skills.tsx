@@ -125,7 +125,7 @@ export default function Skills({ t }: SkillsProps) {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-4xl font-bold text-transparent dark:from-white dark:to-gray-300 md:text-5xl">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl">
             {t.title}
           </h2>
           <div className="mx-auto mb-4 h-1 w-20 rounded-full bg-gradient-to-r from-[var(--yellow)] to-[var(--yellow-glow)]" />

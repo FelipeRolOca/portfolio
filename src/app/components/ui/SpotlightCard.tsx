@@ -1,4 +1,4 @@
-"use client";
+﻿
 
 import React, { useRef, useEffect } from "react";
 import { cn } from "./utils";
@@ -49,7 +49,7 @@ export const SpotlightCard = ({
       ref={containerRef}
       className={cn(
         "group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 transition-colors hover:border-zinc-700",
-        (className || "").includes("overflow-visible") ? "overflow-visible" : "overflow-hidden",
+        (className || "").split(" ").includes("overflow-visible") ? "overflow-visible" : "overflow-hidden",
         className
       )}
       style={{

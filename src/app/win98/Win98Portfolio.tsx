@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { Window } from './components/Window';
@@ -70,7 +70,7 @@ function DesktopContent() {
   const getWindowTitle = (type: WindowType): string => {
     const titles = {
       welcome: t('Welcome', 'Bienvenido'),
-      about: t('About Me', 'Sobre Mí'),
+      about: t('About Me', 'Sobre MÃ­'),
       skills: t('Skills', 'Habilidades'),
       experience: t('Experience', 'Experiencia'),
       projects: t('Projects', 'Proyectos'),
@@ -88,7 +88,7 @@ function DesktopContent() {
     {
       id: 'about' as WindowType,
       icon: <UserIcon />,
-      label: t('About Me', 'Sobre Mí'),
+      label: t('About Me', 'Sobre MÃ­'),
     },
     {
       id: 'skills' as WindowType,
@@ -187,7 +187,7 @@ function DesktopContent() {
                   <p className="text-sm text-gray-800 max-w-xs leading-relaxed">
                     {t(
                       'Full Stack Developer and Computer Engineering Student',
-                      'Desarrollador Full Stack y Estudiante de Ingeniería Informática'
+                      'Desarrollador Full Stack y Estudiante de IngenierÃ­a InformÃ¡tica'
                     )}
                   </p>
                 </div>
@@ -202,11 +202,11 @@ function DesktopContent() {
                     onClick={() => openWindow('contact')}
                     className="px-4 py-2 bg-[#c0c0c0] border-t-2 border-l-2 border-r-2 border-b-2 border-t-[#dfdfdf] border-l-[#dfdfdf] border-r-[#404040] border-b-[#404040] hover:brightness-105 active:border-t-[#404040] active:border-l-[#404040] active:border-r-[#dfdfdf] active:border-b-[#dfdfdf] text-sm font-bold"
                   >
-                    {t('Contact Me', 'Contáctame')}
+                    {t('Contact Me', 'ContÃ¡ctame')}
                   </button>
                 </div>
                 <div className="bg-[#ffffcc] border border-[#808080] p-2 text-xs text-gray-800">
-                  💡 {t('Double-click desktop icons to explore', 'Haz doble clic en los iconos del escritorio para explorar')}
+                  ðŸ’¡ {t('Double-click desktop icons to explore', 'Haz doble clic en los iconos del escritorio para explorar')}
                 </div>
               </div>
             </Window>

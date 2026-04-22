@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import { BriefcaseBusiness, GraduationCap, Languages, MapPin, Sparkles } from "lucide-react";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -6,7 +7,7 @@ import BorderGlow from "./ui/BorderGlow";
 export function QuickFacts() {
   const { t } = useLanguage();
 
-  const quickFacts = [
+  const quickFacts = useMemo(() => [
     {
       label: t.quickFacts.ageLabel,
       value: t.quickFacts.ageValue,
@@ -42,7 +43,7 @@ export function QuickFacts() {
       glowColor: "350 92 76",
       borderColors: ["#e11d48", "#fb7185", "#f43f5e"],
     },
-  ];
+  ], [t.quickFacts]);
 
   return (
     <section className="relative pt-4 pb-12 md:pt-6 md:pb-14">

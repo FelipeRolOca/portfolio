@@ -4,17 +4,18 @@ import GlowingBorderCard from "./ui/glowingbordercard";
 import { TextReveal } from "./ui/TextReveal";
 import { useLanguage } from "../i18n/LanguageContext";
 
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.2 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
 export function About() {
   const { t } = useLanguage();
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.2 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
 
   return (
     <section id="about" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">

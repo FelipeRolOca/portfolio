@@ -1,4 +1,4 @@
-import { useLanguage } from '../contexts/LanguageContext';
+﻿import { useLanguage } from '../contexts/LanguageContext';
 import { Download, GraduationCap, Award, Code } from 'lucide-react';
 import * as Tabs from '@radix-ui/react-tabs';
 
@@ -15,7 +15,7 @@ export function ResumeContent() {
           >
             <div className="flex items-center gap-2">
               <GraduationCap className="w-4 h-4" />
-              {t('Education', 'Educación')}
+              {t('Education', 'EducaciÃ³n')}
             </div>
           </Tabs.Trigger>
           <Tabs.Trigger
@@ -42,14 +42,14 @@ export function ResumeContent() {
           <div className="border-2 border-[#808080] border-t-white border-l-white bg-white p-4 space-y-4">
             <div>
               <h3 className="font-bold text-[#000080] mb-2">
-                {t('Computer Engineering', 'Ingeniería Informática')}
+                {t('Computer Engineering', 'IngenierÃ­a InformÃ¡tica')}
               </h3>
               <p className="text-sm text-gray-700">
                 {t('Currently pursuing degree', 'Actualmente cursando la carrera')}
               </p>
               <p className="text-xs text-gray-600 mt-1">
                 {t('Focus: Software Development, Systems Design, Algorithms',
-                   'Enfoque: Desarrollo de Software, Diseño de Sistemas, Algoritmos')}
+                   'Enfoque: Desarrollo de Software, DiseÃ±o de Sistemas, Algoritmos')}
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@ export function ResumeContent() {
               </div>
               <div>
                 <div className="font-bold text-sm mb-1">
-                  {t('Database Management', 'Gestión de Bases de Datos')}
+                  {t('Database Management', 'GestiÃ³n de Bases de Datos')}
                 </div>
                 <div className="text-xs text-gray-700">
                   SQL, MongoDB, Oracle, Neo4j
@@ -84,7 +84,7 @@ export function ResumeContent() {
               </div>
               <div>
                 <div className="font-bold text-sm mb-1">
-                  {t('Programming Languages', 'Lenguajes de Programación')}
+                  {t('Programming Languages', 'Lenguajes de ProgramaciÃ³n')}
                 </div>
                 <div className="text-xs text-gray-700">Java, JavaScript, Python, C</div>
               </div>
@@ -97,11 +97,11 @@ export function ResumeContent() {
             <div className="space-y-2 text-sm">
               <div className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-[#000080] mt-1.5 flex-shrink-0"></div>
-                <span>{t('Practical problem-solving mindset', 'Mentalidad práctica para resolver problemas')}</span>
+                <span>{t('Practical problem-solving mindset', 'Mentalidad prÃ¡ctica para resolver problemas')}</span>
               </div>
               <div className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-[#000080] mt-1.5 flex-shrink-0"></div>
-                <span>{t('Continuous learning and adaptation', 'Aprendizaje continuo y adaptación')}</span>
+                <span>{t('Continuous learning and adaptation', 'Aprendizaje continuo y adaptaciÃ³n')}</span>
               </div>
               <div className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-[#000080] mt-1.5 flex-shrink-0"></div>
@@ -113,7 +113,7 @@ export function ResumeContent() {
               </div>
               <div className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-[#000080] mt-1.5 flex-shrink-0"></div>
-                <span>{t('Production-ready code delivery', 'Entrega de código listo para producción')}</span>
+                <span>{t('Production-ready code delivery', 'Entrega de cÃ³digo listo para producciÃ³n')}</span>
               </div>
             </div>
           </div>

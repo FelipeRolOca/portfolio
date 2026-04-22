@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+﻿import { motion, AnimatePresence } from "motion/react";
 import { Mail, Phone, Send, ExternalLink, MessageCircle, Smartphone, MapPin } from "lucide-react";
 import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
@@ -36,7 +36,7 @@ export function Contact() {
 
   const phoneOptions = [
     { 
-      label: language === "es" ? "WhatsApp" : "WhatsApp", 
+      label: "WhatsApp", 
       icon: <MessageCircle className="w-4 h-4 text-emerald-400" />,
       href: "https://wa.me/5493329523459"
     },

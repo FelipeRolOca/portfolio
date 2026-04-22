@@ -1,4 +1,4 @@
-"use client";
+
 
 import React, { useEffect, useRef } from "react";
 
@@ -57,18 +57,20 @@ export const DotBackground = () => {
 
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
+      const mouseRadiusSq = mouseRadius * mouseRadius;
 
       for (const dot of dots) {
         const dx = mx - dot.x;
         const dy = my - dot.y;
-        const mouseDistance = Math.sqrt(dx * dx + dy * dy);
+        const mouseDistanceSq = dx * dx + dy * dy;
 
         let size = 1.5;
         let opacity = 0.13;
         let r = 161, g = 161, b = 170; // zinc-400
 
         // Mouse interaction
-        if (mouseDistance < mouseRadius) {
+        if (mouseDistanceSq < mouseRadiusSq) {
+          const mouseDistance = Math.sqrt(mouseDistanceSq);
           const factor = 1 - mouseDistance / mouseRadius;
           size += factor * 3;
           opacity = 0.13 + factor * 0.65;
@@ -79,12 +81,18 @@ export const DotBackground = () => {
         for (const wave of wavesRef.current) {
           const wdx = dot.x - wave.x;
           const wdy = dot.y - wave.y;
-          const waveDistance = Math.sqrt(wdx * wdx + wdy * wdy);
-          if (waveDistance < wave.radius && waveDistance > wave.radius - waveWidth) {
-            const intensity = Math.sin(((wave.radius - waveDistance) / waveWidth) * Math.PI);
-            size += intensity * 3;
-            opacity = Math.min(0.9, opacity + intensity * 0.5);
-            r = 59; g = 130; b = 246;
+          const waveDistanceSq = wdx * wdx + wdy * wdy;
+          const maxWaveDist = wave.radius;
+          const minWaveDist = wave.radius - waveWidth;
+          
+          if (waveDistanceSq < maxWaveDist * maxWaveDist && waveDistanceSq > (minWaveDist > 0 ? minWaveDist * minWaveDist : 0)) {
+            const waveDistance = Math.sqrt(waveDistanceSq);
+            if (waveDistance < wave.radius && waveDistance > wave.radius - waveWidth) {
+              const intensity = Math.sin(((wave.radius - waveDistance) / waveWidth) * Math.PI);
+              size += intensity * 3;
+              opacity = Math.min(0.9, opacity + intensity * 0.5);
+              r = 59; g = 130; b = 246;
+            }
           }
         }
 

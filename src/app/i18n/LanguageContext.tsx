@@ -47,7 +47,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider value={value}>
-      <div className="relative min-h-screen">
+      <>
         <div 
           className="transition-opacity duration-500" 
           style={{ opacity: isChanging ? 0 : 1 }}
@@ -70,7 +70,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </>
     </LanguageContext.Provider>
   );
 }

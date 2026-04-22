@@ -38,7 +38,7 @@ export function Footer() {
             <a 
               href="#contact" 
               className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-full transition-colors" 
-              aria-label="Location"
+              aria-label="Contact Location"
             >
               <MapPin className="w-5 h-5" />
             </a>

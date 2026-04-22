@@ -1,4 +1,4 @@
-import { useLanguage } from '../contexts/LanguageContext';
+﻿import { useLanguage } from '../contexts/LanguageContext';
 import { useUIMode } from '../contexts/UIModeContext';
 import { Globe, Zap } from 'lucide-react';
 import { pixelTransition } from '../utils/pixelTransition';

@@ -1,7 +1,7 @@
-/**
+﻿/**
  * Pixel transition effect for switching between UI modes.
  * Creates a grid of pixels that fade out one by one, then switches, then fades in one by one.
- * Sequence: create pixel grid → fade out pixels → switch → fade in pixels → remove grid
+ * Sequence: create pixel grid â†’ fade out pixels â†’ switch â†’ fade in pixels â†’ remove grid
  * Duration: ~1200ms total
  *
  * Usage:

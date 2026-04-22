@@ -57,7 +57,7 @@ export function Navbar() {
 
     updateActiveSection();
     window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("resize", updateActiveSection, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", updateActiveSection);

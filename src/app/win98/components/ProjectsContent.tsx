@@ -1,4 +1,4 @@
-import { useLanguage } from '../contexts/LanguageContext';
+﻿import { useLanguage } from '../contexts/LanguageContext';
 import { Folder, Globe } from 'lucide-react';
 
 export function ProjectsContent() {
@@ -9,7 +9,7 @@ export function ProjectsContent() {
       name: 'Paper Pops',
       description: t(
         'Full-featured web application built with modern stack',
-        'Aplicación web completa construida con stack moderno'
+        'AplicaciÃ³n web completa construida con stack moderno'
       ),
       technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
       liveUrl: 'https://paper-pops.vercel.app/',
@@ -19,7 +19,7 @@ export function ProjectsContent() {
       name: 'JJAsist',
       description: t(
         'Business management system with automation features',
-        'Sistema de gestión empresarial con funciones de automatización'
+        'Sistema de gestiÃ³n empresarial con funciones de automatizaciÃ³n'
       ),
       technologies: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
       liveUrl: 'https://v0-pwa-ux-ui-design.vercel.app/',
@@ -29,7 +29,7 @@ export function ProjectsContent() {
       name: 'JJ Servicios Empresariales',
       description: t(
         'Professional business website with SEO optimization',
-        'Sitio web empresarial profesional con optimización SEO'
+        'Sitio web empresarial profesional con optimizaciÃ³n SEO'
       ),
       technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
       liveUrl: 'https://jjserviciosempresarialesrrhh.com/',
@@ -89,12 +89,12 @@ export function ProjectsContent() {
 
       <div className="border-2 border-[#808080] border-t-white border-l-white bg-[#c0c0c0] p-4">
         <div className="text-sm text-gray-800">
-          <strong>{t('Tech Stack Highlights:', 'Aspectos destacados del stack tecnológico:')}</strong>
+          <strong>{t('Tech Stack Highlights:', 'Aspectos destacados del stack tecnolÃ³gico:')}</strong>
           <div className="mt-2 space-y-1 text-xs">
-            <div>• {t('Modern React frameworks (Next.js, Vite)', 'Frameworks modernos de React (Next.js, Vite)')}</div>
-            <div>• {t('Backend & databases (Supabase, Google Apps Script)', 'Backend y bases de datos (Supabase, Google Apps Script)')}</div>
-            <div>• {t('Styling & animation (Tailwind CSS, Motion)', 'Estilos y animación (Tailwind CSS, Motion)')}</div>
-            <div>• {t('Deployment & hosting (Vercel)', 'Despliegue y alojamiento (Vercel)')}</div>
+            <div>â€¢ {t('Modern React frameworks (Next.js, Vite)', 'Frameworks modernos de React (Next.js, Vite)')}</div>
+            <div>â€¢ {t('Backend & databases (Supabase, Google Apps Script)', 'Backend y bases de datos (Supabase, Google Apps Script)')}</div>
+            <div>â€¢ {t('Styling & animation (Tailwind CSS, Motion)', 'Estilos y animaciÃ³n (Tailwind CSS, Motion)')}</div>
+            <div>â€¢ {t('Deployment & hosting (Vercel)', 'Despliegue y alojamiento (Vercel)')}</div>
           </div>
         </div>
       </div>

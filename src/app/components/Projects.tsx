@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ExternalLink, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck, ChevronDown } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { SpotlightCard } from "./ui/SpotlightCard";
@@ -8,9 +8,14 @@ import { Magnetic } from "./ui/Magnetic";
 import { useCanHover } from "./ui/use-can-hover";
 import { useLanguage } from "../i18n/LanguageContext";
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
 };
 
 export function Projects() {
@@ -18,7 +23,7 @@ export function Projects() {
   const [openFeaturedIndex, setOpenFeaturedIndex] = useState<number | null>(null);
   const { t } = useLanguage();
 
-  const featuredProjects = [
+  const featuredProjects = useMemo(() => [
     {
       title: "Paper Pops",
       type: t.projects.p1Type,
@@ -76,19 +81,7 @@ export function Projects() {
         { icon: <Settings className="w-4 h-4" />, text: "UI / UX" },
       ]
     }
-  ];
-
-
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
+  ], [t.projects]);
 
   return (
     <section id="projects" className="py-24 bg-zinc-950/50 border-t border-zinc-900 relative">

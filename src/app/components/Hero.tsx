@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring } from "motion/react";
+﻿import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowRight, Mail, Terminal, MonitorPlay } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { TextReveal } from "./ui/TextReveal";
@@ -22,8 +22,7 @@ export function Hero() {
   };
 
   const handleModeSwitch = () => {
-    const cleanup = pixelTransition(() => setMode('retro'));
-    // Cleanup will be called automatically when the component unmounts
+    pixelTransition(() => setMode('retro'));
   };
 
   return (

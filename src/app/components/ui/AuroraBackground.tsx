@@ -1,4 +1,4 @@
-"use client";
+﻿
 
 import { useEffect, useRef } from "react";
 
@@ -20,7 +20,7 @@ interface Blob {
 }
 
 const BLOBS: Blob[] = [
-  // Blue – top-left anchor, drifts slowly
+  // Blue â€“ top-left anchor, drifts slowly
   {
     baseX: 0.18, baseY: 0.3,
     freqX: 0.00038, freqY: 0.00028,
@@ -30,7 +30,7 @@ const BLOBS: Blob[] = [
     r: 59,  g: 130, b: 246,
     opacity: 0.38,
   },
-  // Cyan – top-right, faster vertical drift
+  // Cyan â€“ top-right, faster vertical drift
   {
     baseX: 0.78, baseY: 0.22,
     freqX: 0.00028, freqY: 0.00048,
@@ -40,7 +40,7 @@ const BLOBS: Blob[] = [
     r: 6,   g: 182, b: 212,
     opacity: 0.34,
   },
-  // Violet – center-bottom, lazy orbit
+  // Violet â€“ center-bottom, lazy orbit
   {
     baseX: 0.52, baseY: 0.62,
     freqX: 0.00050, freqY: 0.00038,
@@ -50,7 +50,7 @@ const BLOBS: Blob[] = [
     r: 139, g: 92,  b: 246,
     opacity: 0.24,
   },
-  // Indigo – right edge, tall ellipse, slow
+  // Indigo â€“ right edge, tall ellipse, slow
   {
     baseX: 0.88, baseY: 0.6,
     freqX: 0.00022, freqY: 0.00042,
@@ -60,7 +60,7 @@ const BLOBS: Blob[] = [
     r: 99,  g: 102, b: 241,
     opacity: 0.2,
   },
-  // Teal – bottom-left accent
+  // Teal â€“ bottom-left accent
   {
     baseX: 0.3, baseY: 0.72,
     freqX: 0.00018, freqY: 0.00055,
@@ -70,7 +70,7 @@ const BLOBS: Blob[] = [
     r: 34,  g: 211, b: 238,
     opacity: 0.18,
   },
-  // Electric blue – top-center shimmer, faster
+  // Electric blue â€“ top-center shimmer, faster
   {
     baseX: 0.5,  baseY: 0.1,
     freqX: 0.00065, freqY: 0.00032,

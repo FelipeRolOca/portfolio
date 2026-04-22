@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
@@ -12,7 +12,7 @@ export function ContactContent() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(t('Message sent! (Demo mode)', '¡Mensaje enviado! (Modo demo)'));
+    alert(t('Message sent! (Demo mode)', 'Â¡Mensaje enviado! (Modo demo)'));
   };
 
   const contactInfo = [
@@ -24,13 +24,13 @@ export function ContactContent() {
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      label: t('Phone', 'Teléfono'),
+      label: t('Phone', 'TelÃ©fono'),
       value: '+54 9 3329 523459',
       href: 'tel:+5493329523459',
     },
     {
       icon: <MapPin className="w-5 h-5" />,
-      label: t('Location', 'Ubicación'),
+      label: t('Location', 'UbicaciÃ³n'),
       value: 'San Pedro, Buenos Aires, Argentina',
       href: null,
     },

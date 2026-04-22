@@ -31,7 +31,7 @@ interface SkillCategory {
   usageNote: string;
 }
 
-function SkillCard({ category, idx, t }: { category: SkillCategory; idx: number; t: any }) {
+function SkillCard({ category, t }: { category: SkillCategory; t: any }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -140,7 +140,7 @@ export function Skills() {
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl lg:max-w-none mx-auto items-start"
         >
           {skillCategories.map((category, idx) => (
-            <SkillCard key={idx} category={category} idx={idx} t={t} />
+            <SkillCard key={idx} category={category} t={t} />
           ))}
         </motion.div>
 

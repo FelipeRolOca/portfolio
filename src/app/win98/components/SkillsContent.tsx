@@ -1,4 +1,4 @@
-import { useLanguage } from '../contexts/LanguageContext';
+﻿import { useLanguage } from '../contexts/LanguageContext';
 import { Code, Globe, Database, Wrench } from 'lucide-react';
 
 export function SkillsContent() {
@@ -7,7 +7,7 @@ export function SkillsContent() {
   const skillCategories = [
     {
       icon: <Code className="w-5 h-5" />,
-      title: t('Programming', 'Programación'),
+      title: t('Programming', 'ProgramaciÃ³n'),
       skills: ['Java', 'JavaScript', 'Python', 'C'],
     },
     {
@@ -22,7 +22,7 @@ export function SkillsContent() {
     },
     {
       icon: <Wrench className="w-5 h-5" />,
-      title: t('Tools & Technologies', 'Herramientas y Tecnologías'),
+      title: t('Tools & Technologies', 'Herramientas y TecnologÃ­as'),
       skills: [
         'Git',
         'WordPress',
@@ -36,12 +36,12 @@ export function SkillsContent() {
   ];
 
   const extraAbilities = [
-    t('QR/Barcode Scanning', 'Escaneo de QR/Códigos de barras'),
-    t('GPS Validation', 'Validación GPS'),
-    t('Admin Panels', 'Paneles de Administración'),
+    t('QR/Barcode Scanning', 'Escaneo de QR/CÃ³digos de barras'),
+    t('GPS Validation', 'ValidaciÃ³n GPS'),
+    t('Admin Panels', 'Paneles de AdministraciÃ³n'),
     t('Automated Reports', 'Reportes Automatizados'),
-    t('SEO Optimization', 'Optimización SEO'),
-    t('Responsive Design', 'Diseño Responsivo'),
+    t('SEO Optimization', 'OptimizaciÃ³n SEO'),
+    t('Responsive Design', 'DiseÃ±o Responsivo'),
   ];
 
   return (

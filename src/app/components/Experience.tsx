@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Calendar, MapPin, ChevronDown } from "lucide-react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -11,7 +11,7 @@ export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { t } = useLanguage();
 
-  const experiences = [
+  const experiences = useMemo(() => [
     {
       role: t.experience.job1Role,
       company: t.experience.job1Company,
@@ -38,7 +38,7 @@ export function Experience() {
         outcome: t.experience.job2Outcome
       }
     },
-  ];
+  ], [t.experience]);
 
   return (
     <section id="experience" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">

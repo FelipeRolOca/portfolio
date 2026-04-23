@@ -40,7 +40,7 @@ export function Navbar() {
 
   useEffect(() => {
     let isTicking = false;
-    
+
     const updateActiveSection = () => {
       const threshold = window.innerHeight * 0.4;
       let currentHref = navLinks[0]?.href ?? "#about";
@@ -151,9 +151,8 @@ export function Navbar() {
 
                     <div className="relative z-10 flex flex-col items-center justify-center">
                       <Icon
-                        className={`h-[22px] w-[22px] transition-all duration-300 ${
-                          isActive ? "text-cyan-400 scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)] translate-y-1" : "text-zinc-500 hover:text-zinc-300"
-                        }`}
+                        className={`h-[22px] w-[22px] transition-all duration-300 ${isActive ? "text-cyan-400 scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)] translate-y-1" : "text-zinc-500 hover:text-zinc-300"
+                          }`}
                       />
                       <span className="sr-only">{link.name}</span>
                     </div>

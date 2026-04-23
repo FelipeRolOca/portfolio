@@ -9,7 +9,7 @@ export function ProjectsContent() {
       name: 'Paper Pops',
       description: t(
         'Full-featured web application built with modern stack',
-        'AplicaciÃ³n web completa construida con stack moderno'
+        'Aplicación web completa construida con stack moderno'
       ),
       technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
       liveUrl: 'https://paper-pops.vercel.app/',
@@ -19,7 +19,7 @@ export function ProjectsContent() {
       name: 'JJAsist',
       description: t(
         'Business management system with automation features',
-        'Sistema de gestiÃ³n empresarial con funciones de automatizaciÃ³n'
+        'Sistema de gestión empresarial con funciones de automatización'
       ),
       technologies: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
       liveUrl: 'https://v0-pwa-ux-ui-design.vercel.app/',
@@ -29,7 +29,7 @@ export function ProjectsContent() {
       name: 'JJ Servicios Empresariales',
       description: t(
         'Professional business website with SEO optimization',
-        'Sitio web empresarial profesional con optimizaciÃ³n SEO'
+        'Sitio web empresarial profesional con optimización SEO'
       ),
       technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
       liveUrl: 'https://jjserviciosempresarialesrrhh.com/',
@@ -89,11 +89,11 @@ export function ProjectsContent() {
 
       <div className="border-2 border-[#808080] border-t-white border-l-white bg-[#c0c0c0] p-4">
         <div className="text-sm text-gray-800">
-          <strong>{t('Tech Stack Highlights:', 'Aspectos destacados del stack tecnolÃ³gico:')}</strong>
+          <strong>{t('Tech Stack Highlights:', 'Aspectos destacados del stack tecnológico:')}</strong>
           <div className="mt-2 space-y-1 text-xs">
             <div>â€¢ {t('Modern React frameworks (Next.js, Vite)', 'Frameworks modernos de React (Next.js, Vite)')}</div>
             <div>â€¢ {t('Backend & databases (Supabase, Google Apps Script)', 'Backend y bases de datos (Supabase, Google Apps Script)')}</div>
-            <div>â€¢ {t('Styling & animation (Tailwind CSS, Motion)', 'Estilos y animaciÃ³n (Tailwind CSS, Motion)')}</div>
+            <div>â€¢ {t('Styling & animation (Tailwind CSS, Motion)', 'Estilos y animación (Tailwind CSS, Motion)')}</div>
             <div>â€¢ {t('Deployment & hosting (Vercel)', 'Despliegue y alojamiento (Vercel)')}</div>
           </div>
         </div>

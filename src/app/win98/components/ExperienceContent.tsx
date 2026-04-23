@@ -10,10 +10,10 @@ export function ExperienceContent() {
       role: t('Freelance Full Stack Developer', 'Desarrollador Full Stack Freelance'),
       period: t('2026 â€“ Present', '2026 â€“ Presente'),
       achievements: [
-        t('Implemented QR/barcode scanning system', 'ImplementÃ© sistema de escaneo QR/cÃ³digos de barras'),
-        t('Developed GPS validation features', 'DesarrollÃ© funciones de validaciÃ³n GPS'),
-        t('Built comprehensive admin panel', 'ConstruÃ­ panel de administraciÃ³n completo'),
-        t('Created automated reporting systems', 'CreÃ© sistemas de reportes automatizados'),
+        t('Implemented QR/barcode scanning system', 'Implementé sistema de escaneo QR/códigos de barras'),
+        t('Developed GPS validation features', 'Desarrollé funciones de validación GPS'),
+        t('Built comprehensive admin panel', 'Construí panel de administración completo'),
+        t('Created automated reporting systems', 'Creé sistemas de reportes automatizados'),
       ],
     },
     {
@@ -21,10 +21,10 @@ export function ExperienceContent() {
       role: t('Freelance Web Developer', 'Desarrollador Web Freelance'),
       period: t('2025 â€“ Present', '2025 â€“ Presente'),
       achievements: [
-        t('Designed and launched SEO-optimized business website', 'DiseÃ±Ã© y lancÃ© sitio web empresarial optimizado para SEO'),
-        t('Implemented responsive design across all devices', 'ImplementÃ© diseÃ±o responsivo en todos los dispositivos'),
-        t('Enhanced site performance and user experience', 'MejorÃ© el rendimiento del sitio y la experiencia del usuario'),
-        t('Integrated modern web technologies', 'IntegrÃ© tecnologÃ­as web modernas'),
+        t('Designed and launched SEO-optimized business website', 'Diseñé y lancé sitio web empresarial optimizado para SEO'),
+        t('Implemented responsive design across all devices', 'Implementé diseño responsivo en todos los dispositivos'),
+        t('Enhanced site performance and user experience', 'Mejoré el rendimiento del sitio y la experiencia del usuario'),
+        t('Integrated modern web technologies', 'Integré tecnologías web modernas'),
       ],
     },
   ];
@@ -64,7 +64,7 @@ export function ExperienceContent() {
         <div className="text-xs text-gray-800 italic">
           {t(
             'ðŸ’¼ Focused on delivering production-ready systems for real business needs',
-            'ðŸ’¼ Enfocado en entregar sistemas listos para producciÃ³n para necesidades empresariales reales'
+            'ðŸ’¼ Enfocado en entregar sistemas listos para producción para necesidades empresariales reales'
           )}
         </div>
       </div>

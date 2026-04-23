@@ -12,7 +12,7 @@ export function ContactContent() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(t('Message sent! (Demo mode)', 'Â¡Mensaje enviado! (Modo demo)'));
+    alert(t('Message sent! (Demo mode)', '¡Mensaje enviado! (Modo demo)'));
   };
 
   const contactInfo = [
@@ -24,13 +24,13 @@ export function ContactContent() {
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      label: t('Phone', 'TelÃ©fono'),
+      label: t('Phone', 'Teléfono'),
       value: '+54 9 3329 523459',
       href: 'tel:+5493329523459',
     },
     {
       icon: <MapPin className="w-5 h-5" />,
-      label: t('Location', 'UbicaciÃ³n'),
+      label: t('Location', 'Ubicación'),
       value: 'San Pedro, Buenos Aires, Argentina',
       href: null,
     },

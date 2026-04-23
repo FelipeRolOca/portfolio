@@ -8,26 +8,26 @@ export function AboutContent() {
     {
       icon: <User className="w-6 h-6" />,
       label: t('Age', 'Edad'),
-      value: t('20 years old', '20 aÃ±os'),
+      value: t('20 years old', '20 años'),
     },
     {
       icon: <GraduationCap className="w-6 h-6" />,
-      label: t('Education', 'EducaciÃ³n'),
-      value: t('Computer Engineering Student', 'Estudiante de IngenierÃ­a InformÃ¡tica'),
+      label: t('Education', 'Educación'),
+      value: t('Computer Engineering Student', 'Estudiante de Ingeniería Informática'),
     },
     {
       icon: <Briefcase className="w-6 h-6" />,
       label: t('Focus', 'Enfoque'),
-      value: t('Web systems, automation, business solutions', 'Sistemas web, automatizaciÃ³n, soluciones empresariales'),
+      value: t('Web systems, automation, business solutions', 'Sistemas web, automatización, soluciones empresariales'),
     },
     {
       icon: <Globe className="w-6 h-6" />,
-      label: t('English Level', 'Nivel de InglÃ©s'),
+      label: t('English Level', 'Nivel de Inglés'),
       value: 'B2',
     },
     {
       icon: <MapPin className="w-6 h-6" />,
-      label: t('Location', 'UbicaciÃ³n'),
+      label: t('Location', 'Ubicación'),
       value: 'San Pedro, Buenos Aires, Argentina',
     },
   ];
@@ -36,12 +36,12 @@ export function AboutContent() {
     <div className="p-6 space-y-6">
       <div className="border-2 border-[#808080] border-t-white border-l-white bg-white p-4">
         <h2 className="text-xl font-bold mb-4 text-[#000080]">
-          {t('About Me', 'Sobre MÃ­')}
+          {t('About Me', 'Sobre Mí')}
         </h2>
         <p className="text-sm leading-relaxed text-gray-800">
           {t(
             'I am a Full Stack Developer and Computer Engineering student focused on building practical, real-world systems. My work centers on web development, automation, and business solutions. I have a hands-on approach to solving problems and a commitment to continuous learning.',
-            'Soy un Desarrollador Full Stack y estudiante de IngenierÃ­a InformÃ¡tica enfocado en construir sistemas prÃ¡cticos y del mundo real. Mi trabajo se centra en el desarrollo web, la automatizaciÃ³n y las soluciones empresariales. Tengo un enfoque prÃ¡ctico para resolver problemas y un compromiso con el aprendizaje continuo.'
+            'Soy un Desarrollador Full Stack y estudiante de Ingeniería Informática enfocado en construir sistemas prácticos y del mundo real. Mi trabajo se centra en el desarrollo web, la automatización y las soluciones empresariales. Tengo un enfoque práctico para resolver problemas y un compromiso con el aprendizaje continuo.'
           )}
         </p>
       </div>

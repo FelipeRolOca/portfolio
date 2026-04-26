@@ -34,7 +34,7 @@ export function Experience() {
       bullets: t.experience.job2Bullets,
       details: {
         responsibilities: t.experience.job2Resp,
-        tools: ["WordPress", "Elementor", "SEO"],
+        tools: ["Next.js", "React", "Tailwind CSS", "Vercel"],
         outcome: t.experience.job2Outcome
       }
     },

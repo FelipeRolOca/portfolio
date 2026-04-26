@@ -67,7 +67,7 @@ export function Projects() {
       type: t.projects.p1Type,
       image: "/Captura%20de%20pantalla%202026-04-09%20191343.png",
       description: t.projects.p3Desc,
-      tech: [t.projects.p3Tech1, t.projects.p3Tech2, t.projects.p3Tech3],
+      tech: ["Next.js", "React", "Tailwind CSS", "Vercel"],
       liveUrl: "https://jjserviciosempresarialesrrhh.com/",
       meta: {
         role: t.projects.p3MetaRole,

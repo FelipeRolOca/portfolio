@@ -1,4 +1,4 @@
-﻿import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Mail, Phone, Send, ExternalLink, MessageCircle, Smartphone, MapPin } from "lucide-react";
 import { useState } from "react";
 import { SpotlightCard } from "./ui/SpotlightCard";
@@ -53,10 +53,6 @@ export function Contact() {
   ];
 
   const liveLinks = [
-    {
-      title: "JJAsist - Live",
-      url: "https://v0-pwa-ux-ui-design.vercel.app/"
-    },
     {
       title: "JJ Servicios Empresariales - Live",
       url: "https://jjserviciosempresarialesrrhh.com/"

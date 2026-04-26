@@ -22,7 +22,7 @@ export function ProjectsContent() {
         'Sistema de gestión empresarial con funciones de automatización'
       ),
       technologies: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
-      liveUrl: 'https://v0-pwa-ux-ui-design.vercel.app/',
+      liveUrl: '',
       image: '/JJ ASIST (1).png',
     },
     {
@@ -74,15 +74,17 @@ export function ProjectsContent() {
               ))}
             </div>
             {/* Visit Site button styled as Win98 system button */}
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#c0c0c0] border-t-2 border-l-2 border-r-2 border-b-2 border-t-[#dfdfdf] border-l-[#dfdfdf] border-r-[#404040] border-b-[#404040] hover:brightness-105 active:border-t-[#404040] active:border-l-[#404040] active:border-r-[#dfdfdf] active:border-b-[#dfdfdf] text-sm font-bold text-black no-underline"
-            >
-              <Globe className="w-4 h-4" />
-              {t('Visit Site', 'Visitar Sitio')}
-            </a>
+            {project.name !== 'JJAsist' && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#c0c0c0] border-t-2 border-l-2 border-r-2 border-b-2 border-t-[#dfdfdf] border-l-[#dfdfdf] border-r-[#404040] border-b-[#404040] hover:brightness-105 active:border-t-[#404040] active:border-l-[#404040] active:border-r-[#dfdfdf] active:border-b-[#dfdfdf] text-sm font-bold text-black no-underline"
+              >
+                <Globe className="w-4 h-4" />
+                {t('Visit Site', 'Visitar Sitio')}
+              </a>
+            )}
           </div>
         </div>
       ))}

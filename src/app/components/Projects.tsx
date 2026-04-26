@@ -49,7 +49,7 @@ export function Projects() {
       image: "/JJ%20ASIST%20(1).png",
       description: t.projects.p2Desc,
       tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
-      liveUrl: "https://v0-pwa-ux-ui-design.vercel.app/",
+      liveUrl: "",
       meta: {
         role: t.projects.p2MetaRole,
         problem: t.projects.p2MetaProblem,
@@ -148,17 +148,19 @@ export function Projects() {
                   </div>
 
                   <div className="flex items-center gap-6">
-                    <Magnetic>
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-white font-bold hover:text-blue-400 transition-colors text-lg group/link"
-                      >
-                        {t.projects.visitWebsite}
-                        <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                      </a>
-                    </Magnetic>
+                    {project.liveUrl && project.title !== "JJAsist" && (
+                      <Magnetic>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-white font-bold hover:text-blue-400 transition-colors text-lg group/link"
+                        >
+                          {t.projects.visitWebsite}
+                          <ExternalLink className="w-5 h-5 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                        </a>
+                      </Magnetic>
+                    )}
                   </div>
 
                   <div className="mt-6 pt-5 border-t border-zinc-800/80">

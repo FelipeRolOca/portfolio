@@ -65,7 +65,7 @@ export function Projects() {
     {
       title: "JJ Servicios Empresariales",
       type: t.projects.p1Type,
-      image: "/Captura%20de%20pantalla%202026-04-09%20191343.png",
+      image: "/Rehace_el_logo_202604262015.jpeg",
       description: t.projects.p3Desc,
       tech: ["Next.js", "React", "Tailwind CSS", "Vercel"],
       liveUrl: "https://jjserviciosempresarialesrrhh.com/",

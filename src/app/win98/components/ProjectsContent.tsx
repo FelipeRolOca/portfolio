@@ -33,7 +33,7 @@ export function ProjectsContent() {
       ),
       technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
       liveUrl: 'https://jjserviciosempresarialesrrhh.com/',
-      image: '/Captura de pantalla 2026-04-09 191343.png',
+      image: '/Rehace_el_logo_202604262015.jpeg',
     },
   ];
 

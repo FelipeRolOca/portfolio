@@ -1,4 +1,4 @@
-﻿import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowRight, Mail, Terminal, MonitorPlay } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { TextReveal } from "./ui/TextReveal";
@@ -12,7 +12,7 @@ import { pixelTransition } from "../win98/utils/pixelTransition";
 export function Hero() {
   const { t } = useLanguage();
   const { setMode } = useUIMode();
-  const profileImg = "/felipe.png";
+  const profileImg = "/FOTO CV FINAL.jpeg";
 
   const handleScroll = (href: string) => {
     const element = document.querySelector(href);

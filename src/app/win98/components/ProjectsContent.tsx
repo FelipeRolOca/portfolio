@@ -22,8 +22,8 @@ export function ProjectsContent() {
         'Sistema de gestión empresarial con funciones de automatización'
       ),
       technologies: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
-      liveUrl: '',
-      image: '/JJ ASIST (1).png',
+      liveUrl: 'https://jj-asist.vercel.app/',
+      image: '/JJ ASIST ISOLOGO 1.png',
     },
     {
       name: 'JJ Servicios Empresariales',
@@ -74,7 +74,7 @@ export function ProjectsContent() {
               ))}
             </div>
             {/* Visit Site button styled as Win98 system button */}
-            {project.name !== 'JJAsist' && (
+            {project.liveUrl && (
               <a
                 href={project.liveUrl}
                 target="_blank"

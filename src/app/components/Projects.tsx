@@ -46,10 +46,10 @@ export function Projects() {
     {
       title: "JJAsist",
       type: t.projects.p2Type,
-      image: "/JJ%20ASIST%20(1).png",
+      image: "/JJ%20ASIST%20ISOLOGO%201.png",
       description: t.projects.p2Desc,
       tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
-      liveUrl: "",
+      liveUrl: "https://jj-asist.vercel.app/",
       meta: {
         role: t.projects.p2MetaRole,
         problem: t.projects.p2MetaProblem,
@@ -148,7 +148,7 @@ export function Projects() {
                   </div>
 
                   <div className="flex items-center gap-6">
-                    {project.liveUrl && project.title !== "JJAsist" && (
+                    {project.liveUrl && (
                       <Magnetic>
                         <a
                           href={project.liveUrl}

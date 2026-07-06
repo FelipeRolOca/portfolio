@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { Window } from './components/Window';
@@ -206,7 +206,7 @@ function DesktopContent() {
                   </button>
                 </div>
                 <div className="bg-[#ffffcc] border border-[#808080] p-2 text-xs text-gray-800">
-                  ðŸ’¡ {t('Double-click desktop icons to explore', 'Haz doble clic en los iconos del escritorio para explorar')}
+                  💡 {t('Double-click desktop icons to explore', 'Haz doble clic en los iconos del escritorio para explorar')}
                 </div>
               </div>
             </Window>

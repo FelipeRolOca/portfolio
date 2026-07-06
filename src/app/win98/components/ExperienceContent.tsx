@@ -1,4 +1,4 @@
-﻿import { useLanguage } from '../contexts/LanguageContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Briefcase, Calendar } from 'lucide-react';
 
 export function ExperienceContent() {
@@ -63,8 +63,8 @@ export function ExperienceContent() {
       <div className="border-2 border-[#808080] border-t-white border-l-white bg-[#ffffcc] p-4">
         <div className="text-xs text-gray-800 italic">
           {t(
-            'ðŸ’¼ Focused on delivering production-ready systems for real business needs',
-            'ðŸ’¼ Enfocado en entregar sistemas listos para producción para necesidades empresariales reales'
+            '💼 Focused on delivering production-ready systems for real business needs',
+            '💼 Enfocado en entregar sistemas listos para producción para necesidades empresariales reales'
           )}
         </div>
       </div>

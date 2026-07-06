@@ -6,16 +6,6 @@ export function ProjectsContent() {
 
   const projects = [
     {
-      name: 'Paper Pops',
-      description: t(
-        'Full-featured web application built with modern stack',
-        'Aplicación web completa construida con stack moderno'
-      ),
-      technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
-      liveUrl: 'https://paper-pops.vercel.app/',
-      image: '/paper-pops-preview.jpeg',
-    },
-    {
       name: 'JJAsist',
       description: t(
         'Business management system with automation features',
@@ -23,7 +13,7 @@ export function ProjectsContent() {
       ),
       technologies: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
       liveUrl: 'https://jj-asist.vercel.app/',
-      image: '/JJ ASIST ISOLOGO 1.png',
+      image: '/jj-asist-logo.png',
     },
     {
       name: 'JJ Servicios Empresariales',
@@ -34,6 +24,16 @@ export function ProjectsContent() {
       technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
       liveUrl: 'https://jjserviciosempresarialesrrhh.com/',
       image: '/Rehace_el_logo_202604262015.jpeg',
+    },
+    {
+      name: 'Paper Pops',
+      description: t(
+        'Full-featured web application built with modern stack. (Currently inactive for a few months)',
+        'Aplicación web completa construida con stack moderno. (Actualmente inactiva por unos meses)'
+      ),
+      technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
+      liveUrl: 'https://paper-pops.vercel.app/',
+      image: '/paper-pops-preview.jpeg',
     },
   ];
 

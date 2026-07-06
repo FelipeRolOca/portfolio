@@ -25,28 +25,9 @@ export function Projects() {
 
   const featuredProjects = useMemo(() => [
     {
-      title: "Paper Pops",
-      type: t.projects.p1Type,
-      image: "/paper-pops-preview.jpeg",
-      description: t.projects.p1Desc,
-      tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
-      liveUrl: "https://paper-pops.vercel.app/",
-      meta: {
-        role: t.projects.p1MetaRole,
-        problem: t.projects.p1MetaProblem,
-        value: t.projects.p1MetaValue
-      },
-      highlights: [
-        { icon: <Palette className="w-4 h-4" />, text: t.projects.p1H1 },
-        { icon: <Zap className="w-4 h-4" />, text: t.projects.p1H2 },
-        { icon: <Layout className="w-4 h-4" />, text: t.projects.p1H3 },
-        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p1H4 },
-      ]
-    },
-    {
       title: "JJAsist",
       type: t.projects.p2Type,
-      image: "/JJ%20ASIST%20ISOLOGO%201.png",
+      image: "/jj-asist-logo.png",
       description: t.projects.p2Desc,
       tech: ["Next.js", "Supabase", "Vercel", "Google Apps Script", "Tailwind CSS"],
       liveUrl: "https://jj-asist.vercel.app/",
@@ -79,6 +60,25 @@ export function Projects() {
         { icon: <Zap className="w-4 h-4" />, text: t.projects.p3Tech2 },
         { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p3Tech3 },
         { icon: <Settings className="w-4 h-4" />, text: "UI / UX" },
+      ]
+    },
+    {
+      title: "Paper Pops",
+      type: t.projects.p1Type,
+      image: "/paper-pops-preview.jpeg",
+      description: t.projects.p1Desc,
+      tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+      liveUrl: "https://paper-pops.vercel.app/",
+      meta: {
+        role: t.projects.p1MetaRole,
+        problem: t.projects.p1MetaProblem,
+        value: t.projects.p1MetaValue
+      },
+      highlights: [
+        { icon: <Palette className="w-4 h-4" />, text: t.projects.p1H1 },
+        { icon: <Zap className="w-4 h-4" />, text: t.projects.p1H2 },
+        { icon: <Layout className="w-4 h-4" />, text: t.projects.p1H3 },
+        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p1H4 },
       ]
     }
   ], [t.projects]);

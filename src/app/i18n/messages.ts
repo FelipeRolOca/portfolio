@@ -1,4 +1,4 @@
-﻿export type Language = "en" | "es";
+export type Language = "en" | "es";
 
 export const messages = {
   en: {
@@ -111,7 +111,7 @@ export const messages = {
       whyItMatters: "Why It Matters",
       moreProjectsTitle: "More Projects",
       p1Type: "Featured Project",
-      p1Desc: "Interactive website that combines creative design with dynamic functionality for a modern portfolio.",
+      p1Desc: "Interactive website that combines creative design with dynamic functionality for a modern portfolio. (Currently inactive for a few months as the seller decided to pursue another direction).",
       p1MetaRole: "Frontend Developer",
       p1MetaProblem: "Showcase a creative digital identity through motion and interaction.",
       p1MetaValue: "Demonstrates UI creativity, animation control, and strong visual direction.",
@@ -273,7 +273,7 @@ export const messages = {
       moreProjectsTitle: "Más Proyectos",
 
       p1Type: "Proyecto Destacado",
-      p1Desc: "Sitio web interactivo que combina diseño creativo y dinamismo para un portafolio moderno.",
+      p1Desc: "Sitio web interactivo que combina diseño creativo y dinamismo para un portafolio moderno. (Actualmente inactiva por unos meses ya que el vendedor quiso hacer otra cosa).",
       p1MetaRole: "Frontend Developer",
       p1MetaProblem: "Mostrar una identidad digital creativa a través de animaciones.",
       p1MetaValue: "Refleja creatividad en el diseño UI, control de animaciones y dirección visual.",

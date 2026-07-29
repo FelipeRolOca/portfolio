@@ -173,13 +173,13 @@ function DesktopContent() {
               defaultSize={{ width: 500, height: 420 }}
             >
               <div className="p-8 flex flex-col items-center justify-center h-full text-center space-y-6">
-                <div className="relative">
-                  <div className="w-24 h-24 bg-[#c0c0c0] border-t-2 border-l-2 border-r-2 border-b-2 border-t-[#dfdfdf] border-l-[#dfdfdf] border-r-[#404040] border-b-[#404040] flex items-center justify-center">
-                    <div className="scale-150">
-                      <UserIcon />
-                    </div>
+                  <div className="w-24 h-24 bg-[#c0c0c0] border-t-2 border-l-2 border-r-2 border-b-2 border-t-[#dfdfdf] border-l-[#dfdfdf] border-r-[#404040] border-b-[#404040] flex items-center justify-center overflow-hidden">
+                    <img
+                      src="/Foto Perfil definitiva.png"
+                      alt="Felipe Roldan Ocampo"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
                 <div>
                   <h1 className="text-2xl font-bold text-[#000080] mb-2 tracking-tight">
                     {t('Hi, I\'m Felipe.', 'Hola, soy Felipe.')}

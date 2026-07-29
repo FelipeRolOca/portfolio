@@ -12,7 +12,7 @@ import { pixelTransition } from "../win98/utils/pixelTransition";
 export function Hero() {
   const { t } = useLanguage();
   const { setMode } = useUIMode();
-  const profileImg = "/profile-photo.jpeg";
+  const profileImg = "/Foto Perfil definitiva.png";
 
   const handleScroll = (href: string) => {
     const element = document.querySelector(href);

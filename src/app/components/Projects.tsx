@@ -60,6 +60,20 @@ export function Projects() {
         { icon: <Zap className="w-4 h-4" />, text: t.projects.p3Tech2 },
         { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p3Tech3 },
         { icon: <Settings className="w-4 h-4" />, text: "UI / UX" },
+      ],
+      portals: [
+        {
+          name: "JJHire",
+          url: "https://jj-hire.vercel.app/",
+          desc: t.projects.jjhireDesc,
+          isBeta: true
+        },
+        {
+          name: "JJBusca",
+          url: "https://jj-busca.vercel.app/",
+          desc: t.projects.jjbuscaDesc,
+          isBeta: true
+        }
       ]
     },
     {
@@ -182,19 +196,59 @@ export function Projects() {
                           transition={{ duration: 0.3, ease: "easeOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-5 grid gap-3 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4 sm:grid-cols-3">
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.role}</p>
-                              <p className="text-sm text-white">{project.meta.role}</p>
+                          <div className="mt-5 grid gap-4 rounded-2xl border border-zinc-800/80 bg-zinc-950/75 p-4">
+                            <div className="grid gap-3 sm:grid-cols-3">
+                              <div>
+                                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.role}</p>
+                                <p className="text-sm text-white">{project.meta.role}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.problemSolved}</p>
+                                <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.whyItMatters}</p>
+                                <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.problemSolved}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.problem}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">{t.projects.whyItMatters}</p>
-                              <p className="text-sm text-zinc-300 leading-relaxed">{project.meta.value}</p>
-                            </div>
+
+                            {(project as any).portals && (
+                              <div className="mt-4 pt-4 border-t border-zinc-800/80">
+                                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-3">{(t.projects as any).associatedPortals}</p>
+                                <div className="grid gap-4 sm:grid-cols-2">
+                                  {(project as any).portals.map((portal: any, pIdx: number) => (
+                                    <div key={pIdx} className="p-4 rounded-xl bg-zinc-900/30 border border-zinc-800/85 hover:border-zinc-700/85 transition-colors flex flex-col justify-between">
+                                      <div>
+                                        <div className="flex items-center gap-2 mb-1.5">
+                                          <h5 className="font-bold text-white text-sm">{portal.name}</h5>
+                                          {portal.isBeta && (
+                                            <span className="px-2 py-0.5 text-[10px] font-semibold bg-amber-500/10 text-amber-400 rounded border border-amber-500/20" title={(t.projects as any).betaNotice}>
+                                              Beta
+                                            </span>
+                                          )}
+                                        </div>
+                                        <p className="text-xs text-zinc-400 leading-relaxed mb-4">{portal.desc}</p>
+                                      </div>
+                                      <div className="flex flex-col gap-2">
+                                        <a
+                                          href={portal.url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 transition-colors font-medium self-start"
+                                        >
+                                          {(t.projects as any).visitPortal} <ExternalLink className="w-3.5 h-3.5" />
+                                        </a>
+                                        {portal.isBeta && (
+                                          <span className="text-[10px] text-zinc-500 italic">
+                                            * {(t.projects as any).betaNotice}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </motion.div>
                       )}

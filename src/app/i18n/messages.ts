@@ -134,7 +134,12 @@ export const messages = {
       p3Tech3: "Responsive Design",
       p3MetaRole: "Web Developer",
       p3MetaProblem: "Present services clearly and professionally for a business audience.",
-      p3MetaValue: "Improves online presence with stronger structure, mobile usability, and SEO-oriented organization."
+      p3MetaValue: "Improves online presence with stronger structure, mobile usability, and SEO-oriented organization.",
+      associatedPortals: "Associated Portals",
+      visitPortal: "Visit Portal",
+      jjhireDesc: "Public portal for candidates to submit their CV and apply for job openings.",
+      jjbuscaDesc: "Administrative portal enabling recruiters and admins to query and manage candidate CVs.",
+      betaNotice: "Beta - Aesthetic details pending"
     },
     contact: {
       sectionSubtitle: "Get In Touch",
@@ -298,7 +303,12 @@ export const messages = {
       p3Tech3: "Diseño Responsivo",
       p3MetaRole: "Desarrollador Web",
       p3MetaProblem: "Agilizar los embudos de clientes mostrando las credenciales de manera contundente.",
-      p3MetaValue: "Mejora el volumen de consultas a través de un canal corporativo consolidado."
+      p3MetaValue: "Mejora el volumen de consultas a través de un canal corporativo consolidado.",
+      associatedPortals: "Portales Asociados",
+      visitPortal: "Visitar Portal",
+      jjhireDesc: "Portal público para que los postulantes envíen su CV y apliquen a búsquedas laborales.",
+      jjbuscaDesc: "Portal administrativo para que reclutadores y administradores busquen y gestionen los currículums recibidos.",
+      betaNotice: "Beta - Faltan detalles estéticos"
     },
     contact: {
       sectionSubtitle: "Ponte en Contacto",

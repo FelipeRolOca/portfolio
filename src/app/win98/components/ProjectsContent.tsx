@@ -24,6 +24,26 @@ export function ProjectsContent() {
       technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
       liveUrl: 'https://jjserviciosempresarialesrrhh.com/',
       image: '/Rehace_el_logo_202604262015.jpeg',
+      portals: [
+        {
+          name: 'JJHire',
+          url: 'https://jj-hire.vercel.app/',
+          description: t(
+            'Public portal for candidates to submit their CV and apply for job openings.',
+            'Portal público para que los postulantes envíen su CV y apliquen a búsquedas laborales.'
+          ),
+          isBeta: true,
+        },
+        {
+          name: 'JJBusca',
+          url: 'https://jj-busca.vercel.app/',
+          description: t(
+            'Administrative portal enabling recruiters and admins to query and manage candidate CVs.',
+            'Portal administrativo para que reclutadores y administradores busquen y gestionen los currículums recibidos.'
+          ),
+          isBeta: true,
+        },
+      ],
     },
     {
       name: 'Paper Pops',
@@ -84,6 +104,45 @@ export function ProjectsContent() {
                 <Globe className="w-4 h-4" />
                 {t('Visit Site', 'Visitar Sitio')}
               </a>
+            )}
+
+            {/* Associated Portals for Win98 */}
+            {(project as any).portals && (
+              <div className="mt-4 pt-3 border-t-2 border-dashed border-[#808080]">
+                <div className="text-xs font-bold text-gray-800 mb-2">
+                  {t('Associated Portals (Beta - Aesthetic details pending):', 'Portales Asociados (Beta - Faltan detalles estéticos):')}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {(project as any).portals.map((portal: any, pIdx: number) => (
+                    <div key={pIdx} className="border-2 border-[#808080] border-t-[#dfdfdf] border-l-[#dfdfdf] border-r-[#404040] border-b-[#404040] bg-[#c0c0c0] p-2 space-y-2 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="text-xs font-bold text-[#000080]">{portal.name}</span>
+                          {portal.isBeta && (
+                            <span className="px-1 bg-[#ffffcc] border border-[#808080] text-[9px] font-mono font-bold text-red-700 leading-none">
+                              BETA
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-800 leading-normal">
+                          {portal.description}
+                        </p>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href={portal.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-2 py-1 bg-[#c0c0c0] border-t border-l border-r-2 border-b-2 border-t-white border-l-white border-r-[#404040] border-b-[#404040] hover:brightness-105 active:border-t-[#404040] active:border-l-[#404040] active:border-r-white active:border-b-white text-[11px] font-bold text-black no-underline"
+                        >
+                          <Globe className="w-3.5 h-3.5" />
+                          {t('Visit Portal', 'Visitar Portal')}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         </div>

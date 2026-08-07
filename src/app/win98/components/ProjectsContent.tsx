@@ -24,6 +24,16 @@ export function ProjectsContent() {
       technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
       liveUrl: 'https://jjserviciosempresarialesrrhh.com/',
       image: '/Rehace_el_logo_202604262015.jpeg',
+    },
+    {
+      name: 'JJHire & JJBusca',
+      description: t(
+        'A recruitment platform composed of two complementary portals: JJHire (for candidates to submit CVs) and JJBusca (for admins to search applications). Currently in Beta phase with final logo and layout polish pending.',
+        'Plataforma de contratación compuesta por dos portales complementarios: JJHire (para postulantes) y JJBusca (para administradores). Actualmente en fase Beta con logotipo final y pulido estético pendientes.'
+      ),
+      technologies: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
+      liveUrl: '',
+      image: '/jj-hire-busca-placeholder.png',
       portals: [
         {
           name: 'JJHire',

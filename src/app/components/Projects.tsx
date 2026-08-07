@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo, useState } from "react";
-import { ExternalLink, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck, ChevronDown } from "lucide-react";
+import { ExternalLink, Palette, Zap, Layout, MousePointer2, QrCode, Map, Settings, ShieldCheck, ChevronDown, Globe } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { SpotlightCard } from "./ui/SpotlightCard";
 import { TextReveal } from "./ui/TextReveal";
@@ -60,6 +60,25 @@ export function Projects() {
         { icon: <Zap className="w-4 h-4" />, text: t.projects.p3Tech2 },
         { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p3Tech3 },
         { icon: <Settings className="w-4 h-4" />, text: "UI / UX" },
+      ]
+    },
+    {
+      title: t.projects.p4Title,
+      type: t.projects.p4Type,
+      image: "/jj-hire-busca-placeholder.png",
+      description: t.projects.p4Desc,
+      tech: ["React", "Next.js", "Tailwind CSS", "Vercel"],
+      liveUrl: "",
+      meta: {
+        role: t.projects.p4MetaRole,
+        problem: t.projects.p4MetaProblem,
+        value: t.projects.p4MetaValue
+      },
+      highlights: [
+        { icon: <Globe className="w-4 h-4" />, text: t.projects.p4H1 },
+        { icon: <Settings className="w-4 h-4" />, text: t.projects.p4H2 },
+        { icon: <Zap className="w-4 h-4" />, text: t.projects.p4H3 },
+        { icon: <MousePointer2 className="w-4 h-4" />, text: t.projects.p4H4 },
       ],
       portals: [
         {

@@ -139,7 +139,17 @@ export const messages = {
       visitPortal: "Visit Portal",
       jjhireDesc: "Public portal for candidates to submit their CV and apply for job openings.",
       jjbuscaDesc: "Administrative portal enabling recruiters and admins to query and manage candidate CVs.",
-      betaNotice: "Beta - Aesthetic details pending"
+      betaNotice: "Beta - Aesthetic details pending",
+      p4Type: "Complementary Services / Beta",
+      p4Title: "JJHire & JJBusca",
+      p4Desc: "A recruitment platform composed of two complementary portals: JJHire (for job seekers to submit CVs) and JJBusca (for administrators to query and manage applications). Currently in Beta; aesthetic details and final logo are pending definition.",
+      p4MetaRole: "Full Stack Developer",
+      p4MetaProblem: "Streamline candidate CV reception and recruiter administrative searches in a unified flow.",
+      p4MetaValue: "Integrates public candidate onboarding with administrative management tools.",
+      p4H1: "JJHire: CV Onboarding",
+      p4H2: "JJBusca: Admin Search",
+      p4H3: "Beta - UI polish in progress",
+      p4H4: "Logo Pending Definition"
     },
     contact: {
       sectionSubtitle: "Get In Touch",
@@ -308,7 +318,17 @@ export const messages = {
       visitPortal: "Visitar Portal",
       jjhireDesc: "Portal público para que los postulantes envíen su CV y apliquen a búsquedas laborales.",
       jjbuscaDesc: "Portal administrativo para que reclutadores y administradores busquen y gestionen los currículums recibidos.",
-      betaNotice: "Beta - Faltan detalles estéticos"
+      betaNotice: "Beta - Faltan detalles estéticos",
+      p4Type: "Servicios Complementarios / Beta",
+      p4Title: "JJHire & JJBusca",
+      p4Desc: "Plataforma de contratación compuesta por dos portales complementarios: JJHire (para que los candidatos envíen su CV) y JJBusca (para que los administradores busquen y gestionen aplicaciones). Actualmente en fase Beta; detalles estéticos y logotipo definitivo pendientes.",
+      p4MetaRole: "Desarrollador Full Stack",
+      p4MetaProblem: "Facilitar el envío de CV para postulantes y agilizar las búsquedas administrativas de perfiles.",
+      p4MetaValue: "Conecta de manera directa la postulación pública con el backend de gestión de talento.",
+      p4H1: "JJHire: Envío de CV",
+      p4H2: "JJBusca: Consulta de Admins",
+      p4H3: "Beta - Pulido estético activo",
+      p4H4: "Logo Pendiente de Definición"
     },
     contact: {
       sectionSubtitle: "Ponte en Contacto",

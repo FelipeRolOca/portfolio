@@ -172,9 +172,13 @@ function Navbar() {
             {/* Mobile Language Switcher */}
             <button
               onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-              className="md:hidden px-2.5 py-1 text-[11px] font-mono font-bold text-[#E4EEF0] bg-[#075056]/80 border border-[#268B95] rounded flex items-center gap-1 cursor-pointer"
+              className="md:hidden px-2.5 py-1 text-[11px] font-mono font-bold text-[#E4EEF0] bg-[#075056]/80 border border-[#268B95] rounded flex items-center gap-1.5 cursor-pointer"
               title="Cambiar idioma / Switch language"
             >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+              </svg>
               <span className={lang === 'es' ? 'text-[#FF5B04]' : 'text-white/60'}>ES</span>
               <span>/</span>
               <span className={lang === 'en' ? 'text-[#FF5B04]' : 'text-white/60'}>EN</span>
@@ -232,7 +236,7 @@ function Navbar() {
             {/* Desktop Language Switcher Toggle */}
             <button
               onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-              className="relative z-10 ml-2 px-2.5 py-1.5 text-xs font-mono font-bold tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-1"
+              className="relative z-10 ml-2 px-2.5 py-1.5 text-xs font-mono font-bold tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-1.5"
               style={{
                 backgroundColor: 'rgba(7,80,86,0.6)',
                 color: '#E4EEF0',
@@ -241,6 +245,10 @@ function Navbar() {
               }}
               title="Cambiar idioma / Switch language"
             >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+              </svg>
               <span className={lang === 'es' ? 'text-[#FF5B04]' : 'text-white/50'}>ES</span>
               <span>/</span>
               <span className={lang === 'en' ? 'text-[#FF5B04]' : 'text-white/50'}>EN</span>

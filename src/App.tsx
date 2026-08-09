@@ -1118,7 +1118,8 @@ function Projects() {
             </h2>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* Desktop Page Indicator */}
+          <div className="hidden md:flex items-center gap-4">
             {/* Page Counter Badge */}
             <div
               className="px-3 py-1 text-xs font-mono font-bold tracking-widest uppercase rounded border"
@@ -1150,8 +1151,8 @@ function Projects() {
           </div>
         </div>
 
-        {/* CAROUSEL WRAPPER WITH SIDE NAV ARROWS */}
-        <div className="relative flex items-center gap-2 sm:gap-4">
+        {/* DESKTOP CAROUSEL WRAPPER WITH SIDE NAV ARROWS (md and above) */}
+        <div className="hidden md:flex relative items-center gap-2 sm:gap-4">
           {/* Left Arrow Button (Side) */}
           <button
             onClick={handlePrev}
@@ -1179,9 +1180,9 @@ function Projects() {
             </svg>
           </button>
 
-          {/* GRID OF 4 CARDS (2x2 on Desktop / 1 col or 2 cols on Mobile) */}
+          {/* GRID OF 4 CARDS (2x2 Grid) */}
           <div
-            className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-px transition-all duration-500"
+            className="flex-1 grid grid-cols-2 gap-px transition-all duration-500"
             style={{
               backgroundColor: 'rgba(7,80,86,0.3)',
               border: '1px solid rgba(7,80,86,0.5)',
@@ -1424,6 +1425,103 @@ function Projects() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
+        </div>
+
+        {/* MOBILE STACKED LIST (1-Column List without Add Slots for screens under md) */}
+        <div className="flex flex-col gap-8 md:hidden w-full">
+          {RAW_PROJECTS.map(proj => (
+            <div
+              key={proj.id}
+              className="relative w-full p-6 sm:p-7 flex flex-col justify-between rounded border border-[#075056]/60 bg-[#16232A] shadow-[0_6px_25px_rgba(0,0,0,0.35)] transition-all duration-200"
+            >
+              {proj.featured && (
+                <div
+                  className="absolute top-4 right-4 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10"
+                  style={{
+                    backgroundColor: '#FF5B04',
+                    color: '#E4EEF0',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontSize: '9px',
+                    borderRadius: '2px',
+                  }}
+                >
+                  {t('Principal', 'Featured')}
+                </div>
+              )}
+
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3.5 pr-20">
+                  <div className="w-11 h-11 rounded border border-[#FF5B04]/30 p-1.5 bg-[#075056]/20 flex items-center justify-center flex-shrink-0">
+                    <img
+                      src={proj.image}
+                      alt={proj.title}
+                      className="w-full h-full object-contain rounded"
+                    />
+                  </div>
+                  <div>
+                    <div
+                      className="text-xs uppercase tracking-widest"
+                      style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04', fontSize: '10px' }}
+                    >
+                      {proj.subtitle}
+                    </div>
+                    <h3
+                      className="font-black uppercase text-xl leading-tight"
+                      style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
+                    >
+                      {proj.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <p
+                  className="leading-relaxed text-sm font-medium"
+                  style={{ color: 'rgba(228,238,240,0.85)', fontFamily: 'Barlow, sans-serif' }}
+                >
+                  {proj.description}
+                </p>
+              </div>
+
+              <div className="mt-6 flex flex-col gap-4">
+                <div className="flex flex-wrap gap-2">
+                  {proj.tech.map(tag => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-1 text-xs uppercase tracking-wider font-semibold"
+                      style={{
+                        backgroundColor: 'rgba(7,80,86,0.35)',
+                        color: 'rgba(228,238,240,0.8)',
+                        fontFamily: 'JetBrains Mono, monospace',
+                        borderRadius: '2px',
+                        fontSize: '10px',
+                        border: '1px solid rgba(7,80,86,0.5)',
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
+                  <a
+                    href={proj.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-center transition-all duration-200"
+                    style={{
+                      backgroundColor: '#FF5B04',
+                      color: '#E4EEF0',
+                      fontFamily: 'Barlow Condensed, sans-serif',
+                      borderRadius: '2px',
+                      letterSpacing: '0.08em',
+                    }}
+                  >
+                    {t('Visitar Sitio →', 'Visit Site →')}
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -975,9 +975,11 @@ function Experience() {
 function Projects() {
   const { t } = useLang()
   const [activeProject, setActiveProject] = useState<number | null>(null)
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const PROJECTS = [
+  const RAW_PROJECTS = [
     {
+      id: 'jj-asist',
       title: 'JJAsist',
       subtitle: t('Proyecto Principal / SaaS', 'Main Project / SaaS'),
       description: t(
@@ -990,6 +992,7 @@ function Projects() {
       featured: true,
     },
     {
+      id: 'jj-servicios',
       title: 'JJ Servicios Empresariales',
       subtitle: t('Desarrollo Web / Cliente Real', 'Web Dev / Real Client'),
       description: t(
@@ -1002,19 +1005,33 @@ function Projects() {
       featured: false,
     },
     {
-      title: 'JJHire & JJBusca',
-      subtitle: t('Plataforma en Desarrollo / Beta', 'Platform in Development / Beta'),
+      id: 'jj-hire',
+      title: 'JJHire',
+      subtitle: t('Plataforma de Contratación / Postulantes', 'Hiring Platform / Applicants Portal'),
       description: t(
-        'Plataforma de contratación compuesta por dos portales complementarios: JJHire (para postulantes) y JJBusca (para administradores) para consultar y gestionar búsquedas laborales.',
-        'Hiring platform composed of two complementary portals: JJHire (for applicants) and JJBusca (for admins) to browse and manage job listings.'
+        'Portal de empleo para postulantes donde pueden explorar vacantes laborales activas, postularse con su perfil y dar seguimiento a sus búsquedas.',
+        'Job portal for applicants to browse active openings, apply with their profile, and track their applications.'
       ),
       tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
       url: 'https://jj-hire.vercel.app/',
-      secondaryUrl: 'https://jj-busca.vercel.app/',
       image: '/jj-hire-busca-placeholder.png',
       featured: false,
     },
     {
+      id: 'jj-busca',
+      title: 'JJBusca',
+      subtitle: t('Plataforma de Gestión / Reclutadores', 'Management Platform / Recruiters Portal'),
+      description: t(
+        'Portal administrativo para reclutadores y empresas que permite publicar ofertas, gestionar candidatos y administrar el flujo de selección.',
+        'Administrative portal for recruiters and businesses to publish job openings, manage candidates, and oversee hiring pipelines.'
+      ),
+      tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel', 'Admin Dashboard'],
+      url: 'https://jj-busca.vercel.app/',
+      image: '/jj-hire-busca-placeholder.png',
+      featured: false,
+    },
+    {
+      id: 'paper-pops',
       title: 'Paper Pops',
       subtitle: t('Proyecto Experimental / Frontend', 'Experimental / Frontend Project'),
       description: t(
@@ -1027,6 +1044,45 @@ function Projects() {
       featured: false,
     },
   ]
+
+  const ITEMS_PER_PAGE = 4
+  const totalReal = RAW_PROJECTS.length
+  const totalPages = Math.ceil(totalReal / ITEMS_PER_PAGE)
+  const totalSlotsNeeded = totalPages * ITEMS_PER_PAGE
+  const addSlotsCount = totalSlotsNeeded - totalReal
+
+  type SlotItem =
+    | ({ isAddSlot?: false } & (typeof RAW_PROJECTS)[number])
+    | { isAddSlot: true; id: string }
+
+  const ALL_ITEMS: SlotItem[] = [
+    ...RAW_PROJECTS.map(p => ({ ...p, isAddSlot: false as const })),
+    ...Array.from({ length: addSlotsCount }, (_, idx) => ({
+      isAddSlot: true as const,
+      id: `add-slot-${idx}`,
+    })),
+  ]
+
+  // Auto-slide every 30 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentPage(prev => (prev + 1) % totalPages)
+    }, 30000)
+    return () => clearInterval(timer)
+  }, [totalPages])
+
+  const handlePrev = () => {
+    setCurrentPage(prev => (prev - 1 + totalPages) % totalPages)
+  }
+
+  const handleNext = () => {
+    setCurrentPage(prev => (prev + 1) % totalPages)
+  }
+
+  const currentItems = ALL_ITEMS.slice(
+    currentPage * ITEMS_PER_PAGE,
+    (currentPage + 1) * ITEMS_PER_PAGE
+  )
 
   return (
     <section
@@ -1043,8 +1099,9 @@ function Projects() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header Title & Page Indicator */}
+        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
           <div>
             <h2
               className="uppercase leading-none"
@@ -1060,263 +1117,313 @@ function Projects() {
               <span style={{ color: '#FF5B04' }}>{t('Destacado', 'Work')}</span>
             </h2>
           </div>
+
+          <div className="flex items-center gap-4">
+            {/* Page Counter Badge */}
+            <div
+              className="px-3 py-1 text-xs font-mono font-bold tracking-widest uppercase rounded border"
+              style={{
+                backgroundColor: 'rgba(7,80,86,0.3)',
+                borderColor: '#268B95',
+                color: '#E4EEF0',
+                fontFamily: 'JetBrains Mono, monospace',
+              }}
+            >
+              0{currentPage + 1} / 0{totalPages}
+            </div>
+
+            {/* Page Dots Indicator */}
+            <div className="flex items-center gap-1.5">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentPage(idx)}
+                  className="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer"
+                  style={{
+                    backgroundColor: currentPage === idx ? '#FF5B04' : 'rgba(7,80,86,0.6)',
+                    transform: currentPage === idx ? 'scale(1.2)' : 'scale(1)',
+                  }}
+                  title={`Página ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* DESKTOP 2X2 GRID (Static attached grid with subtle glow on active card & dimmed inactive) */}
-        <div
-          className="hidden lg:grid grid-cols-2 gap-px"
-          style={{
-            backgroundColor: 'rgba(7,80,86,0.3)',
-            border: '1px solid rgba(7,80,86,0.5)',
-          }}
-        >
-          {PROJECTS.map((proj, i) => {
-            const isHovered = activeProject === i
-            const isAnyHovered = activeProject !== null
-            const isDimmed = isAnyHovered && !isHovered
+        {/* CAROUSEL WRAPPER WITH SIDE NAV ARROWS */}
+        <div className="relative flex items-center gap-2 sm:gap-4">
+          {/* Left Arrow Button (Side) */}
+          <button
+            onClick={handlePrev}
+            className="z-20 p-2.5 sm:p-4 rounded transition-all duration-300 cursor-pointer flex items-center justify-center border flex-shrink-0"
+            style={{
+              backgroundColor: 'rgba(22,35,42,0.9)',
+              borderColor: '#075056',
+              color: '#E4EEF0',
+              backdropFilter: 'blur(8px)',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = '#FF5B04'
+              e.currentTarget.style.color = '#FF5B04'
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(255,91,4,0.4)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = '#075056'
+              e.currentTarget.style.color = '#E4EEF0'
+              e.currentTarget.style.boxShadow = 'none'
+            }}
+            title={t('Página anterior', 'Previous page')}
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
-            return (
-              <div
-                key={i}
-                className={`relative p-8 flex flex-col justify-between transition-all duration-300 overflow-hidden cursor-pointer ${
-                  isHovered
-                    ? 'bg-[#0c1f27] border-2 border-[#FF5B04] shadow-[0_15px_40px_rgba(255,91,4,0.3)] z-10'
-                    : isDimmed
-                    ? 'bg-[#121c21] opacity-50 border border-transparent'
-                    : 'bg-[#16232A] border border-transparent hover:bg-[#0a1e25]'
-                }`}
-                onMouseEnter={() => setActiveProject(i)}
-                onMouseLeave={() => setActiveProject(null)}
-                onClick={(e) => {
-                  if ((e.target as HTMLElement).tagName !== 'A' && (e.target as HTMLElement).tagName !== 'BUTTON') {
-                    window.open(proj.url, '_blank')
-                  }
-                }}
-              >
-                {proj.featured && (
+          {/* GRID OF 4 CARDS (2x2 on Desktop / 1 col or 2 cols on Mobile) */}
+          <div
+            className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-px transition-all duration-500"
+            style={{
+              backgroundColor: 'rgba(7,80,86,0.3)',
+              border: '1px solid rgba(7,80,86,0.5)',
+            }}
+          >
+            {currentItems.map((item, i) => {
+              if (item.isAddSlot) {
+                return (
                   <div
-                    className="absolute top-6 right-6 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10"
+                    key={item.id}
+                    onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="relative p-6 sm:p-8 flex flex-col justify-between items-center text-center transition-all duration-300 group cursor-pointer border-2 border-dashed min-h-[340px]"
                     style={{
-                      backgroundColor: '#FF5B04',
-                      color: '#E4EEF0',
-                      fontFamily: 'JetBrains Mono, monospace',
-                      fontSize: '9px',
+                      backgroundColor: 'rgba(22,35,42,0.4)',
+                      borderColor: 'rgba(7,80,86,0.6)',
                       borderRadius: '2px',
                     }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.borderColor = '#FF5B04'
+                      e.currentTarget.style.backgroundColor = 'rgba(7,80,86,0.2)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'rgba(7,80,86,0.6)'
+                      e.currentTarget.style.backgroundColor = 'rgba(22,35,42,0.4)'
+                    }}
                   >
-                    {t('Principal', 'Featured')}
-                  </div>
-                )}
-
-                <div className="flex flex-col gap-4">
-                  {/* Subtle emblem logo header */}
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded border border-[#FF5B04]/30 p-1.5 bg-[#075056]/20 flex items-center justify-center flex-shrink-0">
-                      <img
-                        src={proj.image}
-                        alt={proj.title}
-                        className="w-full h-full object-contain rounded"
-                      />
-                    </div>
-                    <div>
-                      <div
-                        className="text-xs uppercase tracking-widest"
-                        style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04', fontSize: '10px' }}
-                      >
-                        {proj.subtitle}
-                      </div>
-                      <h3
-                        className="font-black uppercase text-2xl leading-tight"
-                        style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
-                      >
-                        {proj.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <p
-                    className="leading-relaxed text-sm"
-                    style={{ color: 'rgba(228,238,240,0.8)', fontFamily: 'Barlow, sans-serif' }}
-                  >
-                    {proj.description}
-                  </p>
-                </div>
-
-                <div className="mt-6 flex flex-col gap-4">
-                  <div className="flex flex-wrap gap-2">
-                    {proj.tech.map(tag => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 text-xs uppercase tracking-wider"
-                        style={{
-                          backgroundColor: 'rgba(7,80,86,0.3)',
-                          color: 'rgba(228,238,240,0.7)',
-                          fontFamily: 'JetBrains Mono, monospace',
-                          borderRadius: '2px',
-                          fontSize: '10px',
-                          border: '1px solid rgba(7,80,86,0.4)',
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
-                    <a
-                      href={proj.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-center"
+                    <div
+                      className="self-end px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider"
                       style={{
-                        backgroundColor: isHovered ? '#FF5B04' : 'rgba(7,80,86,0.5)',
-                        color: '#E4EEF0',
-                        fontFamily: 'Barlow Condensed, sans-serif',
-                        fontWeight: 700,
-                        letterSpacing: '0.1em',
+                        backgroundColor: 'rgba(7,80,86,0.4)',
+                        color: '#FF5B04',
+                        fontFamily: 'JetBrains Mono, monospace',
+                        fontSize: '9px',
                         borderRadius: '2px',
-                        border: isHovered ? '1px solid #FF5B04' : '1px solid rgba(7,80,86,0.6)',
+                        border: '1px solid rgba(255,91,4,0.3)',
                       }}
                     >
-                      {t('Visitar Sitio →', 'Visit Site →')}
-                    </a>
-                    {proj.secondaryUrl && (
+                      {t('DISPONIBLE', 'AVAILABLE SLOT')}
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center gap-4 my-auto">
+                      <div
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-dashed flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style={{
+                          borderColor: '#FF5B04',
+                          color: '#FF5B04',
+                          backgroundColor: 'rgba(255,91,4,0.08)',
+                          boxShadow: '0 0 20px rgba(255,91,4,0.15)',
+                        }}
+                      >
+                        <svg className="w-7 h-7 sm:w-8 sm:h-8 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                      </div>
+
+                      <div>
+                        <h3
+                          className="font-black uppercase text-xl sm:text-2xl leading-tight mb-2"
+                          style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
+                        >
+                          {t('Próximo Proyecto', 'Next Project')}
+                        </h3>
+                        <p
+                          className="text-xs sm:text-sm max-w-xs leading-relaxed"
+                          style={{ color: 'rgba(228,238,240,0.6)', fontFamily: 'Barlow, sans-serif' }}
+                        >
+                          {t(
+                            '¿Tenés un proceso, idea o sistema que querés desarrollar? Sumemos tu proyecto acá.',
+                            'Have a business process, idea, or system to digitize? Let’s feature your project here.'
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
+                      className="w-full py-2.5 px-4 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-center"
+                      style={{
+                        backgroundColor: 'rgba(7,80,86,0.4)',
+                        color: '#E4EEF0',
+                        border: '1px dashed rgba(255,91,4,0.5)',
+                        fontFamily: 'Barlow Condensed, sans-serif',
+                        letterSpacing: '0.1em',
+                        borderRadius: '2px',
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.backgroundColor = '#FF5B04'
+                        e.currentTarget.style.borderColor = '#FF5B04'
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.backgroundColor = 'rgba(7,80,86,0.4)'
+                        e.currentTarget.style.borderColor = 'rgba(255,91,4,0.5)'
+                      }}
+                    >
+                      {t('Consultar por un proyecto →', 'Inquire a project →')}
+                    </div>
+                  </div>
+                )
+              }
+
+              const proj = item
+              const isHovered = activeProject === i
+              const isAnyHovered = activeProject !== null
+              const isDimmed = isAnyHovered && !isHovered
+
+              return (
+                <div
+                  key={proj.id}
+                  className={`relative p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 overflow-hidden cursor-pointer min-h-[340px] ${
+                    isHovered
+                      ? 'bg-[#0c1f27] border-2 border-[#FF5B04] shadow-[0_15px_40px_rgba(255,91,4,0.3)] z-10'
+                      : isDimmed
+                      ? 'bg-[#121c21] opacity-50 border border-transparent'
+                      : 'bg-[#16232A] border border-transparent hover:bg-[#0a1e25]'
+                  }`}
+                  onMouseEnter={() => setActiveProject(i)}
+                  onMouseLeave={() => setActiveProject(null)}
+                  onClick={(e) => {
+                    if ((e.target as HTMLElement).tagName !== 'A' && (e.target as HTMLElement).tagName !== 'BUTTON') {
+                      window.open(proj.url, '_blank')
+                    }
+                  }}
+                >
+                  {proj.featured && (
+                    <div
+                      className="absolute top-6 right-6 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10"
+                      style={{
+                        backgroundColor: '#FF5B04',
+                        color: '#E4EEF0',
+                        fontFamily: 'JetBrains Mono, monospace',
+                        fontSize: '9px',
+                        borderRadius: '2px',
+                      }}
+                    >
+                      {t('Principal', 'Featured')}
+                    </div>
+                  )}
+
+                  <div className="flex flex-col gap-4">
+                    {/* Emblem Logo & Title */}
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded border border-[#FF5B04]/30 p-1.5 bg-[#075056]/20 flex items-center justify-center flex-shrink-0">
+                        <img
+                          src={proj.image}
+                          alt={proj.title}
+                          className="w-full h-full object-contain rounded"
+                        />
+                      </div>
+                      <div>
+                        <div
+                          className="text-xs uppercase tracking-widest"
+                          style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04', fontSize: '10px' }}
+                        >
+                          {proj.subtitle}
+                        </div>
+                        <h3
+                          className="font-black uppercase text-2xl leading-tight"
+                          style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
+                        >
+                          {proj.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <p
+                      className="leading-relaxed text-sm"
+                      style={{ color: 'rgba(228,238,240,0.8)', fontFamily: 'Barlow, sans-serif' }}
+                    >
+                      {proj.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex flex-wrap gap-2">
+                      {proj.tech.map(tag => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 text-xs uppercase tracking-wider"
+                          style={{
+                            backgroundColor: 'rgba(7,80,86,0.3)',
+                            color: 'rgba(228,238,240,0.7)',
+                            fontFamily: 'JetBrains Mono, monospace',
+                            borderRadius: '2px',
+                            fontSize: '10px',
+                            border: '1px solid rgba(7,80,86,0.4)',
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
                       <a
-                        href={proj.secondaryUrl}
+                        href={proj.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="py-3 px-4 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-center"
+                        className="flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-center"
                         style={{
-                          backgroundColor: 'transparent',
+                          backgroundColor: isHovered ? '#FF5B04' : 'rgba(7,80,86,0.5)',
                           color: '#E4EEF0',
                           fontFamily: 'Barlow Condensed, sans-serif',
                           fontWeight: 700,
                           letterSpacing: '0.1em',
                           borderRadius: '2px',
-                          border: '1px solid #075056',
+                          border: isHovered ? '1px solid #FF5B04' : '1px solid rgba(7,80,86,0.6)',
                         }}
                       >
-                        JJBusca →
+                        {t('Visitar Sitio →', 'Visit Site →')}
                       </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        {/* MOBILE STATIC CARDS (Clean, Fixed, No Complex Animations) */}
-        <div className="grid grid-cols-1 gap-6 lg:hidden">
-          {PROJECTS.map((proj, i) => (
-            <div
-              key={i}
-              className="relative p-6 flex flex-col justify-between rounded border border-[#075056]/50 bg-[#16232A]"
-            >
-              {proj.featured && (
-                <div
-                  className="absolute top-4 right-4 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10"
-                  style={{
-                    backgroundColor: '#FF5B04',
-                    color: '#E4EEF0',
-                    fontFamily: 'JetBrains Mono, monospace',
-                    fontSize: '9px',
-                    borderRadius: '2px',
-                  }}
-                >
-                  Principal
-                </div>
-              )}
-
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded border border-[#FF5B04]/30 p-1 bg-[#075056]/20 flex items-center justify-center flex-shrink-0">
-                    <img
-                      src={proj.image}
-                      alt={proj.title}
-                      className="w-full h-full object-contain rounded"
-                    />
-                  </div>
-                  <div>
-                    <div
-                      className="text-xs uppercase tracking-widest"
-                      style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04', fontSize: '9px' }}
-                    >
-                      {proj.subtitle}
                     </div>
-                    <h3
-                      className="font-black uppercase text-xl leading-tight"
-                      style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
-                    >
-                      {proj.title}
-                    </h3>
                   </div>
                 </div>
+              )
+            })}
+          </div>
 
-                <p
-                  className="leading-relaxed text-sm"
-                  style={{ color: 'rgba(228,238,240,0.8)', fontFamily: 'Barlow, sans-serif' }}
-                >
-                  {proj.description}
-                </p>
-              </div>
-
-              <div className="mt-6 flex flex-col gap-4">
-                <div className="flex flex-wrap gap-2">
-                  {proj.tech.map(tag => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 text-xs uppercase tracking-wider"
-                      style={{
-                        backgroundColor: 'rgba(7,80,86,0.3)',
-                        color: 'rgba(228,238,240,0.7)',
-                        fontFamily: 'JetBrains Mono, monospace',
-                        borderRadius: '2px',
-                        fontSize: '9px',
-                        border: '1px solid rgba(7,80,86,0.4)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
-                  <a
-                    href={proj.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider text-center"
-                    style={{
-                      backgroundColor: '#FF5B04',
-                      color: '#E4EEF0',
-                      fontFamily: 'Barlow Condensed, sans-serif',
-                      borderRadius: '2px',
-                    }}
-                  >
-                    {t('Visitar Sitio →', 'Visit Site →')}
-                  </a>
-                  {proj.secondaryUrl && (
-                    <a
-                      href={proj.secondaryUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="py-2.5 px-3 text-xs font-bold uppercase tracking-wider text-center"
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: '#E4EEF0',
-                        fontFamily: 'Barlow Condensed, sans-serif',
-                        borderRadius: '2px',
-                        border: '1px solid #075056',
-                      }}
-                    >
-                      JJBusca →
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+          {/* Right Arrow Button (Side) */}
+          <button
+            onClick={handleNext}
+            className="z-20 p-2.5 sm:p-4 rounded transition-all duration-300 cursor-pointer flex items-center justify-center border flex-shrink-0"
+            style={{
+              backgroundColor: 'rgba(22,35,42,0.9)',
+              borderColor: '#075056',
+              color: '#E4EEF0',
+              backdropFilter: 'blur(8px)',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = '#FF5B04'
+              e.currentTarget.style.color = '#FF5B04'
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(255,91,4,0.4)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = '#075056'
+              e.currentTarget.style.color = '#E4EEF0'
+              e.currentTarget.style.boxShadow = 'none'
+            }}
+            title={t('Página siguiente', 'Next page')}
+          >
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

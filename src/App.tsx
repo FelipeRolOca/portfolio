@@ -421,12 +421,6 @@ function About() {
 
       <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <div
-            className="text-xs font-mono uppercase tracking-widest mb-4"
-            style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
-          >
-            01 — Sobre Mí
-          </div>
           <h2
             className="uppercase leading-none mb-8"
             style={{
@@ -513,12 +507,6 @@ function Services() {
       style={{ backgroundColor: '#16232A' }}
     >
       <div className="relative max-w-7xl mx-auto px-6">
-        <div
-          className="text-xs font-mono uppercase tracking-widest mb-4"
-          style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
-        >
-          02 — Soluciones Digitales
-        </div>
         <h2
           className="uppercase leading-none mb-6"
           style={{
@@ -680,12 +668,6 @@ function Skills() {
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-16 flex-wrap gap-4">
           <div>
-            <div
-              className="text-xs font-mono uppercase tracking-widest mb-4"
-              style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
-            >
-              03 — Tecnologías
-            </div>
             <h2
               className="uppercase leading-none"
               style={{
@@ -776,12 +758,6 @@ function Experience() {
       style={{ backgroundColor: '#075056' }}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div
-          className="text-xs font-mono uppercase tracking-widest mb-4"
-          style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
-        >
-          04 — Experiencia
-        </div>
         <h2
           className="uppercase leading-none mb-16"
           style={{
@@ -942,12 +918,6 @@ function Projects() {
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
           <div>
-            <div
-              className="text-xs font-mono uppercase tracking-widest mb-4"
-              style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
-            >
-              05 — Proyectos
-            </div>
             <h2
               className="uppercase leading-none"
               style={{
@@ -1274,12 +1244,6 @@ function Contact() {
 
       <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
         <div>
-          <div
-            className="text-xs font-mono uppercase tracking-widest mb-4"
-            style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'JetBrains Mono, monospace' }}
-          >
-            06 — Contacto
-          </div>
           <h2
             className="uppercase leading-none mb-8"
             style={{

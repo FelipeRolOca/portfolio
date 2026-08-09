@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-mirage: #16232A;
+  --color-deep-sea: #075056;
+  --color-wild-sand: #E4EEF0;
+  --color-blaze: #FF5B04;
+  --color-blaze-dark: #D94A00;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #16232A;
+  color: #E4EEF0;
+  font-family: 'Barlow', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #16232A;
+}
+::-webkit-scrollbar-thumb {
+  background: #075056;
+  border-radius: 3px;
+}
+
+@keyframes fullSlide {
+  0%, 100% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(-28%);
+  }
+}
+
+.animate-slow-float {
+  animation: fullSlide 14s ease-in-out infinite;
+}
+

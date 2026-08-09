@@ -1,0 +1,10 @@
+{
+  "description": "Showcase your full stack development and automation expertise with a modern, minimalist portfolio that highlights skills, projects, and contact information.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

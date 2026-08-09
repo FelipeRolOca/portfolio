@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, createContext, useContext } from 'react'
 import logo1 from '@/imports/LOGO_1.png'
 import logo2 from '@/imports/LOGO_2.png'
 import logo3 from '@/imports/LOGO_3.png'
@@ -10,10 +10,48 @@ import elem1 from '@/imports/ELEMENTO_GRAFICO_1.png'
 import elem2 from '@/imports/ELEMENTO_GRAFICO_2.png'
 import elem3 from '@/imports/ELEMENTO_GRAFICO_3.png'
 
-const NAV_ITEMS = ['Sobre Mí', 'Servicios', 'Habilidades', 'Experiencia', 'Proyectos', 'Contacto']
+type Language = 'es' | 'en'
+
+interface LanguageContextType {
+  lang: Language
+  setLang: (l: Language) => void
+  t: (es: string, en: string) => string
+}
+
+const LanguageContext = createContext<LanguageContextType>({
+  lang: 'es',
+  setLang: () => {},
+  t: (es) => es,
+})
+
+function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLangState] = useState<Language>(() => {
+    const saved = localStorage.getItem('portfolio_lang')
+    return (saved === 'en' || saved === 'es') ? saved : 'es'
+  })
+
+  const setLang = (l: Language) => {
+    setLangState(l)
+    localStorage.setItem('portfolio_lang', l)
+  }
+
+  const t = (es: string, en: string) => (lang === 'en' ? en : es)
+
+  return (
+    <LanguageContext.Provider value={{ lang, setLang, t }}>
+      {children}
+    </LanguageContext.Provider>
+  )
+}
+
+function useLang() {
+  return useContext(LanguageContext)
+}
+
 const NAV_IDS = ['sobre', 'servicios', 'habilidades', 'experiencia', 'proyectos', 'contacto']
 
 function Navbar() {
+  const { lang, setLang, t } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('hero')
   const [pillStyle, setPillStyle] = useState<{ left: number; width: number; opacity: number }>({
@@ -23,6 +61,15 @@ function Navbar() {
   })
 
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const NAV_ITEMS = [
+    t('Sobre Mí', 'About Me'),
+    t('Soluciones', 'Solutions'),
+    t('Tecnologías', 'Tech Stack'),
+    t('Experiencia', 'Experience'),
+    t('Proyectos', 'Projects'),
+    t('Contacto', 'Contact'),
+  ]
 
   const updatePill = (activeId: string) => {
     const idx = NAV_IDS.indexOf(activeId)
@@ -70,7 +117,7 @@ function Navbar() {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
     }
-  }, [active])
+  }, [active, lang])
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -90,36 +137,49 @@ function Navbar() {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
-          {/* Brand Logo & Name (Distinct indicator when active on Hero) */}
-          <button
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-              setActive('hero')
-              updatePill('hero')
-            }}
-            className={`flex items-center gap-3 px-3 py-1.5 rounded transition-all duration-300 cursor-pointer ${
-              active === 'hero'
-                ? 'bg-[#075056]/30 border border-[#268B95] shadow-[0_0_15px_rgba(38,139,149,0.35)]'
-                : 'hover:bg-[#075056]/20 border border-transparent'
-            }`}
-          >
-            <img src={logo2} alt="FRO logo" className="h-9 w-9 object-contain" />
-            <div className="flex items-center gap-2">
-              <span
-                className="text-xs sm:text-sm font-mono tracking-widest uppercase font-bold"
-                style={{ color: '#E4EEF0', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.15em' }}
-              >
-                Felipe Roldán Ocampo
-              </span>
-              {active === 'hero' && (
+          {/* Brand Logo & Name + Mobile Language Switcher */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+                setActive('hero')
+                updatePill('hero')
+              }}
+              className={`flex items-center gap-3 px-3 py-1.5 rounded transition-all duration-300 cursor-pointer ${
+                active === 'hero'
+                  ? 'bg-[#075056]/30 border border-[#268B95] shadow-[0_0_15px_rgba(38,139,149,0.35)]'
+                  : 'hover:bg-[#075056]/20 border border-transparent'
+              }`}
+            >
+              <img src={logo2} alt="FRO logo" className="h-9 w-9 object-contain" />
+              <div className="flex items-center gap-2">
                 <span
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ backgroundColor: '#FF5B04' }}
-                  title="Inicio Activo"
-                />
-              )}
-            </div>
-          </button>
+                  className="text-xs sm:text-sm font-mono tracking-widest uppercase font-bold"
+                  style={{ color: '#E4EEF0', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.15em' }}
+                >
+                  Felipe Roldán Ocampo
+                </span>
+                {active === 'hero' && (
+                  <span
+                    className="w-2 h-2 rounded-full animate-pulse"
+                    style={{ backgroundColor: '#FF5B04' }}
+                    title={t('Inicio Activo', 'Home Active')}
+                  />
+                )}
+              </div>
+            </button>
+
+            {/* Mobile Language Switcher */}
+            <button
+              onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
+              className="md:hidden px-2.5 py-1 text-[11px] font-mono font-bold text-[#E4EEF0] bg-[#075056]/80 border border-[#268B95] rounded flex items-center gap-1 cursor-pointer"
+              title="Cambiar idioma / Switch language"
+            >
+              <span className={lang === 'es' ? 'text-[#FF5B04]' : 'text-white/60'}>ES</span>
+              <span>/</span>
+              <span className={lang === 'en' ? 'text-[#FF5B04]' : 'text-white/60'}>EN</span>
+            </button>
+          </div>
 
           {/* Desktop Navigation Links with Dynamic Sliding Indicator Rectangle */}
           <nav className="hidden md:flex items-center gap-1 relative p-1 rounded border border-[#075056]/40 bg-[#16232A]/50">
@@ -166,7 +226,24 @@ function Navbar() {
               onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#D94A00')}
               onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#FF5B04')}
             >
-              Hablemos
+              {t('Hablemos', "Let's Talk")}
+            </button>
+
+            {/* Desktop Language Switcher Toggle */}
+            <button
+              onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
+              className="relative z-10 ml-2 px-2.5 py-1.5 text-xs font-mono font-bold tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-1"
+              style={{
+                backgroundColor: 'rgba(7,80,86,0.6)',
+                color: '#E4EEF0',
+                border: '1px solid #268B95',
+                borderRadius: '2px',
+              }}
+              title="Cambiar idioma / Switch language"
+            >
+              <span className={lang === 'es' ? 'text-[#FF5B04]' : 'text-white/50'}>ES</span>
+              <span>/</span>
+              <span className={lang === 'en' ? 'text-[#FF5B04]' : 'text-white/50'}>EN</span>
             </button>
           </nav>
         </div>
@@ -185,7 +262,7 @@ function Navbar() {
         {[
           {
             id: 'sobre',
-            label: 'Sobre Mí',
+            label: t('Sobre Mí', 'About'),
             svg: (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -194,7 +271,7 @@ function Navbar() {
           },
           {
             id: 'servicios',
-            label: 'Soluciones',
+            label: t('Soluciones', 'Solutions'),
             svg: (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -203,7 +280,7 @@ function Navbar() {
           },
           {
             id: 'proyectos',
-            label: 'Proyectos',
+            label: t('Proyectos', 'Projects'),
             svg: (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -212,7 +289,7 @@ function Navbar() {
           },
           {
             id: 'contacto',
-            label: 'Contacto',
+            label: t('Contacto', 'Contact'),
             svg: (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -262,6 +339,8 @@ function Navbar() {
 }
 
 function Hero() {
+  const { t } = useLang()
+
   return (
     <section
       id="hero"
@@ -303,14 +382,17 @@ function Hero() {
             className="mb-4 text-lg font-semibold uppercase tracking-widest"
             style={{ color: '#FF5B04', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.25em' }}
           >
-            Full Stack Developer · Automatización de Procesos
+            {t('Full Stack Developer · Automatización de Procesos', 'Full Stack Developer · Process Automation')}
           </p>
 
           <p
             className="mb-10 max-w-lg leading-relaxed font-medium"
             style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}
           >
-            Desarrollo aplicaciones web, sistemas internos y automatizaciones que ayudan a empresas a reducir tareas manuales, centralizar información y mejorar sus procesos.
+            {t(
+              'Desarrollo aplicaciones web, sistemas internos y automatizaciones que ayudan a empresas a reducir tareas manuales, centralizar información y mejorar sus procesos.',
+              'I develop web applications, internal systems, and process automations that help businesses reduce manual work, centralize data, and optimize operations.'
+            )}
           </p>
 
           <div className="flex flex-wrap gap-4">
@@ -329,7 +411,7 @@ function Hero() {
               onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#D94A00')}
               onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#FF5B04')}
             >
-              Ver Proyectos
+              {t('Ver Proyectos', 'View Projects')}
             </button>
             <button
               onClick={() => window.open('https://wa.me/5493329523459?text=Hola%20Felipe,%20vi%20tu%20portafolio%20y%20quisiera%20contactarte.', '_blank')}
@@ -347,7 +429,7 @@ function Hero() {
               onMouseEnter={e => { e.currentTarget.style.borderColor = '#E4EEF0'; e.currentTarget.style.color = '#E4EEF0' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = '#075056'; e.currentTarget.style.color = '#E4EEF0' }}
             >
-              Hablemos
+              {t('Hablemos', "Let's Talk")}
             </button>
           </div>
         </div>
@@ -397,6 +479,8 @@ function Hero() {
 }
 
 function About() {
+  const { t } = useLang()
+
   return (
     <section
       id="sobre"
@@ -430,24 +514,30 @@ function About() {
               color: '#E4EEF0',
             }}
           >
-            Transformo necesidades
+            {t('Transformo necesidades', 'Transforming business needs')}
             <br />
-            <span style={{ color: '#16232A' }}>en soluciones digitales</span>
+            <span style={{ color: '#16232A' }}>{t('en soluciones digitales', 'into digital solutions')}</span>
           </h2>
           <p className="leading-relaxed mb-6 font-medium" style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}>
-            Soy desarrollador Full Stack y estudiante de Ingeniería Informática. Me especializo en transformar necesidades de negocio en soluciones digitales concretas: desde sitios web y aplicaciones hasta sistemas internos y automatizaciones.
+            {t(
+              'Soy desarrollador Full Stack y estudiante de Ingeniería Informática. Me especializo en transformar necesidades de negocio en soluciones digitales concretas: desde sitios web y aplicaciones hasta sistemas internos y automatizaciones.',
+              'I am a Full Stack Developer and Software Engineering student. I specialize in turning business needs into concrete digital solutions: from websites and apps to internal systems and workflow automations.'
+            )}
           </p>
           <p className="leading-relaxed font-medium" style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}>
-            Mi enfoque no se limita a desarrollar una interfaz. Analizo el proceso que existe detrás de una necesidad, identifico tareas que pueden optimizarse y construyo herramientas que permiten centralizar información, reducir trabajo manual y mejorar la operación.
+            {t(
+              'Mi enfoque no se limita a desarrollar una interfaz. Analizo el proceso que existe detrás de una necesidad, identifico tareas que pueden optimizarse y construyo herramientas que permiten centralizar información, reducir trabajo manual y mejorar la operación.',
+              'My approach goes beyond building a user interface. I analyze the underlying process behind a business need, identify bottleneck tasks, and build custom tools to centralize data and reduce manual overhead.'
+            )}
           </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: elem2, label: 'Educación', value: 'Ing. Informática', unit: 'Estudiante', color: '#16232A' },
-            { icon: elem2, label: 'Ubicación', value: 'Argentina', unit: 'San Pedro, BA', color: '#16232A' },
-            { icon: elem3, label: 'Inglés', value: 'Nivel B2', unit: 'B2', color: '#FF5B04' },
-            { icon: elem2, label: 'Especialidad', value: 'Full Stack', unit: 'Automatización', color: '#16232A' },
+            { icon: elem2, label: t('Educación', 'Education'), value: t('Ing. Informática', 'Software Eng.'), unit: t('Estudiante', 'Student'), color: '#16232A' },
+            { icon: elem2, label: t('Ubicación', 'Location'), value: 'Argentina', unit: 'San Pedro, BA', color: '#16232A' },
+            { icon: elem3, label: t('Inglés', 'English'), value: t('Nivel B2', 'B2 Upper-Int.'), unit: 'B2', color: '#FF5B04' },
+            { icon: elem2, label: t('Especialidad', 'Specialty'), value: 'Full Stack', unit: t('Automatización', 'Automation'), color: '#16232A' },
           ].map((card, i) => (
             <div
               key={i}
@@ -500,6 +590,8 @@ function About() {
 }
 
 function Services() {
+  const { t } = useLang()
+
   return (
     <section
       id="servicios"
@@ -516,28 +608,28 @@ function Services() {
             color: '#E4EEF0',
           }}
         >
-          Soluciones que puedo
+          {t('Soluciones que puedo', 'Solutions I can')}
           <br />
-          <span style={{ color: '#FF5B04' }}>desarrollar</span>
+          <span style={{ color: '#FF5B04' }}>{t('desarrollar', 'build for you')}</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {[
             {
-              title: 'Sitios web',
-              desc: 'Sitios corporativos, landing pages, portfolios y plataformas adaptadas a las necesidades de cada proyecto.',
+              title: t('Sitios web', 'Websites'),
+              desc: t('Sitios corporativos, landing pages, portfolios y plataformas adaptadas a las necesidades de cada proyecto.', 'Corporate sites, landing pages, portfolios, and web platforms tailored to your business needs.'),
             },
             {
-              title: 'Aplicaciones web',
-              desc: 'Sistemas con autenticación, paneles administrativos, bases de datos y lógica de negocio a medida.',
+              title: t('Aplicaciones web', 'Web Applications'),
+              desc: t('Sistemas con autenticación, paneles administrativos, bases de datos y lógica de negocio a medida.', 'Custom web apps with authentication, admin dashboards, databases, and tailored business logic.'),
             },
             {
-              title: 'Automatización de procesos',
-              desc: 'Automatización de tareas repetitivas, generación de reportes, procesamiento de información e integraciones.',
+              title: t('Automatización de procesos', 'Process Automation'),
+              desc: t('Automatización de tareas repetitivas, generación de reportes, procesamiento de información e integraciones.', 'Automation of repetitive tasks, automated report generation, data processing, and API integrations.'),
             },
             {
-              title: 'Sistemas a medida',
-              desc: 'Soluciones diseñadas alrededor de operaciones específicas, desde la gestión de datos hasta el control operativo.',
+              title: t('Sistemas a medida', 'Custom Systems'),
+              desc: t('Soluciones diseñadas alrededor de operaciones específicas, desde la gestión de datos hasta el control operativo.', 'Tailored software built around specific operations, from data management to operational control.'),
             },
           ].map((item, i) => (
             <div
@@ -577,26 +669,26 @@ function Services() {
             className="font-black uppercase text-xl sm:text-3xl mb-2"
             style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
           >
-            ¿Tenés un proceso que todavía hacés manualmente?
+            {t('¿Tenés un proceso que todavía hacés manualmente?', 'Do you have a process still done manually?')}
           </h3>
           <p
             className="text-sm sm:text-base mb-6"
             style={{ color: '#FF5B04', fontFamily: 'JetBrains Mono, monospace' }}
           >
-            Puedo ayudarte a digitalizar procesos y acelerar tareas como:
+            {t('Puedo ayudarte a digitalizar procesos y acelerar tareas como:', 'I can help you digitize processes and speed up workflows such as:')}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              'Carga y organización de información',
-              'Generación automática de reportes',
-              'Gestión de empleados o clientes',
-              'Control de asistencia con GPS y QR',
-              'Formularios y recepción de datos',
-              'Procesos que requieren validaciones',
-              'Integración entre distintas herramientas',
-              'Paneles para visualizar métricas clave',
-              'Sitios web y plataformas corporativas',
+              t('Carga y organización de información', 'Data entry and information management'),
+              t('Generación automática de reportes', 'Automated PDF/Sheet report generation'),
+              t('Gestión de empleados o clientes', 'Employee or client management portals'),
+              t('Control de asistencia con GPS y QR', 'Attendance tracking with GPS & QR'),
+              t('Formularios y recepción de datos', 'Data collection and web form intake'),
+              t('Procesos que requieren validaciones', 'Processes requiring custom validations'),
+              t('Integración entre distintas herramientas', 'Integrations between third-party tools'),
+              t('Paneles para visualizar métricas clave', 'Dashboards for key business metrics'),
+              t('Sitios web y plataformas corporativas', 'Corporate websites & web platforms'),
             ].map((prob, i) => (
               <div
                 key={i}
@@ -619,34 +711,36 @@ function Services() {
   )
 }
 
-const SKILLS = [
-  {
-    category: 'Desarrollo Frontend',
-    icon: '⬡',
-    items: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'HTML5', 'CSS3 / Tailwind'],
-    note: 'Aplicaciones web responsivas, plataformas corporativas y paneles interactivos con lógica moderna.',
-  },
-  {
-    category: 'Backend y Bases de Datos',
-    icon: '◈',
-    items: ['SQL', 'PostgreSQL', 'Supabase', 'MongoDB', 'Neo4j', 'Oracle'],
-    note: 'Diseño de esquemas, consultas optimizadas y gestión de información estructurada y no estructurada.',
-  },
-  {
-    category: 'Automatización e Integración',
-    icon: '⬢',
-    items: ['Google Apps Script', 'REST APIs', 'QR / Códigos de barras', 'Validación GPS', 'Webhooks', 'Node.js'],
-    note: 'Automatización de reportes, flujos administrativos, sincronización de servicios y validaciones de campo.',
-  },
-  {
-    category: 'Herramientas y Despliegue',
-    icon: '◎',
-    items: ['Git / GitHub', 'Vercel', 'VS Code', 'Vite', 'WordPress', 'Linux'],
-    note: 'Parte de mi flujo de trabajo diario para desarrollo ágil, control de versiones y entrega continua.',
-  },
-]
-
 function Skills() {
+  const { t } = useLang()
+
+  const SKILLS = [
+    {
+      category: t('Desarrollo Frontend', 'Frontend Development'),
+      icon: '⬡',
+      items: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'HTML5', 'CSS3 / Tailwind'],
+      note: t('Aplicaciones web responsivas, plataformas corporativas y paneles interactivos con lógica moderna.', 'Responsive web apps, corporate platforms, and interactive dashboards with modern architecture.'),
+    },
+    {
+      category: t('Backend y Bases de Datos', 'Backend & Databases'),
+      icon: '◈',
+      items: ['SQL', 'PostgreSQL', 'Supabase', 'MongoDB', 'Neo4j', 'Oracle'],
+      note: t('Diseño de esquemas, consultas optimizadas y gestión de información estructurada y no estructurada.', 'Schema design, query optimization, and structured/unstructured data management.'),
+    },
+    {
+      category: t('Automatización e Integración', 'Automation & Integration'),
+      icon: '⬢',
+      items: ['Google Apps Script', 'REST APIs', 'QR / Códigos de barras', 'Validación GPS', 'Webhooks', 'Node.js'],
+      note: t('Automatización de reportes, flujos administrativos, sincronización de servicios y validaciones de campo.', 'Automated reporting, admin workflows, third-party service sync, and field validations.'),
+    },
+    {
+      category: t('Herramientas y Despliegue', 'Tools & Deployment'),
+      icon: '◎',
+      items: ['Git / GitHub', 'Vercel', 'VS Code', 'Vite', 'WordPress', 'Linux'],
+      note: t('Parte de mi flujo de trabajo diario para desarrollo ágil, control de versiones y entrega continua.', 'My daily workflow stack for agile development, version control, and continuous deployment.'),
+    },
+  ]
+
   return (
     <section
       id="habilidades"
@@ -677,15 +771,18 @@ function Skills() {
                 color: '#E4EEF0',
               }}
             >
-              Tecnologías y{' '}
-              <span style={{ color: '#FF5B04' }}>herramientas</span>
+              {t('Tecnologías y', 'Tech Stack &')}{' '}
+              <span style={{ color: '#FF5B04' }}>{t('herramientas', 'Tools')}</span>
             </h2>
           </div>
           <div
             className="text-sm max-w-xs"
             style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'Barlow, sans-serif' }}
           >
-            Tecnologías que utilizo para desarrollar aplicaciones, sistemas y automatizaciones orientadas a resolver necesidades reales.
+            {t(
+              'Tecnologías que utilizo para desarrollar aplicaciones, sistemas y automatizaciones orientadas a resolver necesidades reales.',
+              'Technologies and frameworks I use to build scalable web applications, custom systems, and process automations.'
+            )}
           </div>
         </div>
 
@@ -733,24 +830,32 @@ function Skills() {
   )
 }
 
-const EXPERIENCE = [
-  {
-    period: '2026 — Presente',
-    role: 'Desarrollador Full Stack',
-    company: 'JJAsist (Proyecto Freelance / SaaS)',
-    description: 'Sistema de asistencia y control horario con identificación mediante QR, validación geográfica y registro centralizado de operaciones. Resultado: Transformé un proceso manual de asistencia en una plataforma web centralizada, con validación de ubicación, gestión administrativa y automatización de reportes.',
-    tags: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
-  },
-  {
-    period: '2025 — Presente',
-    role: 'Desarrollador Web Freelance',
-    company: 'JJ Servicios Empresariales',
-    description: 'Desarrollo de una presencia digital profesional para una consultora de Recursos Humanos, orientada a mejorar su presentación online, facilitar el contacto con potenciales clientes y estructurar sus servicios de forma clara. Resultado: Desarrollé un sitio corporativo orientado a presentar los servicios de forma clara.',
-    tags: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'SEO'],
-  },
-]
-
 function Experience() {
+  const { t } = useLang()
+
+  const EXPERIENCE = [
+    {
+      period: t('2026 — Presente', '2026 — Present'),
+      role: t('Desarrollador Full Stack', 'Full Stack Developer'),
+      company: t('JJAsist (Proyecto Freelance / SaaS)', 'JJAsist (Freelance SaaS Project)'),
+      description: t(
+        'Sistema de asistencia y control horario con identificación mediante QR, validación geográfica y registro centralizado de operaciones. Resultado: Transformé un proceso manual de asistencia en una plataforma web centralizada, con validación de ubicación, gestión administrativa y automatización de reportes.',
+        'Attendance and time tracking system featuring dynamic QR identification, GPS geographic validation, and centralized operation logs. Result: Transformed a manual attendance process into a centralized web platform with location validation, admin panel, and automated reporting.'
+      ),
+      tags: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
+    },
+    {
+      period: t('2025 — Presente', '2025 — Present'),
+      role: t('Desarrollador Web Freelance', 'Freelance Web Developer'),
+      company: 'JJ Servicios Empresariales',
+      description: t(
+        'Desarrollo de una presencia digital profesional para una consultora de Recursos Humanos, orientada a mejorar su presentación online, facilitar el contacto con potenciales clientes y estructurar sus servicios de forma clara. Resultado: Desarrollé un sitio corporativo orientado a presentar los servicios de forma clara.',
+        'Development of a professional digital presence for an HR consulting firm, aimed at strengthening online brand identity, driving client leads, and structuring services clearly. Result: Built a modern corporate site presenting services clearly and driving client inquiries.'
+      ),
+      tags: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'SEO'],
+    },
+  ]
+
   return (
     <section
       id="experiencia"
@@ -767,9 +872,9 @@ function Experience() {
             color: '#E4EEF0',
           }}
         >
-          Trayectoria
+          {t('Trayectoria', 'Professional')}
           <br />
-          <span style={{ color: '#16232A' }}>Profesional</span>
+          <span style={{ color: '#16232A' }}>{t('Profesional', 'Experience')}</span>
         </h2>
 
         <div className="relative">
@@ -857,48 +962,63 @@ function Experience() {
   )
 }
 
-const PROJECTS = [
-  {
-    title: 'JJAsist',
-    subtitle: 'Proyecto Principal / SaaS',
-    description: 'Sistema de asistencia y control horario con identificación mediante QR dinámico, validación geográfica GPS y registro centralizado de operaciones. Automatización de reportes con Google Apps Script.',
-    tech: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
-    url: 'https://jj-asist.vercel.app/',
-    image: '/jj-asist-logo.png',
-    featured: true,
-  },
-  {
-    title: 'JJ Servicios Empresariales',
-    subtitle: 'Desarrollo Web / Cliente Real',
-    description: 'Sitio corporativo orientado a presentar los servicios de forma clara, optimizar el posicionamiento SEO y facilitar el contacto directo con potenciales clientes corporativos.',
-    tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'SEO'],
-    url: 'https://jjserviciosempresarialesrrhh.com/',
-    image: '/Rehace_el_logo_202604262015.jpeg',
-    featured: false,
-  },
-  {
-    title: 'JJHire & JJBusca',
-    subtitle: 'Plataforma en Desarrollo / Beta',
-    description: 'Plataforma de contratación compuesta por dos portales complementarios: JJHire (para postulantes) y JJBusca (para administradores) para consultar y gestionar búsquedas laborales.',
-    tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
-    url: 'https://jj-hire.vercel.app/',
-    secondaryUrl: 'https://jj-busca.vercel.app/',
-    image: '/jj-hire-busca-placeholder.png',
-    featured: false,
-  },
-  {
-    title: 'Paper Pops',
-    subtitle: 'Proyecto Experimental / Frontend',
-    description: 'Aplicación web completa construida con React, Vite y Motion. Explora animaciones e interfaces interactivas avanzadas.',
-    tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
-    url: 'https://paper-pops.vercel.app/',
-    image: '/paper-pops-preview.jpeg',
-    featured: false,
-  },
-]
+
 
 function Projects() {
+  const { t } = useLang()
   const [activeProject, setActiveProject] = useState<number | null>(null)
+
+  const PROJECTS = [
+    {
+      title: 'JJAsist',
+      subtitle: t('Proyecto Principal / SaaS', 'Main Project / SaaS'),
+      description: t(
+        'Sistema de asistencia y control horario con identificación mediante QR dinámico, validación geográfica GPS y registro centralizado de operaciones. Automatización de reportes con Google Apps Script.',
+        'Attendance and time tracking system with dynamic QR identification, GPS geolocation validation, and centralized operation logs. Automated reporting via Google Apps Script.'
+      ),
+      tech: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
+      url: 'https://jj-asist.vercel.app/',
+      image: '/jj-asist-logo.png',
+      featured: true,
+    },
+    {
+      title: 'JJ Servicios Empresariales',
+      subtitle: t('Desarrollo Web / Cliente Real', 'Web Dev / Real Client'),
+      description: t(
+        'Sitio corporativo orientado a presentar los servicios de forma clara, optimizar el posicionamiento SEO y facilitar el contacto directo con potenciales clientes corporativos.',
+        'Corporate website designed to showcase HR services clearly, optimize SEO ranking, and facilitate direct contact with potential corporate clients.'
+      ),
+      tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'SEO'],
+      url: 'https://jjserviciosempresarialesrrhh.com/',
+      image: '/Rehace_el_logo_202604262015.jpeg',
+      featured: false,
+    },
+    {
+      title: 'JJHire & JJBusca',
+      subtitle: t('Plataforma en Desarrollo / Beta', 'Platform in Development / Beta'),
+      description: t(
+        'Plataforma de contratación compuesta por dos portales complementarios: JJHire (para postulantes) y JJBusca (para administradores) para consultar y gestionar búsquedas laborales.',
+        'Hiring platform composed of two complementary portals: JJHire (for applicants) and JJBusca (for admins) to browse and manage job listings.'
+      ),
+      tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
+      url: 'https://jj-hire.vercel.app/',
+      secondaryUrl: 'https://jj-busca.vercel.app/',
+      image: '/jj-hire-busca-placeholder.png',
+      featured: false,
+    },
+    {
+      title: 'Paper Pops',
+      subtitle: t('Proyecto Experimental / Frontend', 'Experimental / Frontend Project'),
+      description: t(
+        'Aplicación web completa construida con React, Vite y Motion. Explora animaciones e interfaces interactivas avanzadas.',
+        'Full web application built with React, Vite, and Motion. Explores advanced animations and interactive UI patterns.'
+      ),
+      tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
+      url: 'https://paper-pops.vercel.app/',
+      image: '/paper-pops-preview.jpeg',
+      featured: false,
+    },
+  ]
 
   return (
     <section
@@ -927,9 +1047,9 @@ function Projects() {
                 color: '#E4EEF0',
               }}
             >
-              Trabajo
+              {t('Trabajo', 'Featured')}
               <br />
-              <span style={{ color: '#FF5B04' }}>Destacado</span>
+              <span style={{ color: '#FF5B04' }}>{t('Destacado', 'Work')}</span>
             </h2>
           </div>
         </div>
@@ -976,7 +1096,7 @@ function Projects() {
                       borderRadius: '2px',
                     }}
                   >
-                    Principal
+                    {t('Principal', 'Featured')}
                   </div>
                 )}
 
@@ -1016,9 +1136,9 @@ function Projects() {
 
                 <div className="mt-6 flex flex-col gap-4">
                   <div className="flex flex-wrap gap-2">
-                    {proj.tech.map(t => (
+                    {proj.tech.map(tag => (
                       <span
-                        key={t}
+                        key={tag}
                         className="px-2.5 py-1 text-xs uppercase tracking-wider"
                         style={{
                           backgroundColor: 'rgba(7,80,86,0.3)',
@@ -1029,7 +1149,7 @@ function Projects() {
                           border: '1px solid rgba(7,80,86,0.4)',
                         }}
                       >
-                        {t}
+                        {tag}
                       </span>
                     ))}
                   </div>
@@ -1050,7 +1170,7 @@ function Projects() {
                         border: isHovered ? '1px solid #FF5B04' : '1px solid rgba(7,80,86,0.6)',
                       }}
                     >
-                      Visitar Sitio →
+                      {t('Visitar Sitio →', 'Visit Site →')}
                     </a>
                     {proj.secondaryUrl && (
                       <a
@@ -1135,9 +1255,9 @@ function Projects() {
 
               <div className="mt-6 flex flex-col gap-4">
                 <div className="flex flex-wrap gap-2">
-                  {proj.tech.map(t => (
+                  {proj.tech.map(tag => (
                     <span
-                      key={t}
+                      key={tag}
                       className="px-2 py-0.5 text-xs uppercase tracking-wider"
                       style={{
                         backgroundColor: 'rgba(7,80,86,0.3)',
@@ -1148,7 +1268,7 @@ function Projects() {
                         border: '1px solid rgba(7,80,86,0.4)',
                       }}
                     >
-                      {t}
+                      {tag}
                     </span>
                   ))}
                 </div>
@@ -1166,7 +1286,7 @@ function Projects() {
                       borderRadius: '2px',
                     }}
                   >
-                    Visitar Sitio →
+                    {t('Visitar Sitio →', 'Visit Site →')}
                   </a>
                   {proj.secondaryUrl && (
                     <a
@@ -1196,15 +1316,16 @@ function Projects() {
 }
 
 function Contact() {
+  const { t } = useLang()
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [sent, setSent] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const mailUrl = `mailto:felipeoca123@hotmail.com?subject=${encodeURIComponent(
-      form.subject || 'Contacto desde Portafolio Web'
+      form.subject || t('Contacto desde Portafolio Web', 'Contact from Portfolio')
     )}&body=${encodeURIComponent(
-      `Nombre: ${form.name}\nEmail: ${form.email}\n\nMensaje:\n${form.message}`
+      `${t('Nombre', 'Name')}: ${form.name}\nEmail: ${form.email}\n\n${t('Mensaje', 'Message')}:\n${form.message}`
     )}`
     window.location.href = mailUrl
     setSent(true)
@@ -1253,15 +1374,18 @@ function Contact() {
               color: '#E4EEF0',
             }}
           >
-            Trabajemos
+            {t('Trabajemos', "Let's Work")}
             <br />
-            <span style={{ color: '#16232A' }}>Juntos</span>
+            <span style={{ color: '#16232A' }}>{t('Juntos', 'Together')}</span>
           </h2>
           <p
             className="leading-relaxed mb-12"
             style={{ color: 'rgba(228,238,240,0.75)', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}
           >
-            Puedo ayudarte a convertir una idea, necesidad o proceso manual en una solución digital: desde un sitio web profesional hasta una aplicación, sistema interno o automatización diseñada para tu negocio.
+            {t(
+              'Puedo ayudarte a convertir una idea, necesidad o proceso manual en una solución digital: desde un sitio web profesional hasta una aplicación, sistema interno o automatización diseñada para tu negocio.',
+              'I can help you turn an idea, need, or manual process into a digital solution: from a professional website to an application, internal system, or custom automation for your business.'
+            )}
           </p>
 
           <div className="flex flex-col gap-6">
@@ -1332,7 +1456,7 @@ function Contact() {
                     className="text-xs sm:text-sm uppercase tracking-widest font-bold mb-1"
                     style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04' }}
                   >
-                    Teléfono / WhatsApp
+                    {t('Teléfono / WhatsApp', 'Phone / WhatsApp')}
                   </div>
                   <div
                     className="text-lg sm:text-2xl font-bold font-mono tracking-wider"
@@ -1413,7 +1537,7 @@ function Contact() {
                   className="text-xs sm:text-sm uppercase tracking-widest font-bold mb-1"
                   style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04' }}
                 >
-                  Ubicación
+                  {t('Ubicación', 'Location')}
                 </div>
                 <div
                   className="text-base sm:text-xl font-bold"
@@ -1433,14 +1557,14 @@ function Contact() {
                 className="text-xs uppercase tracking-widest"
                 style={{ fontFamily: 'JetBrains Mono, monospace', color: 'rgba(228,238,240,0.6)', fontSize: '10px' }}
               >
-                Nombre *
+                {t('Nombre', 'Name')} *
               </label>
               <input
                 type="text"
                 required
                 value={form.name}
                 onChange={e => setForm({ ...form, name: e.target.value })}
-                placeholder="Tu nombre y apellido"
+                placeholder={t('Tu nombre y apellido', 'Your full name')}
                 style={inputStyle}
                 onFocus={e => (e.currentTarget.style.borderColor = '#FF5B04')}
                 onBlur={e => (e.currentTarget.style.borderColor = 'rgba(7,80,86,0.5)')}
@@ -1458,7 +1582,7 @@ function Contact() {
                 required
                 value={form.email}
                 onChange={e => setForm({ ...form, email: e.target.value })}
-                placeholder="correo@ejemplo.com"
+                placeholder={t('correo@ejemplo.com', 'email@example.com')}
                 style={inputStyle}
                 onFocus={e => (e.currentTarget.style.borderColor = '#FF5B04')}
                 onBlur={e => (e.currentTarget.style.borderColor = 'rgba(7,80,86,0.5)')}
@@ -1471,13 +1595,13 @@ function Contact() {
               className="text-xs uppercase tracking-widest"
               style={{ fontFamily: 'JetBrains Mono, monospace', color: 'rgba(228,238,240,0.6)', fontSize: '10px' }}
             >
-              Asunto
+              {t('Asunto', 'Subject')}
             </label>
             <input
               type="text"
               value={form.subject}
               onChange={e => setForm({ ...form, subject: e.target.value })}
-              placeholder="¿En qué te puedo ayudar?"
+              placeholder={t('¿En qué te puedo ayudar?', 'How can I help you?')}
               style={inputStyle}
               onFocus={e => (e.currentTarget.style.borderColor = '#FF5B04')}
               onBlur={e => (e.currentTarget.style.borderColor = 'rgba(7,80,86,0.5)')}
@@ -1489,13 +1613,13 @@ function Contact() {
               className="text-xs uppercase tracking-widest"
               style={{ fontFamily: 'JetBrains Mono, monospace', color: 'rgba(228,238,240,0.6)', fontSize: '10px' }}
             >
-              Mensaje *
+              {t('Mensaje', 'Message')} *
             </label>
             <textarea
               required
               value={form.message}
               onChange={e => setForm({ ...form, message: e.target.value })}
-              placeholder="Contame sobre tu proyecto, proceso o necesidad..."
+              placeholder={t('Contame sobre tu proyecto, proceso o necesidad...', 'Tell me about your project, process, or needs...')}
               rows={6}
               style={{ ...inputStyle, resize: 'none' }}
               onFocus={e => (e.currentTarget.style.borderColor = '#FF5B04')}
@@ -1519,7 +1643,7 @@ function Contact() {
             onMouseEnter={e => { if (!sent) e.currentTarget.style.backgroundColor = '#D94A00' }}
             onMouseLeave={e => { if (!sent) e.currentTarget.style.backgroundColor = '#FF5B04' }}
           >
-            {sent ? '✓ Mensaje Enviado' : 'Enviar Mensaje'}
+            {sent ? t('✓ Mensaje Enviado', '✓ Message Sent') : t('Enviar Mensaje', 'Send Message')}
           </button>
         </form>
       </div>
@@ -1528,6 +1652,7 @@ function Contact() {
 }
 
 function Footer() {
+  const { t } = useLang()
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -1551,7 +1676,7 @@ function Footer() {
               className="text-xs uppercase tracking-widest mt-0.5"
               style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04', fontSize: '9px' }}
             >
-              Full Stack Developer · Automatización de Procesos
+              {t('Full Stack Developer · Automatización de Procesos', 'Full Stack Developer · Process Automation')}
             </div>
           </div>
         </div>
@@ -1561,7 +1686,7 @@ function Footer() {
             className="text-xs text-center sm:text-right"
             style={{ fontFamily: 'JetBrains Mono, monospace', color: 'rgba(228,238,240,0.4)', fontSize: '10px' }}
           >
-            © {new Date().getFullYear()} Felipe Roldán Ocampo. Todos los derechos reservados.
+            © {new Date().getFullYear()} Felipe Roldán Ocampo. {t('Todos los derechos reservados.', 'All rights reserved.')}
           </div>
 
           <button
@@ -1578,7 +1703,7 @@ function Footer() {
             onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(7,80,86,0.6)')}
             title="Volver arriba"
           >
-            ↑ Arriba
+            ↑ {t('Arriba', 'Top')}
           </button>
         </div>
       </div>
@@ -1588,16 +1713,18 @@ function Footer() {
 
 export default function App() {
   return (
-    <div style={{ fontFamily: 'Barlow, sans-serif' }} className="pb-16 md:pb-0">
-      <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Contact />
-      <Footer />
-    </div>
+    <LanguageProvider>
+      <div style={{ fontFamily: 'Barlow, sans-serif' }} className="pb-16 md:pb-0">
+        <Navbar />
+        <Hero />
+        <About />
+        <Services />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Contact />
+        <Footer />
+      </div>
+    </LanguageProvider>
   )
 }

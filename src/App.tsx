@@ -1354,45 +1354,24 @@ function Projects() {
                     </p>
                   </div>
 
-                  <div className="mt-6 flex flex-col gap-4">
-                    <div className="flex flex-wrap gap-2">
-                      {proj.tech.map(tag => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 text-xs uppercase tracking-wider"
-                          style={{
-                            backgroundColor: 'rgba(7,80,86,0.3)',
-                            color: 'rgba(228,238,240,0.7)',
-                            fontFamily: 'JetBrains Mono, monospace',
-                            borderRadius: '2px',
-                            fontSize: '10px',
-                            border: '1px solid rgba(7,80,86,0.4)',
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
-                      <a
-                        href={proj.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-center"
-                        style={{
-                          backgroundColor: isHovered ? '#FF5B04' : 'rgba(7,80,86,0.5)',
-                          color: '#E4EEF0',
-                          fontFamily: 'Barlow Condensed, sans-serif',
-                          fontWeight: 700,
-                          letterSpacing: '0.1em',
-                          borderRadius: '2px',
-                          border: isHovered ? '1px solid #FF5B04' : '1px solid rgba(7,80,86,0.6)',
-                        }}
-                      >
-                        {t('Visitar Sitio →', 'Visit Site →')}
-                      </a>
-                    </div>
+                  <div className="mt-6 flex gap-3 pt-4 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
+                    <a
+                      href={proj.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-center"
+                      style={{
+                        backgroundColor: isHovered ? '#FF5B04' : 'rgba(7,80,86,0.5)',
+                        color: '#E4EEF0',
+                        fontFamily: 'Barlow Condensed, sans-serif',
+                        fontWeight: 700,
+                        letterSpacing: '0.1em',
+                        borderRadius: '2px',
+                        border: isHovered ? '1px solid #FF5B04' : '1px solid rgba(7,80,86,0.6)',
+                      }}
+                    >
+                      {t('Visitar Sitio →', 'Visit Site →')}
+                    </a>
                   </div>
                 </div>
               )
@@ -1482,43 +1461,22 @@ function Projects() {
                 </p>
               </div>
 
-              <div className="mt-6 flex flex-col gap-4">
-                <div className="flex flex-wrap gap-2">
-                  {proj.tech.map(tag => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-1 text-xs uppercase tracking-wider font-semibold"
-                      style={{
-                        backgroundColor: 'rgba(7,80,86,0.35)',
-                        color: 'rgba(228,238,240,0.8)',
-                        fontFamily: 'JetBrains Mono, monospace',
-                        borderRadius: '2px',
-                        fontSize: '10px',
-                        border: '1px solid rgba(7,80,86,0.5)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
-                  <a
-                    href={proj.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-center transition-all duration-200"
-                    style={{
-                      backgroundColor: '#FF5B04',
-                      color: '#E4EEF0',
-                      fontFamily: 'Barlow Condensed, sans-serif',
-                      borderRadius: '2px',
-                      letterSpacing: '0.08em',
-                    }}
-                  >
-                    {t('Visitar Sitio →', 'Visit Site →')}
-                  </a>
-                </div>
+              <div className="mt-6 flex gap-3 pt-4 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
+                <a
+                  href={proj.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-center transition-all duration-200"
+                  style={{
+                    backgroundColor: '#FF5B04',
+                    color: '#E4EEF0',
+                    fontFamily: 'Barlow Condensed, sans-serif',
+                    borderRadius: '2px',
+                    letterSpacing: '0.08em',
+                  }}
+                >
+                  {t('Visitar Sitio →', 'Visit Site →')}
+                </a>
               </div>
             </div>
           ))}

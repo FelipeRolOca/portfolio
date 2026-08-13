@@ -44,8 +44,8 @@ export function Projects() {
       ),
       tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'UI/UX'],
       url: 'https://sofia-moya.vercel.app/',
-      image: '/jj-hire-busca-placeholder.png',
-      featured: false,
+      image: '/Logo principal_.png',
+      featured: true,
     },
     {
       id: 'jj-hire',
@@ -361,7 +361,7 @@ export function Projects() {
 
                   <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded border border-[#FF5B04]/30 p-1.5 bg-[#075056]/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-[#FF5B04]/40 p-2 bg-[#075056]/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(255,91,4,0.15)]">
                         <img
                           src={proj.image}
                           alt={proj.title}
@@ -467,7 +467,7 @@ export function Projects() {
 
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-3.5 pr-20">
-                  <div className="w-11 h-11 rounded border border-[#FF5B04]/30 p-1.5 bg-[#075056]/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-[#FF5B04]/40 p-2 bg-[#075056]/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(255,91,4,0.15)]">
                     <img
                       src={proj.image}
                       alt={proj.title}

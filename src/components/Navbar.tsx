@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import logo2 from '@/imports/LOGO_2.png'
 import { useLang } from '../i18n/LanguageContext'
 
-const NAV_IDS = ['sobre', 'servicios', 'habilidades', 'experiencia', 'proyectos', 'contacto']
+const NAV_IDS = ['sobre', 'servicios', 'proyectos', 'experiencia', 'habilidades', 'contacto']
 
 export function Navbar() {
   const { lang, setLang, t } = useLang()
@@ -19,9 +19,9 @@ export function Navbar() {
   const NAV_ITEMS = [
     t('Sobre Mí', 'About Me'),
     t('Soluciones', 'Solutions'),
-    t('Tecnologías', 'Tech Stack'),
-    t('Experiencia', 'Experience'),
     t('Proyectos', 'Projects'),
+    t('Experiencia', 'Experience'),
+    t('Tecnologías', 'Tech Stack'),
     t('Contacto', 'Contact'),
   ]
 
@@ -42,7 +42,7 @@ export function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40)
-      const sections = ['hero', 'sobre', 'servicios', 'habilidades', 'experiencia', 'proyectos', 'contacto']
+      const sections = ['hero', 'sobre', 'servicios', 'proyectos', 'experiencia', 'habilidades', 'contacto']
       const scrollPosition = window.scrollY + 250
 
       for (const sectionId of sections) {

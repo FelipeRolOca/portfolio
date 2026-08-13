@@ -35,6 +35,19 @@ export function Projects() {
       featured: false,
     },
     {
+      id: 'sofia-moya',
+      title: 'Sofía Moya (Popi)',
+      subtitle: t('Desarrollo Web / Cliente Real', 'Web Dev / Real Client'),
+      description: t(
+        'Sitio web corporativo y portafolio profesional para la diseñadora gráfica Sofía Moya. Incluye exhibición de marcas, diseño editorial, empaques y contacto directo.',
+        'Professional website & portfolio for graphic designer Sofía Moya. Features branding showcases, editorial layout, packaging design, and direct inquiry forms.'
+      ),
+      tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'UI/UX'],
+      url: 'https://sofia-moya.vercel.app/',
+      image: '/jj-hire-busca-placeholder.png',
+      featured: false,
+    },
+    {
       id: 'jj-hire',
       title: 'JJHire',
       subtitle: t('Portal de Postulantes', 'Applicants Portal'),

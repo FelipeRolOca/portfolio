@@ -3,24 +3,6 @@ import { useLang } from '../i18n/LanguageContext'
 export function Services() {
   const { t } = useLang()
 
-  const methodologySteps = [
-    {
-      step: '01',
-      title: t('Análisis del Proceso', 'Process Analysis'),
-      desc: t('Revisión detallada de los requerimientos de la organización, identificando cuellos de botella y definiendo la arquitectura ideal.', 'In-depth review of business requirements, pinpointing operational bottlenecks, and designing the ideal software architecture.'),
-    },
-    {
-      step: '02',
-      title: t('Desarrollo e Integración', 'Development & Integration'),
-      desc: t('Construcción iterativa de la solución con código limpio, bases de datos optimizadas e integración con servicios existentes.', 'Iterative software build with scalable architecture, optimized databases, and seamless third-party service integration.'),
-    },
-    {
-      step: '03',
-      title: t('Puesta en Marcha y Soporte', 'Deployment & Support'),
-      desc: t('Despliegue en producción, inducción para los usuarios y acompañamiento continuo para asegurar un funcionamiento óptimo.', 'Production rollout, user onboarding, and ongoing maintenance to guarantee peak system performance.'),
-    },
-  ]
-
   return (
     <section
       id="servicios"
@@ -86,61 +68,52 @@ export function Services() {
           ))}
         </div>
 
-        {/* Metodología de Trabajo en 3 Pasos (recuperada de old/) */}
+        {/* Casos Reales y Digitalización de Procesos */}
         <div
-          className="p-8 sm:p-12"
+          className="p-8 sm:p-10"
           style={{
             backgroundColor: 'rgba(7,80,86,0.25)',
             border: '1px solid #075056',
             borderRadius: '2px',
           }}
         >
-          <div className="mb-8">
-            <span
-              className="text-xs uppercase tracking-widest block mb-1 font-bold"
-              style={{ color: '#FF5B04', fontFamily: 'JetBrains Mono, monospace' }}
-            >
-              {t('Proceso Estructurado', 'Structured Process')}
-            </span>
-            <h3
-              className="font-black uppercase text-2xl sm:text-4xl"
-              style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
-            >
-              {t('Metodología de Trabajo', 'Work Methodology')}
-            </h3>
-          </div>
+          <h3
+            className="font-black uppercase text-xl sm:text-3xl mb-2"
+            style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
+          >
+            {t('¿Tenés un proceso que todavía hacés manualmente?', 'Do you have a process still done manually?')}
+          </h3>
+          <p
+            className="text-sm sm:text-base mb-6 font-semibold"
+            style={{ color: '#FF5B04', fontFamily: 'JetBrains Mono, monospace' }}
+          >
+            {t('Puedo ayudarte a digitalizar procesos y acelerar tareas como:', 'I can help you digitize processes and speed up workflows such as:')}
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {methodologySteps.map((m, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              t('Carga y organización de información', 'Data entry and information management'),
+              t('Generación automática de reportes', 'Automated PDF/Sheet report generation'),
+              t('Gestión de empleados o clientes', 'Employee or client management portals'),
+              t('Control de asistencia con GPS y QR dinámico', 'Attendance tracking with GPS & dynamic QR'),
+              t('Formularios y recepción de datos', 'Data collection and web form intake'),
+              t('Procesos que requieren validaciones a medida', 'Processes requiring custom business validations'),
+              t('Integración entre distintas herramientas', 'Integrations between third-party tools'),
+              t('Paneles para visualizar métricas clave', 'Dashboards for key business metrics'),
+              t('Sitios web y plataformas corporativas', 'Corporate websites & web platforms'),
+            ].map((prob, i) => (
               <div
-                key={idx}
-                className="p-6 flex flex-col justify-between transition-all duration-200"
+                key={i}
+                className="flex items-center gap-3 p-3.5 text-sm font-semibold rounded transition-colors"
                 style={{
                   backgroundColor: '#16232A',
+                  color: '#E4EEF0',
                   border: '1px solid rgba(7,80,86,0.5)',
-                  borderRadius: '2px',
+                  fontFamily: 'Barlow, sans-serif',
                 }}
               >
-                <div>
-                  <span
-                    className="font-black text-4xl sm:text-5xl block mb-4"
-                    style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#FF5B04' }}
-                  >
-                    {m.step}
-                  </span>
-                  <h4
-                    className="font-bold text-lg sm:text-xl uppercase mb-2"
-                    style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
-                  >
-                    {m.title}
-                  </h4>
-                  <p
-                    className="text-sm leading-relaxed font-medium"
-                    style={{ color: 'rgba(228,238,240,0.8)', fontFamily: 'Barlow, sans-serif' }}
-                  >
-                    {m.desc}
-                  </p>
-                </div>
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#FF5B04' }} />
+                {prob}
               </div>
             ))}
           </div>

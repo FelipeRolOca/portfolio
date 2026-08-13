@@ -64,7 +64,7 @@ export function About() {
             { icon: elem2, label: t('Educación', 'Education'), value: t('Ing. Informática', 'Software Eng.'), unit: t('Estudiante', 'Student'), color: '#16232A' },
             { icon: elem2, label: t('Edad', 'Age'), value: t('21 Años', '21 Years Old'), unit: '2005', color: '#16232A' },
             { icon: elem3, label: t('Inglés', 'English'), value: t('Nivel B2', 'B2 Upper-Int.'), unit: 'B2', color: '#FF5B04' },
-            { icon: elem2, label: t('Ubicación', 'Location'), value: 'Argentina', unit: 'San Pedro, BA', color: '#16232A' },
+            { icon: elem2, label: t('Ubicación', 'Location'), value: 'San Pedro', unit: 'Buenos Aires, AR', color: '#16232A' },
           ].map((card, i) => (
             <div
               key={i}

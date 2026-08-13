@@ -93,7 +93,7 @@ export function Experience() {
                       </h3>
                       <div
                         className="text-sm font-semibold mt-1"
-                        style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'Barlow, sans-serif' }}
+                        style={{ color: 'rgba(228,238,240,0.85)', fontFamily: 'Barlow, sans-serif' }}
                       >
                         {exp.company}
                       </div>

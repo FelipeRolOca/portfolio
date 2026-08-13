@@ -66,8 +66,8 @@ export function Skills() {
             </h2>
           </div>
           <div
-            className="text-sm max-w-xs"
-            style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'Barlow, sans-serif' }}
+            className="text-sm sm:text-base max-w-md font-semibold leading-relaxed"
+            style={{ color: '#E4EEF0', fontFamily: 'Barlow, sans-serif' }}
           >
             {t(
               'Tecnologías que utilizo para desarrollar aplicaciones, sistemas y automatizaciones orientadas a resolver necesidades reales.',

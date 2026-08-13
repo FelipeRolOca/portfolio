@@ -1,49 +1,117 @@
-import { useLanguage } from '../i18n/LanguageContext'
+import fondoHorizontal from '@/imports/FONDO_RECTANGULO_HORIZONTAL.png'
+import { useLang } from '../i18n/LanguageContext'
 
 export function Skills() {
-  const { t } = useLanguage()
+  const { t } = useLang()
+
+  const SKILLS = [
+    {
+      category: t('Desarrollo Frontend', 'Frontend Development'),
+      icon: '⬡',
+      items: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'HTML5', 'CSS3 / Tailwind'],
+      note: t('Aplicaciones web responsivas, plataformas corporativas y paneles interactivos con lógica moderna.', 'Responsive web apps, corporate platforms, and interactive dashboards with modern architecture.'),
+    },
+    {
+      category: t('Backend y Bases de Datos', 'Backend & Databases'),
+      icon: '◈',
+      items: ['SQL', 'PostgreSQL', 'Supabase', 'MongoDB', 'Neo4j', 'Oracle'],
+      note: t('Diseño de esquemas, consultas optimizadas y gestión de información estructurada y no estructurada.', 'Schema design, query optimization, and structured/unstructured data management.'),
+    },
+    {
+      category: t('Automatización e Integración', 'Automation & Integration'),
+      icon: '⬢',
+      items: ['Google Apps Script', 'REST APIs', 'QR Dinámico', 'Validación GPS', 'Webhooks', 'Node.js'],
+      note: t('Automatización de reportes, flujos administrativos, sincronización de servicios y validaciones de campo.', 'Automated reporting, admin workflows, third-party service sync, and field validations.'),
+    },
+    {
+      category: t('Ingeniería y Despliegue', 'Engineering & Deployment'),
+      icon: '◎',
+      items: ['Git / GitHub', 'Vercel', 'Algoritmos & Estructuras', 'Diseño de Sistemas', 'Java', 'Python'],
+      note: t('Fundamentos sólidos de la carrera de Ingeniería Informática y herramientas de entrega continua.', 'Core engineering fundamentals, systems design, and daily workflow toolchain.'),
+    },
+  ]
 
   return (
-    <section id="skills" className="relative py-36 lg:py-52 overflow-hidden bg-[#0e171e]">
-      <div className="container-fro relative z-10">
-        <div className="section-label">{t.skills?.sectionLabel}</div>
-        <h2 className="section-title mb-6">
-          <span>{t.skills?.title1}</span> <br className="hidden sm:block" />
-          <span className="accent">{t.skills?.title2}</span>
-        </h2>
-        <p className="font-['Barlow'] text-lg sm:text-xl text-[#E4EEF0]/85 max-w-2xl mb-20 leading-relaxed">
-          {t.skills?.subtitle}
-        </p>
+    <section
+      id="habilidades"
+      className="relative py-24 overflow-hidden"
+      style={{ backgroundColor: '#16232A' }}
+    >
+      {/* Horizontal background pattern overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${fondoHorizontal})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.07,
+        }}
+      />
 
-        {/* 4 Skill Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
-          {(t.skills?.groups || []).map((cat) => (
-            <div
-              key={cat.category}
-              className="card-fro p-10 lg:p-12 flex flex-col justify-between group"
+      <div className="relative max-w-7xl mx-auto px-6">
+        <div className="flex items-end justify-between mb-16 flex-wrap gap-4">
+          <div>
+            <h2
+              className="uppercase leading-none"
+              style={{
+                fontFamily: 'Barlow Condensed, sans-serif',
+                fontWeight: 900,
+                fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+                color: '#E4EEF0',
+              }}
             >
-              <div>
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-[#075056] border border-[#FF5B04]/40 flex items-center justify-center text-[#FF5B04] font-bold text-xl shadow-[0_0_15px_rgba(7,80,86,0.4)]">
-                    {cat.icon}
-                  </div>
-                  <h3 className="font-['Barlow_Condensed'] font-black uppercase text-2xl sm:text-3xl text-[#E4EEF0] group-hover:text-[#FF5B04] transition-colors">
-                    {cat.category}
-                  </h3>
-                </div>
-                <p className="font-['Barlow'] text-base text-[#E4EEF0]/75 mb-8 italic">
-                  "{cat.note}"
-                </p>
+              {t('Tecnologías y', 'Tech Stack &')}{' '}
+              <span style={{ color: '#FF5B04' }}>{t('herramientas', 'Tools')}</span>
+            </h2>
+          </div>
+          <div
+            className="text-sm max-w-xs"
+            style={{ color: 'rgba(228,238,240,0.5)', fontFamily: 'Barlow, sans-serif' }}
+          >
+            {t(
+              'Tecnologías que utilizo para desarrollar aplicaciones, sistemas y automatizaciones orientadas a resolver necesidades reales.',
+              'Technologies and frameworks I use to build scalable web applications, custom systems, and process automations.'
+            )}
+          </div>
+        </div>
 
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-3.5">
-                  {cat.items.map((skill) => (
-                    <span key={skill} className="tag text-xs sm:text-sm !py-2 !px-4">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: 'rgba(7,80,86,0.2)' }}>
+          {SKILLS.map((group, gi) => (
+            <div
+              key={gi}
+              className="p-8 transition-all duration-300 group"
+              style={{ backgroundColor: '#16232A' }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#0a1e25')}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#16232A')}
+            >
+              <div
+                className="text-3xl mb-2"
+                style={{ color: '#075056' }}
+              >
+                {group.icon}
               </div>
+              <h3
+                className="uppercase font-black mb-6 text-lg"
+                style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0', letterSpacing: '0.05em' }}
+              >
+                {group.category}
+              </h3>
+              <ul className="flex flex-col gap-3">
+                {group.items.map(skill => (
+                  <li
+                    key={skill}
+                    className="flex items-center gap-3 text-sm font-medium"
+                    style={{ color: 'rgba(228,238,240,0.75)', fontFamily: 'Barlow, sans-serif' }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: '#FF5B04' }}
+                    />
+                    {skill}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>

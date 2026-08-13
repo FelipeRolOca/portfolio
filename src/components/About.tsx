@@ -1,122 +1,115 @@
-import { GraduationCap, MapPin, Languages, Sparkles } from 'lucide-react'
-import { useLanguage } from '../i18n/LanguageContext'
+import logo1 from '@/imports/LOGO_1.png'
+import fondoLargo from '@/imports/FONDO_LARGO.png'
+import elem2 from '@/imports/ELEMENTO_GRAFICO_2.png'
+import elem3 from '@/imports/ELEMENTO_GRAFICO_3.png'
+import { useLang } from '../i18n/LanguageContext'
 
 export function About() {
-  const { t } = useLanguage()
-
-  const quickFacts = [
-    {
-      label: t.quickFacts?.education?.label || 'Educación',
-      value: t.quickFacts?.education?.value || 'Ing. Informática',
-      detail: t.quickFacts?.education?.unit || 'Estudiante',
-      icon: GraduationCap,
-    },
-    {
-      label: t.quickFacts?.location?.label || 'Ubicación',
-      value: t.quickFacts?.location?.value || 'Argentina',
-      detail: t.quickFacts?.location?.unit || 'San Pedro, BA',
-      icon: MapPin,
-    },
-    {
-      label: t.quickFacts?.english?.label || 'Inglés',
-      value: t.quickFacts?.english?.value || 'Nivel B2',
-      detail: t.quickFacts?.english?.unit || 'Intermedio Avanzado',
-      icon: Languages,
-    },
-    {
-      label: t.quickFacts?.specialty?.label || 'Especialidad',
-      value: t.quickFacts?.specialty?.value || 'Full Stack',
-      detail: t.quickFacts?.specialty?.unit || 'Automatización',
-      icon: Sparkles,
-    },
-  ]
+  const { t } = useLang()
 
   return (
-    <section id="about" className="relative py-36 lg:py-52 overflow-hidden bg-[#121d23]">
-      <div className="container-fro relative z-10">
-        <div className="section-label">{t.about?.sectionLabel}</div>
-        <h2 className="section-title mb-20">
-          <span>{t.about?.title1}</span> <br className="hidden sm:block" />
-          <span className="accent">{t.about?.title2}</span>
-        </h2>
+    <section
+      id="sobre"
+      className="relative py-24 overflow-hidden"
+      style={{ backgroundColor: '#075056' }}
+    >
+      {/* Short solid color accent bar at section junction */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#FF5B04] rounded-b-full z-10" />
 
-        {/* Bio + Quick Facts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start mb-28 lg:mb-36">
-          {/* Bio Story (Cols 1-6) */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="card-fro p-10 sm:p-12 border-l-4 border-l-[#FF5B04]">
-              <p className="font-['Barlow'] text-lg sm:text-xl text-[#E4EEF0] font-medium leading-relaxed mb-8">
-                {t.about?.p1}
-              </p>
-              <p className="font-['Barlow'] text-base sm:text-lg text-[#E4EEF0]/80 leading-relaxed">
-                {t.about?.p2}
-              </p>
-            </div>
-          </div>
+      {/* Brand logo1 decoration in About section */}
+      <div className="absolute right-6 top-6 opacity-20 pointer-events-none hidden md:block">
+        <img src={logo1} alt="FRO logo 1" className="w-20 h-20 object-contain" />
+      </div>
 
-          {/* Quick Facts Grid (Cols 7-12) */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {quickFacts.map((fact) => {
-              const Icon = fact.icon
-              return (
-                <div
-                  key={fact.label}
-                  className="card-fro p-8 sm:p-10 flex flex-col justify-between group hover:border-[#FF5B04]"
-                >
-                  <div className="mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-[#075056] border border-[#FF5B04]/40 flex items-center justify-center text-[#FF5B04] group-hover:scale-110 group-hover:border-[#FF5B04] transition-all shadow-[0_0_15px_rgba(7,80,86,0.4)]">
-                      <Icon className="w-7 h-7" />
-                    </div>
-                  </div>
+      {/* Single close-up FONDO_LARGO gliding smoothly from top to bottom and back */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/3 overflow-hidden pointer-events-none opacity-15 hidden md:block">
+        <img
+          src={fondoLargo}
+          alt=""
+          className="w-full min-h-[140%] object-cover animate-slow-float"
+        />
+      </div>
 
-                  <div>
-                    <span className="font-['JetBrains_Mono'] text-[11px] uppercase tracking-wider text-[#FF5B04] block mb-1.5 font-semibold">
-                      {fact.label}
-                    </span>
-                    <h4 className="font-['Barlow_Condensed'] font-bold text-2xl sm:text-3xl text-[#E4EEF0] uppercase leading-tight mb-1.5">
-                      {fact.value}
-                    </h4>
-                    <p className="font-['Barlow'] text-sm sm:text-base text-[#E4EEF0]/70">
-                      {fact.detail}
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <h2
+            className="uppercase leading-none mb-8"
+            style={{
+              fontFamily: 'Barlow Condensed, sans-serif',
+              fontWeight: 900,
+              fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+              color: '#E4EEF0',
+            }}
+          >
+            {t('Transformo necesidades', 'Transforming business needs')}
+            <br />
+            <span style={{ color: '#16232A' }}>{t('en soluciones digitales', 'into digital solutions')}</span>
+          </h2>
+          <p className="leading-relaxed mb-6 font-medium" style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}>
+            {t(
+              'Como estudiante avanzado de Ingeniería Informática y desarrollador, me enfoco en entender a fondo el flujo operativo de cada cliente para diseñar software útil, seguro y fácil de mantener.',
+              'As an advanced Software Engineering student and developer, I focus on deeply understanding each client’s operational workflow to build useful, secure, and maintainable software.'
+            )}
+          </p>
+          <p className="leading-relaxed font-medium" style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}>
+            {t(
+              'Mi objetivo es conectar los procesos del negocio con tecnología moderna: centralizando bases de datos, eliminando la carga de trabajo repetitiva y permitiendo tomar decisiones basadas en información clara.',
+              'My objective is to bridge business workflows with modern technology: centralizing databases, eliminating repetitive manual workloads, and enabling data-driven decisions.'
+            )}
+          </p>
         </div>
 
-        {/* Methodology / How I Work */}
-        <div className="pt-20 border-t border-[#075056]/50">
-          <div className="mb-16 text-center lg:text-left">
-            <span className="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#FF5B04] block mb-3 font-semibold">
-              {t.about?.howIWorkLabel || 'Metodología'}
-            </span>
-            <h3 className="font-['Barlow_Condensed'] font-black uppercase text-3xl sm:text-5xl text-[#E4EEF0]">
-              {t.about?.howIWorkTitle || 'Cómo Trabajo'}
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-            {(t.about?.steps || []).map((step, idx) => (
-              <div
-                key={step.title}
-                className="card-fro p-10 lg:p-12 flex flex-col justify-between group hover:border-[#FF5B04]"
-              >
-                <div>
-                  <span className="font-['Barlow_Condensed'] font-black text-5xl sm:text-6xl text-[#FF5B04]/70 group-hover:text-[#FF5B04] transition-colors block mb-6">
-                    {`0${idx + 1}`}
-                  </span>
-                  <h4 className="font-['Barlow_Condensed'] font-bold text-2xl sm:text-3xl uppercase text-[#E4EEF0] mb-4">
-                    {step.title}
-                  </h4>
-                  <p className="font-['Barlow'] text-base sm:text-lg text-[#E4EEF0]/80 leading-relaxed">
-                    {step.desc}
-                  </p>
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { icon: elem2, label: t('Educación', 'Education'), value: t('Ing. Informática', 'Software Eng.'), unit: t('Estudiante', 'Student'), color: '#16232A' },
+            { icon: elem2, label: t('Edad', 'Age'), value: t('21 Años', '21 Years Old'), unit: '2004', color: '#16232A' },
+            { icon: elem3, label: t('Inglés', 'English'), value: t('Nivel B2', 'B2 Upper-Int.'), unit: 'B2', color: '#FF5B04' },
+            { icon: elem2, label: t('Ubicación', 'Location'), value: 'Argentina', unit: 'San Pedro, BA', color: '#16232A' },
+          ].map((card, i) => (
+            <div
+              key={i}
+              className="p-6 flex flex-col gap-3 transition-transform duration-200 hover:-translate-y-1"
+              style={{
+                backgroundColor: card.color,
+                borderRadius: '2px',
+                border: card.color === '#FF5B04' ? 'none' : '1px solid rgba(228,238,240,0.1)',
+              }}
+            >
+              <img src={card.icon} alt="" className="w-10 h-10 object-contain" />
+              <div>
+                <div
+                  className="text-xs uppercase tracking-widest mb-1"
+                  style={{
+                    fontFamily: 'JetBrains Mono, monospace',
+                    color: card.color === '#FF5B04' ? 'rgba(228,238,240,0.7)' : 'rgba(228,238,240,0.5)',
+                    fontSize: '10px',
+                  }}
+                >
+                  {card.label}
+                </div>
+                <div
+                  className="font-black uppercase leading-none"
+                  style={{
+                    fontFamily: 'Barlow Condensed, sans-serif',
+                    fontSize: '1.6rem',
+                    color: '#E4EEF0',
+                  }}
+                >
+                  {card.value}
+                </div>
+                <div
+                  className="text-xs uppercase tracking-wider mt-1"
+                  style={{
+                    fontFamily: 'Barlow, sans-serif',
+                    color: card.color === '#FF5B04' ? 'rgba(228,238,240,0.8)' : '#FF5B04',
+                    fontWeight: 600,
+                  }}
+                >
+                  {card.unit}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

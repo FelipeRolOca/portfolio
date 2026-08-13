@@ -1,70 +1,52 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
-import { Language, messages } from './messages'
+import { useState, createContext, useContext, ReactNode } from 'react'
 
-type LanguageContextType = {
-  language: Language
-  setLanguage: (lang: Language) => void
-  toggleLanguage: () => void
-  t: typeof messages.es
+type Language = 'es' | 'en'
+
+interface LanguageContextType {
+  lang: Language
+  setLang: (l: Language) => void
+  t: (es: string, en: string) => string
 }
 
-const defaultContextValue: LanguageContextType = {
-  language: 'es',
-  setLanguage: () => {},
-  toggleLanguage: () => {},
-  t: messages.es,
-}
-
-const LanguageContext = createContext<LanguageContextType>(defaultContextValue)
+const LanguageContext = createContext<LanguageContextType>({
+  lang: 'es',
+  setLang: () => { },
+  t: (es) => es,
+})
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
+  const [lang, setLangState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
       try {
-        const saved = localStorage.getItem('fro_language') as Language
-        if (saved === 'en' || saved === 'es') return saved
-        const browserLang = navigator.language?.toLowerCase() || ''
-        if (browserLang.startsWith('es')) return 'es'
-      } catch (e) {
-        console.warn('Storage not accessible', e)
+        const saved = localStorage.getItem('portfolio_lang')
+        return (saved === 'en' || saved === 'es') ? saved : 'es'
+      } catch {
+        return 'es'
       }
     }
     return 'es'
   })
 
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang)
+  const setLang = (l: Language) => {
+    setLangState(l)
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('fro_language', lang)
-      } catch (e) {
-        console.warn('Storage not accessible', e)
+        localStorage.setItem('portfolio_lang', l)
+      } catch {
+        // ignore
       }
     }
   }
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'es' ? 'en' : 'es')
-  }
+  const t = (es: string, en: string) => (lang === 'en' ? en : es)
 
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = language
-      document.title = messages[language]?.meta?.title || 'Felipe Roldán Ocampo'
-    }
-  }, [language])
-
-  const value: LanguageContextType = {
-    language,
-    setLanguage,
-    toggleLanguage,
-    t: messages[language] || messages.es,
-  }
-
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
+  return (
+    <LanguageContext.Provider value={{ lang, setLang, t }}>
+      {children}
+    </LanguageContext.Provider>
+  )
 }
 
-export function useLanguage() {
-  const context = useContext(LanguageContext)
-  return context || defaultContextValue
+export function useLang() {
+  return useContext(LanguageContext)
 }

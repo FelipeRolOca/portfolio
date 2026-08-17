@@ -1,7 +1,11 @@
 import logo2 from '@/imports/LOGO_2.png'
 import { useLang } from '../i18n/LanguageContext'
 
-export function Footer() {
+interface FooterProps {
+  onOpenLegal?: () => void
+}
+
+export function Footer({ onOpenLegal }: FooterProps) {
   const { t } = useLang()
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -31,12 +35,23 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <div
-            className="text-xs text-center sm:text-right"
+            className="text-xs text-center sm:text-right flex flex-col gap-1"
             style={{ fontFamily: 'JetBrains Mono, monospace', color: 'rgba(228,238,240,0.4)', fontSize: '10px' }}
           >
-            © {new Date().getFullYear()} Felipe Roldán Ocampo. {t('Todos los derechos reservados.', 'All rights reserved.')}
+            <div>
+              © {new Date().getFullYear()} Felipe Roldán Ocampo. {t('Todos los derechos reservados.', 'All rights reserved.')}
+            </div>
+            {onOpenLegal && (
+              <button
+                onClick={onOpenLegal}
+                className="hover:underline transition-colors text-left sm:text-right"
+                style={{ color: '#FF5B04', fontSize: '10px' }}
+              >
+                {t('Aviso Legal & Privacidad · Descargo Marcario', 'Legal Notice & Privacy · Trademark Disclaimer')}
+              </button>
+            )}
           </div>
 
           <button

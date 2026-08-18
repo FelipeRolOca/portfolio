@@ -27,7 +27,7 @@ export function CookieBanner({ onOpenLegal }: CookieBannerProps) {
   return (
     <aside
       aria-label="Aviso de cookies y privacidad"
-      className="fixed bottom-6 left-4 right-4 sm:left-6 sm:right-auto z-40 max-w-md p-4 rounded-2xl shadow-2xl transition-all duration-300 animate-in fade-in border"
+      className="fixed bottom-20 md:bottom-6 left-3 right-3 sm:left-6 sm:right-auto z-[100] max-w-md p-4 rounded-2xl shadow-2xl transition-all duration-300 animate-in fade-in border touch-manipulation"
       style={{ backgroundColor: '#16232A', borderColor: 'rgba(7,80,86,0.6)', color: '#E4EEF0' }}
     >
       <div className="flex items-start gap-3">
@@ -53,7 +53,7 @@ export function CookieBanner({ onOpenLegal }: CookieBannerProps) {
         </div>
         <button
           onClick={handleAccept}
-          className="p-1 transition-colors hover:opacity-100 opacity-60"
+          className="p-1 transition-colors hover:opacity-100 opacity-60 touch-manipulation cursor-pointer"
           title={t('Cerrar', 'Close')}
           aria-label={t('Cerrar', 'Close')}
         >
@@ -67,14 +67,14 @@ export function CookieBanner({ onOpenLegal }: CookieBannerProps) {
       >
         <button
           onClick={onOpenLegal}
-          className="text-xs transition-colors underline"
+          className="text-xs transition-colors underline cursor-pointer touch-manipulation"
           style={{ color: '#FF5B04' }}
         >
           {t('Aviso Legal & Privacidad', 'Legal Notice')}
         </button>
         <button
           onClick={handleAccept}
-          className="px-3.5 py-1 text-xs font-bold uppercase tracking-wider rounded transition-colors"
+          className="px-4 py-2 sm:py-1.5 text-xs font-bold uppercase tracking-wider rounded transition-colors cursor-pointer touch-manipulation shadow-md"
           style={{ backgroundColor: '#FF5B04', color: '#FFFFFF' }}
         >
           {t('Aceptar', 'Accept')}

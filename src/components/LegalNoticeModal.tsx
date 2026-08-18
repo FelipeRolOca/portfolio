@@ -12,9 +12,9 @@ export function LegalNoticeModal({ isOpen, onClose }: LegalNoticeModalProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm animate-in fade-in">
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm animate-in fade-in">
       <div 
-        className="w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border"
+        className="w-full max-w-2xl max-h-[90dvh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border"
         style={{ backgroundColor: '#16232A', borderColor: 'rgba(7,80,86,0.6)', color: '#E4EEF0' }}
       >
         {/* Header */}

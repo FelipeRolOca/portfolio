@@ -308,19 +308,19 @@ export const messages = {
         },
         {
           title: 'Paper Pops',
-          category: 'Proyecto Experimental / Frontend',
-          subtitle: 'Frontend Creativo e Interactivo',
+          category: 'E-commerce / Tienda Online',
+          subtitle: 'Tienda Online y Catálogo Digital',
           description:
-            'Aplicación web completa construida con React, Vite y Motion. Explora animaciones e interfaces interactivas avanzadas.',
-          tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
-          url: 'https://paper-pops.vercel.app/',
+            'Tienda online y catálogo de Paper Pops con diseño visual dinámico, navegación de productos y experiencia de compra optimizada.',
+          tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
+          url: 'https://paperpopspp.vercel.app/',
           featured: false,
           image: '/paper-pops-preview.jpeg',
           meta: {
             role: 'Frontend Developer',
-            problem: 'Mostrar una identidad digital creativa a través de animaciones e interacción.',
+            problem: 'Desarrollar una tienda online visualmente atractiva con catálogo y navegación fluida.',
             value:
-              'Refleja capacidad frontend y dirección visual pulida.',
+              'Diseño de tienda moderna y experiencia de usuario atractiva.',
           },
         },
       ],
@@ -663,19 +663,19 @@ export const messages = {
         },
         {
           title: 'Paper Pops',
-          category: 'Experimental / Frontend Project',
-          subtitle: 'Creative & Interactive Frontend',
+          category: 'E-commerce / Online Store',
+          subtitle: 'Online Store & Digital Catalog',
           description:
-            'Full web application built with React, Vite, and Motion exploring advanced UI interactions and animations.',
-          tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
-          url: 'https://paper-pops.vercel.app/',
+            'Online store and interactive catalog for Paper Pops featuring dynamic design, product showcases, and optimized shopping experience.',
+          tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
+          url: 'https://paperpopspp.vercel.app/',
           featured: false,
           image: '/paper-pops-preview.jpeg',
           meta: {
             role: 'Frontend Developer',
-            problem: 'Demonstrate creative digital branding through interactive UI animations.',
+            problem: 'Develop a visually engaging online store with seamless catalog navigation.',
             value:
-              'Highlights UI design capability and polished visual direction.',
+              'Modern storefront design and engaging user experience.',
           },
         },
       ],

@@ -48,6 +48,19 @@ export function Projects() {
       featured: true,
     },
     {
+      id: 'paper-pops',
+      title: 'Paper Pops',
+      subtitle: t('Tienda Online / E-commerce', 'Online Store / E-commerce'),
+      description: t(
+        'Tienda online y catálogo de Paper Pops. Diseño visual atractivo, navegación fluida de productos y experiencia de compra optimizada.',
+        'Online store and catalog for Paper Pops. Engaging visual design, smooth product browsing, and optimized shopping experience.'
+      ),
+      tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
+      url: 'https://paperpopspp.vercel.app/',
+      image: '/paper-pops-preview.jpeg',
+      featured: true,
+    },
+    {
       id: 'jj-hire',
       title: 'JJHire',
       subtitle: t('Portal de Postulantes', 'Applicants Portal'),
@@ -71,19 +84,6 @@ export function Projects() {
       tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel', 'Admin Dashboard'],
       url: 'https://jj-busca.vercel.app/',
       image: '/jj-hire-busca-placeholder.png',
-      featured: false,
-    },
-    {
-      id: 'paper-pops',
-      title: 'Paper Pops',
-      subtitle: t('Proyecto Experimental UI', 'Experimental UI Project'),
-      description: t(
-        'Aplicación web interactiva construida con React, Vite y Framer Motion para explorar animaciones de alta fidelidad e interfaces dinámicas.',
-        'Interactive web app built with React, Vite, and Framer Motion exploring high-fidelity animations and dynamic UI components.'
-      ),
-      tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
-      url: 'https://paper-pops.vercel.app/',
-      image: '/paper-pops-preview.jpeg',
       featured: false,
     },
   ]

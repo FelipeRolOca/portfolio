@@ -13,7 +13,7 @@ export function ProjectsContent() {
       ),
       technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
       liveUrl: 'https://paper-pops.vercel.app/',
-      image: '/paper-pops-preview.jpeg',
+      image: '/paper-pops-logo.png',
     },
     {
       name: 'JJAsist',

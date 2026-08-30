@@ -70,7 +70,7 @@ La interfaz y el sistema de diseño deben seguir **estrictamente** las proporcio
 ### Imágenes de Proyectos
 - `/public/jj-asist-logo.png`: Logo JJ Asist.
 - `/public/jj-hire-busca-placeholder.png`: Mockup / preview JJ Hire.
-- `/public/paper-pops-preview.jpeg`: Preview de Paper Pops.
+- `/public/paper-pops-logo.png`: Logo / Preview oficial de Paper Pops.
 
 ---
 

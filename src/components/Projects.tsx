@@ -56,8 +56,8 @@ export function Projects() {
         'Online store and catalog for Paper Pops. Engaging visual design, smooth product browsing, and optimized shopping experience.'
       ),
       tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
-      url: 'https://paperpopspp.vercel.app/',
-      image: '/paper-pops-preview.jpeg',
+      url: 'https://paperpops.vercel.app/',
+      image: '/paper-pops-logo.png',
       featured: true,
     },
     {

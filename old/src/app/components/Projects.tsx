@@ -98,7 +98,7 @@ export function Projects() {
     {
       title: "Paper Pops",
       type: t.projects.p1Type,
-      image: "/paper-pops-preview.jpeg",
+      image: "/paper-pops-logo.png",
       description: t.projects.p1Desc,
       tech: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
       liveUrl: "https://paper-pops.vercel.app/",

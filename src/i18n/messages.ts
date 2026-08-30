@@ -313,9 +313,9 @@ export const messages = {
           description:
             'Tienda online y catálogo de Paper Pops con diseño visual dinámico, navegación de productos y experiencia de compra optimizada.',
           tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
-          url: 'https://paperpopspp.vercel.app/',
+          url: 'https://paperpops.vercel.app/',
           featured: false,
-          image: '/paper-pops-preview.jpeg',
+          image: '/paper-pops-logo.png',
           meta: {
             role: 'Frontend Developer',
             problem: 'Desarrollar una tienda online visualmente atractiva con catálogo y navegación fluida.',
@@ -668,9 +668,9 @@ export const messages = {
           description:
             'Online store and interactive catalog for Paper Pops featuring dynamic design, product showcases, and optimized shopping experience.',
           tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
-          url: 'https://paperpopspp.vercel.app/',
+          url: 'https://paperpops.vercel.app/',
           featured: false,
-          image: '/paper-pops-preview.jpeg',
+          image: '/paper-pops-logo.png',
           meta: {
             role: 'Frontend Developer',
             problem: 'Develop a visually engaging online store with seamless catalog navigation.',

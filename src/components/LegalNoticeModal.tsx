@@ -68,8 +68,8 @@ export function LegalNoticeModal({ isOpen, onClose }: LegalNoticeModalProps) {
             </h3>
             <p className="text-gray-300">
               {t(
-                'Todas las marcas comerciales, logotipos, nombres de empresas y proyectos exhibidos en este portafolio (incluyendo JJAsist, JJ Servicios Empresariales, JJBusca, JJHire, Sofía Moya y Paper Pops) pertenecen a sus respectivos titulares y se presentan exclusivamente con fines demostrativos de autoría, diseño de interfaces y desarrollo de software.',
-                'All trademarks, logos, company names, and project assets displayed in this portfolio (including JJAsist, JJ Servicios Empresariales, JJBusca, JJHire, Sofía Moya, and Paper Pops) belong to their respective owners and are presented solely for demonstrative purposes of software authorship, UI design, and development.'
+                'Todas las marcas comerciales, logotipos, nombres de empresas y proyectos exhibidos en este portafolio (incluyendo JJAsist, JJ Servicios Empresariales, JJBusca, JJHire y Paper Pops) pertenecen a sus respectivos titulares y se presentan exclusivamente con fines demostrativos de autoría, diseño de interfaces y desarrollo de software.',
+                'All trademarks, logos, company names, and project assets displayed in this portfolio (including JJAsist, JJ Servicios Empresariales, JJBusca, JJHire, and Paper Pops) belong to their respective owners and are presented solely for demonstrative purposes of software authorship, UI design, and development.'
               )}
             </p>
           </section>

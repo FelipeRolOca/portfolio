@@ -22,6 +22,19 @@ export function Projects() {
       featured: true,
     },
     {
+      id: 'oscar-cuero',
+      title: 'OSCAR — Puro Cuero',
+      subtitle: t('Marroquinería & Generador de Contenido', 'Leather Goods & Content Generator'),
+      description: t(
+        'E-commerce y catálogo artesanal de marroquinería y calzado con panel administrativo integrado que incluye un generador de contenido (flyers, banners, historias y copies) para automatizar el marketing en redes sociales de los dueños.',
+        'Artisanal leather goods & footwear e-commerce featuring an integrated admin suite with social media content generation tools (flyers, banners, stories, and copies) for business marketing.'
+      ),
+      tech: ['React', 'Vite', 'Tailwind CSS', 'Social Content Generator', 'SEO'],
+      url: 'https://oscarpurocuero-delta.vercel.app/',
+      image: '/OSCAR-01.png',
+      featured: true,
+    },
+    {
       id: 'jj-servicios',
       title: 'JJ Servicios Empresariales',
       subtitle: t('Sitio Corporativo RRHH', 'HR Corporate Site'),

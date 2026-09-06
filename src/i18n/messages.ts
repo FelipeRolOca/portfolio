@@ -257,6 +257,24 @@ export const messages = {
           },
         },
         {
+          title: 'OSCAR — Puro Cuero',
+          category: 'E-commerce & Generador de Contenido',
+          subtitle: 'Tienda Digital de Marroquinería & Social Media Hub',
+          description:
+            'Plataforma web para taller artesanal de calzado y marroquinería en cuero legítimo. Incorpora catálogo interactivo y un panel de administración con generador de contenido visual (flyers, banners, historias y copies) para redes sociales.',
+          tech: ['React', 'Vite', 'Tailwind CSS', 'Social Content Generator', 'SEO'],
+          url: 'https://oscarpurocuero-delta.vercel.app/',
+          featured: true,
+          image: '/OSCAR-01.png',
+          meta: {
+            role: 'Desarrollador Full Stack',
+            problem:
+              'Diseñar una vitrina digital de alta gama para productos de cuero y brindar a los dueños herramientas para generar material publicitario de redes sociales sin depender de diseñadores.',
+            value:
+              'Potencia las ventas directas y automatiza la creación de contenido para Instagram, Facebook y WhatsApp directamente desde la web.',
+          },
+        },
+        {
           title: 'JJ Servicios Empresariales',
           category: 'Desarrollo Web / Cliente Real',
           subtitle: 'Portal Corporativo de Recursos Humanos',
@@ -609,6 +627,24 @@ export const messages = {
               'Track field staff attendance with GPS location validation and eliminate manual timecard entry.',
             value:
               'Replaces manual workflows with a real-time centralized web platform.',
+          },
+        },
+        {
+          title: 'OSCAR — Puro Cuero',
+          category: 'E-commerce & Content Hub',
+          subtitle: 'Artisanal Leather Store & Social Media Generator',
+          description:
+            'Web platform for an artisanal leather goods & footwear brand with an integrated admin suite featuring social media content generation tools (flyers, banners, stories, and copy) for business marketing.',
+          tech: ['React', 'Vite', 'Tailwind CSS', 'Social Content Generator', 'SEO'],
+          url: 'https://oscarpurocuero-delta.vercel.app/',
+          featured: true,
+          image: '/OSCAR-01.png',
+          meta: {
+            role: 'Full Stack Developer',
+            problem:
+              'Build a premium digital storefront and empower owners to create promotional social media material without external design tools.',
+            value:
+              'Drives direct sales and streamlines marketing workflows with built-in asset generators.',
           },
         },
         {

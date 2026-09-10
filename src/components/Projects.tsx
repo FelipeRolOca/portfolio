@@ -65,8 +65,8 @@ export function Projects() {
       title: 'JJHire',
       subtitle: t('Portal de Postulantes', 'Applicants Portal'),
       description: t(
-        'Portal de empleo para candidatos donde pueden cargar su CV, explorar ofertas laborales vigentes y realizar postulaciones en línea.',
-        'Candidate job portal allowing applicants to upload CVs, explore open job listings, and submit online applications.'
+        'Sistema administrativo para selectores y reclutadores que facilita la búsqueda de perfiles, filtrado de currículums y gestión de búsquedas.',
+        'Administrative dashboard for recruiters enabling profile searches, CV filtering, and candidate pipeline tracking.'
       ),
       tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
       url: 'https://jj-hire.vercel.app/',
@@ -78,12 +78,25 @@ export function Projects() {
       title: 'JJBusca',
       subtitle: t('Portal de Reclutadores', 'Recruiters Portal'),
       description: t(
-        'Sistema administrativo para selectores y reclutadores que facilita la búsqueda de perfiles, filtrado de currículums y gestión de búsquedas.',
-        'Administrative dashboard for recruiters enabling profile searches, CV filtering, and candidate pipeline tracking.'
+        'Portal de empleo para candidatos donde pueden cargar su CV, explorar ofertas laborales vigentes y realizar postulaciones en línea.',
+        'Candidate job portal allowing applicants to upload CVs, explore open job listings, and submit online applications.'
       ),
       tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel', 'Admin Dashboard'],
       url: 'https://jj-busca.vercel.app/',
       image: '/jj-hire-busca-placeholder.png',
+      featured: false,
+    },
+    {
+      id: 'sofia-moya',
+      title: 'Sofia Moya',
+      subtitle: t('Portafolio — Diseñadora Gráfica y Digital', 'Portfolio — Graphic & Digital Designer'),
+      description: t(
+        'Portafolio personal de Sofia Moya, diseñadora gráfica y digital especializada en identidad visual, branding y diseño de logos. Diseño y desarrollo completo del sitio.',
+        'Personal portfolio of Sofia Moya, graphic and digital designer specialized in visual identity, branding and logo design. Full design and development of the site.'
+      ),
+      tech: ['React', 'Vite', 'CSS', 'Branding', 'Diseño Gráfico'],
+      url: 'https://sofia-moya.vercel.app/',
+      image: '/Logo principal_.png',
       featured: false,
     },
   ]

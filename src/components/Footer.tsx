@@ -30,7 +30,7 @@ export function Footer({ onOpenLegal }: FooterProps) {
               className="text-xs uppercase tracking-widest mt-0.5"
               style={{ fontFamily: 'JetBrains Mono, monospace', color: '#FF5B04', fontSize: '9px' }}
             >
-              {t('Full Stack Developer · Automatización de Procesos', 'Full Stack Developer · Process Automation')}
+              {t('Full Stack Developer · Automatización de Procesos', 'Full Stack Developer · Workflow Automation')}
             </div>
           </div>
         </div>
@@ -66,9 +66,9 @@ export function Footer({ onOpenLegal }: FooterProps) {
             }}
             onMouseEnter={e => (e.currentTarget.style.borderColor = '#FF5B04')}
             onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(7,80,86,0.6)')}
-            title="Volver arriba"
+            title={t('Volver arriba', 'Scroll to top')}
           >
-            ↑ {t('Arriba', 'Top')}
+            ↑ {t('Arriba', 'Back to Top')}
           </button>
         </div>
       </div>

@@ -19,28 +19,28 @@ export function Services() {
             color: '#E4EEF0',
           }}
         >
-          {t('Soluciones que puedo', 'Solutions I can')}
+          {t('Soluciones que puedo', 'Tailored Solutions')}
           <br />
-          <span style={{ color: '#FF5B04' }}>{t('desarrollar', 'build for you')}</span>
+          <span style={{ color: '#FF5B04' }}>{t('desarrollar', 'I Engineer')}</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {[
             {
               title: t('Sitios web', 'Websites'),
-              desc: t('Sitios corporativos, landing pages, portfolios y plataformas adaptadas a las necesidades de cada proyecto.', 'Corporate sites, landing pages, portfolios, and web platforms tailored to your business needs.'),
+              desc: t('Sitios corporativos, landing pages, portfolios y plataformas adaptadas a las necesidades de cada proyecto.', 'High-converting corporate websites, landing pages, and interactive platforms engineered for speed, SEO, and flawless responsiveness.'),
             },
             {
               title: t('Aplicaciones web', 'Web Applications'),
-              desc: t('Sistemas con autenticación, paneles administrativos, bases de datos y lógica de negocio a medida.', 'Custom web apps with authentication, admin dashboards, databases, and tailored business logic.'),
+              desc: t('Sistemas con autenticación, paneles administrativos, bases de datos y lógica de negocio a medida.', 'End-to-end web applications featuring secure authentication, intuitive admin dashboards, resilient databases, and bespoke business logic.'),
             },
             {
               title: t('Automatización de procesos', 'Process Automation'),
-              desc: t('Automatización de tareas repetitivas, generación de reportes, procesamiento de información e integraciones.', 'Automation of repetitive tasks, automated report generation, data processing, and API integrations.'),
+              desc: t('Automatización de tareas repetitivas, generación de reportes, procesamiento de información e integraciones.', 'Automated pipelines that eliminate tedious manual work: scheduled report generation, multi-source data sync, and third-party API integrations.'),
             },
             {
               title: t('Sistemas a medida', 'Custom Systems'),
-              desc: t('Soluciones diseñadas alrededor de operaciones específicas, desde la gestión de datos hasta el control operativo.', 'Tailored software built around specific operations, from data management to operational control.'),
+              desc: t('Soluciones diseñadas alrededor de operaciones específicas, desde la gestión de datos hasta el control operativo.', 'Bespoke systems modeled around your exact operations—from centralized data architecture to full operational control.'),
             },
           ].map((item, i) => (
             <div
@@ -81,26 +81,26 @@ export function Services() {
             className="font-black uppercase text-xl sm:text-3xl mb-2"
             style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
           >
-            {t('¿Tenés un proceso que todavía hacés manualmente?', 'Do you have a process still done manually?')}
+            {t('¿Tenés un proceso que todavía hacés manualmente?', 'Still managing core workflows manually or with clunky spreadsheets?')}
           </h3>
           <p
             className="text-sm sm:text-base mb-6 font-semibold"
             style={{ color: '#FF5B04', fontFamily: 'JetBrains Mono, monospace' }}
           >
-            {t('Puedo ayudarte a digitalizar procesos y acelerar tareas como:', 'I can help you digitize processes and speed up workflows such as:')}
+            {t('Puedo ayudarte a digitalizar procesos y acelerar tareas como:', 'I help teams automate operations and remove bottlenecks in areas like:')}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              t('Carga y organización de información', 'Data entry and information management'),
-              t('Generación automática de reportes', 'Automated PDF/Sheet report generation'),
-              t('Gestión de empleados o clientes', 'Employee or client management portals'),
-              t('Control de asistencia con GPS y QR dinámico', 'Attendance tracking with GPS & dynamic QR'),
-              t('Formularios y recepción de datos', 'Data collection and web form intake'),
-              t('Procesos que requieren validaciones a medida', 'Processes requiring custom business validations'),
-              t('Integración entre distintas herramientas', 'Integrations between third-party tools'),
-              t('Paneles para visualizar métricas clave', 'Dashboards for key business metrics'),
-              t('Sitios web y plataformas corporativas', 'Corporate websites & web platforms'),
+              t('Carga y organización de información', 'Automated data entry and centralized record keeping'),
+              t('Generación automática de reportes', 'Instant, scheduled report generation (PDF & Google Sheets)'),
+              t('Gestión de empleados o clientes', 'Self-service staff and client management portals'),
+              t('Control de asistencia con GPS y QR dinámico', 'Geolocated attendance tracking via dynamic QR & GPS'),
+              t('Formularios y recepción de datos', 'Smart multi-step forms and structured data intake'),
+              t('Procesos que requieren validaciones a medida', 'Custom business logic and validation pipelines'),
+              t('Integración entre distintas herramientas', 'Seamless integrations between disparate third-party tools'),
+              t('Paneles para visualizar métricas clave', 'Real-time dashboards visualizing key business KPIs'),
+              t('Sitios web y plataformas corporativas', 'Modern corporate platforms built for growth'),
             ].map((prob, i) => (
               <div
                 key={i}

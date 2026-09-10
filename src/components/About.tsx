@@ -41,30 +41,30 @@ export function About() {
               color: '#E4EEF0',
             }}
           >
-            {t('Transformo necesidades', 'Transforming business needs')}
+            {t('Transformo necesidades', 'Turning Operational Challenges')}
             <br />
-            <span style={{ color: '#16232A' }}>{t('en soluciones digitales', 'into digital solutions')}</span>
+            <span style={{ color: '#16232A' }}>{t('en soluciones digitales', 'Into High-Impact Software')}</span>
           </h2>
           <p className="leading-relaxed mb-6 font-medium" style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}>
             {t(
               'Como estudiante avanzado de Ingeniería Informática y desarrollador, me enfoco en entender a fondo el flujo operativo de cada cliente para diseñar software útil, seguro y fácil de mantener.',
-              'As an advanced Software Engineering student and developer, I focus on deeply understanding each client’s operational workflow to build useful, secure, and maintainable software.'
+              'As a Senior Software Engineering student and full stack developer, I partner closely with businesses to understand their daily operations and engineer robust, maintainable software.'
             )}
           </p>
           <p className="leading-relaxed font-medium" style={{ color: '#F0F6F7', fontFamily: 'Barlow, sans-serif', fontSize: '1.05rem' }}>
             {t(
               'Mi objetivo es conectar los procesos del negocio con tecnología moderna: centralizando bases de datos, eliminando la carga de trabajo repetitiva y permitiendo tomar decisiones basadas en información clara.',
-              'My objective is to bridge business workflows with modern technology: centralizing databases, eliminating repetitive manual workloads, and enabling data-driven decisions.'
+              'My mission is to connect business logic with modern technology: centralizing databases, automating time-consuming tasks, and empowering teams with real-time operational clarity.'
             )}
           </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: elem2, label: t('Educación', 'Education'), value: t('Ing. Informática', 'Software Eng.'), unit: t('Estudiante', 'Student'), color: '#16232A' },
+            { icon: elem2, label: t('Educación', 'Education'), value: t('Ing. Informática', 'Software Eng.'), unit: t('Estudiante', 'B.S. in Progress'), color: '#16232A' },
             { icon: elem2, label: t('Edad', 'Age'), value: t('21 Años', '21 Years Old'), unit: '2005', color: '#16232A' },
-            { icon: elem3, label: t('Inglés', 'English'), value: t('Nivel B2', 'B2 Upper-Int.'), unit: 'B2', color: '#FF5B04' },
-            { icon: elem2, label: t('Modalidad', 'Work Mode'), value: t('Remoto', 'Remote'), unit: t('Freelance & SaaS', 'Freelance & SaaS'), color: '#16232A' },
+            { icon: elem3, label: t('Inglés', 'English'), value: t('Nivel B2', 'B2 Professional'), unit: 'B2', color: '#FF5B04' },
+            { icon: elem2, label: t('Modalidad', 'Work Mode'), value: t('Remoto', 'Remote-First'), unit: t('Freelance & SaaS', 'Freelance & SaaS'), color: '#16232A' },
           ].map((card, i) => (
             <div
               key={i}

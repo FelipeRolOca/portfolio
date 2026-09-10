@@ -47,7 +47,7 @@ export function Hero() {
             className="mb-4 text-lg font-semibold uppercase tracking-widest"
             style={{ color: '#FF5B04', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: '0.25em' }}
           >
-            {t('Full Stack Developer · Automatización de Procesos', 'Full Stack Developer · Process Automation')}
+            {t('Full Stack Developer · Automatización de Procesos', 'Full Stack Developer · Workflow Automation')}
           </p>
 
           <p
@@ -56,7 +56,7 @@ export function Hero() {
           >
             {t(
               'Desarrollo aplicaciones web, sistemas internos y automatizaciones que ayudan a empresas a reducir tareas manuales, centralizar información y mejorar sus procesos.',
-              'I develop web applications, internal systems, and process automations that help businesses reduce manual work, centralize data, and optimize operations.'
+              'I build high-performance web apps, internal platforms, and automated workflows that eliminate repetitive tasks, unify company data, and streamline business operations.'
             )}
           </p>
 
@@ -76,7 +76,7 @@ export function Hero() {
               onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#D94A00')}
               onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#FF5B04')}
             >
-              {t('Ver Proyectos', 'View Projects')}
+              {t('Ver Proyectos', 'Explore Projects')}
             </button>
             <button
               onClick={() => window.open('https://wa.me/5493329523459?text=Hola%20Felipe,%20vi%20tu%20portafolio%20y%20quisiera%20contactarte.', '_blank')}

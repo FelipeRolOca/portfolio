@@ -6,28 +6,54 @@ export function Skills() {
 
   const SKILLS = [
     {
-      category: t('Desarrollo Frontend', 'Frontend Development'),
+      category: t('Desarrollo Frontend', 'Frontend Engineering'),
       icon: '⬡',
       items: ['JavaScript', 'TypeScript', 'React', 'Next.js', 'HTML5', 'CSS3 / Tailwind'],
-      note: t('Aplicaciones web responsivas, plataformas corporativas y paneles interactivos con lógica moderna.', 'Responsive web apps, corporate platforms, and interactive dashboards with modern architecture.'),
+      note: t(
+        'Aplicaciones web responsivas, plataformas corporativas y paneles interactivos con lógica moderna.',
+        'Production web apps, multi-tenant dashboards, and high-performance interfaces engineered with modern frameworks.'
+      ),
     },
     {
       category: t('Backend y Bases de Datos', 'Backend & Databases'),
       icon: '◈',
       items: ['SQL', 'PostgreSQL', 'Supabase', 'MongoDB', 'Neo4j', 'Oracle'],
-      note: t('Diseño de esquemas, consultas optimizadas y gestión de información estructurada y no estructurada.', 'Schema design, query optimization, and structured/unstructured data management.'),
+      note: t(
+        'Diseño de esquemas, consultas optimizadas y gestión de información estructurada y no estructurada.',
+        'Relational schema architecture, performant indexing, ACID compliance, and structured/unstructured persistence layers.'
+      ),
     },
     {
-      category: t('Automatización e Integración', 'Automation & Integration'),
+      category: t('Automatización e Integración', 'Automation & Cloud Integration'),
       icon: '⬢',
-      items: ['Google Apps Script', 'REST APIs', 'QR Dinámico', 'Validación GPS', 'Webhooks', 'Node.js'],
-      note: t('Automatización de reportes, flujos administrativos, sincronización de servicios y validaciones de campo.', 'Automated reporting, admin workflows, third-party service sync, and field validations.'),
+      items: [
+        'Google Apps Script',
+        'REST APIs',
+        t('QR Dinámico', 'Dynamic QR Codes'),
+        t('Validación GPS', 'GPS Geofencing'),
+        'Webhooks',
+        'Node.js',
+      ],
+      note: t(
+        'Automatización de reportes, flujos administrativos, sincronización de servicios y validaciones de campo.',
+        'Automated data pipelines, spreadsheet sync, third-party webhook integrations, and field validation protocols.'
+      ),
     },
     {
-      category: t('Ingeniería y Despliegue', 'Engineering & Deployment'),
+      category: t('Ingeniería y Despliegue', 'Systems Architecture & CI/CD'),
       icon: '◎',
-      items: ['Git / GitHub', 'Vercel', 'Algoritmos & Estructuras', 'Diseño de Sistemas', 'Java', 'Python'],
-      note: t('Fundamentos sólidos de la carrera de Ingeniería Informática y herramientas de entrega continua.', 'Core engineering fundamentals, systems design, and daily workflow toolchain.'),
+      items: [
+        'Git / GitHub',
+        'Vercel',
+        t('Algoritmos & Estructuras', 'Algorithms & Data Structures'),
+        t('Diseño de Sistemas', 'Systems Design'),
+        'Java',
+        'Python',
+      ],
+      note: t(
+        'Fundamentos sólidos de la carrera de Ingeniería Informática y herramientas de entrega continua.',
+        'Rigorous computer science principles, modular architecture design, and automated continuous deployment workflows.'
+      ),
     },
   ]
 
@@ -71,7 +97,7 @@ export function Skills() {
           >
             {t(
               'Tecnologías que utilizo para desarrollar aplicaciones, sistemas y automatizaciones orientadas a resolver necesidades reales.',
-              'Technologies and frameworks I use to build scalable web applications, custom systems, and process automations.'
+              'Core technologies and modern frameworks I employ to build scalable web applications, automate mission-critical workflows, and engineer reliable digital products.'
             )}
           </div>
         </div>

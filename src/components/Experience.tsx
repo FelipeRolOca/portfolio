@@ -7,20 +7,20 @@ export function Experience() {
     {
       period: t('2026 — Presente', '2026 — Present'),
       role: t('Desarrollador Full Stack', 'Full Stack Developer'),
-      company: t('JJAsist (Proyecto Freelance / SaaS)', 'JJAsist (Freelance SaaS Project)'),
+      company: t('JJAsist (Proyecto Freelance / SaaS)', 'JJAsist · Workforce Management SaaS'),
       description: t(
         'Desarrollé una plataforma integral SaaS para el control de asistencia y registro de jornadas laborales. Implementa identificación mediante QR dinámico, validación de ubicación geográfica por GPS y un panel administrativo para gestión de empleados, sucursales y sincronización de reportes.',
-        'Developed a comprehensive SaaS platform for employee attendance and shift tracking. Features dynamic QR identification, GPS geolocation validation, and an administrative dashboard for managing staff, branch locations, and automated reporting sync.'
+        'Architected and developed an end-to-end SaaS attendance and shift tracking platform. Engineered dynamic anti-spoofing QR code generation, GPS geofencing perimeter validation, and multi-tenant admin dashboards for managing employees, branches, and automated report synchronization.'
       ),
       tags: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
     },
     {
       period: t('2025 — Presente', '2025 — Present'),
       role: t('Desarrollador Web Freelance', 'Freelance Web Developer'),
-      company: 'JJ Servicios Empresariales',
+      company: t('JJ Servicios Empresariales', 'JJ Servicios Empresariales · Corporate HR Consultancy'),
       description: t(
         'Diseño y desarrollo de la infraestructura web corporativa para una consultora de Recursos Humanos. Optimización de SEO, maquetación adaptativa responsive y estructuración clara del catálogo de servicios para la captación de clientes.',
-        'Designed and built the corporate web infrastructure for an HR consulting firm. Optimized search engine visibility (SEO), implemented fully responsive layouts, and structured service offerings to drive corporate client inquiries.'
+        'Led web architecture and digital infrastructure for an executive HR consultancy. Delivered high-converting responsive web experiences, technical SEO optimizations, and structured service funnels that streamlined corporate lead acquisition.'
       ),
       tags: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'SEO'],
     },

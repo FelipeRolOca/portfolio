@@ -10,7 +10,7 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const mailUrl = `mailto:felipeoca123@hotmail.com?subject=${encodeURIComponent(
-      form.subject || t('Consulta desde Portafolio Web', 'Contact from Portfolio')
+      form.subject || t('Consulta desde Portafolio Web', 'New Project Inquiry · Portfolio')
     )}&body=${encodeURIComponent(
       `${t('Nombre', 'Name')}: ${form.name}\nEmail: ${form.email}\n\n${t('Mensaje', 'Message')}:\n${form.message}`
     )}`
@@ -71,7 +71,7 @@ export function Contact() {
           >
             {t(
               '¿Tenés un proyecto en mente o querés digitalizar un proceso en tu empresa? Escribime directamente para analizar la mejor solución.',
-              'Have a project in mind or looking to automate a workflow? Contact me directly to discuss the ideal solution.'
+              'Have a project in mind, an idea to validate, or an operational bottleneck to automate? Reach out directly to discuss architecture, timeline, and execution.'
             )}
           </p>
 
@@ -187,7 +187,7 @@ export function Contact() {
                   onMouseEnter={e => (e.currentTarget.style.borderColor = '#FF5B04')}
                   onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,91,4,0.4)')}
                 >
-                  <span>Llamar</span>
+                  <span>{t('Llamar', 'Direct Call')}</span>
                   <svg className="w-5 h-5 text-[#FF5B04]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
@@ -287,7 +287,7 @@ export function Contact() {
               type="text"
               value={form.subject}
               onChange={e => setForm({ ...form, subject: e.target.value })}
-              placeholder={t('¿En qué te puedo ayudar?', 'How can I help you?')}
+              placeholder={t('¿En qué te puedo ayudar?', 'Project type / Automation goals / Timeline')}
               style={inputStyle}
               onFocus={e => (e.currentTarget.style.borderColor = '#FF5B04')}
               onBlur={e => (e.currentTarget.style.borderColor = 'rgba(7,80,86,0.5)')}
@@ -305,7 +305,7 @@ export function Contact() {
               required
               value={form.message}
               onChange={e => setForm({ ...form, message: e.target.value })}
-              placeholder={t('Contame sobre tu proyecto, proceso o necesidad...', 'Tell me about your project, process, or needs...')}
+              placeholder={t('Contame sobre tu proyecto, proceso o necesidad...', 'Tell me about your goals, current bottlenecks, key requirements, or project scope...')}
               rows={6}
               style={{ ...inputStyle, resize: 'none' }}
               onFocus={e => (e.currentTarget.style.borderColor = '#FF5B04')}

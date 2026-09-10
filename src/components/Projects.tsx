@@ -64,6 +64,11 @@ export function Projects() {
       id: 'jj-hire',
       title: 'JJHire',
       subtitle: t('Portal de Postulantes', 'Applicants Portal'),
+      isBeta: true,
+      betaNotice: t(
+        'Versión Beta — Diseño estético no terminado / en desarrollo',
+        'Beta Version — Visual design in progress / under construction'
+      ),
       description: t(
         'Sistema administrativo para selectores y reclutadores que facilita la búsqueda de perfiles, filtrado de currículums y gestión de búsquedas.',
         'Administrative dashboard for recruiters enabling profile searches, CV filtering, and candidate pipeline tracking.'
@@ -77,6 +82,11 @@ export function Projects() {
       id: 'jj-busca',
       title: 'JJBusca',
       subtitle: t('Portal de Reclutadores', 'Recruiters Portal'),
+      isBeta: true,
+      betaNotice: t(
+        'Versión Beta — Diseño estético no terminado / en desarrollo',
+        'Beta Version — Visual design in progress / under construction'
+      ),
       description: t(
         'Portal de empleo para candidatos donde pueden cargar su CV, explorar ofertas laborales vigentes y realizar postulaciones en línea.',
         'Candidate job portal allowing applicants to upload CVs, explore open job listings, and submit online applications.'
@@ -372,6 +382,23 @@ export function Projects() {
                     </div>
                   )}
 
+                  {proj.isBeta && (
+                    <div
+                      className="absolute top-6 right-6 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10 flex items-center gap-1.5"
+                      style={{
+                        backgroundColor: 'rgba(234, 179, 8, 0.15)',
+                        color: '#FACC15',
+                        border: '1px solid rgba(250, 204, 21, 0.4)',
+                        fontFamily: 'JetBrains Mono, monospace',
+                        fontSize: '9px',
+                        borderRadius: '2px',
+                      }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
+                      BETA
+                    </div>
+                  )}
+
                   <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-[#FF5B04]/40 p-2 bg-[#075056]/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(255,91,4,0.15)]">
@@ -403,6 +430,24 @@ export function Projects() {
                     >
                       {proj.description}
                     </p>
+
+                    {proj.betaNotice && (
+                      <div
+                        className="flex items-center gap-2 px-3 py-2 rounded text-xs mt-1"
+                        style={{
+                          backgroundColor: 'rgba(234, 179, 8, 0.08)',
+                          border: '1px dashed rgba(250, 204, 21, 0.35)',
+                          color: '#FACC15',
+                          fontFamily: 'JetBrains Mono, monospace',
+                          fontSize: '11px',
+                        }}
+                      >
+                        <svg className="w-4 h-4 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span>{proj.betaNotice}</span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-6 flex gap-3 pt-4 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
@@ -478,6 +523,23 @@ export function Projects() {
                 </div>
               )}
 
+              {proj.isBeta && (
+                <div
+                  className="absolute top-4 right-4 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10 flex items-center gap-1.5"
+                  style={{
+                    backgroundColor: 'rgba(234, 179, 8, 0.15)',
+                    color: '#FACC15',
+                    border: '1px solid rgba(250, 204, 21, 0.4)',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontSize: '9px',
+                    borderRadius: '2px',
+                  }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
+                  BETA
+                </div>
+              )}
+
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-3.5 pr-20">
                   <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-[#FF5B04]/40 p-2 bg-[#075056]/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(255,91,4,0.15)]">
@@ -509,6 +571,24 @@ export function Projects() {
                 >
                   {proj.description}
                 </p>
+
+                {proj.betaNotice && (
+                  <div
+                    className="flex items-center gap-2 px-3 py-2 rounded text-xs mt-1"
+                    style={{
+                      backgroundColor: 'rgba(234, 179, 8, 0.08)',
+                      border: '1px dashed rgba(250, 204, 21, 0.35)',
+                      color: '#FACC15',
+                      fontFamily: 'JetBrains Mono, monospace',
+                      fontSize: '11px',
+                    }}
+                  >
+                    <svg className="w-4 h-4 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>{proj.betaNotice}</span>
+                  </div>
+                )}
               </div>
 
               <div className="mt-6 flex gap-3 pt-4 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>

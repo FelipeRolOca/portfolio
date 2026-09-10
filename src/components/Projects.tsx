@@ -6,6 +6,7 @@ export function Projects() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200)
+  const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 800)
 
   const RAW_PROJECTS = [
     {
@@ -156,6 +157,7 @@ export function Projects() {
       const newWidth = window.innerWidth
       const oldWidth = prevWidthRef.current
       setWindowWidth(newWidth)
+      setWindowHeight(window.innerHeight)
 
       // If crossing mobile/desktop breakpoint (768px), keep user cleanly in #proyectos
       const crossedBreakpoint =
@@ -199,15 +201,28 @@ export function Projects() {
     window.scrollTo({ top: targetScroll, behavior: 'smooth' })
   }
 
-  // DESKTOP MEASUREMENTS (Synchronized with Tailwind md: breakpoint = 768px):
+  // DESKTOP MEASUREMENTS & VIEWPORT HEIGHT SENSITIVITY:
+  // Dynamically adapts spotlight scale and card sizing so the cards NEVER get clipped
+  // on laptops (1366x768, 1080p scaled displays with height < 780px) while looking large on big screens.
   const isDesktop = windowWidth >= 768
   const isWide = windowWidth >= 1200
-  const cardWidth = isWide ? 410 : isDesktop ? 380 : Math.min(windowWidth - 32, 380)
+  const isShortScreen = windowHeight < 780
+  const isVeryShortScreen = windowHeight < 680
 
-  const baseOffset = isWide ? 475 : isDesktop ? 380 : 320
-  const stepOffset = isWide ? Math.min(180, Math.max(140, Math.floor(windowWidth * 0.12))) : 120
-  const spotlightScale = isDesktop ? 1.32 : 1.15
-  const dockedScale = isDesktop ? 0.88 : 0.85
+  const cardWidth = isWide
+    ? isShortScreen
+      ? 380
+      : 410
+    : isDesktop
+      ? isShortScreen
+        ? 345
+        : 375
+      : Math.min(windowWidth - 32, 380)
+
+  const baseOffset = isWide ? (isShortScreen ? 430 : 475) : isDesktop ? (isShortScreen ? 350 : 380) : 320
+  const stepOffset = isWide ? Math.min(180, Math.max(130, Math.floor(windowWidth * 0.11))) : 120
+  const spotlightScale = isVeryShortScreen ? 1.08 : isShortScreen ? 1.15 : 1.25
+  const dockedScale = isVeryShortScreen ? 0.80 : isShortScreen ? 0.83 : 0.875
 
   return (
     <div id="proyectos">
@@ -225,17 +240,17 @@ export function Projects() {
           height: '560vh', // Extended scroll track for doubled spotlight & shine duration
         }}
       >
-        <div className="sticky top-0 min-h-screen w-full flex flex-col justify-between pt-16 sm:pt-20 pb-8 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col flex-1">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-between pt-14 sm:pt-16 pb-3 sm:pb-5 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col flex-1 min-h-0">
             {/* Header Desktop */}
-            <div className="flex items-end justify-between mb-4 sm:mb-6 flex-wrap gap-4 border-b border-[#075056]/40 pb-5 flex-shrink-0">
+            <div className="flex items-end justify-between mb-2 sm:mb-3 flex-wrap gap-3 border-b border-[#075056]/40 pb-2.5 flex-shrink-0">
               <div>
                 <h2
                   className="uppercase leading-none"
                   style={{
                     fontFamily: 'Barlow Condensed, sans-serif',
                     fontWeight: 900,
-                    fontSize: 'clamp(2.3rem, 4.5vw, 4rem)',
+                    fontSize: 'clamp(1.85rem, 3.2vw, 2.9rem)',
                     color: '#E4EEF0',
                   }}
                 >
@@ -248,7 +263,7 @@ export function Projects() {
               {/* Desktop Indicator & Jump Dots */}
               <div className="flex items-center gap-4">
                 <div
-                  className="px-3 py-1.5 text-xs font-mono font-bold tracking-widest uppercase border"
+                  className="px-3 py-1 text-xs font-mono font-bold tracking-widest uppercase border"
                   style={{
                     backgroundColor: 'rgba(7,80,86,0.35)',
                     borderColor: '#268B95',
@@ -261,7 +276,7 @@ export function Projects() {
                 </div>
 
                 <div
-                  className="flex items-center gap-1.5 bg-[#075056]/20 p-1.5 border border-[#075056]/40"
+                  className="flex items-center gap-1.5 bg-[#075056]/20 p-1 border border-[#075056]/40"
                   style={{ borderRadius: '2px' }}
                 >
                   {ALL_CARDS.map((_, idx) => (
@@ -281,8 +296,8 @@ export function Projects() {
               </div>
             </div>
 
-            {/* Desktop Stage */}
-            <div className="relative w-full flex-1 flex items-center justify-center min-h-[480px] sm:min-h-[520px]">
+            {/* Desktop Stage: natural flex-1 centering within exact viewport height */}
+            <div className="relative w-full flex-1 flex items-center justify-center min-h-0 overflow-visible">
               {ALL_CARDS.map((item, index) => {
                 const isFinalCard = index === maxIndex
                 const delta = index - activeFloatIndex
@@ -508,7 +523,7 @@ function renderCard(
         onClick={() =>
           document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
         }
-        className="w-full relative p-6 sm:p-8 flex flex-col justify-between items-center text-center transition-all duration-300 group cursor-pointer border-2 border-dashed min-h-[380px] sm:min-h-[410px]"
+        className="w-full relative p-4 sm:p-5 md:p-6 flex flex-col justify-between items-center text-center transition-all duration-300 group cursor-pointer border-2 border-dashed min-h-[340px] sm:min-h-[365px]"
         style={{
           backgroundColor: isShining ? '#102229' : '#16232A',
           borderColor: isShining ? '#FF5B04' : 'rgba(7,80,86,0.6)',
@@ -598,7 +613,7 @@ function renderCard(
   /* REAL PROJECT CARD */
   return (
     <div
-      className="w-full relative p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 overflow-hidden min-h-[380px] sm:min-h-[410px]"
+      className="w-full relative p-4 sm:p-5 md:p-6 flex flex-col justify-between transition-all duration-300 overflow-hidden min-h-[340px] sm:min-h-[365px]"
       style={{
         backgroundColor: isShining ? '#0c1f27' : '#16232A',
         border: isShining ? '2px solid #FF5B04' : '1px solid rgba(7,80,86,0.7)',
@@ -610,7 +625,7 @@ function renderCard(
     >
       {item.featured && (
         <div
-          className="absolute top-5 right-5 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10"
+          className="absolute top-4 right-4 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10"
           style={{
             backgroundColor: '#FF5B04',
             color: '#E4EEF0',
@@ -625,7 +640,7 @@ function renderCard(
 
       {item.isBeta && (
         <div
-          className="absolute top-5 right-5 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10 flex items-center gap-1.5"
+          className="absolute top-4 right-4 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider z-10 flex items-center gap-1.5"
           style={{
             backgroundColor: 'rgba(234, 179, 8, 0.15)',
             color: '#FACC15',
@@ -640,9 +655,9 @@ function renderCard(
         </div>
       )}
 
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-lg border border-[#FF5B04]/40 p-2 bg-[#075056]/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(255,91,4,0.15)]">
+      <div className="flex flex-col gap-3 sm:gap-3.5">
+        <div className="flex items-center gap-3.5 sm:gap-4">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-[#FF5B04]/40 p-1.5 sm:p-2 bg-[#075056]/30 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(255,91,4,0.15)]">
             <img
               src={item.image}
               alt={item.title}
@@ -657,7 +672,7 @@ function renderCard(
               {item.subtitle}
             </div>
             <h3
-              className="font-black uppercase text-2xl sm:text-3xl leading-tight"
+              className="font-black uppercase text-xl sm:text-2xl md:text-3xl leading-tight"
               style={{ fontFamily: 'Barlow Condensed, sans-serif', color: '#E4EEF0' }}
             >
               {item.title}
@@ -674,7 +689,7 @@ function renderCard(
 
         {item.betaNotice && (
           <div
-            className="flex items-center gap-2 px-3 py-2 rounded text-xs"
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded text-xs"
             style={{
               backgroundColor: 'rgba(234, 179, 8, 0.08)',
               border: '1px dashed rgba(250, 204, 21, 0.35)',
@@ -684,7 +699,7 @@ function renderCard(
               borderRadius: '2px',
             }}
           >
-            <svg className="w-4 h-4 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 flex-shrink-0 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <span>{item.betaNotice}</span>
@@ -697,7 +712,7 @@ function renderCard(
             {item.tech.map((tTag: string, tIdx: number) => (
               <span
                 key={tIdx}
-                className="px-2.5 py-0.5 text-[10px] sm:text-[11px] font-mono border"
+                className="px-2 py-0.5 text-[10px] sm:text-[11px] font-mono border"
                 style={{
                   backgroundColor: 'rgba(7,80,86,0.25)',
                   borderColor: 'rgba(7,80,86,0.6)',
@@ -713,12 +728,12 @@ function renderCard(
         )}
       </div>
 
-      <div className="mt-5 flex gap-3 pt-4 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
+      <div className="mt-3.5 sm:mt-4 flex gap-3 pt-3 border-t" style={{ borderColor: 'rgba(7,80,86,0.4)' }}>
         <a
           href={item.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 text-center"
+          className="flex-1 py-2.5 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 text-center"
           style={{
             backgroundColor: isShining ? '#FF5B04' : 'rgba(7,80,86,0.5)',
             color: '#E4EEF0',

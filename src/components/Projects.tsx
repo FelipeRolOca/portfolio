@@ -65,6 +65,20 @@ export function Projects() {
       featured: true,
     },
     {
+      id: 'sofia-moya',
+      code: 'SOF',
+      title: 'Sofia Moya',
+      subtitle: t('Portafolio — Diseñadora Gráfica y Digital', 'Graphic & Digital Designer Portfolio'),
+      description: t(
+        'Portafolio personal de Sofia Moya, diseñadora gráfica y digital especializada en identidad visual, branding y diseño de logos. Diseño y desarrollo completo del sitio.',
+        'Bespoke design portfolio engineered for a brand identity specialist, delivering smooth transitions, curated case studies, and editorial-grade typography.'
+      ),
+      tech: ['React', 'Vite', 'CSS', 'Branding', 'Diseño Gráfico'],
+      url: 'https://sofia-moya.vercel.app/',
+      image: '/Logo principal_.png',
+      featured: false,
+    },
+    {
       id: 'jj-hire',
       code: 'JJH',
       title: 'JJHire',
@@ -100,20 +114,6 @@ export function Projects() {
       tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel', 'Admin Dashboard'],
       url: 'https://jj-busca.vercel.app/',
       image: '/jj-hire-busca-placeholder.png',
-      featured: false,
-    },
-    {
-      id: 'sofia-moya',
-      code: 'SOF',
-      title: 'Sofia Moya',
-      subtitle: t('Portafolio — Diseñadora Gráfica y Digital', 'Graphic & Digital Designer Portfolio'),
-      description: t(
-        'Portafolio personal de Sofia Moya, diseñadora gráfica y digital especializada en identidad visual, branding y diseño de logos. Diseño y desarrollo completo del sitio.',
-        'Bespoke design portfolio engineered for a brand identity specialist, delivering smooth transitions, curated case studies, and editorial-grade typography.'
-      ),
-      tech: ['React', 'Vite', 'CSS', 'Branding', 'Diseño Gráfico'],
-      url: 'https://sofia-moya.vercel.app/',
-      image: '/Logo principal_.png',
       featured: false,
     },
   ]
@@ -447,7 +447,7 @@ export function Projects() {
                   style={{
                     top: `${stickyTop}px`,
                     zIndex: 10 + index,
-                    marginBottom: isLastReal ? '0px' : '120px',
+                    marginBottom: '120px',
                   }}
                 >
                   {/* Subtle Protruding Folder Tab ("Pestaña de Fichero") - Purely visual index, touch disabled */}

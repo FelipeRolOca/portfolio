@@ -490,6 +490,9 @@ export function Projects() {
                 </div>
               )
             })}
+
+            {/* Scroll pause buffer: keeps all 7 cards 100% stacked & visible for 380px of scroll before moving to next section */}
+            <div className="h-[380px] w-full pointer-events-none" aria-hidden="true" />
           </div>
 
           {/* "Próximo Proyecto" Slot: OUTSIDE the stacking deck, positioned naturally below Sofia Moya */}

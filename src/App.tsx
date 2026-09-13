@@ -8,6 +8,7 @@ import { Projects } from './components/Projects'
 import { Experience } from './components/Experience'
 import { Skills } from './components/Skills'
 import { Contact } from './components/Contact'
+import { PromoVideoSection } from './components/PromoVideoSection'
 import { Footer } from './components/Footer'
 import { LegalNoticeModal } from './components/LegalNoticeModal'
 import { CookieBanner } from './components/CookieBanner'
@@ -26,6 +27,7 @@ export default function App() {
         <Experience />
         <Skills />
         <Contact />
+        <PromoVideoSection />
         <Footer onOpenLegal={() => setLegalOpen(true)} />
         <LegalNoticeModal isOpen={legalOpen} onClose={() => setLegalOpen(false)} />
         <CookieBanner onOpenLegal={() => setLegalOpen(true)} />

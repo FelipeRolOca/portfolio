@@ -4,7 +4,7 @@ import logo3 from '@/imports/LOGO_3.png'
 import { useLang } from '../i18n/LanguageContext'
 
 export function PromoVideoSection() {
-  const { t } = useLang()
+  const { lang, t } = useLang()
   const sectionRef = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -113,8 +113,8 @@ export function PromoVideoSection() {
   }
 
   const videoSrc = isMobile
-    ? '/video-vertical-con-sonido.mp4?v=7'
-    : '/video-horizontal-con-sonido.mp4?v=7'
+    ? (lang === 'en' ? '/video-vertical-en-con-sonido.mp4?v=1' : '/video-vertical-con-sonido.mp4?v=7')
+    : (lang === 'en' ? '/video-horizontal-en-con-sonido.mp4?v=1' : '/video-horizontal-con-sonido.mp4?v=7')
 
   return (
     <section

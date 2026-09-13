@@ -9,17 +9,17 @@ Este documento contiene **todo lo necesario para continuar, actualizar y agregar
 - **Duración total**: 46.00 segundos (1.380 fotogramas a 30 fps en ambos formatos).
 - **Formatos Oficiales Actuales (V7 - Textos y Escalas Optimizadas)**:
   - 🖥️ **Horizontal 16:9** (1920x1080 px &bull; Full HD Web & YouTube):
-    - 🎬 `public/video-horizontal-con-sonido.mp4` *(16.4 MB &bull; V7 con textos ampliados y logos perimetrales)*
-    - 🔇 `public/video-horizontal-sin-sonido.mp4` *(14.7 MB)*
-    - 📁 `public/video-horizontal-definitivo.mp4` *(14.7 MB)*
+    - 🇪🇸 Español: `public/video-horizontal-con-sonido.mp4` *(16.4 MB)*
+    - 🇬🇧 English: `public/video-horizontal-en-con-sonido.mp4` *(16.3 MB)*
+    - 🔇 Silencioso / Definitivo: `video-horizontal-definitivo.mp4` / `video-horizontal-en-definitivo.mp4`
   - 📱 **Vertical 9:16** (1080x1920 px &bull; Full HD TikTok, Reels, Shorts & Mobile Web):
-    - 🎬 `public/video-vertical-con-sonido.mp4` *(21.5 MB &bull; V7 con Dual-Device iPad + Laptop e iPhone maximizado)*
-    - 🔇 `public/video-vertical-sin-sonido.mp4` *(18.8 MB)*
-    - 📁 `public/video-vertical-definitivo.mp4` *(18.8 MB)*
-- **Integración Web en Portafolio**:
-  - Componente: `src/components/PromoVideoSection.tsx` (efecto Antigravity con scroll interactivo, cursor magnético FRO y fondo fijo `#16232A`).
+    - 🇪🇸 Español: `public/video-vertical-con-sonido.mp4` *(21.5 MB)*
+    - 🇬🇧 English: `public/video-vertical-en-con-sonido.mp4` *(21.5 MB aprox.)*
+    - 🔇 Silencioso / Definitivo: `video-vertical-definitivo.mp4` / `video-vertical-en-definitivo.mp4`
+- **Integración Web Multilingüe**:
+  - Componente: `src/components/PromoVideoSection.tsx` (conmutación instantánea al cambiar idioma ES/EN, efecto Antigravity con scroll interactivo, cursor magnético FRO y fondo fijo `#16232A`).
   - Respaldo previo: `src/App.backup.tsx`.
-- **Panel Interactivo de Audición y Comparación**: `public/audio-review.html` *(con reproductor dual para horizontal y vertical)*.
+- **Panel Interactivo de Audición y Comparación**: `public/audio-review.html`.
 
 ---
 

@@ -1,0 +1,6 @@
+# Robots.txt para el portafolio de Felipe Roldán Ocampo
+User-agent: *
+Allow: /
+
+# Ubicación del Sitemap XML
+Sitemap: https://portfolio-eosin-three-3uxinp6put.vercel.app/sitemap.xml

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1350, initial-scale=1.0">
+  <title>Post 00 - Presentación Oficial | Felipe Roldán Ocampo (FRO)</title>
+  
+  <!-- Google Fonts: Barlow Condensed, Barlow, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 1080px;
+      height: 1350px;
+      background-color: #075056;
+      color: #E4EEF0;
+      font-family: 'Barlow', sans-serif;
+      overflow: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient texture overlay (FONDO_LARGO isometric cube pattern) */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 580px;
+      height: 100%;
+      background-image: url('../../brand/assets/FONDO_LARGO.png');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.13;
+      mask-image: linear-gradient(to right, transparent 0%, black 70%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Top solid accent bar */
+    .top-accent-bar {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 6px;
+      background-color: #FF5B04;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 0 15px rgba(255, 91, 4, 0.7);
+      z-index: 20;
+    }
+
+    /* Main Container */
+    .post-container {
+      position: relative;
+      z-index: 10;
+      width: 1080px;
+      height: 1350px;
+      padding: 60px 68px 50px 68px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(22, 35, 42, 0.65);
+      border: 1px solid rgba(255, 91, 4, 0.45);
+      padding: 9px 20px;
+      border-radius: 9999px;
+      backdrop-filter: blur(8px);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #FF5B04;
+      box-shadow: 0 0 10px #FF5B04;
+    }
+
+    .badge-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #E4EEF0;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .brand-id {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-id img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(255, 91, 4, 0.5));
+    }
+
+    .brand-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #E4EEF0;
+      letter-spacing: 0.12em;
+    }
+
+    /* Hero Statement */
+    .hero-statement {
+      margin-top: 10px;
+    }
+
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 82px;
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -1.8px;
+      color: #E4EEF0;
+      margin-bottom: 24px;
+    }
+
+    .hero-title .dark-cut {
+      color: #16232A;
+      display: block;
+      -webkit-text-stroke: 1.5px rgba(228, 238, 240, 0.25);
+    }
+
+    .hero-paragraphs {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 940px;
+    }
+
+    .hero-p {
+      font-family: 'Barlow', sans-serif;
+      font-size: 21.5px;
+      font-weight: 500;
+      line-height: 1.40;
+      color: #F0F6F7;
+    }
+
+    .hero-p strong {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    /* 2x2 Quadratic Grid (The exact card design from the website) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+      margin-bottom: 28px;
+    }
+
+    .info-card {
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-radius: 4px;
+      transition: transform 0.2s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .info-card-dark {
+      background-color: #16232A;
+      border: 1px solid rgba(228, 238, 240, 0.15);
+    }
+
+    .info-card-accent {
+      background-color: #FF5B04;
+      border: none;
+      box-shadow: 0 12px 35px rgba(255, 91, 4, 0.4);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 4px;
+    }
+
+    .info-card-dark .card-label {
+      color: rgba(228, 238, 240, 0.55);
+    }
+
+    .info-card-accent .card-label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .card-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .info-card-dark .card-value {
+      color: #E4EEF0;
+    }
+
+    .info-card-accent .card-value {
+      color: #FFFFFF;
+    }
+
+    .card-unit {
+      font-family: 'Barlow', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .info-card-dark .card-unit {
+      color: #FF5B04;
+    }
+
+    .info-card-accent .card-unit {
+      color: #FFFFFF;
+      opacity: 0.95;
+    }
+
+    /* Footer / CTA Bar */
+    .footer-bar {
+      background: #16232A;
+      border: 1.5px solid rgba(228, 238, 240, 0.15);
+      border-radius: 4px;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .footer-identity {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 14px rgba(255, 91, 4, 0.6));
+    }
+
+    .footer-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #E4EEF0;
+      line-height: 1.05;
+    }
+
+    .footer-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #FF5B04;
+      letter-spacing: 0.14em;
+    }
+
+    .footer-action {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-cta {
+      background-color: #FF5B04;
+      color: #FFFFFF;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 12px 24px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(255, 91, 4, 0.5);
+    }
+
+    .wa-icon {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Accent Bar -->
+  <div class="top-accent-bar"></div>
+
+  <!-- Ambient Texture -->
+  <div class="bg-pattern"></div>
+
+  <!-- Content Wrap -->
+  <div class="post-container">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="badge-category">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Full Stack & Automatización</span>
+      </div>
+
+      <div class="brand-id">
+        <img src="../../brand/assets/LOGO_3.png" alt="FRO Cubo 3D">
+        <span class="brand-tag">FRO // INGENIERÍA & DEV</span>
+      </div>
+    </div>
+
+    <!-- Hero Statement -->
+    <div class="hero-statement">
+      <h1 class="hero-title">
+        TRANSFORMO<br>
+        NECESIDADES<br>
+        <span class="dark-cut">EN SOLUCIONES</span>
+        DIGITALES
+      </h1>
+
+      <div class="hero-paragraphs">
+        <p class="hero-p">
+          Como desarrollador de software, me enfoco en <strong>entender a fondo el flujo operativo de cada cliente</strong> para diseñar herramientas útiles, seguras y hechas a medida.
+        </p>
+        <p class="hero-p">
+          Mi objetivo: conectar los procesos de tu negocio con tecnología moderna, <strong>eliminando tareas repetitivas</strong> y construyendo plataformas que impulsan tu crecimiento real.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2x2 Quadratic Grid (Matches About.tsx visual identity) -->
+    <div class="cards-grid">
+
+      <!-- Card 1: Desarrollo Web & Plataformas -->
+      <div class="info-card info-card-dark">
+        <img src="../../brand/assets/ELEMENTO_GRAFICO_2.png" alt="" class="card-icon">
+        <div class="card-body">
+          <div class="card-label">Desarrollo Web</div>
+          <div class="card-value">Sistemas & Plataformas</div>
+          <div class="card-unit">A Medida // Cloud // SaaS</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Automatización de Procesos -->
+      <div class="info-card info-card-dark">
+        <img src="../../brand/assets/ELEMENTO_GRAFICO_2.png" alt="" class="card-icon">
+        <div class="card-body">
+          <div class="card-label">Operaciones</div>
+          <div class="card-value">Automatización</div>
+          <div class="card-unit">Chau Tareas Manuales</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Metodología Ágil (The Orange Accent Card) -->
+      <div class="info-card info-card-accent">
+        <img src="../../brand/assets/ELEMENTO_GRAFICO_3.png" alt="" class="card-icon">
+        <div class="card-body">
+          <div class="card-label">Enfoque Técnico</div>
+          <div class="card-value">100% Escalable</div>
+          <div class="card-unit">Código Moderno & Seguro</div>
+        </div>
+      </div>
+
+      <!-- Card 4: Modalidad & Contacto -->
+      <div class="info-card info-card-dark">
+        <img src="../../brand/assets/ELEMENTO_GRAFICO_2.png" alt="" class="card-icon">
+        <div class="card-body">
+          <div class="card-label">Modalidad</div>
+          <div class="card-value">Remoto Global</div>
+          <div class="card-unit">Freelance & Consultoría</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Bar -->
+    <div class="footer-bar">
+      <div class="footer-identity">
+        <img class="footer-logo" src="../../brand/assets/LOGO_3.png" alt="FRO Logo">
+        <div>
+          <div class="footer-name">Felipe Roldán Ocampo</div>
+          <div class="footer-subtitle">HAGÁMOSLO REALIDAD // DEV & AUTOMATION</div>
+        </div>
+      </div>
+
+      <div class="footer-action">
+        <div class="btn-cta">
+          <svg class="wa-icon" viewBox="0 0 24 24">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.42 0-2.82-.37-4.06-1.07l-.29-.17-3.12.82.83-3.04-.19-.31a8.217 8.217 0 0 1-1.26-4.47c0-4.54 3.7-8.25 8.24-8.25m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.18-.47-.3z"/>
+          </svg>
+          <span>HABLEMOS // +54 9 3329 52-3459</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

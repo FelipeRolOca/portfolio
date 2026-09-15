@@ -36,8 +36,13 @@ Este documento es la referencia definitiva de diseño e identidad visual para to
 
 ## 🛡️ 3. Reglas de Marca Inquebrantables
 
-* **PROHIBICIÓN TOTAL:** NUNCA mencionar que ningún sistema o aplicación utiliza *Biometría* o *Reconocimiento Facial*. En la plataforma JJAsist el fichaje se describe y promociona **únicamente mediante GPS y Código QR Dinámico**.
+* **PROHIBICIÓN TOTAL DE BIOMETRÍA:** NUNCA mencionar que ningún sistema o aplicación utiliza *Biometría* o *Reconocimiento Facial*. En la plataforma JJAsist el fichaje se describe y promociona **únicamente mediante GPS y Código QR Dinámico**.
+* **PROHIBICIÓN ESTRICTA DE DEGRADADOS (GRADIENTES / FADES):** NUNCA utilizar máscaras de degradado difuso ni sombras borrosas que parezcan generadas por IA. Los fondos deben resolverse mediante **bloques sólidos con cortes secos** o **patrones/texturas completos de borde a borde con recorte limpio**.
+* **NO SOBRECARGAR NI REPETIR IDENTIDAD:** El nombre profesional (*Felipe Roldán Ocampo*) y el logotipo oficial se colocan **una sola vez por pieza**. Evitar repetir términos como "Full Stack" o "Automatización" en dos o tres lugares del mismo post.
+* **DISCURSO CONTINUO Y CONCISO:** El mensaje debe ser directo, funcional y estar alineado con los videos promocionales (*¿Te falta presencia digital o automatizar procesos? Soluciones a medida para escalar*).
+* **NO USAR CAPTURAS DE WEBS ESPECÍFICAS (salvo pedido expreso):** Para evitar que clientes potenciales crean que solo se realizan tiendas o webs de un rubro particular; proyectar capacidad integral de software.
 * **Llamado a la Acción (CTA) Oficial:**
+
   * Slogan de marca: *"Hagámoslo Realidad."*
   * Contacto directo: WhatsApp `+54 9 3329 52-3459`
   * Portafolio: `https://portafolio-felipe.vercel.app/`

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1350, initial-scale=1.0">
+  <title>Post 01 - Catálogo Web & Tiendas Online | FRO</title>
+  
+  <!-- Google Fonts: Barlow Condensed, Barlow, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 1080px;
+      height: 1350px;
+      background-color: #16232A;
+      color: #E4EEF0;
+      font-family: 'Barlow', sans-serif;
+      overflow: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient background grid & glow */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(7, 80, 86, 0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(7, 80, 86, 0.18) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at 50% 45%, black 40%, transparent 85%);
+      -webkit-mask-image: radial-gradient(circle at 50% 45%, black 40%, transparent 85%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ambient-glow-1 {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(7, 80, 86, 0.45) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ambient-glow-2 {
+      position: absolute;
+      bottom: 200px;
+      left: -150px;
+      width: 650px;
+      height: 650px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 91, 4, 0.18) 0%, transparent 70%);
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Main Container */
+    .post-container {
+      position: relative;
+      z-index: 10;
+      width: 1080px;
+      height: 1350px;
+      padding: 64px 64px 54px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(7, 80, 86, 0.4);
+      border: 1px solid rgba(255, 91, 4, 0.5);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 0 20px rgba(7, 80, 86, 0.3);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #FF5B04;
+      box-shadow: 0 0 10px #FF5B04;
+    }
+
+    .badge-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #E4EEF0;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .brand-id {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-id img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(255, 91, 4, 0.5));
+    }
+
+    .brand-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94A3B8;
+      letter-spacing: 0.12em;
+    }
+
+    /* Headline Section */
+    .header-content {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    .title-main {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 68px;
+      line-height: 0.98;
+      text-transform: uppercase;
+      letter-spacing: -1.5px;
+      color: #E4EEF0;
+      margin-bottom: 16px;
+    }
+
+    .title-main .accent {
+      color: #FF5B04;
+      display: inline-block;
+      text-shadow: 0 0 35px rgba(255, 91, 4, 0.4);
+    }
+
+    .title-sub {
+      font-family: 'Barlow', sans-serif;
+      font-size: 21px;
+      font-weight: 500;
+      line-height: 1.35;
+      color: #CAD5E2;
+      max-width: 840px;
+    }
+
+    /* Center Showcase Stage */
+    .showcase-stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 520px;
+    }
+
+    /* Phone Mockup Frame */
+    .phone-wrapper {
+      position: relative;
+      width: 370px;
+      height: 540px;
+      background: #0D1418;
+      border-radius: 46px;
+      padding: 11px;
+      box-shadow: 
+        0 25px 70px rgba(0, 0, 0, 0.7),
+        0 0 45px rgba(7, 80, 86, 0.4),
+        0 0 0 2px rgba(255, 255, 255, 0.12),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+      z-index: 10;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #111B21;
+      border-radius: 36px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Dynamic Island */
+    .phone-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 96px;
+      height: 24px;
+      background: #000;
+      border-radius: 12px;
+      z-index: 30;
+    }
+
+    /* Simulated Mobile Catalog App UI */
+    .app-header {
+      padding: 42px 18px 12px 18px;
+      background: #16232A;
+      border-bottom: 1px solid rgba(7, 80, 86, 0.5);
+    }
+
+    .app-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .app-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 19px;
+      text-transform: uppercase;
+      color: #E4EEF0;
+      letter-spacing: 0.5px;
+    }
+
+    .app-logo span {
+      color: #FF5B04;
+    }
+
+    .app-cart-badge {
+      background: #FF5B04;
+      color: #FFF;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+
+    .app-search {
+      background: rgba(7, 80, 86, 0.35);
+      border: 1px solid rgba(7, 80, 86, 0.7);
+      border-radius: 10px;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-icon {
+      color: #94A3B8;
+      font-size: 12px;
+    }
+
+    .search-text {
+      font-size: 11px;
+      color: #94A3B8;
+    }
+
+    .app-chips {
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px;
+      background: #111B21;
+      overflow: hidden;
+    }
+
+    .chip-item {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(7, 80, 86, 0.3);
+      color: #CAD5E2;
+      border: 1px solid rgba(7, 80, 86, 0.5);
+    }
+
+    .chip-item.active {
+      background: #FF5B04;
+      color: #FFF;
+      border-color: #FF5B04;
+    }
+
+    .app-grid {
+      padding: 10px 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .product-card {
+      background: #16232A;
+      border: 1px solid rgba(7, 80, 86, 0.6);
+      border-radius: 14px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-img-box {
+      width: 100%;
+      height: 90px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0D1418;
+      margin-bottom: 6px;
+      position: relative;
+    }
+
+    .product-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #E4EEF0;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .product-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #FF5B04;
+    }
+
+    .btn-add {
+      background: #075056;
+      color: #FFF;
+      border: none;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 6px;
+      cursor: pointer;
+    }
+
+    /* Floating Side Badges on the Canvas */
+    .float-badge {
+      position: absolute;
+      background: rgba(22, 35, 42, 0.92);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      z-index: 20;
+    }
+
+    .float-badge-left {
+      left: 10px;
+      top: 90px;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .float-badge-right {
+      right: 10px;
+      top: 140px;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    .float-badge-bottom-right {
+      right: 25px;
+      bottom: 50px;
+      border: 1px solid rgba(255, 91, 4, 0.6);
+      background: rgba(7, 80, 86, 0.4);
+      box-shadow: 0 16px 40px rgba(255, 91, 4, 0.2);
+    }
+
+    .badge-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .icon-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #EF4444;
+    }
+
+    .icon-success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22C55E;
+    }
+
+    .icon-wa {
+      background: rgba(37, 211, 102, 0.15);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      color: #25D366;
+    }
+
+    .float-text-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .float-text-desc {
+      font-size: 14px;
+      font-weight: 500;
+      color: #CAD5E2;
+    }
+
+    /* 3 Value Pillars */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 10px;
+      margin-bottom: 22px;
+    }
+
+    .pillar-card {
+      background: rgba(7, 80, 86, 0.22);
+      border: 1px solid rgba(7, 80, 86, 0.6);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pillar-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: #FF5B04;
+    }
+
+    .pillar-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #E4EEF0;
+      line-height: 1.1;
+    }
+
+    .pillar-desc {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #94A3B8;
+      line-height: 1.3;
+    }
+
+    /* Footer / CTA Bar */
+    .footer-cta {
+      background: rgba(7, 80, 86, 0.35);
+      border: 1.5px solid #075056;
+      border-radius: 20px;
+      padding: 16px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 15px rgba(255, 91, 4, 0.6));
+    }
+
+    .footer-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 23px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #E4EEF0;
+      line-height: 1.1;
+    }
+
+    .footer-slogan {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #FF5B04;
+      letter-spacing: 0.12em;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wa-button {
+      background: #FF5B04;
+      color: #FFFFFF;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 11px 22px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 20px rgba(255, 91, 4, 0.4);
+    }
+
+    .wa-icon-svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient visual effects -->
+  <div class="bg-grid"></div>
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- Content Wrap -->
+  <div class="post-container">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="badge-category">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Soluciones Web Comerciales</span>
+      </div>
+
+      <div class="brand-id">
+        <img src="../../../src/imports/LOGO_3.png" alt="FRO Logo">
+        <span class="brand-tag">FRO // DEV & AUTOMATION</span>
+      </div>
+    </div>
+
+    <!-- Main Title & Hook -->
+    <div class="header-content">
+      <h1 class="title-main">
+        ¿Tu negocio sigue mandando<br>
+        <span class="accent">PDFs que nadie abre?</span>
+      </h1>
+      <p class="title-sub">
+        Convertí tus consultas de WhatsApp en ventas reales con un catálogo web interactivo, ultrarrápido y diseñado para celulares.
+      </p>
+    </div>
+
+    <!-- Center Stage: Smartphone Mockup & Contrast Badges -->
+    <div class="showcase-stage">
+
+      <!-- Left Contrast Badge: The Pain -->
+      <div class="float-badge float-badge-left">
+        <div class="badge-icon-box icon-danger">✕</div>
+        <div>
+          <div class="float-text-title" style="color: #EF4444;">El Problema</div>
+          <div class="float-text-desc">PDF de 30MB que nadie baja</div>
+        </div>
+      </div>
+
+      <!-- Right Contrast Badge: The Solution -->
+      <div class="float-badge float-badge-right">
+        <div class="badge-icon-box icon-success">⚡</div>
+        <div>
+          <div class="float-text-title" style="color: #22C55E;">La Solución</div>
+          <div class="float-text-desc">Web abre en menos de 1 seg</div>
+        </div>
+      </div>
+
+      <!-- Bottom Right Badge: WhatsApp Conversion -->
+      <div class="float-badge float-badge-bottom-right">
+        <div class="badge-icon-box icon-wa">
+          <svg class="wa-icon-svg" viewBox="0 0 24 24">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.42 0-2.82-.37-4.06-1.07l-.29-.17-3.12.82.83-3.04-.19-.31a8.217 8.217 0 0 1-1.26-4.47c0-4.54 3.7-8.25 8.24-8.25m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.18-.47-.3z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="float-text-title" style="color: #FF5B04;">Cierre Inmediato</div>
+          <div class="float-text-desc">Pedido directo a tu WhatsApp</div>
+        </div>
+      </div>
+
+      <!-- Smartphone Mockup -->
+      <div class="phone-wrapper">
+        <div class="phone-screen">
+          <div class="phone-island"></div>
+
+          <!-- App Mockup Content -->
+          <div class="app-header">
+            <div class="app-nav">
+              <div class="app-logo">CATÁLOGO <span>PRO</span></div>
+              <div class="app-cart-badge">3 ITEMS</div>
+            </div>
+            <div class="app-search">
+              <span class="search-icon">🔍</span>
+              <span class="search-text">Buscar calzado, carteras, accesorios...</span>
+            </div>
+          </div>
+
+          <div class="app-chips">
+            <div class="chip-item active">Todos</div>
+            <div class="chip-item">Calzado</div>
+            <div class="chip-item">Marroquinería</div>
+            <div class="chip-item">Ofertas</div>
+          </div>
+
+          <div class="app-grid">
+            <div class="product-card">
+              <div class="product-img-box">
+                <img src="../../../public/Hero paginas/oscarnuevo.png" alt="Producto 1">
+              </div>
+              <div class="product-name">Borcego Cuero Premium</div>
+              <div class="product-price-row">
+                <span class="product-price">$89.000</span>
+                <button class="btn-add">+ PEDIR</button>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div class="product-img-box">
+                <img src="../../../public/Hero paginas/paperpopsnuevo.png" alt="Producto 2">
+              </div>
+              <div class="product-name">Pack Pop Art Edition</div>
+              <div class="product-price-row">
+                <span class="product-price">$34.500</span>
+                <button class="btn-add">+ PEDIR</button>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div class="product-img-box">
+                <img src="../../../public/Hero paginas/oscarnuevo.png" alt="Producto 3">
+              </div>
+              <div class="product-name">Billetera Cuero Genuino</div>
+              <div class="product-price-row">
+                <span class="product-price">$28.900</span>
+                <button class="btn-add">+ PEDIR</button>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div class="product-img-box">
+                <img src="../../../public/Hero paginas/paperpopsnuevo.png" alt="Producto 4">
+              </div>
+              <div class="product-name">Cuadro Decorativo Pop</div>
+              <div class="product-price-row">
+                <span class="product-price">$19.800</span>
+                <button class="btn-add">+ PEDIR</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 3 Value Pillars -->
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <span class="pillar-num">01 // NAVEGACIÓN</span>
+        <div class="pillar-title">Abre en 1 Segundo</div>
+        <p class="pillar-desc">Cero descargas. Tu cliente hace clic en tu link y ve todos tus productos en su celular al instante.</p>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-num">02 // FILTRADO</span>
+        <div class="pillar-title">Buscador & Precios</div>
+        <p class="pillar-desc">Encuentran lo que buscan en dos toques. Sin tener que preguntarte 20 veces "¿cuánto sale este?".</p>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-num">03 // CONVERSIÓN</span>
+        <div class="pillar-title">Pedido a WhatsApp</div>
+        <p class="pillar-desc">El cliente selecciona sus productos y te envía el pedido detallado listo para cobrar y despachar.</p>
+      </div>
+    </div>
+
+    <!-- Footer / CTA -->
+    <div class="footer-cta">
+      <div class="footer-left">
+        <img class="footer-logo" src="../../../src/imports/LOGO_3.png" alt="FRO Cubo 3D">
+        <div>
+          <div class="footer-name">Felipe Roldán Ocampo</div>
+          <div class="footer-slogan">DESARROLLO DE SOFTWARE A MEDIDA</div>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <div class="wa-button">
+          <svg class="wa-icon-svg" viewBox="0 0 24 24">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.42 0-2.82-.37-4.06-1.07l-.29-.17-3.12.82.83-3.04-.19-.31a8.217 8.217 0 0 1-1.26-4.47c0-4.54 3.7-8.25 8.24-8.25m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.18-.47-.3z"/>
+          </svg>
+          <span>HABLEMOS HOY // +54 9 3329 52-3459</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

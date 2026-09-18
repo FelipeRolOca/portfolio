@@ -131,7 +131,7 @@ export function Hero() {
               }}
             >
               <img
-                src="/Foto Perfil definitiva.png"
+                src="/01-perfil-felipe.png"
                 alt="Felipe Roldán Ocampo"
                 className="w-full h-full object-cover object-top"
               />

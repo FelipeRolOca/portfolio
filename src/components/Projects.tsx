@@ -1,123 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLang } from '../i18n/LanguageContext'
+import { PROJECTS_DATA } from '../data/projects'
 
 export function Projects() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const sectionRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200)
   const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 800)
 
-  const RAW_PROJECTS = [
-    {
-      id: 'jj-asist',
-      code: 'JJA',
-      title: 'JJAsist',
-      subtitle: t('Plataforma SaaS de Asistencia', 'SaaS Workforce & Attendance Platform'),
-      description: t(
-        'Solución integral para registro de asistencia laboral con fichaje por QR dinámico, validación de ubicación geográfica GPS y sincronización de planillas en Google Sheets.',
-        'End-to-end workforce management SaaS featuring anti-spoofing dynamic QR check-ins, GPS geofencing verification, and automated Google Sheets sync.'
-      ),
-      tech: ['Next.js', 'Supabase', 'Vercel', 'Google Apps Script', 'Tailwind CSS'],
-      url: 'https://jj-asist.vercel.app/',
-      image: '/jj-asist-logo.png',
-      featured: true,
-    },
-    {
-      id: 'oscar-cuero',
-      code: 'OSC',
-      title: 'OSCAR — Puro Cuero',
-      subtitle: t('Marroquinería & Generador de Contenido', 'Artisanal Leather E-Commerce & AI Marketing Suite'),
-      description: t(
-        'E-commerce y catálogo artesanal de marroquinería y calzado con panel administrativo integrado que incluye un generador de contenido (flyers, banners, historias y copies) para automatizar el marketing en redes sociales de los dueños.',
-        'Direct-to-consumer artisanal leather e-commerce platform paired with an administrative content engine generating on-brand social media campaigns, banners, and copywriting.'
-      ),
-      tech: ['React', 'Vite', 'Tailwind CSS', 'Social Content Generator', 'SEO'],
-      url: 'https://oscarpurocuero-delta.vercel.app/',
-      image: '/OSCAR-01.png',
-      featured: true,
-    },
-    {
-      id: 'jj-servicios',
-      code: 'JJS',
-      title: 'JJ Servicios Empresariales',
-      subtitle: t('Sitio Corporativo RRHH', 'Corporate HR Consulting Platform'),
-      description: t(
-        'Plataforma institucional para consultora de Recursos Humanos. Presentación clara de servicios, maquetación responsive moderna y optimización SEO.',
-        'High-conversion corporate presence for human resources consultancy, engineered with responsive performance architecture and technical SEO optimization.'
-      ),
-      tech: ['Next.js', 'React', 'Tailwind CSS', 'Vercel', 'SEO'],
-      url: 'https://jjserviciosempresarialesrrhh.com/',
-      image: '/Rehace_el_logo_202604262015.jpeg',
-      featured: false,
-    },
-    {
-      id: 'paper-pops',
-      code: 'POP',
-      title: 'Paper Pops',
-      subtitle: t('Tienda Online / E-commerce', 'Online Retail Store & Catalog'),
-      description: t(
-        'Tienda online y catálogo de Paper Pops. Diseño visual atractivo, navegación fluida de productos y experiencia de compra optimizada.',
-        'Digital storefront and interactive catalog featuring optimized buyer journeys, seamless mobile navigation, and modern visual branding.'
-      ),
-      tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce'],
-      url: 'https://paperpops.vercel.app/',
-      image: '/paper-pops-logo.png',
-      featured: true,
-    },
-    {
-      id: 'sofia-moya',
-      code: 'SOF',
-      title: 'Sofia Moya',
-      subtitle: t('Portafolio — Diseñadora Gráfica y Digital', 'Graphic & Digital Designer Portfolio'),
-      description: t(
-        'Portafolio personal de Sofia Moya, diseñadora gráfica y digital especializada en identidad visual, branding y diseño de logos. Diseño y desarrollo completo del sitio.',
-        'Bespoke design portfolio engineered for a brand identity specialist, delivering smooth transitions, curated case studies, and editorial-grade typography.'
-      ),
-      tech: ['React', 'Vite', 'CSS', 'Branding', 'Diseño Gráfico'],
-      url: 'https://sofia-moya.vercel.app/',
-      image: '/Logo principal_.png',
-      featured: false,
-    },
-    {
-      id: 'jj-hire',
-      code: 'JJH',
-      title: 'JJHire',
-      subtitle: t('Portal de Postulantes', 'Talent Acquisition & ATS Dashboard'),
-      isBeta: true,
-      betaNotice: t(
-        'Versión Beta — Diseño estético no terminado / en desarrollo',
-        'Beta Release — Active development / UI polish in progress'
-      ),
-      description: t(
-        'Sistema administrativo para selectores y reclutadores que facilita la búsqueda de perfiles, filtrado de currículums y gestión de búsquedas.',
-        'Streamlined ATS enabling recruiters to parse resumes, filter candidate profiles, and manage end-to-end hiring pipelines in real time.'
-      ),
-      tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
-      url: 'https://jj-hire.vercel.app/',
-      image: '/jj-hire-busca-placeholder.png',
-      featured: false,
-    },
-    {
-      id: 'jj-busca',
-      code: 'JJB',
-      title: 'JJBusca',
-      subtitle: t('Portal de Reclutadores', 'Candidate Career Portal'),
-      isBeta: true,
-      betaNotice: t(
-        'Versión Beta — Diseño estético no terminado / en desarrollo',
-        'Beta Release — Active development / UI polish in progress'
-      ),
-      description: t(
-        'Portal de empleo para candidatos donde pueden cargar su CV, explorar ofertas laborales vigentes y realizar postulaciones en línea.',
-        'Public-facing job board allowing candidates to explore active openings, upload credentials, and track application statuses seamlessly.'
-      ),
-      tech: ['React', 'Next.js', 'Tailwind CSS', 'Vercel', 'Admin Dashboard'],
-      url: 'https://jj-busca.vercel.app/',
-      image: '/jj-hire-busca-placeholder.png',
-      featured: false,
-    },
-  ]
+  const RAW_PROJECTS = PROJECTS_DATA.map(p => ({
+    id: p.id,
+    code: p.code,
+    title: p.title,
+    subtitle: p.subtitle[lang],
+    description: p.description[lang],
+    tech: p.tech,
+    url: p.url,
+    image: p.image,
+    featured: p.featured,
+    isBeta: p.isBeta,
+    betaNotice: p.betaNotice ? p.betaNotice[lang] : undefined,
+  }))
 
   type ProjectItem =
     | ({ isAddSlot?: false } & (typeof RAW_PROJECTS)[number])

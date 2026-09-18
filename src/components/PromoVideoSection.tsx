@@ -113,8 +113,8 @@ export function PromoVideoSection() {
   }
 
   const videoSrc = isMobile
-    ? (lang === 'en' ? '/video-vertical-en-con-sonido.mp4?v=1' : '/video-vertical-con-sonido.mp4?v=7')
-    : (lang === 'en' ? '/video-horizontal-en-con-sonido.mp4?v=1' : '/video-horizontal-con-sonido.mp4?v=7')
+    ? (lang === 'en' ? '/09-video-vertical-en.mp4' : '/08-video-vertical-es.mp4')
+    : (lang === 'en' ? '/11-video-horizontal-en.mp4' : '/10-video-horizontal-es.mp4')
 
   return (
     <section

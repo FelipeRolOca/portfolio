@@ -406,7 +406,7 @@ export function Projects() {
                 // {t('¿TENÉS UN NUEVO PROYECTO?', 'HAVE A PROJECT IN MIND?')}
               </span>
               <span className="text-[10px] font-mono text-[#E4EEF0]/60 uppercase border border-[#075056] px-2 py-0.5 rounded-[2px]">
-                08 / 08
+                {String(totalCards).padStart(2, '0')} / {String(totalCards).padStart(2, '0')}
               </span>
             </div>
             {renderCard(ALL_CARDS[maxIndex], maxIndex, true, t)}

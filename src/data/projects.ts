@@ -31,6 +31,23 @@ export const PROJECTS_DATA: ProjectDefinition[] = [
     featured: true,
   },
   {
+    id: 'deportivo-sport',
+    code: 'DSP',
+    title: 'Deportivo Sport',
+    subtitle: {
+      es: 'Tienda Online & Catálogo Deportivo',
+      en: 'Athletic Wear E-Commerce & Catalog',
+    },
+    description: {
+      es: 'Tienda online y catálogo interactivo de indumentaria deportiva y urbana con selector dinámico de talles y colores, derivación directa de pedidos a WhatsApp y panel administrativo.',
+      en: 'Interactive athletic and streetwear e-commerce platform featuring real-time size and color selectors, instant WhatsApp order routing, and inventory management.',
+    },
+    tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce', 'WhatsApp API'],
+    url: 'https://deportivosport.vercel.app/',
+    image: '/13-proyecto-deportivosport.png',
+    featured: true,
+  },
+  {
     id: 'oscar-cuero',
     code: 'OSC',
     title: 'OSCAR — Puro Cuero',

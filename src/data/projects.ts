@@ -48,6 +48,23 @@ export const PROJECTS_DATA: ProjectDefinition[] = [
     featured: true,
   },
   {
+    id: 'pekes-teens',
+    code: 'PKT',
+    title: 'Pekes & Teens',
+    subtitle: {
+      es: 'Tienda Online & Catálogo Infantil',
+      en: 'Kids & Teens Wear E-Commerce & Catalog',
+    },
+    description: {
+      es: 'Tienda online y catálogo interactivo de indumentaria infantil y juvenil con segmentación por etapas (bebés, nenas, nenes y teens), combinador interactivo de outfits, pedidos directos por WhatsApp y panel administrativo.',
+      en: 'Interactive children and teen apparel e-commerce platform featuring stage segmentation (babies, girls, boys, and teens), interactive outfit builder, instant WhatsApp order routing, and admin panel.',
+    },
+    tech: ['React', 'Vite', 'Tailwind CSS', 'E-commerce', 'WhatsApp API'],
+    url: 'https://pekesyteens.frodev.tech/',
+    image: '/14-proyecto-pekesteens.png',
+    featured: true,
+  },
+  {
     id: 'oscar-cuero',
     code: 'OSC',
     title: 'OSCAR — Puro Cuero',

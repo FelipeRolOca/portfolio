@@ -7,3 +7,15 @@ dist
 marketing/
 archive/
 docs/
+
+# Environment variables
+.env
+.env.local
+.env.*
+
+# Local draft notes
+COSITAS
+*_ES.txt
+*_EN.txt
+
+

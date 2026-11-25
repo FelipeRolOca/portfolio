@@ -65,6 +65,23 @@ export const PROJECTS_DATA: ProjectDefinition[] = [
     featured: true,
   },
   {
+    id: 'llull-bennazar',
+    code: 'LBI',
+    title: 'Llull Bennazar Inmobiliaria',
+    subtitle: {
+      es: 'Plataforma Inmobiliaria & Catálogo',
+      en: 'Real Estate Platform & Property Catalog',
+    },
+    description: {
+      es: 'Plataforma web para inmobiliaria en San Pedro enfocada en venta, alquiler, tasaciones y administración de propiedades (casas, dúplex, galpones, locales, lotes y campos), con fichas detalladas y optimización SEO.',
+      en: 'Real estate web platform in San Pedro for property sales, rentals, appraisals, and management (houses, duplexes, warehouses, commercial spaces, lots, and farmland), featuring detailed listings and technical SEO.',
+    },
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'SEO', 'JSON-LD'],
+    url: 'https://inmobiliariallullbennazar.frodev.tech/',
+    image: '/15-proyecto-llullbennazar.png',
+    featured: true,
+  },
+  {
     id: 'oscar-cuero',
     code: 'OSC',
     title: 'OSCAR — Puro Cuero',
